@@ -21,11 +21,12 @@
 		<init-param>
 			<param-name>contextConfigLocation</param-name>
 			<param-value>
-			/WEB-INF/spring/appServlet/servlet-context00.xml
-			/WEB-INF/spring/appServlet/servlet-context1.xml
-			/WEB-INF/spring/appServlet/servlet-context2.xml
-			/WEB-INF/spring/appServlet/servlet-context3.xml
-			/WEB-INF/spring/appServlet/servlet-context4.xml
+			/WEB-INF/spring/appServlet/servlet-context.xml
+			/WEB-INF/spring/appServlet/servlet-context-baek.xml
+			/WEB-INF/spring/appServlet/servlet-context-han.xml
+			/WEB-INF/spring/appServlet/servlet-context-kang.xml
+			/WEB-INF/spring/appServlet/servlet-context-song.xml
+			/WEB-INF/spring/appServlet/servlet-context-yu.xml
 			</param-value>
 		</init-param>
 		<load-on-startup>1</load-on-startup>
