@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans:beans xmlns="http://www.springframework.org/schema/mvc"
+<beans:beans
+	xmlns="http://www.springframework.org/schema/mvc"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:beans="http://www.springframework.org/schema/beans"
 	xmlns:context="http://www.springframework.org/schema/context"
@@ -22,70 +23,6 @@
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<beans:property name="prefix" value="/WEB-INF/views/" />
 		<beans:property name="suffix" value=".jsp" />
-	</beans:bean>
-
-
-	<beans:bean
-		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-		<beans:property name="prefix" value="/WEB-INF/views/" />
-		<beans:property name="suffix" value=".jsp" />
-	</beans:bean>
-
-	<!-- 파일업로드 처리를 위한 multipartResolver bean 등록 -->
-	<beans:bean id="multipartResolver"
-		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
-		<beans:property name="defaultEncoding">
-			<beans:value>utf-8</beans:value>
-		</beans:property>
-	</beans:bean>
-
-	<beans:bean id="dataSource"
-		class="org.apache.commons.dbcp2.BasicDataSource"
-		p:driverClassName="com.mysql.jdbc.Driver"
-		p:url="jdbc:mysql://mysql-mm.crrugd0oc9oy.ap-northeast-2.rds.amazonaws.com:3306/toti?characterEncoding=utf8"
-		p:username="admin" p:password="minjong12345" />
-
-	<beans:bean id="jdbcTemplate"
-		class="org.springframework.jdbc.core.JdbcTemplate"
-		p:dataSource-ref="dataSource" />
-
-	<!-- PlatformTransactionManager 빈 설정 -->
-	<beans:bean id="transactionManager"
-		class="org.springframework.jdbc.datasource.DataSourceTransactionManager"
-		p:dataSource-ref="dataSource">
-	</beans:bean>
-
-	<!-- Mybatis 설정 : datasource, mapper 경로 -->
-	<beans:bean id="sqlSessionFactory"
-		class="org.mybatis.spring.SqlSessionFactoryBean">
-		<beans:property name="configLocation" value="" />
-		<beans:property name="dataSource" ref="dataSource" />
-		<beans:property name="mapperLocations"
-			value="classpath:com/wad/udo/member/mapper/mybatis/*.xml" />
-	</beans:bean>
-
-	<beans:bean id="sqlSession"
-		class="org.mybatis.spring.SqlSessionTemplate">
-		<beans:constructor-arg index="0"
-			ref="sqlSessionFactory" />
-	</beans:bean>
-
-	<beans:bean id="mailSender"
-		class="org.springframework.mail.javamail.JavaMailSenderImpl">
-		<beans:property name="host" value="smtp.gmail.com" />
-		<beans:property name="port" value="587" /><!-- 465 or 25 -->
-		<beans:property name="username"
-			value="minjong9554@gmail.com" />
-		<beans:property name="password" value="minjong12345" />
-		<beans:property name="defaultEncoding" value="utf-8" />
-		<beans:property name="javaMailProperties">
-			<beans:props>
-				<beans:prop key="mail.transport.protocol">smtp</beans:prop>
-				<beans:prop key="mail.smtp.auth">true</beans:prop>
-				<beans:prop key="mail.smtp.starttls.enable">true</beans:prop>
-				<beans:prop key="mail.debug">true</beans:prop>
-			</beans:props>
-		</beans:property>
 	</beans:bean>
 
 	<context:component-scan
