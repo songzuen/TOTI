@@ -13,13 +13,13 @@ app.get("/", function(req, res) {
 // user 구분을 위한 변수
 
 function getRandomCode(min, max) {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
+  return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
 // socket 연결 성공 시 콘솔 출력
 io.on("connection", function(socket) {
-// user 구분을 위한 변수
-var usercode = getRandomCode(1, 9999);
+  // user 구분을 위한 변수
+  var usercode = getRandomCode(1, 9999);
 
   var name = "user" + usercode;
 
@@ -32,6 +32,8 @@ var usercode = getRandomCode(1, 9999);
       "이(가) 접속했습니다..!"
   );
 
+  io.sockets.emit("alarm", `${name}이(가) 입장..!`);
+
   socket.on("disconnect", function() {
     console.log(
       "socket.id : " +
@@ -40,8 +42,10 @@ var usercode = getRandomCode(1, 9999);
         name +
         "이(가) 접속종료했습니다..!"
     );
+    io.sockets.emit("alarm", `${name}이(가) 퇴장..!`);
   });
 
+  // 콘솔 출력
   socket.on("send_msg", function(msg) {
     console.log(name + ":" + msg);
 

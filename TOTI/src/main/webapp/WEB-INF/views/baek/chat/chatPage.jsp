@@ -47,6 +47,11 @@
 .sendbox {
 	font-weight: bold;
 }
+
+.alarmbox {
+	color: gray;
+	font-weight: bold;
+}
 </style>
 
 </head>
@@ -78,13 +83,19 @@
 						$("#msg").val("");
 					});
 
+					// 알람 메시지
+					socket.on('alarm', function(alarm_msg) {
+						$('<div id = "msgbox" class = "alarmbox"></div>').text(
+								alarm_msg).appendTo("#chat_box");
+						scrollDown();
+
+					});
+
 					// 내가 보낸 메시지
 					socket.on('send_msg', function(msg) {
 						$('<div id = "msgbox" class = "sendbox"></div>').text(
 								msg).appendTo("#chat_box");
-						// 스크롤 자동으로 내리도록 처리
-						$('#chat_box').scrollTop(
-								$('#chat_box').prop('scrollHeight'));
+						scrollDown();
 					});
 
 					// 받은 메시지
@@ -92,13 +103,16 @@
 						// div 태그를 만들고 msg의 내용을 #chat_box에 추가한다.
 						$('<div id = "msgbox"></div>').text(msg).appendTo(
 								"#chat_box");
-						// 스크롤 자동으로 내리도록 처리
-						$('#chat_box').scrollTop(
-								$('#chat_box').prop('scrollHeight'));
+
+						scrollDown();
 
 					});
 
 				});
+		// 스크롤 자동으로 내리도록 처리
+		function scrollDown() {
+			$('#chat_box').scrollTop($('#chat_box').prop('scrollHeight'));
+		}
 	</script>
 
 </body>
