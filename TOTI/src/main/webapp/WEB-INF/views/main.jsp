@@ -54,7 +54,6 @@
     <%@include file="/WEB-INF/views/frame/main/footer.jsp" %>
     <!-- end page container -->
     
-    
 	<script>
 		$(document).ready(function() {
 

@@ -30,16 +30,5 @@ public class RequestController {
 		return entity;	
 	}
 	
-	@CrossOrigin
-	@GetMapping("/request")
-	public ResponseEntity<RequestData> Request() {
-		
-		RequestData data = requestService.getRequestData();
-		
-		ResponseEntity<RequestData> entity = new ResponseEntity<RequestData>(data, HttpStatus.OK);
-		
-		return entity;
-		
-	}
 	
 }

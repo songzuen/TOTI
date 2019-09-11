@@ -10,9 +10,5 @@ public class TOTIMainController {
 	public String getMain() {
 		return "main";
 	}
-	
-	@RequestMapping("/sample")
-	public String getSamplePage() {
-		return "kang/sample";
-	}
+
 }
