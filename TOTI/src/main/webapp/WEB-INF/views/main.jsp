@@ -37,29 +37,7 @@
                 	    	<!-- end short description -->
                             <!-- countdown container -->
                         	<div id="countdown" class="countdown-container">
-                    	    	<!-- days left -->
-                            	<div class="dash days_dash">
-                			    	<div class="counter">
-            	    	    	        <div class="dash_title">보컬</div>
-            	    	    	        <div style="color: white"><a href="<c:url value="/sample" />">이미지넣기</a></div>
-							        </div>
-                		    	</div>
-                                <!-- end days left -->
-                                <!-- hours left -->
-                                <div class="dash hours_dash">
-            	    		        <div class="counter">
-            	    	    	        <div class="dash_title">댄스</div>
-            	    	    	        <div style="color: white">이미지넣기</div>
-							        </div>
-            	    	        </div>
-                                <!-- end hours left -->
-                                <!-- minutes left -->
-                                <div class="dash minutes_dash">
-            	    		        <div class="counter">
-            	        		        <div class="dash_title">악기</div>
-            	        		        <div style="color: white">이미지넣기</div>
-							        </div>
-                		        </div>
+                    	    	
             		        </div>
                         	<!-- end countdown container -->
                     	</div>                    	
@@ -74,6 +52,38 @@
         <!-- end section container -->
     </div>
     <%@include file="/WEB-INF/views/frame/main/footer.jsp" %>
-    <!-- end page container -->  
+    <!-- end page container -->
+    
+	<script>
+		$(document).ready(function() {
+
+			kategorieList();
+
+		});
+		
+		function kategorieList() {
+			
+			$.ajax({
+				url : 'http://localhost:8080/toti/kategorieList',
+				type : 'GET',
+				success : function(data) {
+					
+					var html = '';
+
+					for (var i = 0; i < data.length-1; i++) {
+						html += '<div class="dash days_dash">\n<div class="counter">\n';
+						html += '<div class="dash_title"><a style="color: white" href="<c:url value="/request?cate_idx='+data[i].cate_idx+'" />"> '+ data[i].cate_name +'</a></div>\n';
+						html += '</div>\n';
+						html += '</div>\n';
+					}
+
+					$('#countdown').html(html);
+					
+				}
+
+			});
+			
+		}
+	</script>	
 </body>
 </html>
