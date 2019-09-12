@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yal.toti.song.mentor.dao.EstimateDao">
+
+<!-- 견적서 등록 -->
+<insert id="insertEstimate" parameterType="com.yal.toti.song.mentor.domain.EstimateInfo">
+insert into toti_estimatee (request_idx, mento_idx, est_price, est_cont, est_file) 
+values (#{request_idx},#{mento_idx},#{est_price},#{est_cont},#{est_file});
+</insert>
+</mapper>
