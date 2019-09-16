@@ -1,6 +1,6 @@
 package com.yal.toti.kang.domain;
 
-public class KategoriData {
+public class CategoriData {
 
 	private int cate_idx;
 	private String cate_name;
