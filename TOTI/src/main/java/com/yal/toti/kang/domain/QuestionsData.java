@@ -4,6 +4,7 @@ public class QuestionsData {
 
 	private int quest_idx;	//질문번호
 	private String quest_name;	//질문
+	private String quest_type;	//질문유형
 	
 	public int getQuest_idx() {
 		return quest_idx;
@@ -17,5 +18,13 @@ public class QuestionsData {
 	public void setQuest_name(String quest_name) {
 		this.quest_name = quest_name;
 	}
+	public String getQuest_type() {
+		return quest_type;
+	}
+	public void setQuest_type(String quest_type) {
+		this.quest_type = quest_type;
+	}
+	
+	
 		
 }

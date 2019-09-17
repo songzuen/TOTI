@@ -4,8 +4,7 @@
 <!-- jquery -->
 <script type="text/javascript" src="<c:url value="js/jquery.js" />"></script>
 <!-- bootstrap -->
-<script type="text/javascript"
-	src="<c:url value="js/bootstrap.min.js" />"></script>
+<script type="text/javascript" src="<c:url value="js/bootstrap.min.js" />"></script>
 <!-- other plugins -->
 <script type="text/javascript" src="<c:url value="js/plugins.min.js" />"></script>
 <!-- main js -->

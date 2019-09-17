@@ -28,13 +28,17 @@
 						</div>
 					</div>
 					<form role="form" action="" method="post">
+					<div>
+						회원 Idx : <input type="text" placeholder="회원ID">
+					</div>
 					<div class="step well">
 							<div>
 								<input type="hidden" value="${ quest.quest_idx }" id="${ quest.quest_idx }_quest_idx">
 								 1. ${data.cate_name}분야에서 원하는 서비스는 ?
 								<div>
 									<c:forEach items="${data.service}" var="service" varStatus="stat">
-										<input type="checkbox" name="${ service.service_idx }_service" value="${ service.service_idx }"> ${ service.service_name }<br>
+										<input id="${ service.service_idx }_service" type="checkbox" value="${ service.service_idx }">
+										<label for="${ service.service_idx }_service">${ service.service_name }</label><br>
 									</c:forEach>
 								</div>
 							</div>
@@ -42,7 +46,8 @@
 					<c:forEach items="${data.quest}" var="quest" varStatus="stat">
 						<div class="step well">
 							<div>
-								<input type="hidden" value="${ quest.quest_idx }" id="${ quest.quest_idx }_quest_idx">
+								<input type="hidden" value="${ quest.quest_idx }" class="quest_idx">
+								<input type="hidden" value="${ quest.quest_type }" class="${ quest.quest_idx }_type">
 								${stat.count+1}. ${ quest.quest_name }
 								<div id="${ quest.quest_idx }_item_wrap">
 									
@@ -50,6 +55,7 @@
 							</div>
 						</div>
 					</c:forEach>
+					
 					</form>
 					<button class="action back btn btn-info">Back</button>
 					<input type="submit" class="action submit btn btn-success" value="보내기">
@@ -66,24 +72,18 @@
 	</div>
 	
 <script type="text/javascript">
-	
-	var quest_idx = 0;
 
 	$(document).ready(function() {
-	
+
+		$(".quest_idx").each(function(){
+			
+			itemList($(this).val());
+			
+		});
+		
+
 		var current = 1;
-		
-		var list = new Array();
-		
-		<c:forEach items="${data.quest}" var="item">
-			list.push("${item.quest_idx}");
-		</c:forEach>
-		
-		for (var i = 0; i < list.length; i++) {
-			quest_idx = $('#'+list[i]+'_quest_idx').val();
-			itemList(quest_idx);
-		}
-		
+
 		widget = $(".step");
 		btnnext = $(".next");
 		btnback = $(".back");
@@ -104,9 +104,7 @@
 			hideButtons(current);
 			
 			quest_idx = $('#'+current+'_quest_idx').val();
-			
-			itemList(quest_idx);
-			
+
 		})
 
 		// Back button click action
@@ -119,6 +117,8 @@
 			hideButtons(current);
 			
 		})
+		
+		
 	});
 
 	// Change progress bar action
@@ -152,16 +152,22 @@
 				success : function(data) {
 					
 					var html = '';
+					
 					for (var i = 0; i < data.length; i++) {
-						html += '<input type="radio" name="'+quest_idx+'_item" value="'+data[i].item_idx+'">'+ data[i].item_cont+'<br>';
+						html += '<input id="'+data[i].item_idx+'_item" type="'+$('.'+quest_idx+'_type').val()+'" value="'+data[i].item_idx+'"'
+						html += 'name="'+quest_idx+'_name" >'
+						html += '<label for="'+data[i].item_idx+'_item">'+ data[i].item_cont + '</label><br>';
 					}
 
 					$('#'+quest_idx+'_item_wrap').html(html);
+				
 				}
 
 			});
 			
 		}
+		
+		
 	</script>	
 	
 </body>
