@@ -16,32 +16,21 @@ import com.yal.toti.song.mentee.domain.SearchParam;
 import com.yal.toti.song.mentee.service.MentorListService;
 
 @RestController
-@RequestMapping("/mentee/mentorList")
-public class MentorListController {
+@RequestMapping("/mentee/mentorListByRCnt")
+public class MentorListByReviewCntController {
 
 	@Autowired
 	private MentorListService mentorListService;
 
 	// 고수 리스트
 	@GetMapping
-	public ResponseEntity<List<MentorMemberInfo>> getAllList(
-			@RequestParam(value = "stype", required = false) String stype,
-			@RequestParam(value = "keyword", required = false) String keyword
-			) {
+	public ResponseEntity<List<MentorMemberInfo>> getListByRCnt(
+			@RequestParam(value = "rCnt", required = false) boolean chk) {
 		List<MentorMemberInfo> list = null;
 
-		SearchParam search = null;
-	
-		if (stype != null && keyword != null && !stype.isEmpty() && !keyword.isEmpty()) {
-			search = new SearchParam();
-			search.setStype(stype);
-			search.setKeyword(keyword);
+			list = mentorListService.getListByRCnt();
 			
-			list = mentorListService.getListData(search);
-		}
-		else {
-			list = mentorListService.getAllList();
-		}
+		//System.out.println(list.toString());
 		ResponseEntity<List<MentorMemberInfo>> entity = new ResponseEntity<List<MentorMemberInfo>>(list, HttpStatus.OK);
 		return entity;
 	}

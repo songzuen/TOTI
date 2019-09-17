@@ -1,8 +1,9 @@
 package com.yal.toti;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class songController {
@@ -18,7 +19,7 @@ public class songController {
 	}
 	
 	@RequestMapping("/mentorpage/{mento_idx}")
-	public String getPage() {
-		return "song/mentee/mentorList";
+	public String getPage(@RequestParam("mento_idx") int mento_idx) {
+		return "song/mentee/mentorPage";
 	}
 }

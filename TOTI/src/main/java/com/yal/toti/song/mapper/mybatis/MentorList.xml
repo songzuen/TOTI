@@ -28,33 +28,67 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-ma
 
 	<!-- 멘토 전체 리스트 -->
 	<select id="selectAllList" resultMap="member">
+		select * from toti.toti_mentor t
+		join toti.toti_mentor_profile p on
+		t.mento_idx = p.mento_idx
+		join toti.toti_member b on b.m_idx =
+		t.mento_idx
+		join toti.toti_cate c on c.cate_idx = t.cate_idx
+		left outer
+		join (select * from toti.toti_review where review_idx > 0) r on
+		r.mento_idx = t.mento_idx
+		<where>review_idx in (select r1.review_idx from toti.toti_review r1
+			where review_idx =
+			(
+			select review_idx from toti.toti_review r2 where
+			r1.mento_idx =
+			r2.mento_idx order by r2.review_date desc limit 0,1
+			)
+			)
+			and ( p_shot is not null or p_pay is not null or p_edu is not null or
+			p_career is not null or p_long is not null )
+		</where>
+	</select>
 
+	<!-- 리뷰 개수 순 -->
+
+	<select id="selectListByRCnt" resultMap="member">
 		select * from toti.toti_mentor t
 		join toti.toti_mentor_profile p on t.mento_idx = p.mento_idx
 		join toti.toti_member b on b.m_idx = t.mento_idx
 		join toti.toti_cate c on c.cate_idx = t.cate_idx
-		left outer join (select * from toti.toti_review where review_idx > 0) r on
-		r.mento_idx = t.mento_idx
-
-		<where>review_idx in (select r1.review_idx from toti.toti_review r1
+		left outer join (select * from toti.toti_review where review_idx > 0 ) r
+		on r.mento_idx = t.mento_idx
+		<where>
+			review_idx in (select r1.review_idx from toti.toti_review r1
 			where review_idx =
 			(
-			select review_idx from toti.toti_review r2 where r1.mento_idx =
+			select review_idx from toti.toti_review r2 where
+			r1.mento_idx =
 			r2.mento_idx order by r2.review_date desc limit 0,1
 			)
-			) and p_shot is not null or p_pay is not null or p_edu is not null or
-			p_career is not null or p_long is not null
+			)order by (select count(*) from toti.toti_review group by r.mento_idx
+			order
+			by count(review_cont) desc)
+			and (p_shot is not null or p_pay is
+			not null or p_edu is not null or
+			p_career is not null or p_long is not
+			null)
 		</where>
 	</select>
 
 	<!-- 검색된 멘토 수 -->
 	<select id="selectTotalCount" resultType="int"
 		parameterType="com.yal.toti.song.mentee.domain.SearchParam">
-		select * from toti.toti_mentor t
-		join toti.toti_mentor_profile p on t.mento_idx = p.mento_idx
-		join toti.toti_member b on b.m_idx = t.mento_idx
+		select count(*) from toti.toti_mentor t
+		join toti.toti_mentor_profile p
+		on
+		t.mento_idx = p.mento_idx
+		join toti.toti_member b on b.m_idx =
+		t.mento_idx
 		join toti.toti_cate c on c.cate_idx = t.cate_idx
-		left outer join (select * from toti.toti_review where review_idx > 0) r on
+		left outer
+		join (select * from toti.toti_review where review_idx > 0) r on
 		r.mento_idx = t.mento_idx
 
 		<where>
@@ -76,14 +110,22 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-ma
 					cate_name like CONCAT('%',#{keyword},'%')
 				</if>
 			</if>
-			review_idx in (select r1.review_idx from toti.toti_review r1
-			where review_idx =
+			and
+
+			(review_idx in (select r1.review_idx from toti.toti_review r1
+			where
+			review_idx =
 			(
-			select review_idx from toti.toti_review r2 where r1.mento_idx =
+			select review_idx from toti.toti_review r2 where
+			r1.mento_idx =
 			r2.mento_idx order by r2.review_date desc limit 0,1
 			)
-			) and p_shot is not null or p_pay is not null or p_edu is not null or
-			p_career is not null or p_long is not null
+			)
+			)and (p_shot is
+			not null or p_pay is not null or p_edu is not null or
+			p_career is not
+			null or p_long is not null)
+
 		</where>
 	</select>
 
@@ -91,10 +133,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-ma
 	<select id="selectMentorList" parameterType="map"
 		resultMap="member">
 		select * from toti.toti_mentor t
-		join toti.toti_mentor_profile p on t.mento_idx = p.mento_idx
-		join toti.toti_member b on b.m_idx = t.mento_idx
+		join toti.toti_mentor_profile p on
+		t.mento_idx = p.mento_idx
+		join toti.toti_member b on b.m_idx =
+		t.mento_idx
 		join toti.toti_cate c on c.cate_idx = t.cate_idx
-		left outer join (select * from toti.toti_review where review_idx > 0) r on
+		left outer
+		join (select * from toti.toti_review where review_idx > 0) r on
 		r.mento_idx = t.mento_idx
 		<where>
 			<if test="search != null">
@@ -103,26 +148,35 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-ma
 				<if test="search.stype == 'both'">
 					<include refid="whereName" />
 					<include refid="whereCate" />
+					<!-- <include refid="whereName" /> <include refid="whereCate" /> -->
 				</if>
 
 				<!-- 고수 이름 -->
 				<if test="search.stype =='name'">
+					<!-- and m_name like CONCAT('%',#{search.keyword},'%') -->
 					<include refid="whereName" />
 				</if>
 
 				<!-- 분야 -->
 				<if test="search.stype == 'cate'">
+					<!-- and cate_name like CONCAT('%',#{search.keyword},'%') -->
 					<include refid="whereCate" />
 				</if>
 			</if>
-			review_idx in (select r1.review_idx from toti.toti_review r1
-			where review_idx =
+
+			and (review_idx in (select r1.review_idx from toti.toti_review r1
+			where
+			review_idx =
 			(
-			select review_idx from toti.toti_review r2 where r1.mento_idx =
+			select review_idx from toti.toti_review r2 where
+			r1.mento_idx =
 			r2.mento_idx order by r2.review_date desc limit 0,1
 			)
-			) and p_shot is not null or p_pay is not null or p_edu is not null or
-			p_career is not null or p_long is not null
+			)
+			)and ( p_shot is not null or p_pay is not null or p_edu is not null
+			or
+			p_career is not null or p_long is not null)
+
 		</where>
 	</select>
 
@@ -136,10 +190,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-ma
 	<select id="getMentorPage" resultMap="member"
 		resultType="com.yal.toti.song.mentee.domain.MentorMemberInfo">
 		select * from toti.toti_mentor t
-		join toti.toti_mentor_profile p on t.mento_idx = p.mento_idx
-		join toti.toti_member b on b.m_idx = t.mento_idx
+		join toti.toti_mentor_profile p on
+		t.mento_idx = p.mento_idx
+		join toti.toti_member b on b.m_idx =
+		t.mento_idx
 		join toti.toti_cate c on c.cate_idx = t.cate_idx
-		left outer join (select * from toti.toti_review where review_idx > 0) r on
+		left outer
+		join (select * from toti.toti_review where review_idx > 0) r on
 		r.mento_idx = t.mento_idx
 		<where> t.mento_idx = #{mento_idx} and (p_shot is not null or p_pay is
 			not null or p_edu is not null or

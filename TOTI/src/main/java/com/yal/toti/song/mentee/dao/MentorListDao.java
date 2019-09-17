@@ -16,4 +16,6 @@ public interface MentorListDao {
 
 	List<MentorMemberInfo> getMentorPage(int mento_idx);
 
+	List<MentorMemberInfo> selectListByRCnt();
+
 }

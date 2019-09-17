@@ -6,9 +6,9 @@
 <meta name="description" content="Creative Coming Soon Template">
 <meta name="author" content="Hitesh Jariwala">
 <meta name="keywords" content="">
-<!-- CSS IMPORT -->
-<link rel="stylesheet" href="css/style.css" type="text/css">
-<link rel="stylesheet" href="css/demo.css" type="text/css">
+<!-- CSS IMPORT -->  
+<link rel="stylesheet" href="<c:url value="/css/style.css"/>" type="text/css">
+<link rel="stylesheet" href="<c:url value="/css/demo.css"/>" type="text/css">
 <!-- support HTML5 elements and media queries for IE9 -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>

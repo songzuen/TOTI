@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.yal.toti.song.mentee.domain.MentorMemberInfo;
@@ -20,15 +21,15 @@ public class MentorPageController {
 	@Autowired
 	MentorPageService mentorPageService;
 	
+	//고수 페이지
 	@GetMapping
 	public 	ResponseEntity<List<MentorMemberInfo>> getMentorPage(
-			@PathVariable("mento_idx") int mento_idx
+			@RequestParam("mento_idx") int mento_idx
 			){
 		List<MentorMemberInfo> list= null;
 		list = mentorPageService.getPage(mento_idx);
-		
 		ResponseEntity<List<MentorMemberInfo>> entity = new ResponseEntity<List<MentorMemberInfo>>(list,HttpStatus.OK);
-		
+
 		return entity;
 	}
 }

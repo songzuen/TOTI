@@ -20,7 +20,6 @@ public class MentorPageService {
 	public List<MentorMemberInfo> getPage(int mento_idx) {
 		
 		dao = template.getMapper(MentorListDao.class);
-		
 		List<MentorMemberInfo> list = dao.getMentorPage(mento_idx);
 		System.out.println(list.toString());
 		return list;

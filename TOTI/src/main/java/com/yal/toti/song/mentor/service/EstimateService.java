@@ -21,7 +21,7 @@ public class EstimateService {
 
 	private EstimateDao dao;
 
-	public int insertEstimate(WriteEstimate write, HttpServletRequest request) {
+	public int insertEstimate(WriteEstimate write, HttpServletRequest request, int request_idx) {
 		dao = template.getMapper(EstimateDao.class);
 
 		String path = "/uploadfile/song/estimate";
@@ -32,6 +32,7 @@ public class EstimateService {
 		String newFileName = "";
 
 		EstimateInfo est = write.toEstimateInfo();
+		est.setRequest_idx(request_idx);
 
 		try {
 			if (write.getEst_file() != null) {

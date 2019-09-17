@@ -41,4 +41,13 @@ public class MentorListService {
 		mmi = dao.selectMentorList(params);
 		return mmi;
 	}
+
+	public List<MentorMemberInfo> getListByRCnt() {
+		
+		dao = template.getMapper(MentorListDao.class);
+		
+		List<MentorMemberInfo> list = dao.selectListByRCnt();
+		
+		return list;
+	}
 }

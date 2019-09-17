@@ -12,12 +12,13 @@
 	margin: 0;
 	padding: 0
 }
-body{
-min-width: 900px;
+
+body {
+	min-width: 900px;
 }
 
 .wrapper {
-	width: 80%;
+	width: 65%;
 	margin: 20px auto;
 }
 
@@ -34,25 +35,46 @@ min-width: 900px;
 	float: left;
 }
 
-.divbox{
-width: 60%;
-margin : 0 auto;
+table {
+	width: 100%;
 }
-#price {
-	border : 1px solid #ddd;
-	font-size : 9px;
+
+form {
+
+	margin-top: 15px;
+}
+
+table tr td:first-child {
+	width: 20%;
+	text-align: right;
+}
+table tr td:last-child {
+	width: 300px;
+	}
+
+table tr:last-child td {
+	text-align: center;
+	}
 	
+.divbox {
+	width: 90%;
+	margin: 0 auto;
+	border-radius: 5px 5px;
 }
 
-#est_price{
-height: 40px;
-line-height: 40px;
+#price {
+	border: 1px solid #ddd;
+	font-size: 9px;
 }
 
-#textarea{
-border:  1px solid #ddd;
+#est_price {
+	height: 40px;
+	line-height: 40px;
 }
 
+#textarea {
+	border: 1px solid #ddd;
+}
 </style>
 </head>
 <body>
@@ -69,27 +91,46 @@ border:  1px solid #ddd;
 				<div id="request">요청서</div>
 				<!-- 견적서 -->
 				<div id="estimate">
+				<h3 style="color: black; text-align: center">견적서</h3>
 					<form method="post" enctype="multipart/form-data"
 						onsubmit="return false">
-						
-						<h3 style="color : black; text-align: center">견적서</h3> <input type="hidden" name="request_idx"> <input
-							type="hidden" name="mento_idx">
-							
-							 금액<br> 
-							 <div id="price" class="divbox">
-							 <input type="text" name="est_price" id="est_price" style="width: 90%"><span id="won">원</span>
-							 </div>
-							 수업 상세 내용<br>
-							 <div id="textarea" class="divbox">
-						<textarea rows="7" cols="40" name="est_cont"></textarea>
-						</div>
-						
-						<div id="file" class="divbox">
-						파일 추가 
-						<input type="file" name="est_file"> 
-						<input type="submit" onclick="estimate()" value="전송">
-						</div>
-						</form>
+						<input type="text" name="request_idx"> <input type="text"
+							name="mento_idx">
+						<table>
+							<tr>
+								<td>금액</td>
+								<td>
+									<div id="price" class="divbox">
+										<input type="text" name="est_price" id="est_price"
+											style="width: 90%"><span id="won">원</span>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td>수업 상세 내용</td>
+								<td>
+									<div id="textarea" class="divbox">
+										<textarea rows="7" cols="40" name="est_cont"></textarea>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td>파일 추가</td>
+								<td>
+									<div id="file" class="divbox">
+
+										<input type="file" name="est_file">
+
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td colspan="2"><input type="submit" onclick="estimate()"
+									value="전송"></td>
+							</tr>
+						</table>
+
+					</form>
 				</div>
 				<!-- end home variation -->
 				<!-- end component -->
