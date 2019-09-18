@@ -31,25 +31,29 @@
 	<beans:bean id="jdbcTemplate"
 		class="org.springframework.jdbc.core.JdbcTemplate"
 		p:dataSource-ref="dataSource" />
+		
+	<!-- JDBC설정 끝-->
 	
-	<!-- my batis 설정  : datasoruce, mapper
-	서버 실행시 기준의 경로 -->
+	<!-- my batis 설정  : datasoruce, mapper 서버 실행시 기준의 경로 -->
 	<beans:bean id="sqlSessionFactory"
 				class="org.mybatis.spring.SqlSessionFactoryBean"
 				p:dataSource-ref="dataSource"
-				p:mapperLocations="/WEB-INF/mappers/*.xml"
-	/>
+				p:mapperLocations="/WEB-INF/mappers/*.xml" />
 	
 	<beans:bean id="sqlSession"
 				class="org.mybatis.spring.SqlSessionTemplate">
 		<beans:constructor-arg index="0" ref="sqlSessionFactory"/>
 	</beans:bean>
+	<!-- my batis 설정 끝 -->
 
+	<!-- 트랜잭션 설정 -->
 	<!-- PlatformTransactionManager 빈 설정 -->
 	<beans:bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager" p:dataSource-ref="dataSource" />
 	
 	<!-- @Transactional 애노테이션 활성화 설정 -->
 	<tx:annotation-driven transaction-manager="transactionManager" />
+	<!-- 트랜잭션 설정 끝 -->
+	
 	
 	<context:component-scan base-package="com.yal.toti.kang" />
 	
