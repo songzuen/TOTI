@@ -23,20 +23,34 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-ma
 		<result column="p_long" property="p_long" />
 		<result column="review_star" property="review_star" />
 		<result column="review_cont" property="review_cont" />
+		<result column="member_name" property="member_name" />
+		<result column="review_date" property="review_date" />
+		<result column="str" property="str" />
+		<result column="cont_cnt" property="cont_cnt" />
 	</resultMap>
 
 
 	<!-- 멘토 전체 리스트 -->
 	<select id="selectAllList" resultMap="member">
-		select * from toti.toti_mentor t
+		select t.mento_idx,m_photo, m_name, cate_name, tor_location, p_shot,
+		review_cont,
+		(select round(avg(review_star),1) from toti.toti_review sr
+		where
+		sr.mento_idx = t.mento_idx) str,(select count(review_cont) from
+		toti.toti_review src where src.mento_idx = t.mento_idx) cont_cnt from
+		toti.toti_mentor t
 		join toti.toti_mentor_profile p on
-		t.mento_idx = p.mento_idx
+		t.mento_idx =
+		p.mento_idx
 		join toti.toti_member b on b.m_idx =
 		t.mento_idx
-		join toti.toti_cate c on c.cate_idx = t.cate_idx
+		join
+		toti.toti_cate c on c.cate_idx = t.cate_idx
 		left outer
-		join (select * from toti.toti_review where review_idx > 0) r on
-		r.mento_idx = t.mento_idx
+		join (select *
+		from toti.toti_review where review_idx > 0) r on
+		r.mento_idx =
+		t.mento_idx
 		<where>review_idx in (select r1.review_idx from toti.toti_review r1
 			where review_idx =
 			(
@@ -51,9 +65,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-ma
 	</select>
 
 	<!-- 리뷰 개수 순 -->
-
 	<select id="selectListByRCnt" resultMap="member">
-		select * from toti.toti_mentor t
+		select t.mento_idx,m_photo, m_name, cate_name, tor_location, p_shot,
+		review_cont,(select round(avg(review_star),1) from toti.toti_review sr
+		where
+		sr.mento_idx = t.mento_idx) str,(select count(review_cont) from
+		toti.toti_review src where src.mento_idx = t.mento_idx) cont_cnt from
+		toti.toti_mentor t
 		join toti.toti_mentor_profile p on t.mento_idx = p.mento_idx
 		join toti.toti_member b on b.m_idx = t.mento_idx
 		join toti.toti_cate c on c.cate_idx = t.cate_idx
@@ -77,20 +95,64 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-ma
 		</where>
 	</select>
 
-	<!-- 검색된 멘토 수 -->
-	<select id="selectTotalCount" resultType="int"
-		parameterType="com.yal.toti.song.mentee.domain.SearchParam">
-		select count(*) from toti.toti_mentor t
-		join toti.toti_mentor_profile p
-		on
-		t.mento_idx = p.mento_idx
+	<!-- 별점 순 -->
+	<select id="selectListByStr" resultMap="member">
+		select t.mento_idx,m_photo, m_name, cate_name, tor_location, p_shot, review_cont,
+		(select round(avg(review_star),1) from toti.toti_review sr where
+		sr.mento_idx = t.mento_idx) str,(select count(review_cont) from
+		toti.toti_review src where src.mento_idx = t.mento_idx) cont_cnt from
+		toti.toti_mentor t
+		join toti.toti_mentor_profile p on
+		t.mento_idx =
+		p.mento_idx
 		join toti.toti_member b on b.m_idx =
 		t.mento_idx
-		join toti.toti_cate c on c.cate_idx = t.cate_idx
+		join
+		toti.toti_cate c on c.cate_idx = t.cate_idx
 		left outer
 		join (select * from toti.toti_review where review_idx > 0) r on
 		r.mento_idx = t.mento_idx
+		<where>
+			review_idx in (select r1.review_idx from toti.toti_review r1
+			where review_idx =
+			(
+			select review_idx from toti.toti_review r2 where
+			r1.mento_idx =
+			r2.mento_idx order by r2.review_date desc limit 0,1
+			)
+			)order by (select count(*) from toti.toti_review group by r.mento_idx
+			order
+			by str desc)
+			and (p_shot is not null or p_pay is
+			not null or p_edu
+			is not null or
+			p_career is not null or p_long is not
+			null)
+		</where>
+	</select>
 
+	<!-- 검색된 멘토 수 -->
+	<select id="selectTotalCount" resultType="int"
+		parameterType="com.yal.toti.song.mentee.domain.SearchParam">
+		select t.mento_idx,m_photo, m_name, cate_name, tor_location, p_shot,
+		review_cont,
+		(select round(avg(review_star),1) from toti.toti_review sr
+		where
+		sr.mento_idx = t.mento_idx) str,(select count(review_cont) from
+		toti.toti_review src where src.mento_idx = t.mento_idx) cont_cnt from
+		toti.toti_mentor t
+		join toti.toti_mentor_profile p on
+		t.mento_idx =
+		p.mento_idx
+		join toti.toti_member b on b.m_idx =
+		t.mento_idx
+		join
+		toti.toti_cate c on c.cate_idx = t.cate_idx
+		left outer
+		join (select *
+		from toti.toti_review where review_idx > 0) r on
+		r.mento_idx =
+		t.mento_idx
 		<where>
 			<if test="stype != null">
 
@@ -132,15 +194,25 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-ma
 	<!-- 고수 검색 결과 -->
 	<select id="selectMentorList" parameterType="map"
 		resultMap="member">
-		select * from toti.toti_mentor t
+		select t.mento_idx,m_photo, m_name, cate_name, tor_location, p_shot,
+		review_cont,
+		(select round(avg(review_star),1) from toti.toti_review sr
+		where
+		sr.mento_idx = t.mento_idx) str,(select count(review_cont) from
+		toti.toti_review src where src.mento_idx = t.mento_idx) cont_cnt from
+		toti.toti_mentor t
 		join toti.toti_mentor_profile p on
-		t.mento_idx = p.mento_idx
+		t.mento_idx =
+		p.mento_idx
 		join toti.toti_member b on b.m_idx =
 		t.mento_idx
-		join toti.toti_cate c on c.cate_idx = t.cate_idx
+		join
+		toti.toti_cate c on c.cate_idx = t.cate_idx
 		left outer
-		join (select * from toti.toti_review where review_idx > 0) r on
-		r.mento_idx = t.mento_idx
+		join (select *
+		from toti.toti_review where review_idx > 0) r on
+		r.mento_idx =
+		t.mento_idx
 		<where>
 			<if test="search != null">
 
@@ -187,17 +259,28 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-ma
 		or cate_name like CONCAT('%',#{search.keyword},'%')
 	</sql>
 
+
+	<!-- 고수 상세 페이지-->
 	<select id="getMentorPage" resultMap="member"
 		resultType="com.yal.toti.song.mentee.domain.MentorMemberInfo">
-		select * from toti.toti_mentor t
-		join toti.toti_mentor_profile p on
-		t.mento_idx = p.mento_idx
-		join toti.toti_member b on b.m_idx =
-		t.mento_idx
-		join toti.toti_cate c on c.cate_idx = t.cate_idx
-		left outer
-		join (select * from toti.toti_review where review_idx > 0) r on
-		r.mento_idx = t.mento_idx
+		select *,(select round(avg(review_star),1) from toti.toti_review sr
+		where sr.mento_idx = t.mento_idx) str,(select count(review_cont) from
+		toti.toti_review src where src.mento_idx = t.mento_idx) cont_cnt from
+		toti.toti_mentor t
+		join toti.toti_mentor_profile p on t.mento_idx =
+		p.mento_idx
+		join toti.toti_member b on b.m_idx = t.mento_idx
+		join
+		toti.toti_cate c on c.cate_idx = t.cate_idx
+		left outer join (select *
+		from (select
+		review_idx,mento_idx,review_star,review_cont,
+		review_date,m_id as
+		member_id,m_name as member_name from
+		toti.toti_review w join
+		toti.toti_member e on w.m_idx = e.m_idx ) na
+		where review_idx > 0) r
+		on r.mento_idx = t.mento_idx
 		<where> t.mento_idx = #{mento_idx} and (p_shot is not null or p_pay is
 			not null or p_edu is not null or
 			p_career is not null or p_long is not

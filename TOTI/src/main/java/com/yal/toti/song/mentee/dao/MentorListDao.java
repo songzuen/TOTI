@@ -18,4 +18,6 @@ public interface MentorListDao {
 
 	List<MentorMemberInfo> selectListByRCnt();
 
+	List<MentorMemberInfo> selectListByStr();
+
 }

@@ -50,4 +50,15 @@ public class MentorListService {
 		
 		return list;
 	}
+	
+	public List<MentorMemberInfo> getListByStr() {
+		
+		dao = template.getMapper(MentorListDao.class);
+		
+		List<MentorMemberInfo> list = dao.selectListByStr();
+		
+		return list;
+	}
+	
+
 }

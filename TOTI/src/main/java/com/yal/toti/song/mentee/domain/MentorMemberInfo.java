@@ -22,8 +22,13 @@ public class MentorMemberInfo {
 	private String p_career;	//멘토 경력
 	private String p_long;	//멘토 상세소개
 	
-	private int review_star;
-	private String review_cont;
+	private int review_star;	//리뷰 별점
+	private float str;	//리뷰 별점의 평균
+	private String review_cont;	//리뷰 내용
+	private String member_name;	//리뷰 작성자 명
+	private Date review_date;	//리뷰 작성 날짜
+	private int cont_cnt; 	//작성된 리뷰 수
+	
 	
 	public int getM_idx() {
 		return m_idx;
@@ -130,9 +135,35 @@ public class MentorMemberInfo {
 		this.review_cont = review_cont;
 	}
 	
+	public String getMember_name() {
+		return member_name;
+	}
+	public void setMember_name(String member_name) {
+		this.member_name = member_name;
+	}
+	
+	public float getStr() {
+		return str;
+	}
+	public void setStr(float str) {
+		this.str = str;
+	}
+	public Date getReview_date() {
+		return review_date;
+	}
+	public void setReview_date(Date review_date) {
+		this.review_date = review_date;
+	}
+	public int getCont_cnt() {
+		return cont_cnt;
+	}
+	public void setCont_cnt(int cont_cnt) {
+		this.cont_cnt = cont_cnt;
+	}
+	
 	public MentorMemberInfo(int m_idx, String m_id, String m_name, char m_gender, String m_photo, int mento_idx,
 			int tor_coin, String tor_location, int cate_idx, String cate_name, String p_shot, String p_pay,
-			String p_edu, String p_career, String p_long, int review_star, String review_cont) {
+			String p_edu, String p_career, String p_long, int review_star, String review_cont,String member_name,Date review_date, float str, int cont_cnt) {
 		super();
 		this.m_idx = m_idx;
 		this.m_id = m_id;
@@ -151,9 +182,13 @@ public class MentorMemberInfo {
 		this.p_long = p_long;
 		this.review_star = review_star;
 		this.review_cont = review_cont;
+		this.member_name = member_name;
+		this.review_date = review_date;
+		this.str = str;
+		this.cont_cnt = cont_cnt;
 	}
 	public MentorMemberInfo() {
-		// TODO Auto-generated constructor stub
+		Date review_Date = new Date();
 	}
 	
 	

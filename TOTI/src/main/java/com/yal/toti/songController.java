@@ -18,8 +18,8 @@ public class songController {
 		return "song/mentee/mentorList";
 	}
 	
-	@RequestMapping("/mentorpage/{mento_idx}")
-	public String getPage(@RequestParam("mento_idx") int mento_idx) {
-		return "song/mentee/mentorPage";
-	}
+//	@RequestMapping("/mentorpage/{mento_idx}")
+//	public String getPage(@PathVariable("mento_idx") int mento_idx) {
+//		return "song/mentee/mentorPage";
+//	}
 }

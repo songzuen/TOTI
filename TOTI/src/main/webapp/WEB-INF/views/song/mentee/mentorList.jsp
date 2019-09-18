@@ -82,8 +82,13 @@ padding-top: 10px;
 	border-radius: 50%;
 }
 
-#pageBtn{
+.btn{
 display:none;
+} 
+
+.labelfor{
+color: #aaa; 
+font-size:13px;
 }
 </style>
 </head>
@@ -98,17 +103,21 @@ display:none;
 			<!-- container -->
 			<div id="mainwrapper">
 				<div id="searchDiv">
-					<span> <input type="checkbox" id="rCnt" name="rCnt"
+					<span> 
+					<input type="checkbox" id="rCnt" name="rCnt"
 						value=true onclick="listByReviewCnt()"><label for="rCnt"
-						style="cursor: pointer"><strong id="label_rcnt" style="color: #aaa; font-size:13px;">리뷰순</strong></label>
-					</span> <span>
+						style="cursor: pointer"><strong class="labelfor" id="label_rcnt">리뷰순</strong></label>
+					| <input type="checkbox" id="str" name="str"
+						value=true onclick="listByStr()"><label for="str"
+						style="cursor: pointer"><strong class="labelfor" id="label_str">별점순</strong></label>
+					</span>  <span>
 						<form id="searchForm" method="post" onsubmit="return false">
 							<select name="stype" id="stype">
 								<option value="both">분야+멘토명</option>
 								<option value="cate">분야</option>
 								<option value="name">멘토명</option>
 							</select> <input type="text" name="keyword" id="keyword"> <input
-								type="submit" class="btn" id="searchBtn" value="검색"
+								type="submit" id="searchBtn" value="검색"
 								onclick="search()">
 					</span>
 				</div>
@@ -155,7 +164,7 @@ display:none;
 
 							html += '<tr>';
 							html += '<td rowspan="3" style=\"width: 120px; height: 120px;padding-left:15%; text-aline:center">';
-							html += '<label for="pageBtn" style="cursor:pointer"><span id="photo">';
+							html += '<label for="pageBtn'+data[i].mento_idx+'" style="cursor:pointer"><span id="photo">';
 							html += data[i].m_photo + '<br>';
 							html += '</span></label>';
 							html += '</td>';
@@ -172,14 +181,17 @@ display:none;
 							
 
 							html += '<td>';
-							html += '최근 평점 :' + data[i].review_star;
+							html += '평점 :' + data[i].str;
+							html += '(' + data[i].cont_cnt+'개)';
 							html += '<br>';
 							html += '<span class="comment">최신 리뷰 : ' + data[i].review_cont;
-							html += '</span></td>';
+							html += '</span><br>';
+								html += '<button id="pageBtn'+data[i].mento_idx+'" class="btn" onclick="selectMentor('
+									+ data[i].mento_idx + ')">고수 페이지로 이동</button>';
+									html+='</td>';
 							html += '</tr>';							
 							html += '</table>';
-							html += '<button id="pageBtn" class="btn" onclick="selectMentor('
-									+ data[i].mento_idx + ')">고수 페이지로 이동</button>';
+							
 							//html += '<a href="http://localhost:8080/toti/mentorpage/'+data[i].mento_idx+'">고수 페이지</a>';
 							html += '</div>';
 						}
@@ -210,7 +222,7 @@ display:none;
 
 					html += '<tr>';
 					html += '<td rowspan="3" style=\"width: 120px; height: 120px;padding-left:15%; text-aline:center">';
-					html += '<label for="pageBtn" style="cursor:pointer"><span id="photo">';
+					html += '<label for="pageBtn'+data[i].mento_idx+'" style="cursor:pointer"><span id="photo">';
 					html += data[i].m_photo + '<br>';
 					html += '</span></label>';
 					html += '</td>';
@@ -227,16 +239,18 @@ display:none;
 					
 
 					html += '<td>';
-					html += '최근 평점 :' + data[i].review_star;
+					html += '평점 :' + data[i].str;
+					html += '(' + data[i].cont_cnt+'개)';
 					html += '<br>';
 					html += '<span class="comment">최신 리뷰 : ' + data[i].review_cont;
-					html += '</span></td>';
+					html += '</span><br>';
+						html += '<button id="pageBtn'+data[i].mento_idx+'" class="btn" onclick="selectMentor('
+							+ data[i].mento_idx + ')">고수 페이지로 이동</button>';
+							html+='</td>';
 					html += '</tr>';							
 					html += '</table>';
-					html += '<button id="pageBtn" class="btn" onclick="selectMentor('
-							+ data[i].mento_idx
-							+ ')">고수 페이지로 이동</button>';
-					//html += '<a href="http://localhost:8080/toti/mentorpage?mento_idx='+data[i].mento_idx+'">고수 페이지</a>';
+					
+					//html += '<a href="http://localhost:8080/toti/mentorpage/'+data[i].mento_idx+'">고수 페이지</a>';
 					html += '</div>';
 				}
 				$('#mentorList').html(html);
@@ -246,15 +260,84 @@ display:none;
 	}
 
 	function listByReviewCnt() {
-		$('#rCnt').change(
-						function() {
+		$('#rCnt').change(function() {
+			if($('#str').is(':checked')){
+				
+				$("#str").prop("checked", false);
+				$('#label_str').css('color','#aaa');
+			};
+			$.ajax({
+				url : 'http://localhost:8080/toti/mentee/mentorListByRCnt',
+				type : 'GET',
+				success : function(data) {
+					if ($('#rCnt').is(':checked')) {
+						$('#label_rcnt').css('color','black');
+						var html = '';
+						for (var i = 0; i < data.length; i++) {
+							html += '<div id="mentor">';
+							html += '<input type="hidden" name="mento_idx" value="'+data[i].mento_idx+'">';
+							html += '<table>';
 
+							html += '<tr>';
+							html += '<td rowspan="3" style=\"width: 120px; height: 120px;padding-left:15%; text-aline:center">';
+							html += '<label for="pageBtn'+data[i].mento_idx+'" style="cursor:pointer"><span id="photo">';
+							html += data[i].m_photo + '<br>';
+							html += '</span></label>';
+							html += '</td>';
+							html += '</tr>';
+
+							html += '<tr colspan=3>';
+							html += '<td>';
+							html += data[i].m_name + '(' + data[i].cate_name
+									+ ')<br>';
+							html += '활동가능 지역 : ' + data[i].tor_location+'<br>';
+							html += '<span class="comment"><h5 style="color:black;letter-spacing:3px;">';
+							html += data[i].p_shot;
+							html += '<h5></span></td>';
+							
+
+							html += '<td>';
+							html += '평점 :' + data[i].str;
+							html += '(' + data[i].cont_cnt+'개)';
+							html += '<br>';
+							html += '<span class="comment">최신 리뷰 : ' + data[i].review_cont;
+							html += '</span><br>';
+								html += '<button id="pageBtn'+data[i].mento_idx+'" class="btn" onclick="selectMentor('
+									+ data[i].mento_idx + ')">고수 페이지로 이동</button>';
+									html+='</td>';
+							html += '</tr>';							
+							html += '</table>';
+							
+							//html += '<a href="http://localhost:8080/toti/mentorpage/'+data[i].mento_idx+'">고수 페이지</a>';
+							html += '</div>';
+						}
+						$('#mentorList').html(html);
+											}
+										}
+									});
+							return false;
+
+						});
+		}
+		function selectMentor(mento_idx) {
+			location.href = "http://localhost:8080/toti/mentorpage/" + mento_idx;
+		}
+		
+	function listByStr() {
+		$('#str').change(function() {
+							if($('#rCnt').is(':checked')){
+			
+								$("#rCnt").prop("checked", false);
+								$('#label_rcnt').css('color','#aaa');
+							};
+							
 							$.ajax({
-										url : 'http://localhost:8080/toti/mentee/mentorListByRCnt',
+										url : 'http://localhost:8080/toti/mentee/mentorListByStr',
 										type : 'GET',
 										success : function(data) {
-											if ($('#rCnt').is(':checked')) {
-												$('#label_rcnt').css('color','black');
+											if ($('#str').is(':checked')) {
+												
+												$('#label_str').css('color','black');
 												var html = '';
 												for (var i = 0; i < data.length; i++) {
 													html += '<div id="mentor">';
@@ -263,7 +346,7 @@ display:none;
 
 													html += '<tr>';
 													html += '<td rowspan="3" style=\"width: 120px; height: 120px;padding-left:15%; text-aline:center">';
-													html += '<label for="pageBtn" style="cursor:pointer"><span id="photo">';
+													html += '<label for="pageBtn'+data[i].mento_idx+'" style="cursor:pointer"><span id="photo">';
 													html += data[i].m_photo + '<br>';
 													html += '</span></label>';
 													html += '</td>';
@@ -274,22 +357,24 @@ display:none;
 													html += data[i].m_name + '(' + data[i].cate_name
 															+ ')<br>';
 													html += '활동가능 지역 : ' + data[i].tor_location+'<br>';
-													html += '<span class="comment"><h5 style="color:black;letter-spacing:1px;">';
+													html += '<span class="comment"><h5 style="color:black;letter-spacing:3px;">';
 													html += data[i].p_shot;
 													html += '<h5></span></td>';
 													
 
 													html += '<td>';
-													html += '최근 평점 :' + data[i].review_star;
+													html += '평점 :' + data[i].str;
+													html += '(' + data[i].cont_cnt+'개)';
 													html += '<br>';
 													html += '<span class="comment">최신 리뷰 : ' + data[i].review_cont;
-													html += '</span></td>';
+													html += '</span><br>';
+														html += '<button id="pageBtn'+data[i].mento_idx+'" class="btn" onclick="selectMentor('
+															+ data[i].mento_idx + ')">고수 페이지로 이동</button>';
+															html+='</td>';
 													html += '</tr>';							
 													html += '</table>';
-													html += '<button id="pageBtn" class="btn" onclick="selectMentor('
-															+ data[i].mento_idx
-															+ ')">고수 페이지로 이동</button>';
-													//html += '<a href="http://localhost:8080/toti/mentorpage?mento_idx='+data[i].mento_idx+'">고수 페이지</a>';
+													
+													//html += '<a href="http://localhost:8080/toti/mentorpage/'+data[i].mento_idx+'">고수 페이지</a>';
 													html += '</div>';
 												}
 												$('#mentorList').html(html);
@@ -303,35 +388,6 @@ display:none;
 		function selectMentor(mento_idx) {
 			location.href = "http://localhost:8080/toti/mentorpage/" + mento_idx;
 		}
-
-		/* function mentorPage(mento_idx) {
-			$('#pageBtn').click(function() {
-				$('#mainwrapper').css('display', 'none');
-				$.ajax({
-					url : 'http://localhost:8080/toti/mentorpage/' + mento_idx,
-					type : 'GET',
-					dataType : 'json',
-					success : function(data) {
-						var html = '';
-						for (var i = 0; i < data.length; i++) {
-							html += data[0].m_photo+'<br>'; 
-							html += data[0].mento_idx+'<br>';
-							html += data[0].m_name+'<br>';
-							html += data[0].cate_idx+'<br>';
-							html += data[0].cate_name+'<br>';
-							html += data[0].p_shot+'<br>';
-							break;
-						}
-						for (var i = 0; i < data.length; i++) {
-							html += data[i].review_cont+'<br>';
-						}
-						$('#mentorPage').html(html);
-					}
-				});
-				return false;
-			});
-		} */
-
 	
 </script>
 </html>
