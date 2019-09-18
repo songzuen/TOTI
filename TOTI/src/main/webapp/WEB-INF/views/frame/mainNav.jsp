@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!-- logo -->
-<img class="img-logo" alt="logo" src="img/logo_white.png" />
+<img class="img-logo" alt="logo" src="<c:url value="/img/logo_white.png" />" />
 <!-- end logo -->
 <!-- menu -->
 <div class="open">

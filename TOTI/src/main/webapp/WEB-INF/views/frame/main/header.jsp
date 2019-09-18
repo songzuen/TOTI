@@ -7,4 +7,4 @@
 <meta name="author" content="Hitesh Jariwala">
 <meta name="keywords" content="">
 <!-- CSS IMPORT -->
-<link rel="stylesheet" href="css/style.css" type="text/css">
+<link rel="stylesheet" href="<c:url value="/css/style.css"/>" type="text/css">
