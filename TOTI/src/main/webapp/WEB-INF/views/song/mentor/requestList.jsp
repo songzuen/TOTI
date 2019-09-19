@@ -138,9 +138,9 @@ font-size:13px;
 							
 							html += '<tr>';
 							html += '<td rowspan="2" style=\"width: 120px; height: 120px;padding-left:15%; text-aline:center">';
-							html += '<span id="photo">';
-							html += data[i].m_photo + '<br>';
-							html += '</span>';
+							html += '<span id="photo"><label for="estimateBtn('+data[i].request_idx+')" style="pointer:cursor;">';
+							html += data[i].m_photo;
+							html += '</label></span>';
 							html += '</td>';
 							html += '</tr>';
 
@@ -158,7 +158,9 @@ font-size:13px;
 							
 							html += '</table>';
 							html += '<td rowspan="2" style=\"width: 120px; height: 120px;padding-left:15%; text-aline:center">';
-							html += '<button id="delBtn" onclick="del("'+data[i].request_idx+'")" style="color:black;" value="삭제">';
+							html += '<button id="delBtn" onclick="del("'+data[i].request_idx+'")">삭제</button>';
+							html += '<button id= "estimateBtn('+data[i].request_idx+')" class="btn" onclick="selectRequest('
+							+ data[i].request_idx + ')">이동</button>';
 							html += '</td>';
 							//html += '<a href="http://localhost:8080/toti/mentorpage/'+data[i].mento_idx+'">고수 페이지</a>';
 							html += '</div>';
@@ -181,5 +183,9 @@ font-size:13px;
 		});
 	} */
 	
+	function selectRequest(request_idx) {
+		location.href = "http://localhost:8080/toti/estimate/" + request_idx;
+	}
+
 </script>
 </html>

@@ -15,7 +15,7 @@ import com.yal.toti.song.mentor.domain.WriteEstimate;
 import com.yal.toti.song.mentor.service.EstimateService;
 
 @RestController
-@RequestMapping("/estimate/{request_idx}")
+@RequestMapping("/estimateform/{request_idx}")
 public class EstimateController {
 	
 	@Autowired

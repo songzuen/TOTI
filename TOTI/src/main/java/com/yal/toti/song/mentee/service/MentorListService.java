@@ -20,6 +20,7 @@ public class MentorListService {
 	
 	private MentorListDao dao;
 
+	//전체 리스트
 	public List<MentorMemberInfo> getAllList() {
 		dao = template.getMapper(MentorListDao.class);
 		
@@ -28,20 +29,22 @@ public class MentorListService {
 		return list;
 	}
 
+	//검색
 	public List<MentorMemberInfo> getListData(SearchParam search) {
 		dao = template.getMapper(MentorListDao.class);
 		
 		int totalCnt = dao.selectTotalCount(search);
 		
-		List<MentorMemberInfo> mmi = null;
+		List<MentorMemberInfo> list = null;
 		
 		Map<String, Object> params =new HashMap<String, Object>();
 		params.put("search", search);
 		
-		mmi = dao.selectMentorList(params);
-		return mmi;
+		list = dao.selectMentorList(params);
+		return list;
 	}
 
+	//리뷰수 순
 	public List<MentorMemberInfo> getListByRCnt() {
 		
 		dao = template.getMapper(MentorListDao.class);
@@ -51,6 +54,7 @@ public class MentorListService {
 		return list;
 	}
 	
+	//별점 순
 	public List<MentorMemberInfo> getListByStr() {
 		
 		dao = template.getMapper(MentorListDao.class);

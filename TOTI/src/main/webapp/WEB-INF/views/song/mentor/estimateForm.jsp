@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+	<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -22,6 +23,9 @@ body {
 	margin: 20px auto;
 }
 
+h1,h2,h3,h4,h5,h6{
+color:black;
+}
 #request {
 	width: 45%;
 	border: 1px solid #ddd;
@@ -88,13 +92,33 @@ table tr:last-child td {
 			<!-- container -->
 			<div>
 				<!-- 요청서 -->
-				<div id="request">요청서</div>
+				<div id="request">
+				<h3>요청서</h3>
+				<hr>
+				<c:forEach items="${viewData}" begin="0" end="0" var="requestInfo"
+						varStatus="stat">
+						${requestInfo.m_name}<br>
+						${requestInfo.m_photo}<br>
+						${requestInfo.cate_name }<br>
+						${requestInfo.service_name}<br>
+						</c:forEach>
+						<c:forEach items="${viewData}" var="qna" varStatus="stat">
+						${qna.quest_name }<br>
+						${qna.answer_cont }
+						</c:forEach>
+						
+				
+				</div>
 				<!-- 견적서 -->
 				<div id="estimate">
 				<h3 style="color: black; text-align: center">견적서</h3>
 					<form method="post" enctype="multipart/form-data"
 						onsubmit="return false">
-						<input type="text" name="request_idx" id="request_idx" value="1"> <input type="text"
+						<c:forEach items="${viewData}" begin="0" end="0" var="requestInfo"
+						varStatus="stat">
+						<input type="hidden" id="request_idx" value="${requestInfo.request_idx }">
+						</c:forEach> 
+						<input type="text"
 							name="mento_idx" id="mento_idx" value="3">
 						<table>
 							<tr>
@@ -144,34 +168,8 @@ table tr:last-child td {
 </body>
 <script>
 	$(document).ready(function() {
-
+		
 	});
-	/* 요청서 */
-	function request(){
-		var request_idx = $('#request_idx').val();
-		$.ajax({
-			url : 'http://localhost:8080/toti/requestInfo/'+request_idx,
-			type : 'GET',
-			success : function(data){
-				var html = '';
-				for(int i = 0; i<data.length; i++){
-					html += data[0].m_name+'<br>';
-					html += data[0].m_photo+'<br>';
-					html += data[0].cate_name+'<br>';
-					html += data[0].service_name+'<br>';
-					break;
-					}
-				for(int i = 0; i<data.length; i++){
-					html += data[i].quest_name+'<br>';
-					html += data[i].answer_cont+'<br>';
-					
-				}
-				$('#request').html(html);
-			}
-			
-		});
-	}
-	
 	
 	/* 견적서 */
 	function estimate() {
@@ -189,7 +187,7 @@ table tr:last-child td {
 		var request_idx = $('#request_idx').val();
 
 		$.ajax({
-			url : 'http://localhost:8080/toti/estimate/'+request_idx,
+			url : 'http://localhost:8080/toti/estimateform/'+request_idx,
 			type : 'POST',
 			processData : false,
 			contentType : false,

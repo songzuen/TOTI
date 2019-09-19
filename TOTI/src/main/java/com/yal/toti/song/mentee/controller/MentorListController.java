@@ -16,7 +16,6 @@ import com.yal.toti.song.mentee.domain.SearchParam;
 import com.yal.toti.song.mentee.service.MentorListService;
 
 @RestController
-@RequestMapping("/mentee/mentorList")
 public class MentorListController {
 
 	@Autowired
@@ -24,6 +23,7 @@ public class MentorListController {
 
 	// 고수 리스트
 	@GetMapping
+	@RequestMapping("/mentee/mentorList")
 	public ResponseEntity<List<MentorMemberInfo>> getAllList(
 			@RequestParam(value = "stype", required = false) String stype,
 			@RequestParam(value = "keyword", required = false) String keyword

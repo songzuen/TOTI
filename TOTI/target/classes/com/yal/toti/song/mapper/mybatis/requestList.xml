@@ -48,8 +48,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-ma
 	</select>
 
 	<!-- 요청서 상세페이지 -->
-	<select id="getRequestInfo" resultMap="requestList"
-		resultType="">
+	<select id="getRequestInfo" resultMap="requestList">
 		SELECT r.request_idx, quest_name, answer_cont, m_name,
 		m_photo,cate_name,
 		service_name FROM toti.toti_answer a

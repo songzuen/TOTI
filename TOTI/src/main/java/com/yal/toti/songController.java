@@ -8,10 +8,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class songController {
 
-	@RequestMapping("/estimate")
-	public String getForm() {
-	return "song/mentor/estimateForm";
-	}
+//	@RequestMapping("/estimate/{request_idx}")
+//	public String getForm(@PathVariable("request_idx") int request_idx) {
+//	return "song/mentor/estimateForm";
+//	}
 	
 	@RequestMapping("/mentorList")
 	public String getMentorList() {

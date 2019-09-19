@@ -119,8 +119,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-ma
 			)
 			) rev
 			on rev.midx=t.mento_idx
-			order by cont_cnt desc
 		</where>
+		order by cont_cnt desc
 	</select>
 
 	<!-- 별점 순 -->
@@ -157,9 +157,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-ma
 			)
 			) rev
 			on rev.midx=t.mento_idx
-			order
-			by str desc
+			
 		</where>
+		order by str desc
 	</select>
 
 	<!-- 검색된 멘토 수 -->
