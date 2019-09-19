@@ -78,7 +78,7 @@ table tr:last-child td {
 </style>
 </head>
 <body>
-	<%@include file="/WEB-INF/views/frame/loading.jsp"%>
+	<%-- <%@include file="/WEB-INF/views/frame/loading.jsp"%> --%>
 	<!-- page container -->
 	<div>
 		<%@include file="/WEB-INF/views/frame/contents/contentsHeader.jsp"%>
@@ -94,8 +94,8 @@ table tr:last-child td {
 				<h3 style="color: black; text-align: center">견적서</h3>
 					<form method="post" enctype="multipart/form-data"
 						onsubmit="return false">
-						<input type="text" name="request_idx"> <input type="text"
-							name="mento_idx">
+						<input type="text" name="request_idx" id="request_idx" value="1"> <input type="text"
+							name="mento_idx" id="mento_idx" value="3">
 						<table>
 							<tr>
 								<td>금액</td>
@@ -110,7 +110,7 @@ table tr:last-child td {
 								<td>수업 상세 내용</td>
 								<td>
 									<div id="textarea" class="divbox">
-										<textarea rows="7" cols="40" name="est_cont"></textarea>
+										<textarea rows="7" cols="40" name="est_cont" id="est_cont"></textarea>
 									</div>
 								</td>
 							</tr>
@@ -119,7 +119,7 @@ table tr:last-child td {
 								<td>
 									<div id="file" class="divbox">
 
-										<input type="file" name="est_file">
+										<input type="file" name="est_file" id="est_file">
 
 									</div>
 								</td>
@@ -146,19 +146,50 @@ table tr:last-child td {
 	$(document).ready(function() {
 
 	});
-
+	/* 요청서 */
+	function request(){
+		var request_idx = $('#request_idx').val();
+		$.ajax({
+			url : 'http://localhost:8080/toti/requestInfo/'+request_idx,
+			type : 'GET',
+			success : function(data){
+				var html = '';
+				for(int i = 0; i<data.length; i++){
+					html += data[0].m_name+'<br>';
+					html += data[0].m_photo+'<br>';
+					html += data[0].cate_name+'<br>';
+					html += data[0].service_name+'<br>';
+					break;
+					}
+				for(int i = 0; i<data.length; i++){
+					html += data[i].quest_name+'<br>';
+					html += data[i].answer_cont+'<br>';
+					
+				}
+				$('#request').html(html);
+			}
+			
+		});
+	}
+	
+	
+	/* 견적서 */
 	function estimate() {
 		var formData = new FormData();
 		var file = $('#est_file')[0].files[0];
+		
 		formData.append('est_price', $('#est_price').val());
 		formData.append('est_cont', $('#est_cont').val());
+		formData.append('mento_idx', $('#mento_idx').val());
 
 		if (file != null) {
 			formData.append('est_file', file);
-		}
+		} 
+		
+		var request_idx = $('#request_idx').val();
 
 		$.ajax({
-			url : 'http://localhost:8080/toti/estimate',
+			url : 'http://localhost:8080/toti/estimate/'+request_idx,
 			type : 'POST',
 			processData : false,
 			contentType : false,

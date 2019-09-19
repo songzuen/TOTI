@@ -14,8 +14,13 @@ public class songController {
 	}
 	
 	@RequestMapping("/mentorList")
-	public String getList() {
+	public String getMentorList() {
 		return "song/mentee/mentorList";
+	}
+	
+	@RequestMapping("/requestList")
+	public String getRequestList() {
+		return "song/mentor/requestList";
 	}
 	
 //	@RequestMapping("/mentorpage/{mento_idx}")

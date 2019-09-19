@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.yal.toti.song.mentee.dao.MentorListDao;
 import com.yal.toti.song.mentee.domain.MentorMemberInfo;
+import com.yal.toti.song.mentee.domain.MentorServiceList;
 
 @Service("mentorPageService")
 public class MentorPageService {
@@ -23,6 +24,14 @@ public class MentorPageService {
 		List<MentorMemberInfo> list = dao.getMentorPage(mento_idx);
 		System.out.println(list.toString());
 		return list;
+	}
+	
+	public List<MentorServiceList> getService(int mento_idx){
+		
+		dao= template.getMapper(MentorListDao.class);
+		List<MentorServiceList> list_service = dao.getServiceList(mento_idx);
+		
+		return list_service;
 	}
 	
 }

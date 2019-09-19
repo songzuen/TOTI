@@ -38,6 +38,7 @@ public class MentorListController {
 			search.setKeyword(keyword);
 			
 			list = mentorListService.getListData(search);
+			
 		}
 		else {
 			list = mentorListService.getAllList();

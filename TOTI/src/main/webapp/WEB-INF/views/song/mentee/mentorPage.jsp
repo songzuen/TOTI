@@ -34,7 +34,7 @@ h2, h3, h4, h5, h6 {
 }
 
 table {
-width: 100%;
+	width: 100%;
 }
 </style>
 </head>
@@ -74,14 +74,28 @@ width: 100%;
 					${mentorInfo.tor_location}<br>
 					${mentorInfo.p_edu}<br>
 					${mentorInfo.p_career}<br>
-					제공 서비스 <br>
+					분야 <br>
 					${mentorInfo.cate_name}<br> 
+					</c:forEach>
+					
+					제공 서비스<br>
+					<c:forEach items="${viewData_service}" var="mentorService" varStatus="stat">
+						${mentorService.service_name}
+					</c:forEach>
+					<br>
+					<c:forEach items="${viewData}" begin="0" end="0" var="mentorInfo"
+						varStatus="stat">
 					서비스 상세 설명 <br>
 					${mentorInfo.p_long}<br>
 					</c:forEach>
-
+					
 					<div id="reviewBox">
 						<h4>리뷰</h4>
+
+						<script>
+							var list = new Array();
+						</script>
+
 						<c:forEach items="${viewData}" begin="0" end="0" var="mentorInfo">
 							<h6>${mentorInfo.cont_cnt}개</h6>
 							<br>
@@ -90,7 +104,13 @@ width: 100%;
 
 							<table>
 								<tr>
-									<td><h6>${mentorInfo.member_name}</h6></td>
+									<td><h6 id="review_name">
+											<!-- <script>
+												list.push('${mentorInfo.member_name}');
+											</script> -->
+											${mentorInfo.member_name}
+
+										</h6></td>
 									<td>${mentorInfo.review_star}</td>
 									<fmt:formatDate var="reviewDate" pattern="yyyy-MM-dd"
 										value="${mentorInfo.review_date}" />
@@ -117,4 +137,18 @@ width: 100%;
 		<%@include file="/WEB-INF/views/frame/contents/footer.jsp"%>
 	</div>
 </body>
+
+<script>
+	$(document).ready(function() {
+
+		/* 	for (var i = 0; i < list.length; i++) {
+				var name = list[i];
+				name = name.replace(/(?<=.{1})./gi, "*");
+				var html = '';
+				html += name;
+				$('#review_name').html(html);
+			} */
+
+	});
+</script>
 </html>

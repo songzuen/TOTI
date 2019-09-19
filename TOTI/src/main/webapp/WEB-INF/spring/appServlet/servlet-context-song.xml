@@ -32,9 +32,9 @@
 		id="dataSource"
 		class="org.apache.commons.dbcp2.BasicDataSource"
 		p:driverClassName="com.mysql.jdbc.Driver"
-		p:url="jdbc:mysql://mysql-mm.ccnb5gldec9g.ap-northeast-2.rds.amazonaws.com:3306/toti?useSSL=false&amp;useUnicode=true&amp;characterEncoding=utf-8&amp;serverTimezone=UTC"
-		p:username="admin" 
-		p:password="Thdwndms1104" />
+		p:url="jdbc:mysql://mysql-mm.chvivg7pudki.ap-northeast-2.rds.amazonaws.com:3306/toti?useSSL=false&amp;useUnicode=true&amp;characterEncoding=utf-8&amp;serverTimezone=UTC"
+		p:username="bit" 
+		p:password="bit" />
 		
 	<beans:bean
 		id="jdbcTemplate"

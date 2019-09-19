@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.yal.toti.song.mentee.domain.MentorMemberInfo;
+import com.yal.toti.song.mentee.domain.MentorServiceList;
 import com.yal.toti.song.mentee.service.MentorPageService;
 
 @Controller
@@ -39,8 +40,10 @@ public class MentorPageController {
 	@RequestMapping(value = "/mentorpage/{mento_idx}", method = RequestMethod.GET)
 	public String getMentorPage(Model model, @PathVariable("mento_idx") int mento_idx) {
 		List<MentorMemberInfo> list = mentorPageService.getPage(mento_idx);
+		List<MentorServiceList> list_service = mentorPageService.getService(mento_idx);
 		System.out.println(mento_idx);
 		model.addAttribute("viewData", list);
+		model.addAttribute("viewData_service", list_service);
 		return "song/mentee/mentorPage";
 	}
 }

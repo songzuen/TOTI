@@ -181,9 +181,15 @@ font-size:13px;
 							
 
 							html += '<td>';
-							html += '평점 :' + data[i].str;
-							html += '(' + data[i].cont_cnt+'개)';
+							if(data[i].str != 0){
+								html += '평점 :' + data[i].str;
+								html += '(' + data[i].cont_cnt+'개)';
+							} else{
+								html += '';
+								html+= '';
+							}
 							html += '<br>';
+							
 							html += '<span class="comment">최신 리뷰 : ' + data[i].review_cont;
 							html += '</span><br>';
 								html += '<button id="pageBtn'+data[i].mento_idx+'" class="btn" onclick="selectMentor('
@@ -239,9 +245,15 @@ font-size:13px;
 					
 
 					html += '<td>';
-					html += '평점 :' + data[i].str;
-					html += '(' + data[i].cont_cnt+'개)';
+					if(data[i].str != 0){
+						html += '평점 :' + data[i].str;
+						html += '(' + data[i].cont_cnt+'개)';
+					} else{
+						html += '';
+						html+= '';
+					}
 					html += '<br>';
+					
 					html += '<span class="comment">최신 리뷰 : ' + data[i].review_cont;
 					html += '</span><br>';
 						html += '<button id="pageBtn'+data[i].mento_idx+'" class="btn" onclick="selectMentor('
@@ -297,9 +309,15 @@ font-size:13px;
 							
 
 							html += '<td>';
-							html += '평점 :' + data[i].str;
-							html += '(' + data[i].cont_cnt+'개)';
+							if(data[i].str != 0){
+								html += '평점 :' + data[i].str;
+								html += '(' + data[i].cont_cnt+'개)';
+							} else{
+								html += '';
+								html+= '';
+							}
 							html += '<br>';
+							
 							html += '<span class="comment">최신 리뷰 : ' + data[i].review_cont;
 							html += '</span><br>';
 								html += '<button id="pageBtn'+data[i].mento_idx+'" class="btn" onclick="selectMentor('
@@ -319,9 +337,7 @@ font-size:13px;
 
 						});
 		}
-		function selectMentor(mento_idx) {
-			location.href = "http://localhost:8080/toti/mentorpage/" + mento_idx;
-		}
+		
 		
 	function listByStr() {
 		$('#str').change(function() {
@@ -363,9 +379,15 @@ font-size:13px;
 													
 
 													html += '<td>';
-													html += '평점 :' + data[i].str;
-													html += '(' + data[i].cont_cnt+'개)';
+													if(data[i].str != 0){
+														html += '평점 :' + data[i].str;
+														html += '(' + data[i].cont_cnt+'개)';
+													} else{
+														html += '';
+														html+= '';
+													}
 													html += '<br>';
+													
 													html += '<span class="comment">최신 리뷰 : ' + data[i].review_cont;
 													html += '</span><br>';
 														html += '<button id="pageBtn'+data[i].mento_idx+'" class="btn" onclick="selectMentor('
