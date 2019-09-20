@@ -8,4 +8,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-ma
 insert into toti_estimatee (request_idx, mento_idx, est_price, est_cont, est_file) 
 values (#{request_idx},#{mento_idx},#{est_price},#{est_cont},#{est_file});
 </insert>
+
+<update id="updateCredit" parameterType="com.yal.toti.song.mentor.domain.EstimateInfo">
+update toti.toti_mentor set tor_coin = (tor_coin - 1) where mento_idx =#{mento_idx}
+</update>
 </mapper>

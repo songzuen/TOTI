@@ -57,4 +57,13 @@ public class EstimateService {
 		return rCnt;
 	}
 
+	public int updateCredit(int mento_idx) {
+		dao = template.getMapper(EstimateDao.class);
+		
+		int rCnt = 0;
+		rCnt = dao.updateCredit(mento_idx);
+		
+		return rCnt;
+	}
+
 }

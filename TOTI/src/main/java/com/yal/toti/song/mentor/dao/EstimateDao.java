@@ -7,4 +7,6 @@ public interface EstimateDao {
 	//견적서 등록
 	public int insertEstimate(EstimateInfo est);
 
+	public int updateCredit(int mento_idx);
+
 }

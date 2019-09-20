@@ -13,64 +13,24 @@
 	padding: 0
 }
 
-body {
-	min-width: 700px;
+body{
+overflow: auto
 }
 
 .wrapper {
-	width: 70%;
+	width: 60%;
 	margin: 20px auto;
 }
-
-#searchDiv {
-	height: 10px;
+#requestList{
+width: 100%
 }
-
-#searchDiv span:first-child {
-	margin : 20px 40px;
-	float: left;
-}
-
-#searchDiv span:last-child{
-	float: right;
-	width: 25%;
-}
-
-#stype {
-	border: 0px;
-}
-
-#keyword {
-	padding-left: 5px;
-	width: 50%;
-}
-
-input[type=checkbox] {
-	display: none; 
-}
-
-#mentor {
-	margin: 5px auto;
-	height: 70%;
-	
-}
-
-table {
-	width: 70%;
-	height: 80%;
-	float: left;
-	text-align: left;
-	margin: 10px 0;
-}
-
-table td:nth-child(1) {
-	width: 30%;
-}
-table td:nth-child(2) {
-	width: 40%;
-}
-table td:nth-child(3) {
-	width: 30%;
+#list{
+margin : 10px 20px;
+padding : 5px;
+float: left;
+text-align: center;
+width: 200px;
+height: 200px;
 }
 .comment{
 padding-top: 10px;
@@ -85,10 +45,6 @@ padding-top: 10px;
 display:none;
 } 
 
-.labelfor{
-color: #aaa; 
-font-size:13px;
-}
 </style>
 </head>
 <body>
@@ -132,38 +88,22 @@ font-size:13px;
 							var year = date.getFullYear();
 							var month = date.getMonth();
 							var day = date.getDate();
-							
-							html += '<div id="list">';
-							html += '<table>';
-							
-							html += '<tr>';
-							html += '<td rowspan="2" style=\"width: 120px; height: 120px;padding-left:15%; text-aline:center">';
-							html += '<span id="photo"><label for="estimateBtn('+data[i].request_idx+')" style="pointer:cursor;">';
+							html += '<label for="estimateBtn('+data[i].request_idx+')"><div id="list">';
+							html += '<span id="photo">';
 							html += data[i].m_photo;
-							html += '</label></span>';
-							html += '</td>';
-							html += '</tr>';
-
-							html += '<tr colspan=2>';
-							html += '<td>';
-							html += data[i].m_name + '(' +data[i].cate_name+'-'+ data[i].service_name
+							html += '</span><br>';	
+							
+							html += data[i].m_name+'(' +data[i].cate_name+'-'+ data[i].service_name
 									+ ')<br>';
 							html += '요청 사항: ';
 							html += '<span class="comment">';
 							html += data[i].answer_cont;
-							html += '</span><br>'+year+'-'+month+'-'+day+'</td>';
+							html += '</span><br>'+year+'-'+month+'-'+day;
 							
-							html += '</tr>';
-							
-							
-							html += '</table>';
-							html += '<td rowspan="2" style=\"width: 120px; height: 120px;padding-left:15%; text-aline:center">';
-							html += '<button id="delBtn" onclick="del("'+data[i].request_idx+'")">삭제</button>';
 							html += '<button id= "estimateBtn('+data[i].request_idx+')" class="btn" onclick="selectRequest('
 							+ data[i].request_idx + ')">이동</button>';
-							html += '</td>';
 							//html += '<a href="http://localhost:8080/toti/mentorpage/'+data[i].mento_idx+'">고수 페이지</a>';
-							html += '</div>';
+							html += '</div></label>';
 						}
 						$('#requestList').html(html);
 					}

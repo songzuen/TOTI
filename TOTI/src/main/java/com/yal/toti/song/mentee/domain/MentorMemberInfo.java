@@ -29,6 +29,7 @@ public class MentorMemberInfo {
 	private Date review_date;	//리뷰 작성 날짜
 	private int cont_cnt; 	//작성된 리뷰 수
 	
+	private String tor_sname;	//고수가 제공하는 서비스들
 	
 	public int getM_idx() {
 		return m_idx;
@@ -161,9 +162,15 @@ public class MentorMemberInfo {
 		this.cont_cnt = cont_cnt;
 	}
 	
+	public String getTor_sname() {
+		return tor_sname;
+	}
+	public void setTor_sname(String tor_sname) {
+		this.tor_sname = tor_sname;
+	}
 	public MentorMemberInfo(int m_idx, String m_id, String m_name, char m_gender, String m_photo, int mento_idx,
 			int tor_coin, String tor_location, int cate_idx, String cate_name, String p_shot, String p_pay,
-			String p_edu, String p_career, String p_long, int review_star, String review_cont,String member_name,Date review_date, float str, int cont_cnt) {
+			String p_edu, String p_career, String p_long, int review_star, String review_cont,String member_name,Date review_date, float str, int cont_cnt,String tor_sname) {
 		super();
 		this.m_idx = m_idx;
 		this.m_id = m_id;
@@ -186,6 +193,7 @@ public class MentorMemberInfo {
 		this.review_date = review_date;
 		this.str = str;
 		this.cont_cnt = cont_cnt;
+		this.tor_sname = tor_sname;
 	}
 	public MentorMemberInfo() {
 		Date review_Date = new Date();

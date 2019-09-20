@@ -37,7 +37,8 @@ public class RequestInfoController {
 	public String getRequestInfo(Model model, @PathVariable("request_idx") int request_idx) {
 		List<RequestList> list = requestInfoService.getRequestInfo(request_idx);
 		model.addAttribute("viewData", list);
-		return "/song/mentor/estimateForm";
+		//return "/song/mentor/estimateForm";
+		return "/song/mentor/requestModal";
 	}
 	
 }

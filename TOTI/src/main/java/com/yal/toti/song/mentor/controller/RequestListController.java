@@ -40,11 +40,11 @@ public class RequestListController {
 		return entity;
 	}
 
-	@DeleteMapping("/{request_idx}")
-	public ResponseEntity<String> deleteRequest(@PathVariable("request_idx") int request_idx) {
-		int cnt = requestDeleteService.deleteRequest(request_idx);
-		return new ResponseEntity<String>(cnt > 0 ? "success" : "fail", HttpStatus.OK);
-
-	}
+//	@DeleteMapping("/{request_idx}")
+//	public ResponseEntity<String> deleteRequest(@PathVariable("request_idx") int request_idx) {
+//		int cnt = requestDeleteService.deleteRequest(request_idx);
+//		return new ResponseEntity<String>(cnt > 0 ? "success" : "fail", HttpStatus.OK);
+//
+//	}
 
 }

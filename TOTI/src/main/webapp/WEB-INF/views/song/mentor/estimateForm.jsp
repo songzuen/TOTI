@@ -16,6 +16,7 @@
 
 body {
 	min-width: 900px;
+	overflow: auto;
 }
 
 .wrapper {
@@ -116,10 +117,10 @@ table tr:last-child td {
 						onsubmit="return false">
 						<c:forEach items="${viewData}" begin="0" end="0" var="requestInfo"
 						varStatus="stat">
-						<input type="hidden" id="request_idx" value="${requestInfo.request_idx }">
+						<input type="hidden" id="request_idx" name="request_idx" value="${requestInfo.request_idx}">
 						</c:forEach> 
 						<input type="text"
-							name="mento_idx" id="mento_idx" value="3">
+							name="mento_idx" id="mento_idx" name="mento_idx" value="3">
 						<table>
 							<tr>
 								<td>금액</td>

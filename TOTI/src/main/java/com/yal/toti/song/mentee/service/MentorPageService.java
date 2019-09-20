@@ -25,13 +25,4 @@ public class MentorPageService {
 		System.out.println(list.toString());
 		return list;
 	}
-	
-	public List<MentorServiceList> getService(int mento_idx){
-		
-		dao= template.getMapper(MentorListDao.class);
-		List<MentorServiceList> list_service = dao.getServiceList(mento_idx);
-		
-		return list_service;
-	}
-	
 }

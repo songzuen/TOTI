@@ -24,8 +24,8 @@ public class EstimateController {
 	@PostMapping
 	public ResponseEntity<String> writeEstimate(WriteEstimate write, HttpServletRequest request,
 			@PathVariable("request_idx") int request_idx){
-		int cnt = estimateService.insertEstimate(write, request, request_idx);
 		
+		int cnt = estimateService.insertEstimate(write, request, request_idx);
 		return new ResponseEntity<String>(cnt>0?"success":"fail",HttpStatus.OK);
 	}
 }
