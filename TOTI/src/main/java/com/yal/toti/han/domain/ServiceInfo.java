@@ -5,6 +5,7 @@ public class ServiceInfo {
 	private int service_idx;
 	private int cate_idx;
 	private String service_name;
+	private String cate_name;
 
 	public int getService_idx() {
 		return service_idx;
@@ -24,6 +25,12 @@ public class ServiceInfo {
 	public void setService_name(String service_name) {
 		this.service_name = service_name;
 	}
-
+	public String getCate_name() {
+		return cate_name;
+	}
+	public void setCate_name(String cate_name) {
+		this.cate_name = cate_name;
+	}
+	
 	
 }

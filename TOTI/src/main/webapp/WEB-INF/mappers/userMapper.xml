@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.yal.toti.han.dao.UserDaoInterface">
+	
+	<resultMap id="MentoInfo" type="com.yal.toti.han.domain.MentoInfo">
+		<id property="m_idx" column="m_idx"/>
+		<result property="m_photo" column="m_photo"/>
+		<result property="m_name" column="m_name"/>
+		<result property="p_shot" column="p_shot"/>
+		<result property="tor_location" column="tor_location"/>
+		<result property="p_pay" column="p_pay"/>
+		<result property="p_edu" column="p_edu"/>
+		<result property="p_career" column="p_career"/>
+		<result property="p_long" column="p_long"/>
+	</resultMap>
+	
+	<!-- 고수 정보 상세 설정  -->
+	<select id="selectMentoDetail" resultMap="MentoInfo">
+		
+	</select>
+	
+	<!-- 고수가 선택한 상세 서비스 -->
+	<select id="selectMentoService" resultMap="MentoInfo">
+		
+	</select>
+	
+	<!-- 리뷰 내용 -->
+	<select id="selectReview" resultMap="MentoInfo">
+		
+	</select>
+	
+	<!-- 리뷰 평점, 리뷰수 -->
+	<select id="selectReviewTotal" resultMap="MentoInfo">
+		
+	</select>
+	
+</mapper>

@@ -5,7 +5,6 @@ import java.util.List;
 import com.yal.toti.kang.domain.CategoriData;
 import com.yal.toti.kang.domain.ItemListData;
 import com.yal.toti.kang.domain.QuestionsData;
-import com.yal.toti.kang.domain.RequestListData;
 import com.yal.toti.kang.domain.ServiceData;
 
 public interface RequestDaoInterface {

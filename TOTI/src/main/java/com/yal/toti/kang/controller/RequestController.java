@@ -25,8 +25,6 @@ public class RequestController {
 
 		return "kang/request/requestForm";
 
-	}
-	
-	
+	}	
 	
 }

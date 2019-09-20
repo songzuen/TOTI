@@ -10,5 +10,5 @@ public class TOTIMainController {
 	public String getMain() {
 		return "main";
 	}
-
+	
 }
