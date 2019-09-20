@@ -1,12 +1,14 @@
 package com.yal.toti.kang.domain;
 
+import java.util.List;
+
 public class RequestData {
 	
 	private int m_idx;			//회원번호
 	private int cate_idx; 		//분야번호
+	private int service_idx; 	//서비스번호
 	private int request_idx; 	//요청서번호
-	private int qurest_idx;		//질문번호
-	private String answer_cont;	//답변내용
+	private List<AnswerData> answerDatas; //질문번호, 답변내용
 	
 	public int getM_idx() {
 		return m_idx;
@@ -26,18 +28,19 @@ public class RequestData {
 	public void setRequest_idx(int request_idx) {
 		this.request_idx = request_idx;
 	}
-	public int getQurest_idx() {
-		return qurest_idx;
+	public int getService_idx() {
+		return service_idx;
 	}
-	public void setQurest_idx(int qurest_idx) {
-		this.qurest_idx = qurest_idx;
+	public void setService_idx(int service_idx) {
+		this.service_idx = service_idx;
 	}
-	public String getAnswer_cont() {
-		return answer_cont;
+	public List<AnswerData> getAnswerDatas() {
+		return answerDatas;
 	}
-	public void setAnswer_cont(String answer_cont) {
-		this.answer_cont = answer_cont;
+	public void setAnswerDatas(List<AnswerData> answerDatas) {
+		this.answerDatas = answerDatas;
 	}
+	
 	
 	
 }
