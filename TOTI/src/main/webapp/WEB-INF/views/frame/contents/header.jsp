@@ -9,8 +9,8 @@
     <meta name="keywords" content="">
     <!-- CSS IMPORT -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    <link rel="stylesheet" href="<c:url value="css/cont_style.css"/>" type="text/css">
-    <link rel="stylesheet" href="css/cont_demo.css" type="text/css">
+    <link rel="stylesheet" href="<c:url value="/css/cont_style.css"/>" type="text/css">
+    <link rel="stylesheet" href="<c:url value="/css/cont_demo.css"/>" type="text/css">
     <!-- support HTML5 elements and media queries for IE9 -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>

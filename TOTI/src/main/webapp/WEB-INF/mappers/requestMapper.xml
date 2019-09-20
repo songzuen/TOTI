@@ -25,7 +25,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<!-- 분야번호에 맞는 질문번호, 질문 -->
 	<select id="questData" resultType="com.yal.toti.kang.domain.QuestionsData" parameterType="int">
-		select q.quest_idx, q.quest_name from toti_cate c join toti_question q 
+		select q.quest_idx, q.quest_name, q.quest_type  from toti_cate c join toti_question q 
 		on c.cate_idx = q.cate_idx
 		where c.cate_idx=#{cate_idx} or c.cate_idx=4;
 	</select>
