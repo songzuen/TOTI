@@ -13,30 +13,53 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<!-- 분야번호에 맞는 분야명 -->
 	<select id="cate_naem" resultType="String" parameterType="int">
-		select cate_name from toti_cate where cate_idx=#{cate_idx};
+		select cate_name from toti_cate where cate_idx=#{cate_idx}
 	</select>
 	
 	<!-- 분야번호에 맞는 서비스번호, 서비스명 리스트 -->
 	<select id="serviceData" resultType="com.yal.toti.kang.domain.ServiceData" parameterType="int">
 		select s.service_idx, s.service_name from toti_cate c join toti_service s 
 		on c.cate_idx = s.cate_idx
-		where c.cate_idx=#{cate_idx};
+		where c.cate_idx=#{cate_idx}
 	</select>
 	
 	<!-- 분야번호에 맞는 질문번호, 질문 -->
 	<select id="questData" resultType="com.yal.toti.kang.domain.QuestionsData" parameterType="int">
 		select q.quest_idx, q.quest_name, q.quest_type  from toti_cate c join toti_question q 
 		on c.cate_idx = q.cate_idx
-		where c.cate_idx=#{cate_idx} or c.cate_idx=4;
+		where c.cate_idx=#{cate_idx} or c.cate_idx=4
 	</select>
 	
 	<!-- 질문번호에 맞는 항목 -->
 	<select id="itemListData" resultType="com.yal.toti.kang.domain.ItemListData">
 		select item_idx, item_cont from toti_question join toti_item
 		using(quest_idx)
-		where quest_idx=#{quest_idx};
+		where quest_idx=#{quest_idx}
 	</select>
 	
+	<!-- 요청서 등록 -->
+	<insert id="insertRequest" parameterType="com.yal.toti.kang.domain.RequestData">
+		<selectKey keyProperty="request_idx"  resultType="int" order="BEFORE">
+			SELECT LAST_INSERT_ID() as request_idx
+		</selectKey>
+		insert into toti_request (m_idx, cate_idx) values (#{param1}, #{param2})
+	</insert>
+	
+	
+	<!-- 답변 등록 -->
+	<!-- 
+	<insert id="insertAnswer" parameterType="com.yal.toti.kang.domain.RequestData">
+		insert into toti_answer (request_idx, quest_idx, answer_cont) values
+		(#{request_idx}, #{qurest_idx}, #{answer_cont})
+	</insert>
+	
+	 서비스 등록 --> 
+	<!-- 
+	<insert id="insertService" parameterType="com.yal.toti.kang.domain.RequestData">
+		insert into toti_answer (request_idx, quest_idx, answer_cont) values
+		(#{request_idx}, #{m_idx}, #{service_idx})
+	</insert>
+	 -->
 </mapper>
 
 

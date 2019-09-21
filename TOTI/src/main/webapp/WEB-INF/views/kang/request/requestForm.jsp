@@ -56,7 +56,7 @@
 							</div>
 						</div>
 					</c:forEach>
-					<div class="step well">
+<%-- 					<div class="step well">
 							<div>
 								 간단한 자기소개 및 희망 사항을 알려주세요!
 								<div>
@@ -71,10 +71,10 @@
 									</c:if>
 								</div>
 							</div>
-					</div>
+					</div> --%>					
+					<input type="submit" class="action submit btn btn-success" value="보내기">
 					</form>
 					<button class="action back btn btn-info">Back</button>
-					<input type="submit" class="action submit btn btn-success" value="보내기">
 					<button class="action next btn btn-info">Next</button>
 				</div>
 				<!-- end home variation -->
@@ -89,14 +89,16 @@
 	
 <script type="text/javascript">
 
-	$(document).ready(function() {
+	
 
-		$(".quest_idx").each(function(){
-			
-			itemList($(this).val());
-			
-		});
+	$(document).ready(function() {
 		
+		var cnt = 0;
+		
+		$(".quest_idx").each(function(){
+			itemList($(this).val(), cnt);
+			cnt++;
+		});
 
 		var current = 1;
 
@@ -160,7 +162,7 @@
 		}
 	}
 		
-		function itemList(quest_idx) {
+		function itemList(quest_idx, cnt) {
 			
 			$.ajax({
 				url : 'http://localhost:8080/toti/itemList/'+quest_idx,
@@ -168,13 +170,14 @@
 				success : function(data) {
 					
 					var html = '';
-					
-					for (var i = 0; i < data.length; i++) {
-						html += '<input id="'+data[i].item_idx+'_item" type="'+$('.'+quest_idx+'_type').val()+'" value="'+data[i].item_idx+'"'
-						html += 'name="answerDatas['+quest_idx+'].answer_cont" >'
-						html += '<label for="'+data[i].item_idx+'_item">'+ data[i].item_cont + '</label><br>';
-					}
 
+						for (var i = 0; i < data.length; i++) {
+							html += '<input id="'+data[i].item_idx+'_item" type="'+$('.'+quest_idx+'_type').val()+'" value="'+data[i].item_cont+'"'
+							html += 'name="answerDatas['+cnt+'].answer_cont" >'
+							html += '<label for="'+data[i].item_idx+'_item">'+ data[i].item_cont + '</label><br>';
+						}	
+
+					
 					$('#'+quest_idx+'_item_wrap').html(html);
 				
 				}

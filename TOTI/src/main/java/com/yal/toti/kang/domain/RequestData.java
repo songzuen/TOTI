@@ -4,11 +4,22 @@ import java.util.List;
 
 public class RequestData {
 	
+	private int request_idx; 	//요청서번호
 	private int m_idx;			//회원번호
 	private int cate_idx; 		//분야번호
 	private int service_idx; 	//서비스번호
-	private int request_idx; 	//요청서번호
 	private List<AnswerData> answerDatas; //질문번호, 답변내용
+	
+	public RequestData() {}
+	
+	public RequestData(int request_idx, int m_idx, int cate_idx, int service_idx,  List<AnswerData> answerDatas) {
+		super();
+		this.m_idx = m_idx;
+		this.cate_idx = cate_idx;
+		this.service_idx = service_idx;
+		this.request_idx = request_idx;
+		this.answerDatas = answerDatas;
+	}
 	
 	public int getM_idx() {
 		return m_idx;
