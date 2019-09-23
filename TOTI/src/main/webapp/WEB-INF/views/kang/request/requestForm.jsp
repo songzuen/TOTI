@@ -31,7 +31,7 @@
 						<!-- 분야번호 -->
 						<input type="hidden" value="${data.cate_idx}" id="cate_idx" name="cate_idx">
 						<!-- 회원번호 -->
-						<input type="text" placeholder="회원ID" name="m_idx" value="1">
+						<input type="hidden" placeholder="회원ID" name="m_idx" value="1">
 					</div>
 					<div class="step well">
 							<div>
@@ -47,7 +47,7 @@
 					<c:forEach items="${data.quest}" var="quest" varStatus="stat">
 						<div class="step well">
 							<div>
-								<input type="text" value="${ quest.quest_idx }" class="quest_idx" name="answerDatas[${stat.index}].qurest_idx">
+								<input type="hidden" value="${ quest.quest_idx }" class="quest_idx" name="answerDatas[${stat.index}].qurest_idx">
 								<input type="hidden" value="${ quest.quest_type }" class="${ quest.quest_idx }_type">
 								${ quest.quest_name }
 								<div id="${ quest.quest_idx }_item_wrap">
@@ -55,23 +55,7 @@
 								</div>
 							</div>
 						</div>
-					</c:forEach>
-<%-- 					<div class="step well">
-							<div>
-								 간단한 자기소개 및 희망 사항을 알려주세요!
-								<div>
-									<c:if test="${data.cate_name eq '보컬'}">
-										<input type="text" placeholder="ex) 음치탈출하고싶어요">
-									</c:if>
-									<c:if test="${data.cate_name eq '댄스'}">
-										<input type="text" placeholder="ex) 몸치탈출하고싶어요">
-									</c:if>
-									<c:if test="${data.cate_name eq '악기'}">
-										<input type="text" placeholder="ex) 악보읽기 힘들어요">
-									</c:if>
-								</div>
-							</div>
-					</div> --%>					
+					</c:forEach>				
 					<input type="submit" class="action submit btn btn-success" value="보내기">
 					</form>
 					<button class="action back btn btn-info">Back</button>
@@ -170,13 +154,26 @@
 				success : function(data) {
 					
 					var html = '';
-
+					
+					if(quest_idx == 999) {
 						for (var i = 0; i < data.length; i++) {
-							html += '<input id="'+data[i].item_idx+'_item" type="'+$('.'+quest_idx+'_type').val()+'" value="'+data[i].item_cont+'"'
-							html += 'name="answerDatas['+cnt+'].answer_cont" >'
+							html += '<input id="'+data[i].item_idx+'_item" type="'+$('.'+quest_idx+'_type').val()+'"'
+							if($('#cate_idx').val() == 1){
+								html +=	'placeholder="ex) 음치탈출하고싶어요"';
+							}else if($('#cate_idx').val() == 2){
+								html +=	'placeholder="ex) 몸치탈출하고싶어요"';
+							}else if($('#cate_idx').val() == 3){
+								html +=	'placeholder="ex) 악보읽기 힘들어요"';
+							}
+							html += 'name="answerDatas['+cnt+'].answer_cont" >';
+						}
+					}else {
+						for (var i = 0; i < data.length; i++) {
+							html += '<input id="'+data[i].item_idx+'_item" type="'+$('.'+quest_idx+'_type').val()+'" value="'+data[i].item_cont+'"';
+							html += 'name="answerDatas['+cnt+'].answer_cont" >';
 							html += '<label for="'+data[i].item_idx+'_item">'+ data[i].item_cont + '</label><br>';
 						}	
-
+					}
 					
 					$('#'+quest_idx+'_item_wrap').html(html);
 				

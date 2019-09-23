@@ -38,28 +38,35 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<!-- 요청서 등록 -->
-	<insert id="insertRequest" parameterType="com.yal.toti.kang.domain.RequestData">
-		<selectKey keyProperty="request_idx"  resultType="int" order="BEFORE">
-			SELECT LAST_INSERT_ID() as request_idx
-		</selectKey>
-		insert into toti_request (m_idx, cate_idx) values (#{param1}, #{param2})
+	<insert id="insertRequest" keyProperty="request_idx" useGeneratedKeys="true" parameterType="com.yal.toti.kang.domain.RequestData">
+		insert into toti_request (m_idx, cate_idx) values (#{m_idx}, #{cate_idx})
 	</insert>
 	
-	
-	<!-- 답변 등록 -->
-	<!-- 
-	<insert id="insertAnswer" parameterType="com.yal.toti.kang.domain.RequestData">
-		insert into toti_answer (request_idx, quest_idx, answer_cont) values
-		(#{request_idx}, #{qurest_idx}, #{answer_cont})
-	</insert>
-	
-	 서비스 등록 --> 
-	<!-- 
+	<!-- 서비스 등록 -->
 	<insert id="insertService" parameterType="com.yal.toti.kang.domain.RequestData">
-		insert into toti_answer (request_idx, quest_idx, answer_cont) values
+		insert into toti_mentee_service (request_idx, m_idx, service_idx) values
 		(#{request_idx}, #{m_idx}, #{service_idx})
 	</insert>
-	 -->
+	
+	<!-- 답변 등록 -->
+	<insert id="insertAnswer" parameterType="java.util.Map">
+		insert into toti_answer (request_idx, quest_idx, answer_cont) values
+		<foreach collection="answerDatas" item="item" separator=",">
+			(#{request_idx}, #{item.qurest_idx}, #{item.answer_cont})
+		</foreach>
+	</insert>
+	
+	<!-- 요청서 정보 -->
+	<select id="getUserRequestData" resultType="com.yal.toti.kang.domain.UserRequestData" parameterType="int">
+		SELECT r.request_idx, quest_name, answer_cont, m_name, m_photo,cate_name, service_name, date_format(r.request_date, '%y-%m-%d %H:%i') request_date FROM toti.toti_answer a 
+		join toti.toti_question q on q.quest_idx = a.quest_idx 
+		join toti.toti_request r on r.request_idx = a.request_idx join toti.toti_member m on m.m_idx = r.m_idx 
+		join toti.toti_cate c on q.cate_idx = c.cate_idx
+		left outer join (select cate_idx, service_name, m_idx from toti.toti_service se 
+		join toti.toti_mentee_service tee on se.service_idx = tee.service_idx ) cate on cate.cate_idx = c.cate_idx
+		where r.request_idx=#{request_idx};
+	</select>
+	
 </mapper>
 
 

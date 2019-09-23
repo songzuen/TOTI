@@ -1,12 +1,14 @@
 package com.yal.toti.kang.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import com.yal.toti.kang.domain.CategoriData;
 import com.yal.toti.kang.domain.ItemListData;
 import com.yal.toti.kang.domain.QuestionsData;
-import com.yal.toti.kang.domain.RequestListData;
+import com.yal.toti.kang.domain.RequestData;
 import com.yal.toti.kang.domain.ServiceData;
+import com.yal.toti.kang.domain.UserRequestData;
 
 public interface RequestDaoInterface {
 
@@ -26,11 +28,14 @@ public interface RequestDaoInterface {
 	public List<ItemListData> itemListData(int quest_idx);
 	
 	//요청서 등록(회원번호, 분야번호)
-	public int insertRequest(int m_idx, int cate_idx);
-	
-	//답변 등록(요청서번호, 질문번호, 답변내용)
-	public int insertAnswer(int request_idx, int quest_idx, String answer_cont);
+	public int insertRequest(RequestData data);
 	
 	//멘티 서비스 등록
-	public int insertService(int request_idx, int m_idx, int service_idx);
+	public int insertService(RequestData data);
+	
+	//답변 등록(요청서번호, 질문번호, 답변내용)
+	public void insertAnswer(Map<String, Object> an);
+	
+	//요청서 정보
+	public UserRequestData getUserRequestData(int request_idx);
 }

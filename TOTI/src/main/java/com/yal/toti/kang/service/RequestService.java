@@ -1,6 +1,8 @@
 package com.yal.toti.kang.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,11 +11,11 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
 import com.yal.toti.kang.dao.RequestDaoInterface;
-import com.yal.toti.kang.domain.AnswerData;
 import com.yal.toti.kang.domain.CategoriData;
 import com.yal.toti.kang.domain.ItemListData;
 import com.yal.toti.kang.domain.RequestData;
 import com.yal.toti.kang.domain.RequestListData;
+import com.yal.toti.kang.domain.UserRequestData;
 
 @Service("requestService")
 public class RequestService {
@@ -65,17 +67,20 @@ public class RequestService {
 		dao = template.getMapper(RequestDaoInterface.class);
 
 		try {
-			int cnt = dao.insertRequest(data.getM_idx(), data.getCate_idx());
 			
-			System.out.println("요청서 번호 : "+data.getRequest_idx());
+			//요청서
+			dao.insertRequest(data);
 			
-			System.out.println("ddd : "+ cnt );
+			//서비스
+			dao.insertService(data);
 			
-			//dao.insertService(data.getRequest_idx(), data.getM_idx(), data.getService_idx());
+			Map<String, Object> an = new HashMap<String, Object>();
 			
-			/*for(AnswerData answer : data.getAnswerDatas()) {
-				dao.insertAnswer(data.getRequest_idx(), answer.getQurest_idx(), answer.getAnswer_cont());
-			}*/
+			an.put("request_idx", data.getRequest_idx());
+			an.put("answerDatas", data.getAnswerDatas());
+			
+			//답변
+			dao.insertAnswer(an);
 			
 	        return 200;
 	        
@@ -88,5 +93,16 @@ public class RequestService {
 	    }
 
 	}
+	
+	public UserRequestData getUserRequestData(int request_idx) {
+
+		dao = template.getMapper(RequestDaoInterface.class);
+
+		UserRequestData data = dao.getUserRequestData(request_idx);
+
+		return data;
+
+	}
+	
 
 }

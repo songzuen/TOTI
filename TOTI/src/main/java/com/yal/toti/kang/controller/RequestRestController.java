@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.yal.toti.kang.domain.CategoriData;
 import com.yal.toti.kang.domain.ItemListData;
+import com.yal.toti.kang.domain.UserRequestData;
 import com.yal.toti.kang.service.RequestService;
 
 @RestController
@@ -40,6 +41,17 @@ public class RequestRestController {
 		ResponseEntity<List<ItemListData>> entity = new ResponseEntity<List<ItemListData>>(list, HttpStatus.OK);
 		
 		return entity;	
+	}
+	
+	@CrossOrigin
+	@GetMapping("/request/{request_idx}")
+	public ResponseEntity<UserRequestData> getRequest(@PathVariable("request_idx") int request_idx) {
+		
+		UserRequestData data = requestService.getUserRequestData(request_idx);
+		
+		ResponseEntity<UserRequestData> entity = new ResponseEntity<UserRequestData>(data, HttpStatus.OK);
+		
+		return entity;
 	}
 	
 }
