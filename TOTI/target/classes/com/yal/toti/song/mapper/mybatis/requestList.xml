@@ -19,52 +19,52 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-ma
 
 	</resultMap>
 
-	<!-- <select id="selectAllRequest" resultMap="requestList"> SELECT a.request_idx, 
-		m_name, m_photo, c.cate_name,quest_name,answer_cont FROM toti.toti_answer 
-		a left outer join toti.toti_question q on q.quest_idx = a.quest_idx join 
-		toti.toti_request r on r.request_idx = a.request_idx join toti.toti_member 
-		m on m.m_idx = r.m_idx join toti.toti_cate c on q.cate_idx = c.cate_idx where 
-		mento_idx = ${mento_idx} order by a.answer_idx </select> -->
+	<!-- <select id="selectAllRequest" resultMap="requestList"> SELECT a.request_idx,m.m_idx, 
+		m_name, m_photo,quest_name, answer_cont, service_name, request_date FROM 
+		toti.toti_answer a join toti.toti_question q on q.quest_idx = a.quest_idx 
+		join toti.toti_request r on r.request_idx = a.request_idx join toti.toti_member 
+		m on m.m_idx = r.m_idx join toti.toti_cate c on q.cate_idx = c.cate_idx join 
+		toti.toti_mentee_service tee on r.request_idx = tee.request_idx join toti.toti_service 
+		s on s.service_idx = tee.service_idx <where> c.cate_idx = 4 and q.quest_idx 
+		= 999 </where> order by request_date desc </select> -->
+
 	<select id="selectAllRequest" resultMap="requestList">
-		select a.request_idx, m.m_idx, m_name, m_photo, c.cate_name,
-		quest_name, answer_cont, service_name, request_date FROM
-		toti.toti_answer a left outer join toti.toti_question q on q.quest_idx
-		= a.quest_idx
-		join toti.toti_request r on r.request_idx = a.request_idx join
-		toti.toti_member m on m.m_idx = r.m_idx
+		SELECT a.request_idx,m.m_idx, m_name, m_photo,quest_name, answer_cont,
+		service_name, request_date
+		FROM toti.toti_answer a
+		join toti.toti_question q on q.quest_idx = a.quest_idx
+		join toti.toti_request r on r.request_idx = a.request_idx
+		join toti.toti_member m on m.m_idx = r.m_idx
 		join toti.toti_cate c on q.cate_idx = c.cate_idx
-		join toti.toti_mentee_service tee on m.m_idx = tee.m_idx
-		join toti.toti_service s on s.service_idx = tee.service_idx and c.cate_idx
-		= s.cate_idx
+		join toti.toti_mentee_service tee on r.request_idx = tee.request_idx
+		join toti.toti_service s on s.service_idx = tee.service_idx
+
 		<where>
-			not c.cate_idx = 4
+			c.cate_idx = 4 and q.quest_idx = 999 and tee.service_idx in
+			(select service_idx from toti.toti_mentor_service mts join toti.toti_mentor
+			mt on mt.mento_idx=mts.mento_idx
+			where mt.mento_idx=#{mento_idx})
 		</where>
-		order by request_date desc
 	</select>
 
 	<!-- 요청서 상세페이지 -->
 	<select id="getRequestInfo" resultMap="requestList">
-		SELECT r.request_idx, quest_name, answer_cont,m.m_idx, m_name,
-		m_photo,cate_name,
-		service_name FROM toti.toti_answer a
-		join
-		toti.toti_question q on q.quest_idx = a.quest_idx
-		join
-		toti.toti_request r on r.request_idx = a.request_idx join
+		SELECT r.request_idx, quest_name, answer_cont, m.m_idx, m_name,
+		m_photo,cate_name, cate.service_name FROM toti.toti_answer a
+		join toti.toti_question q on q.quest_idx = a.quest_idx
+		join toti.toti_request r on r.request_idx = a.request_idx join
 		toti.toti_member m on m.m_idx = r.m_idx
-		join toti.toti_cate c on
-		q.cate_idx = c.cate_idx
-		left outer join (select cate_idx, service_name,
-		m_idx from
-		toti.toti_service se
-		join toti.toti_mentee_service tee on
-		se.service_idx = tee.service_idx )
-		cate on cate.cate_idx = c.cate_idx
+		join toti.toti_cate c on q.cate_idx = c.cate_idx
+		join toti.toti_mentee_service ms on ms.request_idx = r.request_idx
+		join toti.toti_service s on ms.service_idx = s.service_idx
+		left outer join (select cate_idx, se.service_idx, se.service_name, m_idx
+		from toti.toti_service se
+		join toti.toti_mentee_service tee on se.service_idx = tee.service_idx )
+		cate on cate.service_idx = s.service_idx
 		<where> r.request_idx = #{request_idx}</where>
+		group by q.quest_idx
 	</select>
 
-	<!-- <delete id="deleteRequest">
-		delete from toti.toti_mentee_service where request_idx =
-		#{request_idx}
-	</delete> -->
+	<!-- <delete id="deleteRequest"> delete from toti.toti_mentee_service where 
+		request_idx = #{request_idx} </delete> -->
 </mapper>

@@ -11,7 +11,7 @@
 <style>
 * {
 	margin: 0;
-	padding: 0
+	padding: 0; 
 }
 
 body {
@@ -28,35 +28,37 @@ h1, h2, h3, h4, h5, h6 {
 	color: black;
 }
 
-#request{
-width: 100%;
+#request {
+	width: 100%;
 }
 
 #req {
 	width: 70%;
-	float:left;
+	float: left;
 }
 
-#request h3{
-text-align: left;
+#request h3 {
+	text-align: left;
 }
 
 #request table {
-width: 100%;
-text-align: left;
-}
-#request table tr td:nth-child(1){
-width: 40%;
-height: 24px;
+	width: 100%;
+	text-align: left;
 }
 
-#est{
-float: left;
-text-align: center;
-border : 1px solid #ddd;
-border-radius: 3px; 
-padding: 5px;
+#request table tr td:nth-child(1) {
+	width: 40%;
+	height: 24px;
 }
+
+#est {
+	float: left;
+	text-align: center;
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 5px;
+}
+
 .modal-body table {
 	width: 90%;
 	margin: 0 auto;
@@ -98,19 +100,20 @@ padding: 5px;
 .modal-body #textarea {
 	border: 1px solid #ddd;
 }
-p{
-font-size:12px;
-color: #212529;
+
+p {
+	font-size: 12px;
+	color: #212529;
 }
 
-.modal-body #subBtn{
-margin: 3% 0;
-width: 30%;
+.modal-body #subBtn {
+	margin: 3% 0;
+	width: 30%;
 }
 </style>
 </head>
 <body>
-	<%-- <%@include file="/WEB-INF/views/frame/loading.jsp"%> --%>
+	<%--  <%@include file="/WEB-INF/views/frame/loading.jsp"%>  --%>
 	<!-- page container -->
 	<div>
 		<%@include file="/WEB-INF/views/frame/contents/contentsHeader.jsp"%>
@@ -122,51 +125,12 @@ width: 30%;
 				<!-- 요청서 -->
 				<div id="request">
 					<h3>요청서</h3>
+					<input type="hidden" id="request_idx" value="${request_idx}">
 					<hr>
-					<div id="req">
-					<table>
-					<c:forEach items="${viewData}" begin="0" end="0" var="requestInfo" varStatus="stat">
-					<tr>
-					<td>
-					<p>${requestInfo.m_photo}</p>
-					</td>
-					<td>
-					<p>${requestInfo.m_name}</p>
-					</td>
-					</tr>
-					
-					<tr>
-					<td>
-					<p>${requestInfo.cate_name}</p>
-					</td>
-					<td>
-					<p>${requestInfo.service_name}</p>
-					</td>
-					</tr>
-					</c:forEach>
-					
-					<c:forEach items="${viewData}" var="qna" varStatus="stat">
-					<tr>
-					<td>
-					<p style="font-weight: 700">${qna.quest_name}</p>
-					</td>
-					<td>
-						<p>${qna.answer_cont }</p>
-						</td>
-						</c:forEach>
-
-					</table>
-				</div>
+					<div id="req"></div>
 				</div>
 				<!-- 견적서 -->
 				<div id="est">
-				<c:forEach items="${viewData}" begin="0" end="0" var="requestInfo" varStatus="stat">
-				${requestInfo.m_name}님이 멘토를  찾고 계세요! <br>
-				${requestInfo.m_name}에게 ${requestInfo.service_name}를 알려주세요!<br>
-				</c:forEach>
-				<!-- Button to Open the Modal -->
-				<button type="button" class="btn btn-primary" data-toggle="modal"
-					data-target="#myModal" style="margin:2px auto;">견적서 보내기</button>
 				</div>
 				<!-- The Modal -->
 				<div class="modal" id="myModal">
@@ -183,13 +147,14 @@ width: 30%;
 							<div class="modal-body">
 								<form method="post" enctype="multipart/form-data"
 									onsubmit="return false">
-									<c:forEach items="${viewData}" begin="0" end="0"
-										var="requestInfo" varStatus="stat">
-										<input type="hidden" id="request_idx" name="request_idx"
-											value="${requestInfo.request_idx}">
-									</c:forEach>
+									<div id="req_idx">
+									</div>
+									
+									<!-- 세션 값 받기 -->
 									<input type="text" name="mento_idx" id="mento_idx"
 										name="mento_idx" value="3">
+										
+										
 									<table>
 										<tr>
 											<td><p>금액</p></td>
@@ -219,8 +184,10 @@ width: 30%;
 											</td>
 										</tr>
 										<tr>
-											<td colspan="2"><button type="button" id="subBtn" class="btn btn-primary"
-												onclick="estimate()">전송</button></td>
+											<td colspan="2">
+											<p id="coinCheck"></p>
+											<button type="button" id="subBtn"
+													class="btn btn-primary" onclick="estimate()">전송</button></td>
 										</tr>
 									</table>
 
@@ -249,36 +216,131 @@ width: 30%;
 <script>
 	$(document).ready(function() {
 
+		request($('#request_idx').val());
 	});
+
+	function request(request_idx) {
+		$.ajax({
+			url : 'http://localhost:8080/toti/requestInfo/' + request_idx,
+			type : 'GET',
+			success : function(data) {
+				var html = '';
+				var est = '';
+				var req_idx='';
+
+				html += '<table>';
+				for (var i = 0; i < data.length; i++) {
+					html += '<tr>';
+					html += '<td>';
+					html += '<p>' + data[0].m_photo + '</p>';
+					html += '</td>';
+					html += '<td>';
+					html += '<p>' + data[0].m_name + '</p>';
+					html += '</td>';
+					html += '</tr>';
+
+					html += '<tr>';
+					html += '<td>';
+					html += '<p>' + data[0].cate_name + '</p>';
+					html += '</td>';
+					html += '<td>';
+					html += '<p>' + data[0].service_name + '</p>';
+					html += '</td>';
+					html += '</tr>';
+					break;
+				}
+
+				for (var i = 0; i < data.length; i++) {
+					html += '<tr>';
+					html += '<td>';
+					html += '<p style="font-weight: 700">' + data[i].quest_name+'</p>';
+					html += '</td>';
+					html += '<td>';
+					html += '<p>' + data[i].answer_cont + '</p>';
+					html += '</td>';
+					html += '</tr>';
+				}
+				html += '</table>';
+				$('#req').html(html);
+				
+				for (var i = 0; i<data.length; i++){
+				est += data[0].m_name+'님이 멘토를  찾고 계세요! <br>';
+				est += data[0].m_name+'님에게 ${requestInfo.service_name}를 알려주세요!<br>';
+				break;
+				}
+				/* Button to Open the Modal */
+				est += '<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" style="margin: 2px auto;">견적서 보내기</button>';
+				
+				$('#est').html(est);
+				
+				req_idx += '<input type="hidden" id="request_idx" name="request_idx" value="'+request_idx+'">';
+				$('#req_idx').html(req_idx);
+
+			}
+		});
+	}
 
 	/* 견적서 */
 	function estimate() {
-		var formData = new FormData();
-		var file = $('#est_file')[0].files[0];
+		var mento_idx = $('#mento_idx').val();				
+				$.ajax({
+					url : 'http://localhost:8080/toti/credit/'+mento_idx,
+					type : 'GET',
+					success : function(item){
+						var coinhtml = '';
+						for(var i =0; i<item.length; i++){
+						if(item[i].tor_coin == 0){
+							alert('코인을 충전 후 사용해주세요.');
+							location.href ='#';
+							break;
+						}else{
+							alert('사용 가능한 코인 : '+ item[i].tor_coin+'\n견적서를 보낼 때마다 1코인씩 차감됩니다');
+							$.ajax({
+								url : 'http://localhost:8080/toti/credit/'+mento_idx,
+								type : 'PUT',
+								success : function(dataC){
+									
+									if(dataC =='success'){
+										var formData = new FormData();
+										var file = $('#est_file')[0].files[0];
+										
+										formData.append('est_price', $('#est_price').val());
+										formData.append('est_cont', $('#est_cont').val());
+										formData.append('mento_idx', $('#mento_idx').val());
 
-		formData.append('est_price', $('#est_price').val());
-		formData.append('est_cont', $('#est_cont').val());
-		formData.append('mento_idx', $('#mento_idx').val());
+										if (file != null) {
+											formData.append('est_file', file);
+										}
 
-		if (file != null) {
-			formData.append('est_file', file);
-		}
+										var request_idx = $('#request_idx').val();
 
-		var request_idx = $('#request_idx').val();
 
-		$.ajax({
-			url : 'http://localhost:8080/toti/estimateform/' + request_idx,
-			type : 'POST',
-			processData : false,
-			contentType : false,
-			data : formData,
-			success : function(data) {
-				if (data == 'success') {
-					alert('전송되었습니다.');
-				}
-			}
-		});
-		return false;
+										$.ajax({
+											url : 'http://localhost:8080/toti/estimateform/' + request_idx,
+											type : 'POST',
+											processData : false,
+											contentType : false,
+											data : formData,
+											success : function(data) {
+
+												
+												if (data == 'success') {
+													alert('전송되었습니다.');
+													
+												}
+											}
+										});
+										return false;
+									}
+									
+								}
+								
+							});
+						}
+						}
+					}
+				});
+		
 	}
 </script>
 </html>

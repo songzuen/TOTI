@@ -452,7 +452,7 @@ table td:nth-child(3) {
 						});
 	}
 	function selectMentor(mento_idx) {
-		location.href = "http://localhost:8080/toti/mentorpage/" + mento_idx;
+		location.href = "http://localhost:8080/toti/mentor/" + mento_idx;
 	}
 </script>
 </html>

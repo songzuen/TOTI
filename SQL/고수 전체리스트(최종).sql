@@ -19,3 +19,10 @@ select t.mento_idx,m_photo, m_name, cate_name, tor_location, p_shot,
 			)
         ) rev
 		on rev.midx=t.mento_idx;
+        
+select * from toti.toti_review r1 
+		where r1.review_idx =
+			(
+			select r2.review_idx from toti.toti_review r2 where
+			r1.mento_idx = r2.mento_idx order by r2.review_date desc limit 0,1 
+			)

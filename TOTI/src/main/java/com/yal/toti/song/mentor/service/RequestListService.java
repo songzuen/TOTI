@@ -17,13 +17,12 @@ public class RequestListService {
 	
 	private RequestListDao dao;
 
-	//public List<RequestList> getAllList(int mento_idx) {
-	public List<RequestList> getAllList() {
+	public List<RequestList> getAllList(int mento_idx) {
 		
 		dao = template.getMapper(RequestListDao.class);
 		
 		//List<RequestList> list = dao.selectAllRequest(mento_idx);
-		List<RequestList> list = dao.selectAllRequest();
+		List<RequestList> list = dao.selectAllRequest(mento_idx);
 		
 		return list;
 	}

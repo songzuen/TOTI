@@ -6,7 +6,7 @@ import com.yal.toti.song.mentor.domain.RequestList;
 
 public interface RequestListDao {
 
-	List<RequestList> selectAllRequest();
+	List<RequestList> selectAllRequest(int mento_idx);
 
 	int deleteRequest(int request_idx);
 

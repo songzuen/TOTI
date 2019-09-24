@@ -58,6 +58,10 @@ display:none;
 			<!-- container -->
 			<div id="mainwrapper">
 				
+				<!-- 세션 값으로 바꿔야함 -->
+				<input type="hidden" name="mento_idx" id="mento_idx" value="3">
+				
+				
 				<div id="requestList"></div>
 				<!-- end home variation -->
 				<!-- end component -->
@@ -71,14 +75,13 @@ display:none;
 	</div>
 </body>
 <script>
-	$(document).ready(function() {
-		list();
+	$(document).ready(function() {	
+		list($('#mento_idx').val());
 	});
 
-	function list() {
-		$
-				.ajax({
-					url : 'http://localhost:8080/toti/mentor/requestList',
+	function list(mento_idx) {
+		$.ajax({
+					url : 'http://localhost:8080/toti/mentor/requestList/'+mento_idx,
 					type : 'GET',
 					success : function(data) {
 						var html = '';
@@ -93,7 +96,7 @@ display:none;
 							html += data[i].m_photo;
 							html += '</span><br>';	
 							
-							html += data[i].m_name+'(' +data[i].cate_name+'-'+ data[i].service_name
+							html += data[i].m_name+'(' + data[i].service_name
 									+ ')<br>';
 							html += '요청 사항: ';
 							html += '<span class="comment">';
@@ -124,7 +127,8 @@ display:none;
 	} */
 	
 	function selectRequest(request_idx) {
-		location.href = "http://localhost:8080/toti/estimate/" + request_idx;
+		//location.href = "http://localhost:8080/toti/estimate/" + request_idx;
+		location.href = "http://localhost:8080/toti/requestList/" + request_idx;
 	}
 
 </script>

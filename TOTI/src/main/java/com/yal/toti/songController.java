@@ -8,10 +8,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class songController {
 
-//	@RequestMapping("/estimate/{request_idx}")
-//	public String getForm(@PathVariable("request_idx") int request_idx) {
-//	return "song/mentor/estimateForm";
-//	}
+	@RequestMapping("/requestList/{request_idx}")
+	public String getForm(@PathVariable("request_idx") int request_idx) {
+	return "song/mentor/requestModal";
+	}
 	
 	@RequestMapping("/mentorList")
 	public String getMentorList() {
@@ -23,8 +23,8 @@ public class songController {
 		return "song/mentor/requestList";
 	}
 	
-//	@RequestMapping("/mentorpage/{mento_idx}")
-//	public String getPage(@PathVariable("mento_idx") int mento_idx) {
-//		return "song/mentee/mentorPage";
-//	}
+	@RequestMapping("/mentor/{mento_idx}")
+	public String getPage(@PathVariable("mento_idx") int mento_idx) {
+		return "song/mentee/mentorPage";
+	}
 }

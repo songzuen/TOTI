@@ -2,6 +2,7 @@ package com.yal.toti.song.mentor.service;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.yal.toti.song.mentor.dao.EstimateDao;
+import com.yal.toti.song.mentor.domain.Coin;
 import com.yal.toti.song.mentor.domain.EstimateInfo;
 import com.yal.toti.song.mentor.domain.WriteEstimate;
 
@@ -57,13 +59,20 @@ public class EstimateService {
 		return rCnt;
 	}
 
-	public int updateCredit(int mento_idx) {
+	public int updateCoin(int mento_idx) {
 		dao = template.getMapper(EstimateDao.class);
 		
 		int rCnt = 0;
-		rCnt = dao.updateCredit(mento_idx);
+		rCnt = dao.updateCoin(mento_idx);
 		
 		return rCnt;
+	}
+
+	public List<Coin> coinCheck(int mento_idx) {
+		dao = template.getMapper(EstimateDao.class);
+		List<Coin> list = dao.coinCheck(mento_idx);
+		
+		return list;
 	}
 
 }
