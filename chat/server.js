@@ -1,62 +1,107 @@
 // express
-var app = require("express")();
+const app = require("express");
 // http, app
-var http = require("http").Server(app);
+const http = require("http");
 // socket.io
-var io = require("socket.io")(http);
+const socketio = require("socket.io")(http);
 
-// get 요청
-app.get("/", function(req, res) {
-  res.send("<h1>Hello</h1>");
+var server = http
+  .createServer(function(req, res) {
+    res.writeHead(200, { "Content-Type": "text/html" });
+    res.end();
+  })
+  .listen(82, function() {
+    console.log("listening 82 port");
+  });
+
+// 소켓 서버 생성
+var io = socketio.listen(server);
+
+io.sockets.on("connection", function(socket) {
+  // 사용자의 방 이름, 사용자 명, socket.id 값을 저장할 변수
+  const loginIds = new Array();
+
+  var roomInfo;
+  // 채팅방 입장시 실행
+  socket.on("join", function(data) {
+    socket.leave(socket.id);
+    socket.join(data.room);
+
+    loginIds.push({
+      room: data.room, // 접속한 채팅방의 이름
+      user: data.user, // 유저의 이름
+      target: data.target
+    });
+
+    // 입장한 유저의 정보를 출력한다.
+    io.sockets.in(data.room).emit("contact", {
+      name: data.name,
+      message: data.user + "님이 " + data.target + "님과 채팅 시작..!"
+    });
+
+    roomInfo = loginIds[0];
+  });
+
+  socket.on("disconnect", function() {
+    if (roomInfo != undefined) {
+      io.sockets.in(roomInfo.room).emit("contact", {
+        message: roomInfo.user + "님이 채팅방에서 나갔스ㅂ.."
+      });
+    }
+  });
+
+  socket.on("send_msg", function(data) {
+    socket.emit("send_msg", data);
+    socket.broadcast.in(data.room).emit("receiv_msg", data);
+  });
 });
 
-// user 구분을 위한 변수
-
-function getRandomCode(min, max) {
-  return Math.floor(Math.random() * (max - min + 1)) + min;
-}
-
-// socket 연결 성공 시 콘솔 출력
+/*
+// socket 연결 성공시 콘솔 출력
 io.on("connection", function(socket) {
-  // user 구분을 위한 변수
-  var usercode = getRandomCode(1, 9999);
+  function setName(user) {
+    console.log(user);
+    return user;
+  }
 
-  var name = "user" + usercode;
+  var name01;
 
-  io.to(socket.id).emit("user_name", name);
-  console.log(
-    "socket.id : " +
-      socket.id +
-      ", username : " +
-      name +
-      "이(가) 접속했습니다..!"
-  );
+  socket.on("userName", function(user) {
+    name01 = setName(user);
+  });
 
-  io.sockets.emit("alarm", `${name}이(가) 입장..!`);
+  setTimeout(function() {
+    console.log(
+      "socket.id : " +
+        socket.id +
+        ", username : " +
+        name01 +
+        "이(가) 접속했습니다..!"
+    );
 
+    io.sockets.emit("alarm", `${name01}이(가) 입장..!`);
+  }, 500);
+
+  // socket 연결 종료시 콘솔 출력
   socket.on("disconnect", function() {
     console.log(
       "socket.id : " +
         socket.id +
         ", username : " +
-        name +
-        "이(가) 접속종료했습니다..!"
+        `${name01}이(가) 접속종료했습니다..!`
     );
-    io.sockets.emit("alarm", `${name}이(가) 퇴장..!`);
+    io.sockets.emit("alarm", `${name01}이(가) 퇴장..!`);
   });
 
   // 콘솔 출력
   socket.on("send_msg", function(msg) {
-    console.log(name + ":" + msg);
+    console.log(name01 + ":" + msg);
 
-    // 소켓을 통해 이벤트를 다시 전송한다.
-    socket.broadcast.emit("receive_msg", `[${name}] : ${msg}`);
-    socket.emit("send_msg", `[${name}] : ${msg}`);
+    // 메시지는 자신을 제외한 다른 유저들에게 보낸다.
+    socket.broadcast.emit("receive_msg", `[${name01}] : ${msg}`);
+
+    // 내가 보낸 메시지를 확인하기 위한 처리
+    socket.emit("send_msg", `[${name01}] : ${msg}`);
   });
 });
-
-// 82번 포트를 서버로 사용
-http.listen(82, function() {
-  // 콘솔창에 출력
-  console.log("listening on *:82");
-});
+*/

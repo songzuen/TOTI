@@ -11,6 +11,6 @@
 
 <P>  The time on the server is ${serverTime}. </P>
 
-<a href="baek/chat">채팅</a>
+<a href="chat/chatLogin">채팅</a>
 </body>
 </html>

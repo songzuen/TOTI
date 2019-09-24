@@ -1,14 +1,14 @@
-package com.yal.toti.baek.chat;
+package com.yal.toti.baek.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-public class Chat {
+public class ChatController {
 
-	@RequestMapping(value = "baek/chat")
-	public String getChatPage() {
-
+	@RequestMapping(value = "chat/chatPage")
+	public String chatPage() {
+		
 		return "/baek/chat/chatPage";
 	}
 }

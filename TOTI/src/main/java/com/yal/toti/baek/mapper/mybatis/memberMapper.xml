@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace는 필수 속성이다. : dao 식별하기 위한 이름 -->
+<mapper namespace="com.yal.toti.baek.dao.ChatSessionDao">
+	<select id="selectMemberById"
+		resultType="com.yal.toti.baek.domain.MemberInfo">
+		select * from toti_member where m_id = #{param1}
+	</select>
+
+	<select id="selectAllList"
+		resultType="com.yal.toti.baek.domain.MemberInfo">
+		select * from toti_member where m_id not in (#{param1})
+	</select>
+
+	<select id="searchChatRoom" resultType="String">
+		select room_num from toti_chatroom where room_user =
+		#{param1} and room_target = #{param2}
+	</select>
+	
+	<insert id="insertChatRoom">
+		insert into toti_chatroom(room_user, room_target) values(#{param1}, #{param2})
+	</insert>
+</mapper>
