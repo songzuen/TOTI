@@ -56,16 +56,75 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		</foreach>
 	</insert>
 	
-	<!-- 요청서 정보 -->
-	<select id="getUserRequestData" resultType="com.yal.toti.kang.domain.UserRequestData" parameterType="int">
-		SELECT r.request_idx, quest_name, answer_cont, m_name, m_photo,cate_name, service_name, date_format(r.request_date, '%y-%m-%d %H:%i') request_date FROM toti.toti_answer a 
-		join toti.toti_question q on q.quest_idx = a.quest_idx 
-		join toti.toti_request r on r.request_idx = a.request_idx join toti.toti_member m on m.m_idx = r.m_idx 
-		join toti.toti_cate c on q.cate_idx = c.cate_idx
-		left outer join (select cate_idx, service_name, m_idx from toti.toti_service se 
-		join toti.toti_mentee_service tee on se.service_idx = tee.service_idx ) cate on cate.cate_idx = c.cate_idx
-		where r.request_idx=#{request_idx};
+	<!-- 로그인한 유저의 요청서리스트 -->
+	<select id="userRequestList" resultType="com.yal.toti.kang.domain.UserRequestList">
+		select r.request_idx, c.cate_name, s.service_name, date_format(request_date, '%y-%m-%d') request_date 
+		from toti_request r join toti_cate c join toti_mentee_service ms join toti_service s
+		on r.cate_idx = c.cate_idx and ms.request_idx = r.request_idx and ms.service_idx = s.service_idx
+		where r.m_idx = #{param1}
+		order by r.request_date desc
 	</select>
+	
+	<!-- 요청서 개수 -->
+	<select id="requestCnt" resultType="int">
+		select count(*) from toti_estimatee e join toti_request r
+		on e.request_idx = r.request_idx
+		where r.request_idx = #{param1}
+	</select>
+	
+	
+	<!-- ==============요청서 정보에 대한 Mapper================ -->
+	<!-- 로그인한 유저정보 -->
+	<select id="requestUserInfo" resultType="com.yal.toti.kang.domain.RequestUser">
+		select m_name, m_photo from toti_request r join toti_member m
+		on r.m_idx = m.m_idx
+		where r.request_idx = #{param1} and m.m_idx = #{param2}
+	</select>
+	
+	<!-- 분야 -->
+	<select id="requestCate" resultType="String">
+		select cate_name from toti_request r join toti_cate c
+		on r.cate_idx = c.cate_idx
+		where r.request_idx = #{param1}
+	</select>
+	
+	<!-- 서비스 -->
+	<select id="requestService" resultType="String">
+		select service_name from toti_request r join toti_service s join toti_mentee_service ms
+		on ms.request_idx = r.request_idx and ms.service_idx = s.service_idx
+		where r.request_idx = #{param1}
+	</select>
+	
+	<!-- 질문답변 -->
+	<select id="requestAnswer" resultType="com.yal.toti.kang.domain.RequestAnswer">
+		select quest_name, answer_cont from toti_request r join toti_answer a join toti_question q
+		on r.request_idx = a.request_idx and q.quest_idx = a.quest_idx
+		where r.request_idx = #{param1}
+	</select>
+	
+	<!-- 시간 -->
+	<select id="requestDate" resultType="String">
+		select date_format(request_date, '%Y년 %m월 %d일') request_date
+		from toti_request
+		where request_idx = #{param1}
+	</select>
+	<!-- ===================================================== -->
+	
+	<!-- 견적서 데이터 리스트 -->
+	<select id="estimateeList" resultType="com.yal.toti.kang.domain.EstimateeListData">
+		select m.mento_idx, mm.m_photo, mm.m_name, mp.p_shot, FORMAT(e.est_price , 0) est_price, m.tor_location, 
+		(if(isnull(re.review_idx),0,(select round(avg(sr.review_star),1) from toti_review sr where sr.mento_idx = m.mento_idx))) str,
+		(select count(*) from toti.toti_review src where m.mento_idx = src.mento_idx) cont_cnt
+		from toti_estimatee e join toti_request r join toti_mentor m join toti_mentor_profile mp join toti_member mm join toti_review re
+		on e.request_idx = r.request_idx and e.mento_idx = m.mento_idx and m.mento_idx = mp.mento_idx and m.mento_idx = mm.m_idx and re.mento_idx = m.mento_idx
+		where r.request_idx = #{param1}
+		group by est_idx
+	</select>
+	
+	<!-- 요청서 취소(삭제) -->
+	<delete id="requestDelete">
+		delete from toti_request where request_idx = #{param1};
+	</delete>
 	
 </mapper>
 

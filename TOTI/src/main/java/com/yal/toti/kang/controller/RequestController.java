@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -13,13 +14,12 @@ import com.yal.toti.kang.domain.RequestListData;
 import com.yal.toti.kang.service.RequestService;
 
 @Controller
-@RequestMapping("/request")
 public class RequestController {
 
 	@Autowired
 	private RequestService requestService;
 	
-	@RequestMapping(method = RequestMethod.GET)
+	@RequestMapping(value = ("/request"), method = RequestMethod.GET)
 	public String getRequestList(@RequestParam("cate_idx") int cate_idx, Model model) {
 
 		RequestListData data = requestService.getRequestListData(cate_idx);
@@ -30,7 +30,7 @@ public class RequestController {
 
 	}
 	
-	@RequestMapping(method = RequestMethod.POST)
+	@RequestMapping(value = ("/request"), method = RequestMethod.POST)
 	public String request(RequestData data, Model model) {		
 		
 		int cnt = requestService.insertRequest(data);
@@ -39,6 +39,30 @@ public class RequestController {
 		model.addAttribute("request_idx", data.getRequest_idx());
 		
 		return "kang/request/request";
+	}
+
+	@RequestMapping("/user/request/{request_idx}")
+	public String userRequest(@PathVariable("request_idx") int request_idx, Model model) {		
+		
+		model.addAttribute("request_idx", request_idx);
+		
+		return "kang/request/request";
+		
+	}
+	
+	@RequestMapping("/user/requests")
+	public String userRequestList() {		
+		
+		return "kang/request/myRequestList";
+	}
+	
+	@RequestMapping("/user/estimatee/{request_idx}")
+	public String userEstimatee(@PathVariable("request_idx") int request_idx, Model model) {		
+		
+		model.addAttribute("request_idx", request_idx);
+		
+		return "kang/request/estimatee";
+		
 	}
 	
 }

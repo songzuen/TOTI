@@ -10,17 +10,6 @@ public class RequestData {
 	private int service_idx; 	//서비스번호
 	private List<AnswerData> answerDatas; //질문번호, 답변내용
 	
-	public RequestData() {}
-	
-	public RequestData(int request_idx, int m_idx, int cate_idx, int service_idx,  List<AnswerData> answerDatas) {
-		super();
-		this.m_idx = m_idx;
-		this.cate_idx = cate_idx;
-		this.service_idx = service_idx;
-		this.request_idx = request_idx;
-		this.answerDatas = answerDatas;
-	}
-	
 	public int getM_idx() {
 		return m_idx;
 	}

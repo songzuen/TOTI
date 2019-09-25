@@ -8,7 +8,7 @@
 		<div class="container text-container">
 			<div
 				class="col-sm-12 col-rlt-left col-xs-rlt centering-y text-center">
-				<img alt="회원사진" src="<c:url value="img/logo_white.png"/>" class="logo" />
+				<img alt="회원사진" src="<c:url value="/img/logo_white.png" />" class="logo" />
 				<h4>Hi, Welcome To</h4>
 				<h1>OO (멘티던 멘토)님</h1>
 			</div>

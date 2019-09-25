@@ -12,10 +12,12 @@ import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
 import com.yal.toti.kang.dao.RequestDaoInterface;
 import com.yal.toti.kang.domain.CategoriData;
+import com.yal.toti.kang.domain.EstimateeList;
 import com.yal.toti.kang.domain.ItemListData;
 import com.yal.toti.kang.domain.RequestData;
 import com.yal.toti.kang.domain.RequestListData;
 import com.yal.toti.kang.domain.UserRequestData;
+import com.yal.toti.kang.domain.UserRequestList;
 
 @Service("requestService")
 public class RequestService {
@@ -94,15 +96,68 @@ public class RequestService {
 
 	}
 	
-	public UserRequestData getUserRequestData(int request_idx) {
+	public List<UserRequestList> getUserRequests(int m_idx) {
 
 		dao = template.getMapper(RequestDaoInterface.class);
 
-		UserRequestData data = dao.getUserRequestData(request_idx);
+		List<UserRequestList> list = dao.userRequestList(m_idx);
+		
+		for(UserRequestList data : list ) {
+			data.setRequest_cnt(dao.requestCnt(data.getRequest_idx()));
+		}
+		
+		return list;
 
+	}
+	
+	
+	public UserRequestData getUserRequestData(int request_idx, int m_idx) {
+
+		dao = template.getMapper(RequestDaoInterface.class);
+		
+		UserRequestData data = new UserRequestData();
+		
+		data.setRequest_idx(request_idx);
+		
+		data.setUserInfo(dao.requestUserInfo(request_idx, m_idx));
+		
+		data.setAnswer(dao.requestAnswer(request_idx));
+		
+		data.setCate_name(dao.requestCate(request_idx));
+
+		data.setService_name(dao.requestService(request_idx));
+		
+		data.setRequest_date(dao.requestDate(request_idx));
+		
 		return data;
 
 	}
 	
+	
+	public EstimateeList getEstimateeList(int request_idx) {
+
+		dao = template.getMapper(RequestDaoInterface.class);
+
+		EstimateeList data = new EstimateeList();
+		
+		data.setCate_name(dao.requestCate(request_idx));
+		data.setService_name(dao.requestService(request_idx));
+		data.setRequest_date(dao.requestDate(request_idx));
+		
+		data.setEstiData(dao.estimateeList(request_idx));
+		
+		return data;
+
+	}
+	
+	public int requestDelete(int request_idx) {
+		
+		dao = template.getMapper(RequestDaoInterface.class);
+		
+		int cnt = dao.requestDelete(request_idx);
+		
+		return cnt;
+		
+	}
 
 }

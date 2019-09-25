@@ -4,11 +4,15 @@ import java.util.List;
 import java.util.Map;
 
 import com.yal.toti.kang.domain.CategoriData;
+import com.yal.toti.kang.domain.EstimateeListData;
 import com.yal.toti.kang.domain.ItemListData;
 import com.yal.toti.kang.domain.QuestionsData;
+import com.yal.toti.kang.domain.RequestAnswer;
 import com.yal.toti.kang.domain.RequestData;
+import com.yal.toti.kang.domain.RequestUser;
 import com.yal.toti.kang.domain.ServiceData;
 import com.yal.toti.kang.domain.UserRequestData;
+import com.yal.toti.kang.domain.UserRequestList;
 
 public interface RequestDaoInterface {
 
@@ -36,6 +40,35 @@ public interface RequestDaoInterface {
 	//답변 등록(요청서번호, 질문번호, 답변내용)
 	public void insertAnswer(Map<String, Object> an);
 	
-	//요청서 정보
-	public UserRequestData getUserRequestData(int request_idx);
+	//로그인한 유저의 요청서 리스트
+	public List<UserRequestList> userRequestList(int m_idx);
+	
+	//요청서 개수
+	public int requestCnt(int request_idx);
+	
+	//------------------------- 요청서 정보 ---------------------------
+	//유저정보
+	public RequestUser requestUserInfo(int request_idx, int m_idx);
+	
+	//분야
+	public String requestCate(int request_idx);
+	
+	//서비스
+	public String requestService(int request_idx);
+	
+	//질문답변
+	public List<RequestAnswer> requestAnswer(int request_idx);
+	
+	//시간
+	public String requestDate(int request_idx);
+	
+	//-------------------------------------------------------------
+	
+	
+	//견적서데이터 리스트
+	public List<EstimateeListData> estimateeList(int request_idx);
+	
+	//요청서 취소(삭제)
+	public int requestDelete(int request_idx);
+	
 }

@@ -8,7 +8,8 @@
 	<div class="cls"></div>
 	<div>
 		<ul class="sub-menu-t">
-			<li class="active"><a href="<c:url value="/main" />" class="menu-link" data-section="home" data-nav-title="home" data-section-pos="0" data-section-posy="0">
+			<li class="active">
+			<a href="<c:url value="/main" />" class="menu-link" data-section="home" data-nav-title="home" data-section-pos="0" data-section-posy="0">
 			Home<i class="fa fa-fw fa-home">
 			</i>
 			</a>
