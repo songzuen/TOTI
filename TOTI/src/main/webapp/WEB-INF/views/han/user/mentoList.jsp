@@ -19,9 +19,9 @@
 		<div class="demo-content mrg-top-md">
 			<!-- container -->
 			<div class="container" style="margin-top: -50px">
-				<h1 style="color: black">Profile</h1>
 				<hr>
-				
+					<div id="mento"> </div>
+
 				<!-- end home variation -->
 				<!-- end component -->
 			</div>
@@ -32,11 +32,29 @@
 		<%@include file="/WEB-INF/views/frame/contents/footer.jsp"%>
 	</div>
 	<script>
-	$(document).ready(function() {
+		$(document).ready(function() {
+			MentoList();
+		});
 		
-	});
-	
-	
+		function MentoList() {
+			
+			$.ajax({
+				url : 'http://localhost:8080/toti/mento/mentoList',
+				type : 'GET',
+				success : function(data) {
+					
+					var html = '';
+					for (var i = 0; i < data.length; i++) {
+						html += '<div><a href="<c:url value="/profile/'+data[i].mento_idx+'" />"> '+ data[i].mento_idx +'</a></div>\n';
+					}
+					$('#mento').html(html);
+					
+				}
+			});
+			
+		}
+		
+		
 	</script>
 </body>
 

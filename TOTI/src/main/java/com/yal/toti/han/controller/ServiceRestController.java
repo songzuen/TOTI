@@ -19,7 +19,7 @@ import com.yal.toti.han.service.ServiceAdminService;
 
 @RestController
 @RequestMapping("/admin/service")
-public class ServiceRestFullController {
+public class ServiceRestController {
 	
 	@Autowired
 	private ServiceAdminService serviceAdmin;

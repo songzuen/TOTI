@@ -1,4 +1,4 @@
-package com.yal.toti;
+package com.yal.toti.han.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,10 +15,10 @@ public class HanController {
 	public String getQuestion() {
 		return "han/admin/adminQuestion";
 	}
-	
+
 	@RequestMapping("/mento")
-	public String getMentoPage() {
-		return "han/user/mentoProfile";
+	public String getList() {
+		return "han/user/mentoList";
 	}
 	
 }

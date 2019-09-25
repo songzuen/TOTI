@@ -20,7 +20,7 @@ import com.yal.toti.han.service.QuestionAdminService;
 
 @RestController
 @RequestMapping("/admin/question")
-public class QuestionRestFullController {
+public class QuestionRestController {
 
 	@Autowired
 	private QuestionAdminService questAdmin;

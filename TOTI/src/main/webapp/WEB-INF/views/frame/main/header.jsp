@@ -8,3 +8,4 @@
 <meta name="keywords" content="">
 <!-- CSS IMPORT -->
 <link rel="stylesheet" href="css/style.css" type="text/css">
+© 2019 GitHub, Inc.

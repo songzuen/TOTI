@@ -15,11 +15,11 @@
 <!-- end page container -->
 <!-- javascript import -->
 <!-- jquery -->
-<script type="text/javascript" src="js/jquery.js"></script>
+<script type="text/javascript" src="<c:url value="/js/jquery.js"/>"></script>
 <!-- bootstrap -->
-<script type="text/javascript" src="js/bootstrap.min.js"></script>
+<script type="text/javascript" src="<c:url value="/js/bootstrap.min.js"/>"></script>
 <!-- backstretch -->
-<script type="text/javascript" src="js/plugins.min.js"></script>
+<script type="text/javascript" src="<c:url value="/js/plugins.min.js"/>"></script>
 <!-- main js -->
-<script type="text/javascript" src="js/demo.js"></script>
-<script type="text/javascript" src="js/main_constellation.js"></script>
+<script type="text/javascript" src="<c:url value="/js/demo.js"/>"></script>
+<script type="text/javascript" src="<c:url value="/js/main_constellation.js"/>"></script>

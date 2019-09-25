@@ -56,9 +56,7 @@
     
 	<script>
 		$(document).ready(function() {
-
 			kategorieList();
-
 		});
 		
 		function kategorieList() {
@@ -69,18 +67,15 @@
 				success : function(data) {
 					
 					var html = '';
-
 					for (var i = 0; i < data.length-1; i++) {
 						html += '<div class="dash days_dash">\n<div class="counter">\n';
 						html += '<div class="dash_title"><a style="color: white" href="<c:url value="/request?cate_idx='+data[i].cate_idx+'" />"> '+ data[i].cate_name +'</a></div>\n';
 						html += '</div>\n';
 						html += '</div>\n';
 					}
-
 					$('#countdown').html(html);
 					
 				}
-
 			});
 			
 		}
