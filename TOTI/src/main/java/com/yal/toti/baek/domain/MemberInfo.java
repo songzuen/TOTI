@@ -7,7 +7,7 @@ public class MemberInfo {
 	private String m_id;
 	private String m_pw;
 	private String m_name;
-	private String m_email;
+
 	private String m_ver;
 	private String m_gender;
 	private String m_photo;
@@ -45,14 +45,6 @@ public class MemberInfo {
 
 	public void setM_name(String m_name) {
 		this.m_name = m_name;
-	}
-
-	public String getM_email() {
-		return m_email;
-	}
-
-	public void setM_email(String m_email) {
-		this.m_email = m_email;
 	}
 
 	public String getM_ver() {
@@ -103,14 +95,13 @@ public class MemberInfo {
 		this.m_date = m_date;
 	}
 
-	public MemberInfo(Integer m_idx, String m_id, String m_pw, String m_name, String m_email, String m_ver,
+	public MemberInfo(Integer m_idx, String m_id, String m_pw, String m_name, String m_ver,
 			String m_gender, String m_photo, String m_code, String m_codeVer, Timestamp m_date) {
 		super();
 		this.m_idx = m_idx;
 		this.m_id = m_id;
 		this.m_pw = m_pw;
 		this.m_name = m_name;
-		this.m_email = m_email;
 		this.m_ver = m_ver;
 		this.m_gender = m_gender;
 		this.m_photo = m_photo;
@@ -121,8 +112,7 @@ public class MemberInfo {
 
 	@Override
 	public String toString() {
-		return "MemberInfo [m_idx=" + m_idx + ", m_id=" + m_id + ", m_pw=" + m_pw + ", m_name=" + m_name + ", m_email="
-				+ m_email + ", m_ver=" + m_ver + ", m_gender=" + m_gender + ", m_photo=" + m_photo + ", m_code="
+		return "MemberInfo [m_idx=" + m_idx + ", m_id=" + m_id + ", m_pw=" + m_pw + ", m_name=" + m_name + ", m_ver=" + m_ver + ", m_gender=" + m_gender + ", m_photo=" + m_photo + ", m_code="
 				+ m_code + ", m_codeVer=" + m_codeVer + ", m_date=" + m_date + "]";
 	}
 

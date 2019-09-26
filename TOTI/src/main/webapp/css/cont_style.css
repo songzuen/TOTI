@@ -1665,7 +1665,7 @@ canvas#bg-canvas{
 /*-- ============ 5.5 MARGINS & PADDINGS ============ --*/
 .mrg-top-minus{ margin-top:-1px; }
 .mrg-top-lg{ margin-top:90px; }
-.mrg-top-md{ margin-top:60px; }
+.mrg-top-md{ margin-top:0px; }
 .mrg-top-sm{ margin-top:30px; }
 .mrg-top-xs{ margin-top:12px; }
 .mrg-right-lg{ margin-right:90px; }
