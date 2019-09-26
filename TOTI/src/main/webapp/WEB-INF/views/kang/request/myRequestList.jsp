@@ -75,7 +75,7 @@
 		
 		function requestDel(request_idx) {
 			
-			if(confirm('예매를 취소하겠습니까?')){
+			if(confirm('요청을 취소하겠습니까?')){
 				
 				$.ajax({
 					url : 'http://localhost:8080/toti/user/request/'+request_idx,
@@ -83,7 +83,7 @@
 					success : function(data) {
 						
 						if(data > 0) {
-							alert('요청서가 취소되었습니다.');
+							alert('요청이 취소되었습니다.');
 							location.reload();
 							
 						}else {

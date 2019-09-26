@@ -4,6 +4,8 @@
 <html>
 <head>
 <%@include file="/WEB-INF/views/frame/contents/header.jsp"%>
+
+<script type="text/javascript" src="<c:url value="/js/jquery.ajax-cross-origin.min.js" />"></script>
 <!-- title -->
 <title>TOTI</title>
 </head>
@@ -24,6 +26,8 @@
 					<div class="progress">
 						<div
 							class="progress-bar progress-bar-info progress-bar-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100">
+							<div id="dd">
+							</div>
 						</div>
 					</div>
 					<form role="form" method="post">
@@ -76,7 +80,7 @@
 	
 
 	$(document).ready(function() {
-		
+				
 		var cnt = 0;
 		
 		$(".quest_idx").each(function(){
@@ -167,12 +171,36 @@
 							}
 							html += 'name="answerDatas['+cnt+'].answer_cont" >';
 						}
+					}else if(quest_idx == 6){
+					
+						$.ajax({
+							crossOrigin: true,
+							url : 'http://localhost:8080/toti/xml/City.xml',
+							dataType : 'xml',
+							error : function(error) {
+								alert(error);
+							},
+							success : function(data) {
+								alert('언제');
+								
+								/* html += '<select id="api" name="api">';
+								html += '<option selected>광역시/도</option>';
+
+								for (var i = 0; i < data.BorodCityResponse.borodCity.length; i++) {	
+								html += '<option value="'+ data.BorodCityResponse.borodCity[i].brtcNm +'">'+ data.BorodCityResponse.borodCity[i].brtcNm + '</option>';
+								}
+								
+								html +=	'</select>'; */
+								
+ 							}
+						});
+	
 					}else {
 						for (var i = 0; i < data.length; i++) {
 							html += '<input id="'+data[i].item_idx+'_item" type="'+$('.'+quest_idx+'_type').val()+'" value="'+data[i].item_cont+'"';
 							html += 'name="answerDatas['+cnt+'].answer_cont" >';
 							html += '<label for="'+data[i].item_idx+'_item">'+ data[i].item_cont + '</label><br>';
-						}	
+						}
 					}
 					
 					$('#'+quest_idx+'_item_wrap').html(html);
@@ -185,6 +213,6 @@
 		
 		
 	</script>	
-	
+	<script type="text/javascript" src="<c:url value="/js/jquery.ajax-cross-origin.min.js" />"></script>
 </body>
 </html>
