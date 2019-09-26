@@ -1,3 +1,4 @@
+-- 요청서 번호, 회원번호, 회원 이름, 회원 사진, 회원 요청사항 내용, ㅅ회원 선택한 서비스, 요청서 보낸 날짜
 SELECT a.request_idx,m.m_idx, m_name, m_photo,quest_name, answer_cont, service_name, request_date 
 FROM toti.toti_answer a 
 join toti.toti_question q on q.quest_idx = a.quest_idx

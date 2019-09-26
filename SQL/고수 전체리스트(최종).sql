@@ -1,3 +1,4 @@
+-- 고수번호, 고수 사진, 고수 이름, 고수 분야, 고수 지역, 고수 한줄 소개, 고수 레슨 관련 리뷰(가장 최근 달린 리뷰 1개), 평균 별점, 리뷰 개수, 고수 지원 서비스
 select t.mento_idx,m_photo, m_name, cate_name, tor_location, p_shot,
 		(if(isnull(review_idx),'리뷰 없음',review_cont)) review_cont, 
         (if(isnull(review_idx),0,(select round(avg(sr.review_star),1) from toti.toti_review sr where sr.mento_idx = t.mento_idx))) str,
@@ -20,9 +21,3 @@ select t.mento_idx,m_photo, m_name, cate_name, tor_location, p_shot,
         ) rev
 		on rev.midx=t.mento_idx;
         
-select * from toti.toti_review r1 
-		where r1.review_idx =
-			(
-			select r2.review_idx from toti.toti_review r2 where
-			r1.mento_idx = r2.mento_idx order by r2.review_date desc limit 0,1 
-			)
