@@ -28,6 +28,7 @@
 	border: 1px solid black;
 	width: 20%;
 	display: none;
+	min-height: 500px;
 }
 
 #chat_box {
@@ -39,20 +40,28 @@
 	overflow: auto;
 }
 
-#memberList {
-	width: 300px;
+#list {
+	width: 700px;
 	height: 500px;
 	margin: 0 auto;
 }
 
-#memberListTable {
+#estListTable {
 	width: 100%;
 	border-collapse: collapse;
 }
 
-#memberListTable tr td {
-	border: 1px solid black;
+#chatRoomListTable {
 	width: 100%;
+	border-collapse: collapse;
+}
+
+#chatRoomList {
+	padding-top: 50px;
+}
+
+table tr td {
+	border: 1px solid black;
 	padding: 5px;
 }
 
@@ -120,7 +129,9 @@
 		<div class="demo-content">
 			<!-- container -->
 			<div class="container" style="margin: 50px auto;">
-
+				<div id=backBtn>
+					<a href="http://localhost:8080/toti/chat/chatLogin" onclick="">뒤로가기</a>
+				</div>
 				<div id="chatArea">
 					<div id="chatInfo"></div>
 					<div id="chat_box"></div>
@@ -154,9 +165,28 @@
 
 				</div>
 			</div>
-			<div id="memberList">
-				<table id="memberListTable">
-				</table>
+			<div id="list">
+				<div id="estList">
+					<table id="estListTable">
+						<tr>
+							<td>est_idx</td>
+							<td>cate_idx</td>
+							<td>mento_idx</td>
+							<td>m_idx</td>
+							<td>est_price</td>
+							<td>est_const</td>
+						</tr>
+					</table>
+				</div>
+				<div id="chatRoomList">
+					<table id="chatRoomListTable">
+						<tr>
+							<td>방 번호</td>
+							<td>상대방</td>
+							<td>마지막 메시지</td>
+						</tr>
+					</table>
+				</div>
 			</div>
 
 			<!-- end home variation -->
@@ -170,46 +200,92 @@
 	</div>
 	<script>
 		// 사용자 계정 정보
-		var user = '${loginInfo.m_id}';
+		var user = '${loginInfo.m_idx}';
 
 		// 요일 구할 때 사용할 배열
 		var week = new Array('일', '월', '화', '수', '목', '금', '토');
 
-		$(document).ready(
-				function() {
-					$.ajax({
-						url : 'http://localhost:8080/toti/chat/memberlist/'
-								+ user,
-						type : 'GET',
-						success : function(data) {
-							var html = '';
-							for (var i = 0; i < data.length; i++) {
+		$(document).ready(function() {
 
-								html += '<tr>';
-								html += '<td onclick="chat(' + '\''
-										+ data[i].m_id + '\'' + ');">'
-										+ data[i].m_id + '</td>';
-								html += '</tr>';
-							}
-							$('#memberListTable').html(html);
+			estlist();
+		});
+
+		function estlist() {
+
+			$('#chatArea').css('display', 'none');
+			$('#backBtn').css('display', 'none');
+			$('#profileArea').css('display', 'none');
+			$('#estList').css('display', 'block');
+
+			$('#chat_box').empty();
+
+			$.ajax({
+				url : 'http://localhost:8080/toti/chat/estlist/' + user,
+				type : 'GET',
+				success : function(data) {
+					var html = '';
+					for (var i = 0; i < data.length; i++) {
+
+						html += '<tr>';
+						html += '<td onclick="chat(' + '\'' + data[i].est_idx
+								+ '\'' + ', ' + '\'' + data[i].cate_idx + '\''
+								+ ', ' + '\'' + data[i].m_idx + '\'' + ');">'
+								+ data[i].est_idx + '</td>';
+						html += '<td>' + data[i].cate_idx + '</td>';
+						html += '<td>' + data[i].mento_idx + '</td>';
+						html += '<td>' + data[i].m_idx + '</td>';
+						html += '<td>' + data[i].est_price + '</td>';
+						html += '<td>' + data[i].est_cont + '</td>';
+						html += '</tr>';
+					}
+					$('#estListTable').append(html);
+				}
+			});
+
+			$('#chatRoomList').css('display', 'block');
+
+			$.ajax({
+				url : 'http://localhost:8080/toti/chat/roomlist/' + user,
+				type : 'GET',
+				success : function(data) {
+					var html = '';
+					for (var i = 0; i < data.length; i++) {
+
+						if (user == data[i].room_target) {
+							var tmp = data[i].room_user;
+							data[i].room_target = data[i].room_user;
+							data[i].room_user = tmp;
 						}
-					})
-				});
 
-		function chat(m_id) {
+						html += '<tr>';
+						html += '<td onclick="chat(' + '\'' + data[i].room_num
+								+ '\'' + ', ' + '\'' + data[i].room_cat + '\''
+								+ ', ' + '\'' + data[i].room_target + '\''
+								+ ');">' + data[i].room_num + '</td>';
+						html += '<td>' + data[i].room_target + '</td>';
+						html += '<td>' + data[i].last_msg + '</td>';
+						html += '</tr>';
+					}
+					$('#chatRoomListTable').append(html);
+				}
+			});
 
-			alert(m_id);
+		}
+
+		function chat(est_idx, cate_idx, m_idx) {
+
+			$('#backBtn').css('display', 'block');
 			$('#chatArea').css('display', 'inline-block');
 			$('#profileArea').css('display', 'inline-block');
-			$('#memberList').css('display', 'none');
-
+			$('#estList').css('display', 'none');
+			$('#chatRoomList').css('display', 'none');
 			$
 					.ajax({
-						url : 'http://localhost:8080/toti/chat/room/' + user
-								+ '/' + m_id,
+						url : 'http://localhost:8080/toti/chat/room/' + est_idx
+								+ '/' + cate_idx + '/' + user + '/' + m_idx,
 						type : 'GET',
 						success : function(data) {
-
+							alert(data);
 							var html = '';
 							html += '<input type="hidden" id="chat_room" value="' + data + '">'
 							$('#chatInfo').html(html);
@@ -227,7 +303,7 @@
 				socket.emit("join", {
 					room : $('#chat_room').val(),
 					user : user,
-					target : m_id
+					target : m_idx
 				});
 			}, 500);
 
@@ -264,7 +340,8 @@
 				receiveMsg += '<div id = "msgbox">';
 				receiveMsg += '<div id = "msg" class = "receivebox">';
 				receiveMsg += data.name + ' : ' + data.message;
-				receiveMsg += '</div></div>';
+				receiveMsg += '</div><span class = "time">' + data.time
+						+ '</span></div>';
 
 				$('#chat_box').append(receiveMsg);
 				scrollDown();
@@ -273,6 +350,7 @@
 			socket.on("send_msg", function(data) {
 				var sendMsg = '';
 				sendMsg += '<div id = "msgbox" class="text_right">';
+				sendMsg += '<span class = "time">' + data.time + '</span>';
 				sendMsg += '<div id = "msg" class = "sendbox">';
 				sendMsg += '나 : ' + data.message;
 				sendMsg += '</div></div>';

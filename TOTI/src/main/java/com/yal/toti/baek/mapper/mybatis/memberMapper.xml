@@ -12,16 +12,31 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 
 	<select id="selectAllList"
-		resultType="com.yal.toti.baek.domain.MemberInfo">
-		select * from toti_member where m_id not in (#{param1})
+		resultType="com.yal.toti.baek.domain.EstInfo">
+		select est.est_idx, req.cate_idx, est.mento_idx, req.m_idx,
+		est.est_price, est.est_cont from toti_estimatee as est join
+		toti_request as req
+		on est.request_idx = req.request_idx where
+		mento_idx = #{param1}
+	</select>
+
+	<select id="selectChatRoomListByUser"
+		resultType="com.yal.toti.baek.domain.ChatRoomInfo">
+		select * from toti.toti_chatroom where room_user =
+		#{param1} or room_target = #{param1};
 	</select>
 
 	<select id="searchChatRoom" resultType="String">
-		select room_num from toti_chatroom where room_user =
+		select room_num from
+		toti_chatroom where room_user =
 		#{param1} and room_target = #{param2}
+		and room_cat = #{param3}
 	</select>
-	
+
 	<insert id="insertChatRoom">
-		insert into toti_chatroom(room_user, room_target) values(#{param1}, #{param2})
+		insert into toti_chatroom(room_num, room_cat,
+		room_user, room_target)
+		values(#{param1}, #{param2}, #{param3},
+		#{param4})
 	</insert>
 </mapper>

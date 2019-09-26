@@ -11,23 +11,25 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.yal.toti.baek.domain.MemberInfo;
-import com.yal.toti.service.MemberListServcie;
+import com.yal.toti.baek.domain.EstInfo;
+import com.yal.toti.service.EstListServcie;
 
 @RestController
-@RequestMapping("chat/memberlist")
-public class UserlistController {
+@RequestMapping("chat/estlist")
+public class EstListController {
 
 	@Autowired
-	private MemberListServcie service;
+	private EstListServcie service;
 
 	@CrossOrigin
 	@GetMapping("/{user}")
-	public ResponseEntity<List<MemberInfo>> getMemberList(@PathVariable("user") String user) {
+	public ResponseEntity<List<EstInfo>> getMemberList(@PathVariable("user") int user) {
 
-		List<MemberInfo> list = service.getMemberList(user);
+		// System.out.println(user);
+		
+		List<EstInfo> list = service.getEstList(user);
 
-		ResponseEntity<List<MemberInfo>> entity = new ResponseEntity<List<MemberInfo>>(list, HttpStatus.OK);
+		ResponseEntity<List<EstInfo>> entity = new ResponseEntity<List<EstInfo>>(list, HttpStatus.OK);
 
 		return entity;
 	}

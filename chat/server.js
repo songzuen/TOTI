@@ -80,7 +80,7 @@ io.sockets.on("connection", function(socket) {
           console.log(error);
         }
         // console.log(results);
-
+        
         connection.query("update toti_chatroom set last_msg = ? where room_num = ?", [data.message, data.room],
         function(error, results) {
           if (error) {

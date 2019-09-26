@@ -20,7 +20,7 @@
 		<!-- demo content -->
 		<div class="demo-content mrg-top-md">
 			<!-- container -->
-			<div class="container" style="margin-top: -50px;">
+			<div class="container" style="margin: 50px;">
 				<div id="content">
 					<form method="post">
 						<input type="text" name="m_id" required="required"> <input type="submit">

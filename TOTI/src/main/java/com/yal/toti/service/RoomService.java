@@ -1,10 +1,13 @@
 package com.yal.toti.service;
 
+import java.util.List;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.yal.toti.baek.dao.ChatSessionDao;
+import com.yal.toti.baek.domain.ChatRoomInfo;
 
 @Service
 public class RoomService {
@@ -14,20 +17,31 @@ public class RoomService {
 
 	private ChatSessionDao dao;
 
-	public String searchChatRoom(String user, String target) {
+	public String searchChatRoom(int roomnum, int category, int user, int target) {
 		dao = template.getMapper(ChatSessionDao.class);
 
-		String room = dao.searchChatRoom(user, target);
+		String room = dao.searchChatRoom(user, target, category);
 
 		if (room == null) {
-			room = dao.searchChatRoom(target, user);
+			room = dao.searchChatRoom(target, user, category);
 		}
 
 		if (room == null) {
-			dao.insertChatRoom(user, target);
-			room = dao.searchChatRoom(user, target);
+			dao.insertChatRoom(roomnum, category, user, target);
+			room = dao.searchChatRoom(user, target, category);
 		}
 
 		return room;
+	}
+
+	public List<ChatRoomInfo> getRoomList(int user) {
+		dao = template.getMapper(ChatSessionDao.class);
+
+		List<ChatRoomInfo> list = dao.selectChatRoomListByUser(user);
+		if (list == null) {
+			
+		}
+
+		return list;
 	}
 }
