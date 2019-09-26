@@ -56,6 +56,10 @@ table tr td:nth-child(1) {
 	width: 20%;
 }
 
+#reviewTable{
+margin-top: 20px;
+}
+
 
 .rBox {
 	border: 1px solid #ddd;
@@ -85,7 +89,7 @@ table tr td:nth-child(1) {
 
 
 				<div class="buttonWrapper">
-					<div id="requestBtnBox" class="rBox">
+					<!-- <div id="requestBtnBox" class="rBox"> -->
 						<%-- <c:forEach items="${viewData}" begin="0" end="0" var="mentorInfo"
 							varStatus="stat">
 							${mentorInfo.m_name} 멘토님에게 <br> 원하는 서비스의 견적을 받아보세요
@@ -93,7 +97,7 @@ table tr td:nth-child(1) {
 						<br>
 						<button type="button" id="subBtn" class="btn btn-primary">견적
 							요청하기</button> --%>
-					</div>
+					<!-- </div> -->
 
 					<div id="reviewBtnBox" class="rBox">
 						<%-- <c:forEach items="${viewData}" begin="0" end="0" var="mentorInfo"
@@ -137,13 +141,31 @@ table tr td:nth-child(1) {
 
 						/* 고수 이름 */
 						html+='<div class="info">';
-						html+='<b><h4>'+data[0].m_name+'</h4></b>';
+						html+='<b><h4>'+data[0].m_name+'고수<span style="color:black; font-size:9px;"> 평점 : '+data[0].str+'점</span></h4></b>';
+						html+='</div>';
+						
+						/* 대표 서비스 */
+						html+='<div class="info">';
+						html+='<h4>대표 서비스</h4>';
+						html+= data[0].cate_name;
 						html+='</div>';
 
 						/* 고수 한 줄 소개 */
 						html+='<div class="info">';
 						html+='<h4>한줄 소개</h4>'+data[0].p_shot+'<br>';
 						html+='</div>';
+						
+						/* 제공 서비스 */
+						
+						if(data[0].tor_sname != null){
+							html+= '<div class="info">';
+							html+= '<h4>제공 서비스</h4>';
+							html+= data[0].tor_sname+'</div>';
+						}
+						else {
+							html+= '<div class="info">';
+							html+= '<h4>제공 서비스 없음</h4></div>';
+						}
 						
 						/* 활동 지역 */
 						if(data[0].tor_location != null){
@@ -166,37 +188,26 @@ table tr td:nth-child(1) {
 							html+= data[0].p_career+'</div>';
 						}
 
-						/* 제공 분야 */
-						html+='<div class="info">';
-						html+='<h4>분야</h4>'+data[0].cate_name;
-						html+='</div>';
-
-
-						/* 제공 서비스 */
-						html+='<div class="info">';
-						html+='<h4>제공 서비스</h4>';
-						html+='</div>';
-						if(data[0].tor_sname != null){
+						
+					/* 고수 상세 설명 */
+					
+						if(data[0].p_long != null){
 							html+= '<div class="info">';
-							html+= '<h4>제공 서비스</h4>';
-							html+= data[0].tor_sname+'</div>';
+							html+= '<h4>상세 설명</h4>';
+							html+= data[0].p_long+'</div>';
 						}
 						else {
 							html+= '<div class="info">';
-							html+= '<h4>제공 서비스 없음</h4></div>';
+							html+= '<h4>상세 설명</h4>';
+							html+= '상세 설명 없음</div>';
 						}
-						
-					/* 고수 상세 설명 */
-					html+='<div class="info">';
-						
-						html+='<h4>서비스 상세 설명</h4>'+data[0].p_long+'<br>';
-						html+='</div>';
 					
 					/* 리뷰 박스 */
 					html+='<div id="reviewBox" class="info">';
 						html+='<h4>';
-						html+='리뷰<span style="font-size: 10px; letter-spacing: 1px;">'+data[0].cont_cnt+'개('+data[0].str+'점)</span>';
-						html+='</h4>';
+						html+='리뷰</h4>';
+						html+='<div><span style="float:left;margin-right:10px;"><h5>'+data[0].str+'</h5></span>';
+						html+='<span style="font-size: 10px; letter-spacing: 1px;float:left">'+data[0].cont_cnt+'개</span></div>';
 						break;
 				}
 				for(var i = 0; i<data.length;i++){
@@ -204,6 +215,8 @@ table tr td:nth-child(1) {
 					var year = date.getFullYear();
 					var month = date.getMonth();
 					var day = date.getDate();
+					
+						html+='<div id="reviewTable">';
 						html+='<table>';
 						html+='<tr>';
 						html+='	<td><h5 id="review_name">';
@@ -218,17 +231,18 @@ table tr td:nth-child(1) {
 							html+='<td colspan="3">'+data[i].review_cont+'</td>';
 							html+='</tr>';
 							html+='</table>';
+							html+='</div>';
 							
 				}
 				html+='</div>';
 				$('#mentorPage').html(html);
 				
-				for(var i=0; i<data.length; i++){
+				/* for(var i=0; i<data.length; i++){
 				reqBtn += data[0].m_name+' 멘토님에게 <br> 원하는 서비스의 견적을 받아보세요<br>';
 				reqBtn +='<button type="button" id="subBtn" class="btn btn-primary">견적 요청하기</button>';
 				break;
 				}
-				$('#requestBtnBox').html(reqBtn);
+				$('#requestBtnBox').html(reqBtn); */
 				
 				for(var i = 0; i<data.length;i++){
 				revBtn += data[0].m_name+' 멘토님의 수업이 어떠셨나요?<br>';

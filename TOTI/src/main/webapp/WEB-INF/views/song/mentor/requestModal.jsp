@@ -106,6 +106,11 @@ p {
 	color: #212529;
 }
 
+.chk{
+float: right;
+margin-right: 15px;
+}
+
 .modal-body #subBtn {
 	margin: 3% 0;
 	width: 30%;
@@ -163,6 +168,7 @@ p {
 													<input type="text" name="est_price" id="est_price"
 														style="width: 90%"><span id="won">원</span>
 												</div>
+												<p id="p_chk"></p>
 											</td>
 										</tr>
 										<tr>
@@ -171,6 +177,7 @@ p {
 												<div id="textarea" class="divbox">
 													<textarea rows="7" cols="40" name="est_cont" id="est_cont"></textarea>
 												</div>
+												<p id="c_chk"></p>
 											</td>
 										</tr>
 										<tr>
@@ -217,7 +224,18 @@ p {
 	$(document).ready(function() {
 
 		request($('#request_idx').val());
+		
+		$('#est_price').focusout(function(){
+			addComma($('#est_price').val());
+		});
+
 	});
+	
+	function addComma(est_price) {
+
+		return Number(est_price).toLocaleString('en').split(".")[0];
+
+		}
 
 	function request(request_idx) {
 		$.ajax({
@@ -282,13 +300,43 @@ p {
 
 	/* 견적서 */
 	function estimate() {
-		var mento_idx = $('#mento_idx').val();				
+		var mento_idx = $('#mento_idx').val();
+		
+			
 				$.ajax({
 					url : 'http://localhost:8080/toti/credit/'+mento_idx,
 					type : 'GET',
 					success : function(item){
+							
 						var coinhtml = '';
 						for(var i =0; i<item.length; i++){
+							
+
+							var price = $('#est_price').val();
+							var cont = $('#est_cont').val();
+							
+							if(cont.length<1 && price.length<1 && price <1){
+								$('#p_chk').html('<p class="chk" style="color:red;">1원 이상 입력해주세요.</p>');
+								$('#c_chk').html('<p class="chk" style="color:red;">필수 사항입니다.</p>');
+								return false;
+							}else if(price.length<1 && price < 1){
+								$('#p_chk').html('<p class="chk" style="color:red;">1원 이상 입력해주세요.</p>');
+								$('#c_chk').html('<p class="chk" style="color:red;"></p>');
+								
+								return false;
+							}else if(cont.length<1){
+									$('#c_chk').html('<p class="chk" style="color:red;">필수 사항입니다.</p>');
+									$('#p_chk').html('<p class="chk" style="color:red;"></p>');
+									return false;
+							}else{
+								$('#p_chk').html('<p class="chk" style="color:red;"></p>');
+								$('#c_chk').html('<p class="chk" style="color:red;"></p>');
+							}
+								
+						
+								
+								
+								
 						if(item[i].tor_coin == 0){
 							alert('코인을 충전 후 사용해주세요.');
 							location.href ='#';

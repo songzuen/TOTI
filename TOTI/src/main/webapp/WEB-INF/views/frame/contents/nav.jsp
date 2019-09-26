@@ -5,6 +5,6 @@
 	<ul class="navbar-nav">
 		<li class="nav-item"><a class="nav-link" href="<c:url value="/mentorList" />">고수 목록</a></li>
 		<li class="nav-item"><a class="nav-link" href="<c:url value="/requestList" />">받은 요청</a></li>
-		<li class="nav-item"><a class="nav-link" href="#">메뉴넣기</a></li>
+		<li class="nav-item"><a class="nav-link" href="<c:url value="/mentor/chatList/"/>">채팅 목록</a></li>
 	</ul>
 </nav>

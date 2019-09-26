@@ -12,7 +12,9 @@
 	margin: 0;
 	padding: 0
 }
-
+h1,h2,h3,h4,h5,h6{
+color:black;
+}
 body{
 overflow: auto
 }
@@ -59,7 +61,7 @@ display:none;
 			<div id="mainwrapper">
 				
 				<!-- 세션 값으로 바꿔야함 -->
-				<input type="hidden" name="mento_idx" id="mento_idx" value="3">
+				<input type="hidden" name="mento_idx" id="mento_idx" value="2">
 				
 				
 				<div id="requestList"></div>
@@ -85,13 +87,21 @@ display:none;
 					type : 'GET',
 					success : function(data) {
 						var html = '';
+						html += '<h3>요청서</h3><hr>';
 						for (var i = 0; i < data.length; i++) {
 							
 							var date = new Date(data[i].request_date);
 							var year = date.getFullYear();
 							var month = date.getMonth();
 							var day = date.getDate();
-							html += '<label for="estimateBtn('+data[i].request_idx+')"><div id="list">';
+							
+							/* if (data.length=0){
+								html += '<div id="list">';
+								html += '<h2>요청받은 데이터 없습니다.</h2>'
+								html += '</div>';
+							} */
+							
+							html += '<label for="estimateBtn('+data[i].request_idx+')" style="cursor:pointer"><div id="list">';
 							html += '<span id="photo">';
 							html += data[i].m_photo;
 							html += '</span><br>';	

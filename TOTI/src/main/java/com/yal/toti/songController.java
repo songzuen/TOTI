@@ -27,4 +27,9 @@ public class songController {
 	public String getPage(@PathVariable("mento_idx") int mento_idx) {
 		return "song/mentee/mentorPage";
 	}
+	
+	@RequestMapping("/mentor/chatList")
+	public String getChatList() {
+		return "song/mentor/chatList";
+	}
 }

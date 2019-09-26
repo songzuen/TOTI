@@ -90,7 +90,7 @@ table td:nth-child(3) {
 }
 
 .btn {
-	display: none;
+	display: block;
 }
 
 .labelfor {
@@ -108,7 +108,7 @@ table td:nth-child(3) {
 		<!-- demo content -->
 		<div class="demo-content mrg-top-md">
 			<!-- container -->
-			<div class="container" style="margin-top: -50px; overflow: scroll;">
+			<div class="container" style="margin-top: -50px;">
 				<div id="searchDiv">
 					<span> <input type="checkbox" id="rCnt" name="rCnt"
 						value=true onclick="listByReviewCnt()"><label for="rCnt"
