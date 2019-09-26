@@ -225,17 +225,7 @@ margin-right: 15px;
 
 		request($('#request_idx').val());
 		
-		$('#est_price').focusout(function(){
-			addComma($('#est_price').val());
-		});
-
 	});
-	
-	function addComma(est_price) {
-
-		return Number(est_price).toLocaleString('en').split(".")[0];
-
-		}
 
 	function request(request_idx) {
 		$.ajax({
@@ -333,56 +323,51 @@ margin-right: 15px;
 								$('#c_chk').html('<p class="chk" style="color:red;"></p>');
 							}
 								
-						
-								
-								
-								
 						if(item[i].tor_coin == 0){
 							alert('코인을 충전 후 사용해주세요.');
 							location.href ='#';
 							break;
 						}else{
+							
 							alert('사용 가능한 코인 : '+ item[i].tor_coin+'\n견적서를 보낼 때마다 1코인씩 차감됩니다');
+							
+							var formData = new FormData();
+							var file = $('#est_file')[0].files[0];
+
+							formData.append('est_price', $('#est_price').val());
+							formData.append('est_cont', $('#est_cont').val());
+							formData.append('mento_idx', $('#mento_idx').val());
+
+							if (file != null) {
+								formData.append('est_file', file);
+							}
+
+							var request_idx = $('#request_idx').val();
+							
 							$.ajax({
-								url : 'http://localhost:8080/toti/credit/'+mento_idx,
-								type : 'PUT',
-								success : function(dataC){
-									
-									if(dataC =='success'){
-										var formData = new FormData();
-										var file = $('#est_file')[0].files[0];
-										
-										formData.append('est_price', $('#est_price').val());
-										formData.append('est_cont', $('#est_cont').val());
-										formData.append('mento_idx', $('#mento_idx').val());
+								url : 'http://localhost:8080/toti/estimateform/' + request_idx,
+								type : 'POST',
+								processData : false,
+								contentType : false,
+								data : formData,
+								success : function(data) {
 
-										if (file != null) {
-											formData.append('est_file', file);
-										}
-
-										var request_idx = $('#request_idx').val();
-
-
+									if (data == 'success') {
+										alert('전송되었습니다.');
 										$.ajax({
-											url : 'http://localhost:8080/toti/estimateform/' + request_idx,
-											type : 'POST',
-											processData : false,
-											contentType : false,
-											data : formData,
-											success : function(data) {
-
-												
-												if (data == 'success') {
-													alert('전송되었습니다.');
-													
-												}
+											url : 'http://localhost:8080/toti/credit/'+mento_idx,
+											type : 'PUT',
+											success : function(dataC){
+												alert('1코인이 사용 되었습니다.');
+											
 											}
+											
 										});
-										return false;
+										
+									}else{
+										alert('이미 전송한 요청서 입니다.');
 									}
-									
 								}
-								
 							});
 						}
 						}

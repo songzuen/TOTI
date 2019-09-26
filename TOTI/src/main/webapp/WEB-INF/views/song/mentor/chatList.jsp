@@ -43,6 +43,9 @@ table {
 table tr:nth-child(1) td{
 width: 150px;
 }
+table tr:nth-child(2) td{
+width: 40%;
+}
 
 /* table td:nth-child(1){
 width: 30%;
@@ -71,7 +74,7 @@ width: 30%;
 			<div>
 			
 			<!-- 로그인 세션값으로 변경 -->
-			<input type="hidden" name="mento_idx" id="mento_idx" value="2">
+			<input type="hidden" name="mento_idx" id="mento_idx" value="3">
 				<!-- 채팅리스트 -->
 				<h3>채팅 목록</h3>
 				<hr>
@@ -127,7 +130,7 @@ width: 30%;
 							
 							html += '<tr>';
 							html += '<td>';
-							html += '<label for="chatBtn" style="cursor:pointer"><span class="comment"><h5 style="color:black;letter-spacing:3px;"> 채팅 내용 블라블라';
+							html += '<label for="chatBtn" style="cursor:pointer"><span class="comment"><h5 style="color:black;letter-spacing:3px;">'+data[i].last_msg;
 							html += '<h5></span></label></td>';
 								html += '<td><span style="color:black;">예상 수업 금액 : ' + data[i].est_price + '원</span>';
 							html += '<button id="chatBtn' + data[i].est_idx

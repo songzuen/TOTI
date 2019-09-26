@@ -13,6 +13,7 @@ public class ChatList {
 	private Date est_date;
 	private String answer_cont;
 	private int mento_idx;
+	private String last_msg;
 	
 	
 	public int getMento_idx() {
@@ -69,8 +70,15 @@ public class ChatList {
 	public void setAnswer_cont(String answer_cont) {
 		this.answer_cont = answer_cont;
 	}
+	
+	public String getLast_msg() {
+		return last_msg;
+	}
+	public void setLast_msg(String last_msg) {
+		this.last_msg = last_msg;
+	}
 	public ChatList(int est_idx, String m_photo, String m_name, String cate_name, String service_name, String est_price,
-			Date est_date, String answer_cont,int mento_idx) {
+			Date est_date, String answer_cont,int mento_idx,String last_msg) {
 		super();
 		this.mento_idx = mento_idx;
 		this.est_idx = est_idx;
@@ -81,6 +89,7 @@ public class ChatList {
 		this.est_price = est_price;
 		this.est_date = est_date;
 		this.answer_cont = answer_cont;
+		this.last_msg = last_msg;
 	}
 	public ChatList() {
 		Date est_date = new Date();

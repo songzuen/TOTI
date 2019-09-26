@@ -61,7 +61,7 @@ display:none;
 			<div id="mainwrapper">
 				
 				<!-- 세션 값으로 바꿔야함 -->
-				<input type="hidden" name="mento_idx" id="mento_idx" value="2">
+				<input type="hidden" name="mento_idx" id="mento_idx" value="3">
 				
 				
 				<div id="requestList"></div>
