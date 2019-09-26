@@ -83,7 +83,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<!-- 고수 이름 수정 -->
 	<update id="updateName" parameterType="com.yal.toti.han.domain.MentoProfile">
-		update toti_member set m_name=#{m_name} where m_idx=#{m_idx}
+		update toti_member set m_name=#{m_name} where m_idx=#{mento_idx}
+	</update>
+	
+	<!-- 한줄 소개 수정 -->
+	<update id="updateShot" parameterType="com.yal.toti.han.domain.MentoProfile">
+		update toti_mentor_profile set p_shot=#{p_shot} where mento_idx=#{mento_idx}
+	</update>
+	
+	<!-- 제공 서비스 수정 -->
+	
+	
+	<!-- 활동 지역 수정 -->
+	<update id="updateLocation" parameterType="com.yal.toti.han.domain.MentoProfile">
+		update toti_mentor set tor_location=#{tor_location} where mento_idx=#{mento_idx}
 	</update>
 	
 	<!-- 결제 수단 수정 -->
@@ -101,22 +114,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		update toti_mentor_profile set p_career=#{p_career} where mento_idx=#{mento_idx}
 	</update>
 	
-	<!-- 한줄 소개 수정 -->
-	<update id="updateShot" parameterType="com.yal.toti.han.domain.MentoProfile">
-		update toti_mentor_profile set p_shot=#{p_shot} where mento_idx=#{mento_idx}
-	</update>
-	
 	<!-- 상세 설명 수정 -->
 	<update id="updateLong" parameterType="com.yal.toti.han.domain.MentoProfile">
 		update toti_mentor_profile set p_long={p_long} where mento_idx=#{mento_idx}
 	</update>
-	
-	<!-- 활동 지역 수정 -->
-	<update id="updateLocation" parameterType="com.yal.toti.han.domain.MentoProfile">
-		update toti_mentor set tor_location=#{tor_location} where mento_idx=#{mento_idx}
-	</update>
-	
-	
 	
 	<!-- 리뷰 작성 -->
 	<insert id="insertReview" parameterType="com.yal.toti.han.domain.ReviewInfo">

@@ -1,16 +1,20 @@
 package com.yal.toti.han.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-public class MentoProfileController {
+public class ProfileController {
 
 	@RequestMapping("/profile/{mento_idx}")
 	public String getMentoProfile(@PathVariable("mento_idx") int mento_idx) {
 		return "han/user/MentoProfile";
+	}
+	
+	@RequestMapping("/review/{mento_idx}")
+	public String writeReview(@PathVariable("mento_idx") int mento_idx) {
+		return "han/user/ReviewWrite";
 	}
 	
 	/*
