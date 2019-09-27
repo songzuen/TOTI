@@ -21,11 +21,27 @@ public class ChatRoomController {
 	public String searchChatRoom(@PathVariable("est_idx") int roomnum, @PathVariable("cate_idx") int category,
 			@PathVariable("user") int user, @PathVariable("m_idx") int target) {
 
-		System.out.println(roomnum + ", " + category + ", " + user + ", " + target);
-
 		String room = service.searchChatRoom(roomnum, category, user, target);
 
 		return room;
+	}
+
+	@CrossOrigin
+	@GetMapping(value = "/{m_idx}/{user}", produces = "application/text; charset=utf8")
+	public String targetName(@PathVariable("m_idx") int target, @PathVariable("user") int user) {
+
+		String name = service.targetName(target, user);
+
+		return name;
+	}
+
+	@CrossOrigin
+	@GetMapping(value = "/{user}", produces = "application/text; charset=utf8")
+	public String usertName(@PathVariable("user") int user) {
+
+		String name = service.userName(user);
+
+		return name;
 	}
 
 }

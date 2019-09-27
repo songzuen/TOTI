@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import com.yal.toti.baek.dao.ChatSessionDao;
 import com.yal.toti.baek.domain.ChatRoomInfo;
 
-@Service
+@Service("roomService")
 public class RoomService {
 
 	@Autowired
@@ -34,12 +34,32 @@ public class RoomService {
 		return room;
 	}
 
+	public String targetName(int target, int user) {
+		dao = template.getMapper(ChatSessionDao.class);
+
+		String targetName = dao.searchTargetName(target);
+
+		if (targetName == null) {
+			targetName = dao.searchTargetNameByUser(user);
+		}
+
+		return targetName;
+	}
+
+	public String userName(int user) {
+		dao = template.getMapper(ChatSessionDao.class);
+
+		String userName = dao.searchUserName(user);
+
+		return userName;
+	}
+
 	public List<ChatRoomInfo> getRoomList(int user) {
 		dao = template.getMapper(ChatSessionDao.class);
 
 		List<ChatRoomInfo> list = dao.selectChatRoomListByUser(user);
 		if (list == null) {
-			
+
 		}
 
 		return list;

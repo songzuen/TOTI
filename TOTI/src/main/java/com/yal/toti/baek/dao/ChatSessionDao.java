@@ -15,6 +15,14 @@ public interface ChatSessionDao {
 
 	public int insertChatRoom(int user, int target, int category, int roomnum);
 
+	public String searchTargetName(int target);
+
+	public String searchTargetNameByUser(int user);
+
+	public String searchUserName(int user);
+
+	public String selectMentorCheck(int user);
+
 	public List<ChatRoomInfo> selectChatRoomListByUser(int user);
 
 }

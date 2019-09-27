@@ -5,6 +5,7 @@
 
 <head>
 <%@include file="/WEB-INF/views/frame/contents/header.jsp"%>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <!-- title -->
 <title>SamplePage</title>
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
@@ -134,34 +135,15 @@ table tr td {
 				</div>
 				<div id="chatArea">
 					<div id="chatInfo"></div>
+					<div id="targetName"></div>
+					<div id="userName"></div>
 					<div id="chat_box"></div>
 					<input type="text" id="input_msg">
 					<button id="msg_process">전송</button>
 				</div>
 				<div id="profileArea">
 
-					<div>프로필</div>
-
-					<br> <br>
-
-					<div>
-						기본정보
-
-						<ul>
-							<li>본인 인증 여부</li>
-							<li>고용된 횟수</li>
-							<li>지역</li>
-						</ul>
-
-					</div>
-
-					<br> <br>
-
-					<div>추가 정보</div>
-
-					<br> <br>
-
-					<div>제공 서비스</div>
+					<div id="profile"></div>
 
 				</div>
 			</div>
@@ -171,7 +153,7 @@ table tr td {
 						<tr>
 							<td>est_idx</td>
 							<td>cate_idx</td>
-							<td>mento_idx</td>
+							<td>mentor_idx</td>
 							<td>m_idx</td>
 							<td>est_price</td>
 							<td>est_const</td>
@@ -181,7 +163,7 @@ table tr td {
 				<div id="chatRoomList">
 					<table id="chatRoomListTable">
 						<tr>
-							<td>방 번호</td>
+							<td>분야</td>
 							<td>상대방</td>
 							<td>마지막 메시지</td>
 						</tr>
@@ -208,6 +190,7 @@ table tr td {
 		$(document).ready(function() {
 
 			estlist();
+
 		});
 
 		function estlist() {
@@ -251,18 +234,22 @@ table tr td {
 					var html = '';
 					for (var i = 0; i < data.length; i++) {
 
+						var name = data[i].targetname;
+
 						if (user == data[i].room_target) {
-							var tmp = data[i].room_user;
+							var tmp = data[i].room_target;
 							data[i].room_target = data[i].room_user;
 							data[i].room_user = tmp;
+
+							name = data[i].username;
 						}
 
 						html += '<tr>';
+						html += '<td>' + data[i].cate_name + '</td>';
 						html += '<td onclick="chat(' + '\'' + data[i].room_num
 								+ '\'' + ', ' + '\'' + data[i].room_cat + '\''
 								+ ', ' + '\'' + data[i].room_target + '\''
-								+ ');">' + data[i].room_num + '</td>';
-						html += '<td>' + data[i].room_target + '</td>';
+								+ ');">' + name + '</td>';
 						html += '<td>' + data[i].last_msg + '</td>';
 						html += '</tr>';
 					}
@@ -285,12 +272,26 @@ table tr td {
 								+ '/' + cate_idx + '/' + user + '/' + m_idx,
 						type : 'GET',
 						success : function(data) {
-							alert(data);
+
 							var html = '';
 							html += '<input type="hidden" id="chat_room" value="' + data + '">'
 							$('#chatInfo').html(html);
+							mentorCheck(user);
+							chatTarget(user);
+							chatUser(user);
 						}
 					});
+
+			if ($('#check').val() == 'Y') {
+				$.ajax({
+					url : 'http://localhost:8080/toti/chat/profile/mentor/'
+							+ user,
+					type : 'GET',
+					success : function(data) {
+						alert(data);
+					}
+				});
+			}
 
 			var socket = io.connect('http://localhost:82/');
 
@@ -325,7 +326,7 @@ table tr td {
 					} else {
 						html += '<div id = "msgbox">';
 						html += '<div id = "msg" class = "receivebox">';
-						html += data[i].room_user + ' : ' + data[i].message;
+						html += data[i].user_name + ' : ' + data[i].message;
 						html += '</div><span class = "time">'
 								+ data[i].message_date + '</span></div>';
 					}
@@ -339,7 +340,7 @@ table tr td {
 				var receiveMsg = '';
 				receiveMsg += '<div id = "msgbox">';
 				receiveMsg += '<div id = "msg" class = "receivebox">';
-				receiveMsg += data.name + ' : ' + data.message;
+				receiveMsg += data.username + ' : ' + data.message;
 				receiveMsg += '</div><span class = "time">' + data.time
 						+ '</span></div>';
 
@@ -395,12 +396,61 @@ table tr td {
 
 						socket.emit("send_msg", {
 							room : $('#chat_room').val(),
-							name : user,
+							useridx : user,
+							username : $('#user').val(),
 							message : $("#input_msg").val(),
 							time : currentDate + currentTime
 						});
 						$("#input_msg").val("");
 					});
+
+			function mentorCheck(user) {
+				$
+						.ajax({
+
+							url : 'http://localhost:8080/toti/chat/mentorcheck/'
+									+ user,
+							type : 'GET',
+							success : function(data) {
+								alert('data : ' + data);
+
+								var html = '';
+								html += '<input type="input" id="check" value="' + data + '">'
+								$('#profile').html(html);
+							}
+
+						});
+			}
+
+			function chatTarget(user) {
+				$
+						.ajax({
+							url : 'http://localhost:8080/toti/chat/room/'
+									+ m_idx + '/' + user,
+							type : 'GET',
+							success : function(data) {
+
+								var html = '';
+								html += '<input type="hidden" id="target" value="' + data + '">'
+								$('#targetName').html(html);
+							}
+						});
+			}
+
+			function chatUser(user) {
+				$
+						.ajax({
+							url : 'http://localhost:8080/toti/chat/room/'
+									+ user,
+							type : 'GET',
+							success : function(data) {
+								// alert(data);
+								var html = '';
+								html += '<input type="hidden" id="user" value="' + data + '">'
+								$('#userName').html(html);
+							}
+						});
+			}
 
 		};
 

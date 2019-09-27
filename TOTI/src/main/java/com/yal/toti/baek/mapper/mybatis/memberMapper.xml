@@ -22,8 +22,23 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<select id="selectChatRoomListByUser"
 		resultType="com.yal.toti.baek.domain.ChatRoomInfo">
-		select * from toti.toti_chatroom where room_user =
-		#{param1} or room_target = #{param1};
+		select chatroom.room_num, chatroom.room_cat,
+		cate.cate_name,
+		chatroom.room_user,
+		chatroom.last_msg,
+		chatroom.room_target,
+		(select m_name from toti.toti_member where m_idx
+		= room_user) as username, (select m_name from toti.toti_member where
+		m_idx = room_target) as targetname from
+		toti.toti_chatroom as chatroom
+		join toti.toti_member
+		as member on
+		chatroom.room_target = member.m_idx
+		join toti.toti_cate as cate on
+		chatroom.room_cat = cate.cate_idx where
+		room_user =
+		#{param1} or
+		room_target = #{param1} order by cate_name
 	</select>
 
 	<select id="searchChatRoom" resultType="String">
@@ -31,6 +46,31 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		toti_chatroom where room_user =
 		#{param1} and room_target = #{param2}
 		and room_cat = #{param3}
+	</select>
+
+	<select id="searchTargetName" resultType="String">
+		select distinct
+		member.m_name from toti.toti_chatroom as chatroom join
+		toti.toti_member as member on chatroom.room_target = member.m_idx
+		where room_target = #{param1}
+	</select>
+
+	<select id="searchUserName" resultType="String">
+		select m_name from
+		toti.toti_member where m_idx = #{param1}
+	</select>
+
+	<select id="searchTargetNameByUser" resultType="String">
+		select distinct
+		member.m_name from toti.toti_chatroom as chatroom join
+		toti.toti_member as member on chatroom.room_user = member.m_idx where
+		room_target = #{param1};
+	</select>
+
+	<select id="selectMentorCheck" resultType="String">
+		select m_ver from
+		toti.toti_member where m_idx =
+		#{param1}
 	</select>
 
 	<insert id="insertChatRoom">

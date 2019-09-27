@@ -65,28 +65,28 @@ io.sockets.on("connection", function(socket) {
     }
   });
 
-
   socket.on("send_msg", function(data) {
-    socket.emit("send_msg", data);
-    socket.broadcast.in(data.room).emit("receiv_msg", data);
-
-    console.log(data.message, data.room, data.name, data.time);
+    // console.log(data.message, data.room, data.name, data.time);
 
     connection.query(
       "insert into toti_chatlog(message, message_date, room_num, room_user) VALUES (?, ?, ?, ?)",
-      [data.message, data.time, data.room, data.name],
+      [data.message, data.time, data.room, data.useridx],
       function(error, results) {
         if (error) {
           console.log(error);
         }
         // console.log(results);
-        
-        connection.query("update toti_chatroom set last_msg = ? where room_num = ?", [data.message, data.room],
-        function(error, results) {
-          if (error) {
-            console.log(error);
+        connection.query(
+          "update toti_chatroom set last_msg = ? where room_num = ?",
+          [data.message, data.room],
+          function(error, results) {
+            if (error) {
+              console.log(error);
+            }
+            socket.emit("send_msg", data);
+            socket.broadcast.in(data.room).emit("receiv_msg", data);
           }
-        })
+        );
       }
     );
   });
@@ -96,7 +96,7 @@ io.sockets.on("connection", function(socket) {
     const log = new Array();
 
     connection.query(
-      "select * from toti_chatlog where room_num = ?",
+      "select chatlog.message, chatlog.message_date, chatlog.room_num, chatlog.room_user, member.m_name from toti_chatlog as chatlog join toti_member as member on chatlog.room_user = member.m_idx where room_num = ?",
       [data.room],
       function(error, results) {
         if (error) {
@@ -104,11 +104,11 @@ io.sockets.on("connection", function(socket) {
         }
         for (var i = 0; i < results.length; i++) {
           log.push({
-            message_num: results[i].message_num,
             message: results[i].message,
             message_date: results[i].message_date,
-            room_user: results[i].room_user
-          });    
+            room_user: results[i].room_user,
+            user_name: results[i].m_name
+          });
         }
         // 여기에 콜백 함수
         // io.sockets.in(data.room).emit("loadChatLog", log);
