@@ -65,4 +65,10 @@ public class RequestController {
 		
 	}
 	
+	@RequestMapping("/request/map")
+	public String dd() {
+		
+		return "kang/request/map";
+	}
+	
 }
