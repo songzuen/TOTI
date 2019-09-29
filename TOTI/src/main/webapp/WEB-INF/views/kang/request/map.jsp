@@ -44,6 +44,9 @@
 </head>
 <body>
 <div>
+	<div>
+		<h2>레슨을 원하는 장소의 주소검색 또는 위치를 표시해주세요.</h2>
+	</div>
 	<div class="map_wrap">
 		<div id="map" style="width: 100%; height: 100%; position: relative; overflow: hidden;"></div>
 		<div class="hAddr">
@@ -51,9 +54,10 @@
 		</div>
 	</div>
 	<div>
-		주소 : <input type="text" id="selectMap"> <input>
+		주소 : <input type="text" id="selectMap"> <input type="button" value="검색" onclick="serchMap()"> <input type="button" value="입력" onclick="submit()">
 	</div>
 </div>
+	<script src="http://code.jquery.com/jquery-1.11.2.min.js"></script>
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=4668590a134c8473c3e3cea848555388&libraries=services"></script>
 	<script>
 		var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
@@ -79,19 +83,13 @@
 
 		// 지도를 클릭했을 때 클릭 위치 좌표에 대한 주소정보를 표시하도록 이벤트를 등록합니다
 		kakao.maps.event.addListener(map, 'click', function(mouseEvent) {
+
 			searchDetailAddrFromCoords(mouseEvent.latLng, function(result,
 					status) {
 				if (status === kakao.maps.services.Status.OK) {
-					var detailAddr = !!result[0].road_address ? '<div>도로명주소 : '
-							+ result[0].road_address.address_name + '</div>'
-							: '';
-					detailAddr += '<div>지번 주소 : '
-							+ result[0].address.address_name + '</div>';
 
-					var content = '<div class="bAddr">'
-							+ '<span class="title">법정동 주소정보</span>'
-							+ detailAddr + '</div>';
-							
+					var content = '<div style="width:150px;text-align:center;padding:6px 0;">여기서 레슨받고 싶어요.</div>'
+					
 					// 마커를 클릭한 위치에 표시합니다 
 					marker.setPosition(mouseEvent.latLng);
 					marker.setMap(map);
@@ -134,6 +132,44 @@
 					}
 				}
 			}
+		}
+		
+		function serchMap() {
+			marker.setMap(null);
+			var serch = $('#selectMap').val();
+
+			geocoder.addressSearch(serch, function(result, status) {
+
+			    // 정상적으로 검색이 완료됐으면 
+			     if (status === kakao.maps.services.Status.OK) {
+
+			        var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+
+			        // 결과값으로 받은 위치를 마커로 표시합니다
+			        var marker = new kakao.maps.Marker({
+			            map: map,
+			            position: coords
+			        });
+
+			        // 인포윈도우로 장소에 대한 설명을 표시합니다
+			        var infowindow = new kakao.maps.InfoWindow({
+			            content: '<div style="width:150px;text-align:center;padding:6px 0;">여기서 레슨받고 싶어요.</div>'
+			        });
+			        
+			        infowindow.open(map, marker);
+
+			        // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+			        map.setCenter(coords);
+			    } 
+			});    
+		}
+		
+		
+		function submit() {
+			
+			opener.document.getElementById("city_idx").value = document.getElementById("selectMap").value;
+			window.close();
+			
 		}
 	</script>
 </body>
