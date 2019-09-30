@@ -64,7 +64,7 @@
 							</div>
 						</div>
 					</div>
-					<form role="form" method="post">
+					<form role="form" method="post" id="requestForm">
 					<div>
 						<!-- 분야번호 -->
 						<input type="hidden" value="${data.cate_idx}" id="cate_idx" name="cate_idx">
@@ -133,32 +133,78 @@
 		setProgress(current);
 
 		// Next button click action
+		var c = 0;
+		
 		btnnext.click(function() {
-
+	
 			if(!$('input:radio[name=service_idx]').is(':checked')) {
 				alert("체크해주세요");
+			}else if(current > 1){
+				
+				if ($('input[name="answerDatas['+c+'].answer_cont"]').attr('type') == 'checkbox' || $('input[name="answerDatas['+c+'].answer_cont"]').attr('type') == 'radio') {
+					if($('input[name="answerDatas['+c+'].answer_cont"]:checked').length == 0) {
+						alert('체크 ㅠ');
+					}else {
+						if (current < widget.length) {
+							widget.show();
+							widget.not(':eq(' + (current++) + ')').hide();
+							setProgress(current);
+							c++;
+						}
+						hideButtons(current);
+					}
+				}else {
+					if($('input[name="answerDatas['+c+'].answer_cont"]').val() == '') {
+						alert('빈칸채우세여');
+					}else{
+						if (current < widget.length) {
+							widget.show();
+							widget.not(':eq(' + (current++) + ')').hide();
+							setProgress(current);
+							c++;
+						}
+						hideButtons(current);
+					}
+				}
 			}else {
+				
+				if(c < 0) {
+					c = 0;
+				}
+				
 				if (current < widget.length) {
-					widget.show();
-					widget.not(':eq(' + (current++) + ')').hide();
-					setProgress(current);
+						widget.show();
+						widget.not(':eq(' + (current++) + ')').hide();
+						setProgress(current);
 				}
 				hideButtons(current);
 			}
-	
+
 		})
 
 		// Back button click action
 		btnback.click(function() {
-			
-			if (current > 1) {
+
+			if (current > 1 || c > 0) {
 				current = current - 2;
+				c = c-2;
 				btnnext.trigger('click');
+				
 			}
+			
 			hideButtons(current);
 			
 		})
 		
+		
+		$('#requestForm').submit(function() {
+			  
+			if($('input[name="answerDatas['+c+'].answer_cont"]').val() == '') {
+				alert('빈칸채우세여');
+				
+				return false;
+			}
+		});
 		
 	});
 
@@ -230,12 +276,11 @@
 		
 		
 		function openMap() {
+			
             window.name = 'requestForm';
-            
             // window.open("open할 window", "자식창 이름", "팝업창 옵션");
             window.open('<c:url value="/request/map" />', 'mapForm', "width=800, height=600,top = 100, left = 100, resizable = no, scrollbars = no");
 		}
-		
 		
 </script>
 </body>

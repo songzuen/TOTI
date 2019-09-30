@@ -33,10 +33,17 @@ public class RequestController {
 	@RequestMapping(value = ("/request"), method = RequestMethod.POST)
 	public String request(RequestData data, Model model) {		
 		
-		int cnt = requestService.insertRequest(data);
-		
-		model.addAttribute("cnt", cnt);
-		model.addAttribute("request_idx", data.getRequest_idx());
+		int cnt;
+		try {
+			cnt = requestService.insertRequest(data);
+			
+			model.addAttribute("cnt", cnt);
+			model.addAttribute("request_idx", data.getRequest_idx());
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		return "kang/request/request";
 	}

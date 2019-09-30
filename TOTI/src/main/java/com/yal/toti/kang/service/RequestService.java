@@ -63,8 +63,8 @@ public class RequestService {
 
 	}
 	
-	@Transactional
-	public int insertRequest(RequestData data) {
+	@Transactional(rollbackFor=Exception.class)
+	public int insertRequest(RequestData data) throws Exception {
 		
 		dao = template.getMapper(RequestDaoInterface.class);
 
@@ -89,12 +89,12 @@ public class RequestService {
 	    } catch(Exception e) {
 	    	
 	        e.printStackTrace();
-	        TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
 	        
-	        return 500;
+	        throw new Exception();
 	    }
 
 	}
+	
 	
 	public List<UserRequestList> getUserRequests(int m_idx) {
 
