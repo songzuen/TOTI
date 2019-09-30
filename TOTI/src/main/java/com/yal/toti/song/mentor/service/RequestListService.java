@@ -21,10 +21,9 @@ public class RequestListService {
 		
 		dao = template.getMapper(RequestListDao.class);
 		
-		//List<RequestList> list = dao.selectAllRequest(mento_idx);
 		List<RequestList> list = dao.selectAllRequest(mento_idx);
 		
 		return list;
 	}
-
+	
 }

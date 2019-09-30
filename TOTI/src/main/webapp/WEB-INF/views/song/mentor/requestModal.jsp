@@ -35,28 +35,37 @@ h1, h2, h3, h4, h5, h6 {
 #req {
 	width: 70%;
 	float: left;
+	
 }
 
+img {
+width: 100px;
+border-radius: 50%;
+margin-bottom: 20px;
+margin-right: 30px;
+}
 #request h3 {
 	text-align: left;
 }
 
-#request table {
-	width: 100%;
-	text-align: left;
+#mInfo{
+margin-bottom: 20px;
 }
-
-#request table tr td:nth-child(1) {
-	width: 40%;
-	height: 24px;
-}
-
 #est {
 	float: left;
 	text-align: center;
 	border: 1px solid #ddd;
 	border-radius: 3px;
-	padding: 5px;
+	padding: 15px;
+	margin: 5px;
+	font-size: 14px;
+}
+
+#estBtn {
+font-size: 13px;
+margin-top: 6px;
+width: 140px;
+margin-top: 20px;
 }
 
 .modal-body table {
@@ -102,9 +111,11 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 p {
-	font-size: 12px;
+	font-size: 14px;
 	color: #212529;
+	
 }
+
 
 .chk{
 float: right;
@@ -114,6 +125,7 @@ margin-right: 15px;
 .modal-body #subBtn {
 	margin: 3% 0;
 	width: 30%;
+	font-size: 13px;
 }
 </style>
 </head>
@@ -162,24 +174,38 @@ margin-right: 15px;
 										
 									<table>
 										<tr>
-											<td><p>금액</p></td>
+											<td><p>예상 총 비용</p></td>
 											<td>
 												<div id="price" class="divbox">
 													<input type="text" name="est_price" id="est_price"
-														style="width: 90%"><span id="won">원</span>
+														style="width: 90%"><span style="font-size:13px;" id="won">원</span>
 												</div>
-												<p id="p_chk"></p>
+												
 											</td>
 										</tr>
+										
+										<tr>
+										<td colspan="2">
+										<p id="p_chk"></p>
+										</td>
+										</tr>
+										
 										<tr>
 											<td><p>수업 상세 내용</p></td>
 											<td>
 												<div id="textarea" class="divbox">
 													<textarea rows="7" cols="40" name="est_cont" id="est_cont"></textarea>
 												</div>
-												<p id="c_chk"></p>
+												
 											</td>
 										</tr>
+										
+										<tr>
+										<td colspan="2">
+										<p id="c_chk"></p>
+										</td>
+										</tr>
+										
 										<tr>
 											<td><p>파일 추가</p></td>
 											<td>
@@ -236,48 +262,36 @@ margin-right: 15px;
 				var est = '';
 				var req_idx='';
 
-				html += '<table>';
 				for (var i = 0; i < data.length; i++) {
-					html += '<tr>';
-					html += '<td>';
-					html += '<p>' + data[0].m_photo + '</p>';
-					html += '</td>';
-					html += '<td>';
-					html += '<p>' + data[0].m_name + '</p>';
-					html += '</td>';
-					html += '</tr>';
-
-					html += '<tr>';
-					html += '<td>';
-					html += '<p>' + data[0].cate_name + '</p>';
-					html += '</td>';
-					html += '<td>';
-					html += '<p>' + data[0].service_name + '</p>';
-					html += '</td>';
-					html += '</tr>';
+					html += '<div id="mInfo">'
+					html += '<img src = "<c:url value="/img/user/'+data[i].m_photo+'"/>"';
+					html += '<span style="float:left;"><h2 style="height:100px;line-height:60px;">' + data[i].m_name;
+					html += '<p>' + data[i].cate_name;
+					html += ' - ';
+					html += data[i].service_name + '</p>';
+					html += '</h2></span>';
+					html += '</div>'
 					break;
 				}
 
 				for (var i = 0; i < data.length; i++) {
-					html += '<tr>';
-					html += '<td>';
-					html += '<p style="font-weight: 700">' + data[i].quest_name+'</p>';
-					html += '</td>';
-					html += '<td>';
+					html += '<div id="reqInfo">'
+					html += '<p style="font-weight: 700">Q'+ (i+1) +'. '+ data[i].quest_name+'</p>';
 					html += '<p>' + data[i].answer_cont + '</p>';
-					html += '</td>';
-					html += '</tr>';
+					html += '<hr>';
+					html += '</div>'
+					
 				}
-				html += '</table>';
+				
 				$('#req').html(html);
 				
 				for (var i = 0; i<data.length; i++){
-				est += data[0].m_name+'님이 멘토를  찾고 계세요! <br>';
-				est += data[0].m_name+'님에게 ${requestInfo.service_name}를 알려주세요!<br>';
+				est += data[i].m_name+'님이 멘토를  찾고 계세요! <br>';
+				est += data[i].m_name+'님에게 '+data[i].service_name+'를 알려주세요!<br>';
 				break;
 				}
 				/* Button to Open the Modal */
-				est += '<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" style="margin: 2px auto;">견적서 보내기</button>';
+				est += '<button type="button" id="estBtn" class="btn btn-primary" data-toggle="modal" data-target="#myModal" style="margin: 2px auto;">견적서 보내기</button>';
 				
 				$('#est').html(est);
 				
@@ -365,7 +379,7 @@ margin-right: 15px;
 										});
 										
 									}else{
-										alert('이미 전송한 요청서 입니다.');
+										alert('이미 견적서를 전송한 요청서 입니다.');
 									}
 								}
 							});

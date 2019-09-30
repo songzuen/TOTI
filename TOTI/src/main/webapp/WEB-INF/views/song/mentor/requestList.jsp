@@ -14,6 +14,7 @@
 }
 h1,h2,h3,h4,h5,h6{
 color:black;
+letter-spacing: 1px;
 }
 body{
 overflow: auto
@@ -24,28 +25,64 @@ overflow: auto
 	margin: 20px auto;
 }
 #requestList{
-width: 100%
+width: 100%;
+height:100%;
 }
+#nList{
+width: 500px;
+margin: 70px auto;
+border: 1px solid #ddd;
+border-radius: 5px;
+padding: 20px 10px;
+text-align: center;
+}
+
 #list{
-margin : 10px 20px;
-padding : 5px;
+margin : 10px 10px;
+padding-bottom : 10px;
 float: left;
 text-align: center;
 width: 200px;
-height: 200px;
+height:  300px;
+
+border: 1px solid #ddd;
+border-radius: 7px;
+
 }
-.comment{
-padding-top: 10px;
+/* #requestList :hover{
+background-color: #F2F3CA;
+} */
+
+img{
+width: 100px;
+border-radius: 50%;
+text-align: center;
+margin: 30px 0;
 }
-#photo {
-	width: 120px;
-	height: 120px;
-	border-radius: 50%;
+
+#photo{
+margin-bottom: 20px;
 }
 
 .btn{
 display:none;
 } 
+.comment{
+width:16px;
+padding-right : 3px; 
+color: #a0a0a0;
+}
+#listInfo{
+text-align: left;
+margin-left: 30px;
+margin-right : 10px;
+width :150px;
+
+white-space: nowrap; 
+overflow: hidden;
+text-overflow: ellipsis;
+
+}
 
 </style>
 </head>
@@ -59,11 +96,12 @@ display:none;
 		<div class="wrapper">
 			<!-- container -->
 			<div id="mainwrapper">
-				
+				<!-- <h3 style="margin-bottom: 30px;">요청서</h3> -->
 				<!-- 세션 값으로 바꿔야함 -->
 				<input type="hidden" name="mento_idx" id="mento_idx" value="3">
 				
 				
+				<div id="noList"></div>
 				<div id="requestList"></div>
 				<!-- end home variation -->
 				<!-- end component -->
@@ -79,6 +117,8 @@ display:none;
 <script>
 	$(document).ready(function() {	
 		list($('#mento_idx').val());
+		
+	
 	});
 
 	function list(mento_idx) {
@@ -87,7 +127,14 @@ display:none;
 					type : 'GET',
 					success : function(data) {
 						var html = '';
-						html += '<h3>요청서</h3><hr>';
+						var noList='';
+
+						if (data.length ==0){
+							noList += '<div id="nList">';
+							noList += '<h2> 아직 받은 요청서가 없어요</h2>'
+							noList += '</div>';
+						} 
+						else{
 						for (var i = 0; i < data.length; i++) {
 							
 							var date = new Date(data[i].request_date);
@@ -95,49 +142,28 @@ display:none;
 							var month = date.getMonth();
 							var day = date.getDate();
 							
-							/* if (data.length=0){
-								html += '<div id="list">';
-								html += '<h2>요청받은 데이터 없습니다.</h2>'
-								html += '</div>';
-							} */
-							
 							html += '<label for="estimateBtn('+data[i].request_idx+')" style="cursor:pointer"><div id="list">';
-							html += '<span id="photo">';
-							html += data[i].m_photo;
-							html += '</span><br>';	
-							
+							html += '<div><img src = "<c:url value="/img/user/'+data[i].m_photo+'"/>"</div><br>';
+							html += '<div id="listInfo"><h3>'
 							html += data[i].m_name+'(' + data[i].service_name
-									+ ')<br>';
-							html += '요청 사항: ';
-							html += '<span class="comment">';
-							html += data[i].answer_cont;
-							html += '</span><br>'+year+'-'+month+'-'+day;
-							
+									+ ')</h3>';
+							html += '<br><h5><span class="comment" id="cont">요청 사항 </span><br>';
+							html += '<span id="cont">'+data[i].answer_cont+'</span></h5>';
+							html += '<br><span style="font-size:11px; color:#000; font-weight:400; margin-right:20px;">'+year+'.'+month+'.'+day+'</span>';
+							html += '</div>'
 							html += '<button id= "estimateBtn('+data[i].request_idx+')" class="btn" onclick="selectRequest('
-							+ data[i].request_idx + ')">이동</button>';
-							//html += '<a href="http://localhost:8080/toti/mentorpage/'+data[i].mento_idx+'">고수 페이지</a>';
+							+ data[i].request_idx + ')">이동</button><br>';
 							html += '</div></label>';
+							html += '</div>';
+						}
 						}
 						$('#requestList').html(html);
+						$('#noList').html(noList);
 					}
 				});
 	}
 
-	/* function del(request_idx){
-		$.ajax(function(){
-			url : 'http://localhost:8080/toti/mentor/requestList/'+request_idx,
-			type:'DELETE',
-			success : function(data){
-				if (data =='success'){
-					alert('삭제 되었습니다.');
-					list();
-				}
-			}
-		});
-	} */
-	
 	function selectRequest(request_idx) {
-		//location.href = "http://localhost:8080/toti/estimate/" + request_idx;
 		location.href = "http://localhost:8080/toti/requestList/" + request_idx;
 	}
 

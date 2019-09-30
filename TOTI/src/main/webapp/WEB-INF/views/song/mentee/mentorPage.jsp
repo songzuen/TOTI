@@ -27,7 +27,7 @@ body {
 	margin: 20px auto;
 	padding-left: 10px;
 }
- h4, h5, h6 {
+h2,h3, h4, h5, h6 {
 	color: black;
 	letter-spacing: 2px;
 	margin: 0;
@@ -45,19 +45,37 @@ body {
 }
 
 .info {
-	margin: 10px;
+	margin: 20px;
 }
 
+.info div{
+padding: 5px 0;
+font-size: 12px;
+}
+img {
+width: 100px;
+border-radius : 50%;
+}
+
+#img{
+float:left;
+margin-right: 20px;
+}
 table {
 	width: 100%;
 }
 
-table tr td:nth-child(1) {
-	width: 20%;
+table tr:nth-child(1) td:nth-child(1) {
+	width: 50px;
 }
 
 #reviewTable{
 margin-top: 20px;
+margin-left: 25px;
+}
+
+#review_name{
+font-weight: 800;
 }
 
 
@@ -65,9 +83,20 @@ margin-top: 20px;
 	border: 1px solid #ddd;
 	border-radius: 3px;
 	text-align: center;
-	padding: 5px;
+	padding: 15px;
 	margin: 5px;
-	position: relative;
+	position: absolute;
+	font-size: 14px;
+}
+
+#star{
+width: 15px;
+}
+
+#revBtn{
+width: 70%;
+font-size: 13px;
+margin-top: 6px;
 }
 </style>
 </head>
@@ -83,32 +112,12 @@ margin-top: 20px;
 			<div>
 				<input type="hidden" id="mento_idx" value="${mento_idx}">
 				<!-- 고수 마이페이지 -->
-				<div id="mentorPage">
-					
-				</div>
+				<div id="mentorPage"></div>
 
 
 				<div class="buttonWrapper">
-					<!-- <div id="requestBtnBox" class="rBox"> -->
-						<%-- <c:forEach items="${viewData}" begin="0" end="0" var="mentorInfo"
-							varStatus="stat">
-							${mentorInfo.m_name} 멘토님에게 <br> 원하는 서비스의 견적을 받아보세요
-						</c:forEach> 
-						<br>
-						<button type="button" id="subBtn" class="btn btn-primary">견적
-							요청하기</button> --%>
-					<!-- </div> -->
-
-					<div id="reviewBtnBox" class="rBox">
-						<%-- <c:forEach items="${viewData}" begin="0" end="0" var="mentorInfo"
-							varStatus="stat">
-						${mentorInfo.m_name} 멘토님의 수업이 어떠셨나요?<br>
-						${mentorInfo.m_name} 멘토님에 관한 후기를 남겨주세요
-						</c:forEach>
-						<br>
-						<button type="button" id="subBtn" class="btn btn-primary">리뷰
-							작성하기</button> --%>
-					</div>
+				
+					<div id="reviewBtnBox" class="rBox"></div>
 				</div>
 				<!-- end home variation -->
 				<!-- end component -->
@@ -127,6 +136,10 @@ margin-top: 20px;
 	});
 	
 	function mentorPage(mento_idx){
+
+		var fullStar = '<span><img id=\"star\" src=\"https://d1hhkexwnh74v.cloudfront.net/icons/icon-common-review-star-small-full.svg\"></span>';
+		var halfStar = '<span><img id=\"star\" src=\"https://d1hhkexwnh74v.cloudfront.net/icons/icon-common-review-star-small-half.svg\"></span>';
+		
 		$.ajax({
 			url : 'http://localhost:8080/toti/mentorpage/'+mento_idx,
 			type : 'GET',
@@ -136,78 +149,181 @@ margin-top: 20px;
 				var revBtn = '';
 				for(var i = 0; i<data.length; i++){
 						
-						/*고수 프로필 사진*/
-						html+='<div class="info">'+data[0].m_photo+'</div>';
-
-						/* 고수 이름 */
-						html+='<div class="info">';
-						html+='<b><h4>'+data[0].m_name+'고수<span style="color:black; font-size:9px;"> 평점 : '+data[0].str+'점</span></h4></b>';
-						html+='</div>';
+						/*고수 프로필*/
+						html+='<div class="info"><span id="img"><img src = "<c:url value="/img/user/'+data[i].m_photo+'"/>"><span></div>';
 						
+						html+='<div class="info" style="height:100px; padding:30px 10px;"><b><h2>'+data[i].m_name+'</h2></b><span style="color:black; font-size:9px;">';
+						
+						if (data[i].str != 0) {
+							if(data[i].str == 5){
+								for(var j=0; j< 5; j++){
+									$('#starBox2').append(html+=fullStar);
+									
+								}
+							}
+							else if(data[i].str > 4 && data[i].str < 5){
+								for(var j=0;j<4;j++){
+									$('#starBox2').append(html+=fullStar);
+								}
+								$('#starBox2').append(html+=halfStar);
+								
+							}else if(data[i].str == 4){
+								for(var j=0;j<4;j++){
+									$('#starBox2').append(html+=fullStar);
+								}
+							}
+							else if(data[i].str > 3 && data[i].str <4){
+								for(var j=0;j<3;j++){
+									$('#starBox2').append(html+=fullStar);
+								}
+								$('#starBox2').append(html+=halfStar);
+							}
+							else if(data[i].str == 3){
+								for(var j=0;j<3;j++){
+									$('#starBox2').append(html+=fullStar);
+								}
+							}
+							else if(data[i].str > 2 && data[i].str < 3){
+								for(var j=0;j<2;j++){
+									$('#starBox2').append(html+=fullStar);
+								}
+								$('#starBox2').append(html+=halfStar);
+							}
+							else if(data[i].str == 2){
+								for(var j=0;j<2;j++){
+									$('#starBox2').append(html+=fullStar);
+								}
+							}
+							else if(data[i].str > 1&& data[i].str <2){
+								for(var j=0;j<2;j++){
+									$('#starBox2').append(html+=fullStar);
+								}
+								$('#starBox2').append(html+=halfStar);
+							}
+							else if(data[i].str ==1){
+								$('#starBox2').append(html+=fullStar);
+							}
+							else {
+								$('#starBox2').append(html+=halfStar);
+							}
+							html += '<span style="margin-left:15px; font-size:14px;"><b>'+data[i].str +'</b></span>';
+							html += '<span style="margin-left:15px; font-size:14px;">('+data[i].cont_cnt +'개)</span>';
+							}
+						html += '</div>';
+						html+= '<hr>';
 						/* 대표 서비스 */
 						html+='<div class="info">';
-						html+='<h4>대표 서비스</h4>';
-						html+= data[0].cate_name;
-						html+='</div>';
+						html+='<h3>대표 서비스</h3><div>';
+						html+= data[i].cate_name;
+						html+='</div></div>';
 
 						/* 고수 한 줄 소개 */
 						html+='<div class="info">';
-						html+='<h4>한줄 소개</h4>'+data[0].p_shot+'<br>';
-						html+='</div>';
+						html+='<h3>한줄 소개</h3><div>'+data[i].p_shot+'<br>';
+						html+='</div></div>';
 						
 						/* 제공 서비스 */
 						
-						if(data[0].tor_sname != null){
+						if(data[i].tor_sname != null){
 							html+= '<div class="info">';
-							html+= '<h4>제공 서비스</h4>';
-							html+= data[0].tor_sname+'</div>';
-						}
-						else {
-							html+= '<div class="info">';
-							html+= '<h4>제공 서비스 없음</h4></div>';
+							html+= '<h3>제공 서비스</h3><div>';
+							html+= data[i].tor_sname+'</div></div>';
 						}
 						
 						/* 활동 지역 */
-						if(data[0].tor_location != null){
+						if(data[i].tor_location != null){
 							html+= '<div class="info">';
-							html+= '<h4>위치</h4>';
-							html+= data[0].tor_location+'</div>';
+							html+= '<h3>위치</h3><div>';
+							html+= data[i].tor_location+'</div></div>';
 						}
 						
 						/* 고수 학력 */
-						if(data[0].p_edu != null){
+						if(data[i].p_edu != null){
 							html+= '<div class="info">';
-							html+= '<h4>학력</h4>';
-							html+= data[0].p_edu+'</div>';
+							html+= '<h3>학력</h3><div>';
+							html+= data[i].p_edu+'</div></div>';
 						}
 						
 						/* 고수 경력 */
-						if(data[0].p_career != null){
+						if(data[i].p_career != null){
 							html+= '<div class="info">';
-							html+= '<h4>경력사항</h4>';
-							html+= data[0].p_career+'</div>';
+							html+= '<h3>경력사항</h3><div>';
+							html+= data[i].p_career+'</div></div>';
 						}
 
 						
 					/* 고수 상세 설명 */
 					
-						if(data[0].p_long != null){
+						if(data[i].p_long != null){
 							html+= '<div class="info">';
-							html+= '<h4>상세 설명</h4>';
-							html+= data[0].p_long+'</div>';
+							html+= '<h3>상세 설명</h3><div>';
+							html+= data[i].p_long+'</div></div>';
 						}
-						else {
-							html+= '<div class="info">';
-							html+= '<h4>상세 설명</h4>';
-							html+= '상세 설명 없음</div>';
-						}
-					
 					/* 리뷰 박스 */
 					html+='<div id="reviewBox" class="info">';
-						html+='<h4>';
-						html+='리뷰</h4>';
-						html+='<div><span style="float:left;margin-right:10px;"><h5>'+data[0].str+'</h5></span>';
-						html+='<span style="font-size: 10px; letter-spacing: 1px;float:left">'+data[0].cont_cnt+'개</span></div>';
+						html+='<h3>';
+						html+='리뷰';
+						if(data[i].str == 0){
+							html+='</h3>리뷰 없음';
+						}
+						
+						else{
+					 	html+='<span id="starBox3" style="width:20px;font-size:12px; padding-left: 10px;">';
+						if(data[i].str == 5){
+							for(var j=0; j< 5; j++){
+								$('#starBox3').append(html+=fullStar);
+								
+							}
+						}
+						else if(data[i].str > 4 && data[i].str < 5){
+							for(var j=0;j<4;j++){
+								$('#starBox3').append(html+=fullStar);
+							}
+							$('#starBox3').append(html+=halfStar);
+							
+						}else if(data[i].str == 4){
+							for(var j=0;j<4;j++){
+								$('#starBox3').append(html+=fullStar);
+							}
+						}
+						else if(data[i].str > 3 && data[i].str <4){
+							for(var j=0;j<3;j++){
+								$('#starBox3').append(html+=fullStar);
+							}
+							$('#starBox3').append(html+=halfStar);
+						}
+						else if(data[i].str == 3){
+							for(var j=0;j<3;j++){
+								$('#starBox3').append(html+=fullStar);
+							}
+						}
+						else if(data[i].str > 2 && data[i].str < 3){
+							for(var j=0;j<2;j++){
+								$('#starBox3').append(html+=fullStar);
+							}
+							$('#starBox3').append(html+=halfStar);
+						}
+						else if(data[i].str == 2){
+							for(var j=0;j<2;j++){
+								$('#starBox3').append(html+=fullStar);
+							}
+						}
+						else if(data[i].str > 1&& data[i].str <2){
+							for(var j=0;j<2;j++){
+								$('#starBox3').append(html+=fullStar);
+							}
+							$('#starBox3').append(html+=halfStar);
+						}
+						else if(data[i].str ==1){
+							$('#starBox3').append(html+=fullStar);
+						}
+						else {
+							$('#starBox3').append(html+=halfStar);
+						}
+						html += '<span style="margin-left:15px; font-size:13px;"><b>'+data[i].str +'</b></span>';
+						html += '<span style="margin-left:15px; font-size:13px;">('+data[i].cont_cnt +'개)</span>';
+						}
+						html+='</h3>';
 						break;
 				}
 				for(var i = 0; i<data.length;i++){
@@ -215,16 +331,71 @@ margin-top: 20px;
 					var year = date.getFullYear();
 					var month = date.getMonth();
 					var day = date.getDate();
-					
+					if(data[i].str != 0){
 						html+='<div id="reviewTable">';
 						html+='<table>';
 						html+='<tr>';
 						html+='	<td><h5 id="review_name">';
 						html+=data[i].member_name;
 
-						html+='</h5></td>';
-						html+='<td>'+data[i].review_star+'</td>';
-							html+='<td>'+year+'-'+month+'-'+day+'</td>';
+						html+='</h5>';
+						html+='<td style="width:100px;"><div id=rev_star>';
+
+						if (data[i].review_star != 0) {
+							if(data[i].review_star == 5){
+								for(var j=0; j< 5; j++){
+									$('#rev_star').append(html+=fullStar);
+									
+								}
+							}
+							else if(data[i].review_star > 4 && data[i].review_star < 5){
+								for(var j=0;j<4;j++){
+									$('#rev_star').append(html+=fullStar);
+								}
+								$('#rev_star').append(html+=halfStar);
+								
+							}else if(data[i].review_star == 4){
+								for(var j=0;j<4;j++){
+									$('#rev_star').append(html+=fullStar);
+								}
+							}
+							else if(data[i].review_star > 3 && data[i].review_star <4){
+								for(var j=0;j<3;j++){
+									$('#rev_star').append(html+=fullStar);
+								}
+								$('#rev_star').append(html+=halfStar);
+							}
+							else if(data[i].review_star == 3){
+								for(var j=0;j<3;j++){
+									$('#rev_star').append(html+=fullStar);
+								}
+							}
+							else if(data[i].review_star > 2 && data[i].review_star < 3){
+								for(var j=0;j<2;j++){
+									$('#rev_star').append(html+=fullStar);
+								}
+								$('#rev_star').append(html+=halfStar);
+							}
+							else if(data[i].review_star == 2){
+								for(var j=0;j<2;j++){
+									$('#rev_star').append(html+=fullStar);
+								}
+							}
+							else if(data[i].review_star > 1&& data[i].review_star <2){
+								for(var j=0;j<2;j++){
+									$('#rev_star').append(html+=fullStar);
+								}
+								$('#rev_star').append(html+=halfStar);
+							}
+							else if(data[i].review_star ==1){
+								$('#rev_star').append(html+=fullStar);
+							}
+							else {
+								$('#rev_star').append(html+=halfStar);
+							}
+							}
+						html += '</div></td>';
+							html+='<td style="color:#acacac;">'+year+'.'+month+'.'+day+'</td>';
 
 							html+='</tr>';
 							html+='<tr>';
@@ -232,22 +403,23 @@ margin-top: 20px;
 							html+='</tr>';
 							html+='</table>';
 							html+='</div>';
+					}
 							
 				}
 				html+='</div>';
 				$('#mentorPage').html(html);
 				
 				/* for(var i=0; i<data.length; i++){
-				reqBtn += data[0].m_name+' 멘토님에게 <br> 원하는 서비스의 견적을 받아보세요<br>';
+				reqBtn += data[i].m_name+' 멘토님에게 <br> 원하는 서비스의 견적을 받아보세요<br>';
 				reqBtn +='<button type="button" id="subBtn" class="btn btn-primary">견적 요청하기</button>';
 				break;
 				}
 				$('#requestBtnBox').html(reqBtn); */
 				
 				for(var i = 0; i<data.length;i++){
-				revBtn += data[0].m_name+' 멘토님의 수업이 어떠셨나요?<br>';
-				revBtn += data[0].m_name+' 멘토님에 관한 후기를 남겨주세요<br>';
-				revBtn +='<button type="button" id="subBtn" class="btn btn-primary">리뷰 작성하기</button>';
+				revBtn += data[i].m_name+' 멘토님의 수업이 어떠셨나요?<br>';
+				revBtn += data[i].m_name+' 멘토님에 관한 후기를 남겨주세요<br>';
+				revBtn +='<button type="button" id="revBtn" class="btn btn-primary">리뷰 작성하기</button>';
 				break;
 				}
 				$('#reviewBtnBox').html(revBtn);

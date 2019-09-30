@@ -8,8 +8,6 @@ public interface RequestListDao {
 
 	List<RequestList> selectAllRequest(int mento_idx);
 
-	int deleteRequest(int request_idx);
-
 	List<RequestList> getRequestInfo(int request_idx);
-
+	
 }

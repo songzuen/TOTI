@@ -1,5 +1,5 @@
 -- 각 고수의 개인정보, 고수에게 달린 리뷰들(각 리뷰의 별점, 리뷰개수, 별점 평), 고수 제공 서비스 
-select *,(if(isnull(r.review_idx),'리뷰 없음',r.review_cont)) cont,
+select *,(if(isnull(r.review_idx),'리뷰 없음',r.review_cont)) review_cont,
 (if(isnull(r.review_idx),'리뷰 없음',(select round(avg(sr.review_star),1) from toti.toti_review sr where sr.mento_idx = t.mento_idx))) str,
 (select count(review_cont) from toti.toti_review src where src.mento_idx = t.mento_idx) cont_cnt,
 (

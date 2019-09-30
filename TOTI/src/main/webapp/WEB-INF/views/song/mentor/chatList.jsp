@@ -23,42 +23,42 @@ body {
 }
 h1,h2,h3,h4,h5,h6{
 color:black;
+letter-spacing: 1px;
 }
 .wrapper {
 	width: 55%;
 	margin: 20px auto;
+}
+
+#chatList{
+margin: 70px 0;
 }
 #chat {
 	margin: 5px auto;
 	height: 70%;
 }
 
+img{
+width: 100px;
+border-radius: 50%;
+}
+
 table {
-	width: 70%;
+	width: 800px;
 	height: 100%;
 	float: left;
 	text-align: left;
-	margin: 10px auto;
 }
-table tr:nth-child(1) td{
+table tr:nth-child(1) td:nth-child(1){
 width: 150px;
+text-align: center;
 }
-table tr:nth-child(2) td{
-width: 40%;
-}
-
-/* table td:nth-child(1){
-width: 30%;
-} */
-
-#photo {
-	width: 120px;
-	height: 120px;
-	border-radius: 50%;
-}
-
 .btn {
-	display: block;
+	display: none;
+}
+.text {
+font-weight: 400;
+font-size: 11px;
 }
 </style>
 </head>
@@ -76,8 +76,7 @@ width: 30%;
 			<!-- 로그인 세션값으로 변경 -->
 			<input type="hidden" name="mento_idx" id="mento_idx" value="3">
 				<!-- 채팅리스트 -->
-				<h3>채팅 목록</h3>
-				<hr>
+				<!-- <h3 style="margin-bottom: 30px;">채팅 목록</h3> -->
 				<div id="chatList">
 					
 				</div>
@@ -105,34 +104,43 @@ width: 30%;
 					success : function(data) {
 						var html = '';
 						for (var i = 0; i < data.length; i++) {
-							html += '<div id="chat">';
+							html += '<label for="chatBtn" style="cursor:pointer"><div id="chat">';
 							html += '<input type="hidden" name="mento_idx" value="'+data[i].est_idx+'">';
 							html += '<table>';
 
 							html += '<tr>';
-							html += '<td rowspan="3" style="text-aline:center">';
+							html += '<td rowspan="6" style="text-aline:center">';
 							html += '<span id="photo">';
-							html += data[i].m_photo + '<br>';
+							html += '<img src = "<c:url value="/img/user/'+data[i].m_photo+'"/>"';
 							html += '</span>';
 							html += '</td>';
 							html += '</tr>';
 
 							html += '<tr>';
 							html += '<td>';
-							html += data[i].m_name + '(' + data[i].cate_name
-									+ ')</td>';
-							html += '</td>';
+							html += '<h3>'+data[i].m_name + '<span style="font-weight:400; font-size:11px; margin-left:7px;">' + data[i].service_name+'</span>';
+							html += '<span style="font-weight:400; font-size:11px; margin-left:7px;">('+data[i].cate_name+')</span></h3></td>';
+							html += '</tr>';
+							
+							/* html += '<tr>';
 							html += '<td>';
-							html += '신청 서비스 : ' + data[i].service_name+ ' / ';
-							html += '요청사항 : ' + data[i].answer_cont+ '<br>';
+							html += data[i].service_name+ '</td>';
+							html += '</tr>'; */
+							
+							
+							
+							html += '<tr>';
+							html += '<td>';
+							html += '<h5 style="font-size:14px;">'+data[i].last_msg+'<h5></td>';
+							html += '</tr>';
+							
+							html += '<tr>';
+							html += '<td><span style="color:#a0a0a0; padding:3px; width:16px; "> 요청 사항 </span><span class="text">' + data[i].answer_cont+'</span>';
 							html += '</td>';
 							html += '</tr>';
 							
 							html += '<tr>';
-							html += '<td>';
-							html += '<label for="chatBtn" style="cursor:pointer"><span class="comment"><h5 style="color:black;letter-spacing:3px;">'+data[i].last_msg;
-							html += '<h5></span></label></td>';
-								html += '<td><span style="color:black;">예상 수업 금액 : ' + data[i].est_price + '원</span>';
+							html += '<td><span style="color:#a0a0a0; padding:3px; width:16px; ">예상 수업 비용 </span><span class="text"> ' + data[i].est_price + '원</span>';
 							html += '<button id="chatBtn' + data[i].est_idx
 									+ '" class="btn" onclick="selectChat('
 									+ data[i].est_idx
@@ -142,7 +150,8 @@ width: 30%;
 							html += '</table>';
 
 							//html += '<a href="http://localhost:8080/toti/mentorpage/'+data[i].mento_idx+'">고수 페이지</a>';
-							html += '</div>';
+							html += '</div></label>';
+							html += '<hr>';
 						}
 						$('#chatList').html(html);
 					}

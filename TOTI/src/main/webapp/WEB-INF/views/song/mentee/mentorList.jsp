@@ -15,16 +15,18 @@
 }
 
 body {
-	min-width: 700px;
+	width:100%;
+	height:100%;
 	overflow: auto;
 }
 
-.wrapper {
-	width: 70%;
+.container {
+	width: 75%;
 	margin: 20px auto;
 }
-
-.container {
+h1,h2,h3,h4,h5,h6{
+color:black;
+letter-spacing: 1px;
 }
 
 #searchDiv {
@@ -54,43 +56,49 @@ input[type=checkbox] {
 	display: none;
 }
 
+#mentorList {
+width: 80%;
+margin: 20px auto;
+}
+
 #mentor {
-	margin: 5px auto;
+	/* margin: 10px auto; */
+	width:100%;
 	height: 70%;
 }
 
+img{
+width: 100px;
+border-radius: 50%;
+}
+
 table {
-	width: 100%;
-	height: 80%;
-	float: left;
+	width: 800px;
 	text-align: left;
-	margin: 10px 0;
+	margin: 20px auto;
 }
 
-table td:nth-child(1) {
-	width: 30%;
+table tr:nth-child(1) td:nth-child(1){
+width: 150px;
+text-align: center;
 }
 
-table td:nth-child(2) {
-	width: 40%;
+table tr td {
+padding: 3px 0;
 }
 
-table td:nth-child(3) {
-	width: 30%;
+.comment{
+width:16px;
+padding : 3px; 
+color: #a0a0a0;
 }
 
-.comment {
-	padding-top: 10px;
-}
-
-#photo {
-	width: 120px;
-	height: 120px;
-	border-radius: 50%;
+#star{
+width: 15px;
 }
 
 .btn {
-	display: block;
+	display: none;
 }
 
 .labelfor {
@@ -109,7 +117,9 @@ table td:nth-child(3) {
 		<div class="demo-content mrg-top-md">
 			<!-- container -->
 			<div class="container" style="margin-top: -50px;">
+			
 				<div id="searchDiv">
+					<!-- <h3 style="margin-bottom: 30px;">고수찾기</h3> -->
 					<span> <input type="checkbox" id="rCnt" name="rCnt"
 						value=true onclick="listByReviewCnt()"><label for="rCnt"
 						style="cursor: pointer"><strong class="labelfor"
@@ -157,6 +167,14 @@ table td:nth-child(3) {
 	});
 
 	function list() {
+		if ($('#str').is(':checked')||$('#rCnt').is(':checked')) {
+
+			$("#str").prop("checked", false);
+			$('#label_str').css('color', '#aaa');
+
+			$("#rCnt").prop("checked", false);
+			$('#label_rcnt').css('color', '#aaa');
+		};
 		$
 				.ajax({
 					url : 'http://localhost:8080/toti/mentee/mentorList',
@@ -164,41 +182,112 @@ table td:nth-child(3) {
 					success : function(data) {
 						var html = '';
 						for (var i = 0; i < data.length; i++) {
-							html += '<div id="mentor">';
+							html += '<label for="pageBtn'+data[i].mento_idx+'" style="cursor:pointer"><div id="mentor">';
 							html += '<input type="hidden" name="mento_idx" value="'+data[i].mento_idx+'">';
 							html += '<table>';
 
 							html += '<tr>';
-							html += '<td rowspan="3" style=\"width: 120px; height: 120px;padding-left:15%; text-aline:center">';
-							html += '<label for="pageBtn'+data[i].mento_idx+'" style="cursor:pointer"><span id="photo">';
-							html += data[i].m_photo + '<br>';
+							html += '<td rowspan="6" style=\"text-aline:center">';
+							html += '<span id="photo">';
+							html += '<img src = "<c:url value="/img/user/'+data[i].m_photo+'"/>"';
 							html += '</span></label>';
 							html += '</td>';
 							html += '</tr>';
 
-							html += '<tr colspan=3>';
+							html += '<tr>';
 							html += '<td>';
-							html += data[i].m_name + '(' + data[i].cate_name
-									+ ')<br>';
-							html += '제공 서비스 : ' + data[i].tor_sname+ '<br>';
-							html += '활동가능 지역 : ' + data[i].tor_location+ '<br>';
-							html += '<span class="comment"><h5 style="color:black;letter-spacing:3px;">';
+							/* html += '<h2>'+data[i].m_name + '</h2>' + data[i].cate_name + '</td>'; */
+							html += '<h2>'+data[i].m_name + '</h2></td>';
+									html += '</tr>';
+							/* html += '제공 서비스 : ' + data[i].tor_sname+ '<br>'; */
+							/* html += '활동가능 지역 : ' + data[i].tor_location+ '<br>'; */
+							html += '<tr>';
+							html += '<td><h5 style="color:black;">';
 							html += data[i].p_shot;
-							html += '<h5></span></td>';
-
+							html += '<h5></td>';
+							html += '</tr>';
+							html += '<tr>';
 							html += '<td>';
+							html += '<div id="starBox2">';
+							
+							var fullStar = '<span><img id=\"star\" src=\"https://d1hhkexwnh74v.cloudfront.net/icons/icon-common-review-star-small-full.svg\"></span>';
+							var halfStar = '<span><img id=\"star\" src=\"https://d1hhkexwnh74v.cloudfront.net/icons/icon-common-review-star-small-half.svg\"></span>';
+							
 							if (data[i].str != 0) {
-								html += '평점 :' + data[i].str;
-								html += '(' + data[i].cont_cnt + '개)';
-							} else {
-								html += '';
-								html += '';
-							}
-							html += '<br>';
-
-							html += '<span class="comment">최신 리뷰 : '
+								if(data[i].str == 5){
+									for(var j=0; j< 5; j++){
+										$('#starBox2').append(html+=fullStar);
+										
+									}
+									/* $('#starBox2').append(html+=fullStar);
+									$('#starBox2').append(html+=fullStar);
+									$('#starBox2').append(html+=fullStar);
+									$('#starBox2').append(html+=fullStar);
+									$('#starBox2').append(html+=fullStar); */
+									
+								}
+								else if(data[i].str > 4 && data[i].str < 5){
+									for(var j=0;j<4;j++){
+										$('#starBox2').append(html+=fullStar);
+									}
+									$('#starBox2').append(html+=halfStar);
+									
+								}else if(data[i].str == 4){
+									for(var j=0;j<4;j++){
+										$('#starBox2').append(html+=fullStar);
+									}
+								}
+								else if(data[i].str > 3 && data[i].str <4){
+									for(var j=0;j<3;j++){
+										$('#starBox2').append(html+=fullStar);
+									}
+									$('#starBox2').append(html+=halfStar);
+								}
+								else if(data[i].str == 3){
+									for(var j=0;j<3;j++){
+										$('#starBox2').append(html+=fullStar);
+									}
+								}
+								else if(data[i].str > 2 && data[i].str < 3){
+									for(var j=0;j<2;j++){
+										$('#starBox2').append(html+=fullStar);
+									}
+									$('#starBox2').append(html+=halfStar);
+								}
+								else if(data[i].str == 2){
+									for(var j=0;j<2;j++){
+										$('#starBox2').append(html+=fullStar);
+									}
+								}
+								else if(data[i].str > 1&& data[i].str <2){
+									for(var j=0;j<2;j++){
+										$('#starBox2').append(html+=fullStar);
+									}
+									$('#starBox2').append(html+=halfStar);
+								}
+								else if(data[i].str ==1){
+									$('#starBox2').append(html+=fullStar);
+								}
+								else {
+									$('#starBox2').append(html+=halfStar);
+								}
+								html += '<span style="margin-left:15px; font-size:12px;">'+data[i].str +'</span>';
+								html += '<span style="margin-left:15px; font-size:12px; font-weight:300; color:#aaa;">('+data[i].cont_cnt +'개)</span>';
+								}
+							html += '</div>';
+							html += '</td>';
+							html += '</tr>';
+							html += '<tr>';
+							html += '<td>';
+							if(data[i].str != 0){
+							html += '<span class="comment">최신 리뷰 </span>'
 									+ data[i].review_cont;
-							html += '</span><br>';
+							}/* else{
+								html+='<div>';
+								html+='리뷰없음';
+								html+='</div>';
+							} */
+							
 							html += '<button id="pageBtn' + data[i].mento_idx
 									+ '" class="btn" onclick="selectMentor('
 									+ data[i].mento_idx
@@ -208,7 +297,8 @@ table td:nth-child(3) {
 							html += '</table>';
 
 							//html += '<a href="http://localhost:8080/toti/mentorpage/'+data[i].mento_idx+'">고수 페이지</a>';
-							html += '</div>';
+							html += '</div><label for="pageBtn'+data[i].mento_idx+'" style="cursor:pointer">';
+							html+='<hr>'
 						}
 						$('#mentorList').html(html);
 					}
@@ -219,6 +309,14 @@ table td:nth-child(3) {
 		var stype = $('#stype option:selected').val();
 		var keyword = $('#keyword').val();
 		$('#mentorList').html('');
+		if ($('#str').is(':checked')||$('#rCnt').is(':checked')) {
+
+			$("#str").prop("checked", false);
+			$('#label_str').css('color', '#aaa');
+
+			$("#rCnt").prop("checked", false);
+			$('#label_rcnt').css('color', '#aaa');
+		};
 		$
 				.ajax({
 					url : 'http://localhost:8080/toti/mentee/mentorList',
@@ -232,41 +330,112 @@ table td:nth-child(3) {
 					success : function(data) {
 						var html = '';
 						for (var i = 0; i < data.length; i++) {
-							html += '<div id="mentor">';
+							html += '<label for="pageBtn'+data[i].mento_idx+'" style="cursor:pointer"><div id="mentor">';
 							html += '<input type="hidden" name="mento_idx" value="'+data[i].mento_idx+'">';
 							html += '<table>';
 
 							html += '<tr>';
-							html += '<td rowspan="3" style=\"width: 120px; height: 120px;padding-left:15%; text-aline:center">';
-							html += '<label for="pageBtn'+data[i].mento_idx+'" style="cursor:pointer"><span id="photo">';
-							html += data[i].m_photo + '<br>';
+							html += '<td rowspan="6" style=\"text-aline:center">';
+							html += '<span id="photo">';
+							html += '<img src = "<c:url value="/img/user/'+data[i].m_photo+'"/>"';
 							html += '</span></label>';
 							html += '</td>';
 							html += '</tr>';
 
-							html += '<tr colspan=3>';
+							html += '<tr>';
 							html += '<td>';
-							html += data[i].m_name + '(' + data[i].cate_name
-									+ ')<br>';
-							html += '활동가능 지역 : ' + data[i].tor_location
-									+ '<br>';
-							html += '<span class="comment"><h5 style="color:black;letter-spacing:3px;">';
+							/* html += '<h2>'+data[i].m_name + '</h2>' + data[i].cate_name + '</td>'; */
+							html += '<h2>'+data[i].m_name + '</h2></td>';
+									html += '</tr>';
+							/* html += '제공 서비스 : ' + data[i].tor_sname+ '<br>'; */
+							/* html += '활동가능 지역 : ' + data[i].tor_location+ '<br>'; */
+							html += '<tr>';
+							html += '<td><h5 style="color:black;letter-spacing:3px;">';
 							html += data[i].p_shot;
-							html += '<h5></span></td>';
-
+							html += '<h5></td>';
+							html += '</tr>';
+							html += '<tr>';
 							html += '<td>';
+							html += '<div id="starBox2">';
+							
+							var fullStar = '<span><img id=\"star\" src=\"https://d1hhkexwnh74v.cloudfront.net/icons/icon-common-review-star-small-full.svg\"></span>';
+							var halfStar = '<span><img id=\"star\" src=\"https://d1hhkexwnh74v.cloudfront.net/icons/icon-common-review-star-small-half.svg\"></span>';
+							
 							if (data[i].str != 0) {
-								html += '평점 :' + data[i].str;
-								html += '(' + data[i].cont_cnt + '개)';
-							} else {
-								html += '';
-								html += '';
-							}
-							html += '<br>';
-
-							html += '<span class="comment">최신 리뷰 : '
+								if(data[i].str == 5){
+									for(var j=0; j< 5; j++){
+										$('#starBox2').append(html+=fullStar);
+										
+									}
+									/* $('#starBox2').append(html+=fullStar);
+									$('#starBox2').append(html+=fullStar);
+									$('#starBox2').append(html+=fullStar);
+									$('#starBox2').append(html+=fullStar);
+									$('#starBox2').append(html+=fullStar); */
+									
+								}
+								else if(data[i].str > 4 && data[i].str < 5){
+									for(var j=0;j<4;j++){
+										$('#starBox2').append(html+=fullStar);
+									}
+									$('#starBox2').append(html+=halfStar);
+									
+								}else if(data[i].str == 4){
+									for(var j=0;j<4;j++){
+										$('#starBox2').append(html+=fullStar);
+									}
+								}
+								else if(data[i].str > 3 && data[i].str <4){
+									for(var j=0;j<3;j++){
+										$('#starBox2').append(html+=fullStar);
+									}
+									$('#starBox2').append(html+=halfStar);
+								}
+								else if(data[i].str == 3){
+									for(var j=0;j<3;j++){
+										$('#starBox2').append(html+=fullStar);
+									}
+								}
+								else if(data[i].str > 2 && data[i].str < 3){
+									for(var j=0;j<2;j++){
+										$('#starBox2').append(html+=fullStar);
+									}
+									$('#starBox2').append(html+=halfStar);
+								}
+								else if(data[i].str == 2){
+									for(var j=0;j<2;j++){
+										$('#starBox2').append(html+=fullStar);
+									}
+								}
+								else if(data[i].str > 1&& data[i].str <2){
+									for(var j=0;j<2;j++){
+										$('#starBox2').append(html+=fullStar);
+									}
+									$('#starBox2').append(html+=halfStar);
+								}
+								else if(data[i].str ==1){
+									$('#starBox2').append(html+=fullStar);
+								}
+								else {
+									$('#starBox2').append(html+=halfStar);
+								}
+								html += '<span style="margin-left:15px; font-size:12px;">'+data[i].str +'</span>';
+								html += '<span style="margin-left:15px; font-size:12px; font-weight:300; color:#aaa;">('+data[i].cont_cnt +'개)</span>';
+								}
+							html += '</div>';
+							html += '</td>';
+							html += '</tr>';
+							html += '<tr>';
+							html += '<td>';
+							if(data[i].str != 0){
+							html += '<span class="comment">최신 리뷰 </span>'
 									+ data[i].review_cont;
-							html += '</span><br>';
+							}/* else{
+								html+='<div>';
+								html+='리뷰없음';
+								html+='</div>';
+							} */
+							
 							html += '<button id="pageBtn' + data[i].mento_idx
 									+ '" class="btn" onclick="selectMentor('
 									+ data[i].mento_idx
@@ -276,7 +445,8 @@ table td:nth-child(3) {
 							html += '</table>';
 
 							//html += '<a href="http://localhost:8080/toti/mentorpage/'+data[i].mento_idx+'">고수 페이지</a>';
-							html += '</div>';
+							html += '</div><label for="pageBtn'+data[i].mento_idx+'" style="cursor:pointer">';
+							html+='<hr>'
 						}
 						$('#mentorList').html(html);
 					}
@@ -304,50 +474,113 @@ table td:nth-child(3) {
 														'black');
 												var html = '';
 												for (var i = 0; i < data.length; i++) {
-													html += '<div id="mentor">';
+													html += '<label for="pageBtn'+data[i].mento_idx+'" style="cursor:pointer"><div id="mentor">';
 													html += '<input type="hidden" name="mento_idx" value="'+data[i].mento_idx+'">';
 													html += '<table>';
 
 													html += '<tr>';
-													html += '<td rowspan="3" style=\"width: 120px; height: 120px;padding-left:15%; text-aline:center">';
-													html += '<label for="pageBtn'+data[i].mento_idx+'" style="cursor:pointer"><span id="photo">';
-													html += data[i].m_photo
-															+ '<br>';
+													html += '<td rowspan="6" style=\"text-aline:center">';
+													html += '<span id="photo">';
+													html += '<img src = "<c:url value="/img/user/'+data[i].m_photo+'"/>"';
 													html += '</span></label>';
 													html += '</td>';
 													html += '</tr>';
 
-													html += '<tr colspan=3>';
+													html += '<tr>';
 													html += '<td>';
-													html += data[i].m_name
-															+ '('
-															+ data[i].cate_name
-															+ ')<br>';
-													html += '활동가능 지역 : '
-															+ data[i].tor_location
-															+ '<br>';
-													html += '<span class="comment"><h5 style="color:black;letter-spacing:3px;">';
+													/* html += '<h2>'+data[i].m_name + '</h2>' + data[i].cate_name + '</td>'; */
+													html += '<h2>'+data[i].m_name + '</h2></td>';
+															html += '</tr>';
+													/* html += '제공 서비스 : ' + data[i].tor_sname+ '<br>'; */
+													/* html += '활동가능 지역 : ' + data[i].tor_location+ '<br>'; */
+													html += '<tr>';
+													html += '<td><h5 style="color:black;letter-spacing:3px;">';
 													html += data[i].p_shot;
-													html += '<h5></span></td>';
-
+													html += '<h5></td>';
+													html += '</tr>';
+													html += '<tr>';
 													html += '<td>';
+													html += '<div id="starBox2">';
+													
+													var fullStar = '<span><img id=\"star\" src=\"https://d1hhkexwnh74v.cloudfront.net/icons/icon-common-review-star-small-full.svg\"></span>';
+													var halfStar = '<span><img id=\"star\" src=\"https://d1hhkexwnh74v.cloudfront.net/icons/icon-common-review-star-small-half.svg\"></span>';
+													
 													if (data[i].str != 0) {
-														html += '평점 :'
-																+ data[i].str;
-														html += '('
-																+ data[i].cont_cnt
-																+ '개)';
-													} else {
-														html += '';
-														html += '';
-													}
-													html += '<br>';
-
-													html += '<span class="comment">최신 리뷰 : '
+														if(data[i].str == 5){
+															for(var j=0; j< 5; j++){
+																$('#starBox2').append(html+=fullStar);
+																
+															}
+															/* $('#starBox2').append(html+=fullStar);
+															$('#starBox2').append(html+=fullStar);
+															$('#starBox2').append(html+=fullStar);
+															$('#starBox2').append(html+=fullStar);
+															$('#starBox2').append(html+=fullStar); */
+															
+														}
+														else if(data[i].str > 4 && data[i].str < 5){
+															for(var j=0;j<4;j++){
+																$('#starBox2').append(html+=fullStar);
+															}
+															$('#starBox2').append(html+=halfStar);
+															
+														}else if(data[i].str == 4){
+															for(var j=0;j<4;j++){
+																$('#starBox2').append(html+=fullStar);
+															}
+														}
+														else if(data[i].str > 3 && data[i].str <4){
+															for(var j=0;j<3;j++){
+																$('#starBox2').append(html+=fullStar);
+															}
+															$('#starBox2').append(html+=halfStar);
+														}
+														else if(data[i].str == 3){
+															for(var j=0;j<3;j++){
+																$('#starBox2').append(html+=fullStar);
+															}
+														}
+														else if(data[i].str > 2 && data[i].str < 3){
+															for(var j=0;j<2;j++){
+																$('#starBox2').append(html+=fullStar);
+															}
+															$('#starBox2').append(html+=halfStar);
+														}
+														else if(data[i].str == 2){
+															for(var j=0;j<2;j++){
+																$('#starBox2').append(html+=fullStar);
+															}
+														}
+														else if(data[i].str > 1&& data[i].str <2){
+															for(var j=0;j<2;j++){
+																$('#starBox2').append(html+=fullStar);
+															}
+															$('#starBox2').append(html+=halfStar);
+														}
+														else if(data[i].str ==1){
+															$('#starBox2').append(html+=fullStar);
+														}
+														else {
+															$('#starBox2').append(html+=halfStar);
+														}
+														html += '<span style="margin-left:15px; font-size:12px;">'+data[i].str +'</span>';
+														html += '<span style="margin-left:15px; font-size:12px; font-weight:300; color:#aaa;">('+data[i].cont_cnt +'개)</span>';
+														}
+													html += '</div>';
+													html += '</td>';
+													html += '</tr>';
+													html += '<tr>';
+													html += '<td>';
+													if(data[i].str != 0){
+													html += '<span class="comment">최신 리뷰 </span>'
 															+ data[i].review_cont;
-													html += '</span><br>';
-													html += '<button id="pageBtn'
-															+ data[i].mento_idx
+													}/* else{
+														html+='<div>';
+														html+='리뷰없음';
+														html+='</div>';
+													} */
+													
+													html += '<button id="pageBtn' + data[i].mento_idx
 															+ '" class="btn" onclick="selectMentor('
 															+ data[i].mento_idx
 															+ ')">고수 페이지로 이동</button>';
@@ -356,7 +589,8 @@ table td:nth-child(3) {
 													html += '</table>';
 
 													//html += '<a href="http://localhost:8080/toti/mentorpage/'+data[i].mento_idx+'">고수 페이지</a>';
-													html += '</div>';
+													html += '</div><label for="pageBtn'+data[i].mento_idx+'" style="cursor:pointer">';
+													html+='<hr>'
 												}
 												$('#mentorList').html(html);
 											}
@@ -389,50 +623,113 @@ table td:nth-child(3) {
 														'black');
 												var html = '';
 												for (var i = 0; i < data.length; i++) {
-													html += '<div id="mentor">';
+													html += '<label for="pageBtn'+data[i].mento_idx+'" style="cursor:pointer"><div id="mentor">';
 													html += '<input type="hidden" name="mento_idx" value="'+data[i].mento_idx+'">';
 													html += '<table>';
 
 													html += '<tr>';
-													html += '<td rowspan="3" style=\"width: 120px; height: 120px;padding-left:15%; text-aline:center">';
-													html += '<label for="pageBtn'+data[i].mento_idx+'" style="cursor:pointer"><span id="photo">';
-													html += data[i].m_photo
-															+ '<br>';
+													html += '<td rowspan="6" style=\"text-aline:center">';
+													html += '<span id="photo">';
+													html += '<img src = "<c:url value="/img/user/'+data[i].m_photo+'"/>"';
 													html += '</span></label>';
 													html += '</td>';
 													html += '</tr>';
 
-													html += '<tr colspan=3>';
+													html += '<tr>';
 													html += '<td>';
-													html += data[i].m_name
-															+ '('
-															+ data[i].cate_name
-															+ ')<br>';
-													html += '활동가능 지역 : '
-															+ data[i].tor_location
-															+ '<br>';
-													html += '<span class="comment"><h5 style="color:black;letter-spacing:3px;">';
+													/* html += '<h2>'+data[i].m_name + '</h2>' + data[i].cate_name + '</td>'; */
+													html += '<h2>'+data[i].m_name + '</h2></td>';
+															html += '</tr>';
+													/* html += '제공 서비스 : ' + data[i].tor_sname+ '<br>'; */
+													/* html += '활동가능 지역 : ' + data[i].tor_location+ '<br>'; */
+													html += '<tr>';
+													html += '<td><h5 style="color:black;letter-spacing:3px;">';
 													html += data[i].p_shot;
-													html += '<h5></span></td>';
-
+													html += '<h5></td>';
+													html += '</tr>';
+													html += '<tr>';
 													html += '<td>';
+													html += '<div id="starBox2">';
+													
+													var fullStar = '<span><img id=\"star\" src=\"https://d1hhkexwnh74v.cloudfront.net/icons/icon-common-review-star-small-full.svg\"></span>';
+													var halfStar = '<span><img id=\"star\" src=\"https://d1hhkexwnh74v.cloudfront.net/icons/icon-common-review-star-small-half.svg\"></span>';
+													
 													if (data[i].str != 0) {
-														html += '평점 :'
-																+ data[i].str;
-														html += '('
-																+ data[i].cont_cnt
-																+ '개)';
-													} else {
-														html += '';
-														html += '';
-													}
-													html += '<br>';
-
-													html += '<span class="comment">최신 리뷰 : '
+														if(data[i].str == 5){
+															for(var j=0; j< 5; j++){
+																$('#starBox2').append(html+=fullStar);
+																
+															}
+															/* $('#starBox2').append(html+=fullStar);
+															$('#starBox2').append(html+=fullStar);
+															$('#starBox2').append(html+=fullStar);
+															$('#starBox2').append(html+=fullStar);
+															$('#starBox2').append(html+=fullStar); */
+															
+														}
+														else if(data[i].str > 4 && data[i].str < 5){
+															for(var j=0;j<4;j++){
+																$('#starBox2').append(html+=fullStar);
+															}
+															$('#starBox2').append(html+=halfStar);
+															
+														}else if(data[i].str == 4){
+															for(var j=0;j<4;j++){
+																$('#starBox2').append(html+=fullStar);
+															}
+														}
+														else if(data[i].str > 3 && data[i].str <4){
+															for(var j=0;j<3;j++){
+																$('#starBox2').append(html+=fullStar);
+															}
+															$('#starBox2').append(html+=halfStar);
+														}
+														else if(data[i].str == 3){
+															for(var j=0;j<3;j++){
+																$('#starBox2').append(html+=fullStar);
+															}
+														}
+														else if(data[i].str > 2 && data[i].str < 3){
+															for(var j=0;j<2;j++){
+																$('#starBox2').append(html+=fullStar);
+															}
+															$('#starBox2').append(html+=halfStar);
+														}
+														else if(data[i].str == 2){
+															for(var j=0;j<2;j++){
+																$('#starBox2').append(html+=fullStar);
+															}
+														}
+														else if(data[i].str > 1&& data[i].str <2){
+															for(var j=0;j<2;j++){
+																$('#starBox2').append(html+=fullStar);
+															}
+															$('#starBox2').append(html+=halfStar);
+														}
+														else if(data[i].str ==1){
+															$('#starBox2').append(html+=fullStar);
+														}
+														else {
+															$('#starBox2').append(html+=halfStar);
+														}
+														html += '<span style="margin-left:15px; font-size:12px;">'+data[i].str +'</span>';
+														html += '<span style="margin-left:15px; font-size:12px; font-weight:300; color:#aaa;">('+data[i].cont_cnt +'개)</span>';
+														}
+													html += '</div>';
+													html += '</td>';
+													html += '</tr>';
+													html += '<tr>';
+													html += '<td>';
+													if(data[i].str != 0){
+													html += '<span class="comment">최신 리뷰 </span>'
 															+ data[i].review_cont;
-													html += '</span><br>';
-													html += '<button id="pageBtn'
-															+ data[i].mento_idx
+													}/* else{
+														html+='<div>';
+														html+='리뷰없음';
+														html+='</div>';
+													} */
+													
+													html += '<button id="pageBtn' + data[i].mento_idx
 															+ '" class="btn" onclick="selectMentor('
 															+ data[i].mento_idx
 															+ ')">고수 페이지로 이동</button>';
@@ -441,7 +738,8 @@ table td:nth-child(3) {
 													html += '</table>';
 
 													//html += '<a href="http://localhost:8080/toti/mentorpage/'+data[i].mento_idx+'">고수 페이지</a>';
-													html += '</div>';
+													html += '</div><label for="pageBtn'+data[i].mento_idx+'" style="cursor:pointer">';
+													html+='<hr>'
 												}
 												$('#mentorList').html(html);
 											}
