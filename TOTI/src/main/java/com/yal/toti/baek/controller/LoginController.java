@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.yal.toti.baek.domain.MemberInfo;
-import com.yal.toti.service.LoginService;
+import com.yal.toti.baek.service.LoginService;
 
 @Controller
 public class LoginController {

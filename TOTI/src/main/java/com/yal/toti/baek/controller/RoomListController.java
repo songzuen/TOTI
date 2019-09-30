@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.yal.toti.baek.domain.ChatRoomInfo;
-import com.yal.toti.service.RoomService;
+import com.yal.toti.baek.service.RoomService;
 
 @RestController
 @RequestMapping("chat/roomlist")

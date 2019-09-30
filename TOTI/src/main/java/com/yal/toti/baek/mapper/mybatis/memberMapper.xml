@@ -79,4 +79,23 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		values(#{param1}, #{param2}, #{param3},
 		#{param4})
 	</insert>
+
+	<select id="selectMentorProfile"
+		resultType="com.yal.toti.baek.domain.MentorProfile">
+		SELECT mentor.mento_idx, member.m_id, member.m_name,
+		member.m_gender,
+		member.m_photo, member.m_date, mentor.p_shot,
+		mentor.p_pay,
+		mentor.p_edu, mentor.p_career, mentor.p_long FROM
+		toti.toti_mentor_profile as mentor join toti.toti_member as member on
+		mentor.mento_idx = member.m_idx where mento_idx = #{param1};
+	</select>
+
+	<select id="selectMentorReview"
+		resultType="com.yal.toti.baek.domain.MentorReview">
+		SELECT review.m_idx, member.m_name, review.review_star,
+		review.review_cont, review.review_date FROM toti.toti_review as review
+		join toti.toti_member as member on review.m_idx = member.m_idx where
+		review.mento_idx = #{param1} order by m_idx limit 0, 3;
+	</select>
 </mapper>

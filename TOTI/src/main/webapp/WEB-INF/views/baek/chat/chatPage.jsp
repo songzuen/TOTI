@@ -18,7 +18,7 @@
 
 #chatArea {
 	border: 1px solid black;
-	width: 77%;
+	width: 72%;
 	display: none;
 	background-color: #c1c1c1;
 	float: left;
@@ -27,7 +27,7 @@
 
 #profileArea {
 	border: 1px solid black;
-	width: 20%;
+	width: 25%;
 	display: none;
 	min-height: 500px;
 }
@@ -116,6 +116,59 @@ table tr td {
 .area {
 	margin: 0 auto;
 	background-color: blue;
+}
+
+.profileTitle {
+	text-align: center;
+	font-size: 24px;
+	font-weight: bold;
+}
+
+.profileImg {
+	width: 100px;
+	height: 100px;
+	border: 1px solid black;
+	border-radius: 50%;
+	margin: 10px auto;
+}
+
+.profileName {
+	text-align: center;
+}
+
+.profileSubTitle {
+	margin: 10px 0 2px 2px;
+	font-size: 11px;
+	color: gray;
+	margin-left: 2px;
+	font-size: 11px;
+}
+
+.profileSubContent {
+	margin: 0 2px;
+}
+
+hr {
+	margin: 0;
+	padding: 0;
+}
+
+.review {
+	margin: 10px 2px;
+}
+
+.reviewName {
+	font-size: 14px;
+}
+
+.reviewStar {
+	font-weight: bold;
+}
+
+.reviewDate {
+	color: gray;
+	margin-left: 2px;
+	font-size: 11px;
 }
 </style>
 </head>
@@ -282,17 +335,6 @@ table tr td {
 						}
 					});
 
-			if ($('#check').val() == 'Y') {
-				$.ajax({
-					url : 'http://localhost:8080/toti/chat/profile/mentor/'
-							+ user,
-					type : 'GET',
-					success : function(data) {
-						alert(data);
-					}
-				});
-			}
-
 			var socket = io.connect('http://localhost:82/');
 
 			var room_num = $('input#chat_room').val();
@@ -412,11 +454,10 @@ table tr td {
 									+ user,
 							type : 'GET',
 							success : function(data) {
-								alert('data : ' + data);
-
 								var html = '';
 								html += '<input type="input" id="check" value="' + data + '">'
 								$('#profile').html(html);
+								mentorProfile(user);
 							}
 
 						});
@@ -448,6 +489,65 @@ table tr td {
 								var html = '';
 								html += '<input type="hidden" id="user" value="' + data + '">'
 								$('#userName').html(html);
+							}
+						});
+			}
+			function mentorProfile(user) {
+				if ($('#check').val() == 'Y') {
+					$
+							.ajax({
+								url : 'http://localhost:8080/toti/chat/profile/mentor/'
+										+ user,
+								type : 'GET',
+								success : function(data) {
+									var html = '';
+									html += '<div class = "profileTitle">멘토 프로필</div>';
+									html += '<div class = "profileImg"> '
+											+ data.m_photo + '</div>';
+									html += '<div class = "profileName">'
+											+ data.m_name + ' (' + data.m_id
+											+ ')</div>';
+									html += '<div class = "profileSubTitle">코멘트</div>';
+									html += '<div class = "profileSubContent">'
+											+ data.p_shot + '</div>';
+									html += '<div class = "profileSubTitle">학력</div>';
+									html += '<div class = "profileSubContent">'
+											+ data.p_edu + '</div>';
+									html += '<div class = "profileSubTitle">경력</div>';
+									html += '<div class = "profileSubContent">'
+											+ data.p_career + '</div>';
+									html += '<div class = "profileSubTitle">결제 방식</div>';
+									html += '<div class = "profileSubContent">'
+											+ data.p_pay + '</div><hr>';
+									html += '<div class = "mentorReview"></div>';
+									$('#profile').append(html);
+									mentorProfileReview(user)
+								}
+							});
+
+				}
+			}
+			;
+
+			function mentorProfileReview(user) {
+				$
+						.ajax({
+							url : 'http://localhost:8080/toti/chat/profile/mentor/review/'
+									+ user,
+							type : 'GET',
+							success : function(data) {
+								for (var i = 0; i < data.length; i++) {
+									var html = '<div class = review>'
+									html += '<div class = reviewName>'
+											+ data[i].m_name + ' / '
+											+ data[i].review_star + '</div>';
+									html += '<div class = reviewDate>'
+											+ data[i].review_date + '</div>';
+									html += '<div>' + data[i].review_cont
+											+ '</div>';
+									html += '</div>';
+									$('.mentorReview').append(html);
+								}
 							}
 						});
 			}

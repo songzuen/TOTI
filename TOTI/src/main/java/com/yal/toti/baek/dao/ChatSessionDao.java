@@ -5,6 +5,8 @@ import java.util.List;
 import com.yal.toti.baek.domain.ChatRoomInfo;
 import com.yal.toti.baek.domain.EstInfo;
 import com.yal.toti.baek.domain.MemberInfo;
+import com.yal.toti.baek.domain.MentorProfile;
+import com.yal.toti.baek.domain.MentorReview;
 
 public interface ChatSessionDao {
 	public MemberInfo selectMemberById(String uid);
@@ -24,5 +26,9 @@ public interface ChatSessionDao {
 	public String selectMentorCheck(int user);
 
 	public List<ChatRoomInfo> selectChatRoomListByUser(int user);
+
+	public MentorProfile selectMentorProfile(int user);
+
+	public List<MentorReview> selectMentorReview(int user);
 
 }

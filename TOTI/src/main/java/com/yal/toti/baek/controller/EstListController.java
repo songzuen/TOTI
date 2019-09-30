@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.yal.toti.baek.domain.EstInfo;
-import com.yal.toti.service.EstListServcie;
+import com.yal.toti.baek.service.EstListServcie;
 
 @RestController
 @RequestMapping("chat/estlist")

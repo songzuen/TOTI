@@ -38,3 +38,11 @@ room_target = 1 order by cate_name;
 select chatlog.message, chatlog.message_date, chatlog.room_num, chatlog.room_user, member.m_name from toti.toti_chatlog as chatlog join toti.toti_member as member on chatlog.room_user = member.m_idx where room_num = 19;
 
 select * from toti.toti_chatlog where room_num = 19;
+
+
+SELECT mentor.mento_idx, member.m_id, member.m_name, member.m_gender, member.m_photo, member.m_date, mentor.p_shot, mentor.p_pay, mentor.p_edu, mentor.p_career, mentor.p_long
+
+FROM toti.toti_mentor_profile as mentor join toti.toti_member as member on mentor.mento_idx = member.m_idx;
+
+
+SELECT * FROM toti.toti_review as review join toti.toti_member as member on review.m_idx = member.m_idx;

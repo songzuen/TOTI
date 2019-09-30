@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.yal.toti.service.MentorService;
+import com.yal.toti.baek.service.MentorService;
 
 @RestController
 @RequestMapping("chat/mentorcheck")
