@@ -1,0 +1,330 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yal.toti.song.mentee.dao.MentorListDao">
+
+	<resultMap
+		type="com.yal.toti.song.mentee.domain.MentorMemberInfo" id="member">
+		<result column="m_idx" property="m_idx" />
+		<result column="m_id" property="m_id" />
+		<result column="m_name" property="m_name" />
+		<result column="m_gender" property="m_gender" />
+		<result column="m_photo" property="m_photo" />
+		<result column="mento_idx" property="mento_idx" />
+		<result column="cate_idx" property="cate_idx" />
+		<result column="cate_name" property="cate_name" />
+		<result column="tor_coin" property="tor_coin" />
+		<result column="tor_location" property="tor_location" />
+		<result column="mento_idx" property="mento_idx" />
+		<result column="p_shot" property="p_shot" />
+		<result column="p_pay" property="p_pay" />
+		<result column="p_edu" property="p_edu" />
+		<result column="p_career" property="p_career" />
+		<result column="p_long" property="p_long" />
+		<result column="review_star" property="review_star" />
+		<result column="review_cont" property="review_cont" />
+		<result column="member_name" property="member_name" />
+		<result column="review_date" property="review_date" />
+		<result column="str" property="str" />
+		<result column="cont_cnt" property="cont_cnt" />
+		<result column="tor_sname" property="tor_sname" />
+	</resultMap>
+
+	<!-- 멘토 전체 리스트 -->
+	<select id="selectAllList" resultMap="member">
+		select t.mento_idx,m_photo, m_name, cate_name, tor_location, p_shot,
+		(if(isnull(review_idx),'리뷰 없음',review_cont)) review_cont,
+		(if(isnull(review_idx),0,(select round(avg(sr.review_star),1) from
+		toti.toti_review sr where sr.mento_idx = t.mento_idx))) str,
+		(select
+		count(review_cont) from toti.toti_review src where src.mento_idx =
+		t.mento_idx) cont_cnt,
+		(if(isnull(service_idx),'제공 서비스 없음',(select
+		group_concat(service_name SEPARATOR ',')
+		from toti.toti_mentor_service
+		tor
+		join toti.toti_mentor m on m.mento_idx = tor.mento_idx
+		join
+		toti_service ser on ser.service_idx = tor.service_idx
+		where t.mento_idx
+		= tor.mento_idx
+		group by tor.mento_idx))) tor_sname
+		from toti.toti_mentor t
+		join toti.toti_mentor_profile p on t.mento_idx = p.mento_idx
+		join
+		toti.toti_member b on b.m_idx = t.mento_idx
+		join toti.toti_cate c on
+		c.cate_idx = t.cate_idx
+		join toti.toti_service sr on sr.cate_idx=
+		sr.service_idx
+		left outer join
+		(select r1.review_idx, r1.mento_idx as
+		midx, review_cont from
+		toti.toti_review r1
+		<where>r1.review_idx =
+			(
+			select r2.review_idx from toti.toti_review r2
+			where
+			r1.mento_idx =
+			r2.mento_idx order by r2.review_date desc limit
+			0,1
+			)
+			) rev
+			on rev.midx=t.mento_idx
+			and ( p_shot is not null or p_pay is
+			not null or
+			p_edu is not null or
+			p_career is not null or p_long is not
+			null )
+		</where>
+	</select>
+
+	<!-- 리뷰 개수 순 -->
+	<select id="selectListByRCnt" resultMap="member">
+		select t.mento_idx,m_photo, m_name, cate_name, tor_location, p_shot,
+		(if(isnull(review_idx),'리뷰 없음',review_cont)) review_cont,
+		(if(isnull(review_idx),0,(select round(avg(sr.review_star),1) from
+		toti.toti_review sr where sr.mento_idx = t.mento_idx))) str,
+		(select
+		count(review_cont) from toti.toti_review src where src.mento_idx =
+		t.mento_idx) cont_cnt,
+		(select group_concat(service_name SEPARATOR ',')
+		from toti.toti_mentor_service tor
+		join toti.toti_mentor m on
+		m.mento_idx = tor.mento_idx
+		join toti_service ser on ser.service_idx =
+		tor.service_idx
+		where t.mento_idx = tor.mento_idx
+		group by
+		tor.mento_idx) tor_sname
+		from toti.toti_mentor t
+		join
+		toti.toti_mentor_profile p on t.mento_idx = p.mento_idx
+		join
+		toti.toti_member b on b.m_idx = t.mento_idx
+		join toti.toti_cate c on
+		c.cate_idx = t.cate_idx
+		left outer join
+		(select r1.review_idx,
+		r1.mento_idx as midx, review_cont from
+		toti.toti_review r1
+		<where>
+			r1.review_idx =
+			(
+			select r2.review_idx from toti.toti_review r2
+			where
+			r1.mento_idx =
+			r2.mento_idx order by r2.review_date desc limit
+			0,1
+			)
+			) rev
+			on rev.midx=t.mento_idx
+		</where>
+		order by cont_cnt desc
+	</select>
+
+	<!-- 별점 순 -->
+	<select id="selectListByStr" resultMap="member">
+		select t.mento_idx,m_photo, m_name, cate_name, tor_location, p_shot,
+		(if(isnull(review_idx),'리뷰 없음',review_cont)) review_cont,
+		(if(isnull(review_idx),0,(select round(avg(sr.review_star),1) from
+		toti.toti_review sr where sr.mento_idx = t.mento_idx))) str,
+		(select
+		count(review_cont) from toti.toti_review src where src.mento_idx =
+		t.mento_idx) cont_cnt,
+		(select group_concat(service_name SEPARATOR ',')
+		from toti.toti_mentor_service tor
+		join toti.toti_mentor m on
+		m.mento_idx = tor.mento_idx
+		join toti_service ser on ser.service_idx =
+		tor.service_idx
+		where t.mento_idx = tor.mento_idx
+		group by
+		tor.mento_idx) tor_sname
+		from toti.toti_mentor t
+		join
+		toti.toti_mentor_profile p on t.mento_idx = p.mento_idx
+		join
+		toti.toti_member b on b.m_idx = t.mento_idx
+		join toti.toti_cate c on
+		c.cate_idx = t.cate_idx
+		left outer join
+		(select r1.review_idx,
+		r1.mento_idx as midx, review_cont from
+		toti.toti_review r1
+		<where>
+			r1.review_idx =
+			(
+			select r2.review_idx from toti.toti_review r2
+			where
+			r1.mento_idx =
+			r2.mento_idx order by r2.review_date desc limit
+			0,1
+			)
+			) rev
+			on rev.midx=t.mento_idx
+
+		</where>
+		order by str desc
+	</select>
+
+	<!-- 검색된 멘토 수 -->
+	<select id="selectTotalCount" resultType="int"
+		parameterType="com.yal.toti.song.mentee.domain.SearchParam">
+		select count(*)
+		from toti.toti_mentor t
+		join toti.toti_mentor_profile p
+		on t.mento_idx = p.mento_idx
+		join
+		toti.toti_member b on b.m_idx =
+		t.mento_idx
+		join toti.toti_cate c on
+		c.cate_idx = t.cate_idx
+		left outer
+		join
+		(select r1.review_idx, r1.mento_idx as midx, review_cont from
+		toti.toti_review r1
+		<where> r1.review_idx =
+			(
+			select r2.review_idx from toti.toti_review r2
+			where
+			r1.mento_idx =
+			r2.mento_idx order by r2.review_date desc limit
+			0,1
+			)
+			) rev
+			on rev.midx=t.mento_idx
+		</where>
+		<where>
+			<if test="stype != null">
+
+				<!-- 분야&고수이름 -->
+				<if test="stype == 'both'">
+					m_name like CONCAT('%',#{keyword},'%') or cate_name like
+					CONCAT('%',#{keyword},'%')
+				</if>
+
+				<!-- 고수 이름 -->
+				<if test="stype =='name'">
+					m_name like CONCAT('%',#{keyword},'%')
+				</if>
+
+				<!-- 분야 -->
+				<if test="stype == 'cate'">
+					cate_name like CONCAT('%',#{keyword},'%')
+				</if>
+			</if>
+		</where>
+	</select>
+
+	<!-- 고수 검색 결과 -->
+	<select id="selectMentorList" parameterType="map"
+		resultMap="member">
+		select t.mento_idx,m_photo, m_name, cate_name, tor_location, p_shot,
+		(if(isnull(review_idx),'리뷰 없음',review_cont)) review_cont,
+		(if(isnull(review_idx),0,(select round(avg(sr.review_star),1) from
+		toti.toti_review sr where sr.mento_idx = t.mento_idx))) str,
+		(select
+		count(review_cont) from toti.toti_review src where src.mento_idx =
+		t.mento_idx) cont_cnt,
+		(select group_concat(service_name SEPARATOR ',')
+		from toti.toti_mentor_service tor
+		join toti.toti_mentor m on
+		m.mento_idx = tor.mento_idx
+		join toti_service ser on ser.service_idx =
+		tor.service_idx
+		where t.mento_idx = tor.mento_idx
+		group by
+		tor.mento_idx) tor_sname
+		from toti.toti_mentor t
+		join
+		toti.toti_mentor_profile p on t.mento_idx = p.mento_idx
+		join
+		toti.toti_member b on b.m_idx = t.mento_idx
+		join toti.toti_cate c on
+		c.cate_idx = t.cate_idx
+		left outer join
+		(select r1.review_idx,
+		r1.mento_idx as midx, review_cont from
+		toti.toti_review r1
+		<where> r1.review_idx =
+			(
+			select r2.review_idx from toti.toti_review r2
+			where
+			r1.mento_idx =
+			r2.mento_idx order by r2.review_date desc limit
+			0,1
+			)
+			) rev
+			on rev.midx=t.mento_idx
+		</where>
+		<where>
+			<if test="search != null">
+
+				<!-- 분야&고수이름 -->
+				<if test="search.stype == 'both'">
+					<include refid="whereName" />
+					<include refid="whereCate" />
+					<!-- <include refid="whereName" /> <include refid="whereCate" /> -->
+				</if>
+
+				<!-- 고수 이름 -->
+				<if test="search.stype =='name'">
+					<!-- and m_name like CONCAT('%',#{search.keyword},'%') -->
+					<include refid="whereName" />
+				</if>
+
+				<!-- 분야 -->
+				<if test="search.stype == 'cate'">
+					<!-- and cate_name like CONCAT('%',#{search.keyword},'%') -->
+					<include refid="whereCate" />
+				</if>
+			</if>
+		</where>
+	</select>
+
+	<sql id="whereName">
+		or m_name like CONCAT('%',#{search.keyword},'%')
+	</sql>
+	<sql id="whereCate">
+		or cate_name like CONCAT('%',#{search.keyword},'%')
+	</sql>
+
+	<!-- 고수 상세 페이지 -->
+	<select id="getMentorPage" resultMap="member"
+		resultType="com.yal.toti.song.mentee.domain.MentorMemberInfo">
+		select *,(if(isnull(r.review_idx),'리뷰 없음',r.review_cont))
+		cont,(if(isnull(r.review_idx),'0',(select
+		round(avg(sr.review_star),1) from toti.toti_review sr where
+		sr.mento_idx = t.mento_idx))) str,
+		(select count(review_cont) from
+		toti.toti_review src where src.mento_idx =
+		t.mento_idx) cont_cnt,
+		(select group_concat(service_name SEPARATOR ' / ')
+		from toti.toti_mentor_service tor
+		join toti.toti_mentor m on m.mento_idx = tor.mento_idx
+		join toti_service ser on ser.service_idx = tor.service_idx
+		where t.mento_idx = tor.mento_idx
+		group by tor.mento_idx) tor_sname
+		from toti.toti_mentor t
+		join toti.toti_mentor_profile p on t.mento_idx =
+		p.mento_idx
+		join
+		toti.toti_member b on b.m_idx = t.mento_idx
+		join
+		toti.toti_cate c on
+		c.cate_idx = t.cate_idx
+		left outer join (select *
+		from (select
+		review_idx,mento_idx,review_star,review_cont,
+		review_date, m_name as member_name from
+		toti.toti_review w join
+		toti.toti_member e on w.m_idx = e.m_idx ) na
+		where review_idx > 0) r
+		on
+		r.mento_idx = t.mento_idx
+		<where> t.mento_idx = #{mento_idx}
+		</where>
+		order by review_date desc
+	</select>
+</mapper>
