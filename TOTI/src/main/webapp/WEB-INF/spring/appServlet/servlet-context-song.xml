@@ -21,36 +21,12 @@
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
 	
-	<!-- 파일업로드 처리를 위한 multipartResolver bean 등록 -->
+	<!-- 파일업로드 처리를 위한 multipartResolver bean 등록 --> 
 	<beans:bean id="multipartResolver"
 		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
 		<beans:property name="defaultEncoding">
 			<beans:value>UTF-8</beans:value>
 		</beans:property>
-	</beans:bean>
-	<beans:bean 
-		id="dataSource"
-		class="org.apache.commons.dbcp2.BasicDataSource"
-		p:driverClassName="com.mysql.jdbc.Driver"
-		p:url="jdbc:mysql://mysql-mm.chvivg7pudki.ap-northeast-2.rds.amazonaws.com:3306/toti?useSSL=false&amp;useUnicode=true&amp;characterEncoding=utf-8&amp;serverTimezone=UTC"
-		p:username="bit" 
-		p:password="bit" />
-		
-	<beans:bean
-		id="jdbcTemplate"
-		class="org.springframework.jdbc.core.JdbcTemplate"
-		p:dataSource-ref="dataSource"
-	/>
-	
-	<beans:bean id="sqlSessionFactory"
-	class="org.mybatis.spring.SqlSessionFactoryBean"
-	>
-	<beans:property name="dataSource" ref="dataSource"/>
-	<beans:property name="mapperLocations" value="classpath:com/yal/toti/song/mapper/mybatis/*.xml"/>
-	</beans:bean>
-	
-	<beans:bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate"> 
-		<beans:constructor-arg index="0" ref="sqlSessionFactory" />
 	</beans:bean>
 	
 	<context:component-scan base-package="com.yal.toti.song" />
