@@ -1,84 +1,90 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
-<%@include file="/WEB-INF/views/frame/header.jsp"%>
-<!-- title -->
-<title>TOTI</title>
-<style type="text/css">
-</style>
-</head>
+	<%@ include file="/WEB-INF/views/frame/header.jsp" %>
+	<link href="<c:url value="/css/daheeCss/daheecontents.css" />" rel="stylesheet">
+	<title>TOTI</title>
+</head><!--/head-->
 <body>
-	<%@include file="/WEB-INF/views/frame/loading.jsp"%>
-	<!-- page container -->
-	<div class="page-container">
-		<%@include file="/WEB-INF/views/frame/contents/contentsHeader.jsp"%>
-		<%@include file="/WEB-INF/views/frame/contents/nav.jsp"%>
-		<!-- demo content -->
-		<div class="demo-content mrg-top-md">
-			<!-- container -->
-			<div class="container" style="margin-top: -50px">
-				<div>				
-					<h2>${data.cate_name}</h2>
-				</div>
-				<div class="col-md-8 col-md-offset-2">
-					<div class="progress">
-						<div
-							class="progress-bar progress-bar-info progress-bar-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100">
-							<div id="dd">
-							</div>
-						</div>
-					</div>
-					<form role="form" method="post" id="requestForm">
-					<div>
-						<!-- 분야번호 -->
-						<input type="hidden" value="${data.cate_idx}" id="cate_idx" name="cate_idx">
-						<!-- 회원번호 -->
-						<input type="hidden" placeholder="회원ID" name="m_idx" value="1">
-					</div>
-					<div class="step well">
-							<div>
-								 ${data.cate_name}분야에서 원하는 서비스는 ?
-								<div>
-									<c:forEach items="${data.service}" var="service" varStatus="stat">
-										<input id="${ service.service_idx }_service" type="radio" value="${ service.service_idx }" name="service_idx">
-										<label for="${ service.service_idx }_service">${ service.service_name }</label><br>
-									</c:forEach>
-								</div>
-							</div>
-					</div>
-					<c:forEach items="${data.quest}" var="quest" varStatus="stat">
-						<div class="step well">
-							<div>
-								<input type="hidden" value="${ quest.quest_idx }" class="quest_idx" name="answerDatas[${stat.index}].qurest_idx">
-								<input type="hidden" value="${ quest.quest_type }" class="${ quest.quest_idx }_type">
-								${ quest.quest_name }
-								<div id="${ quest.quest_idx }_item_wrap">
-									
-								</div>
-							</div>
-						</div>
-					</c:forEach>				
-					<input type="submit" class="action submit btn btn-success" value="보내기">
-					</form>
-					<button class="action back btn btn-info">Back</button>
-					<button class="action next btn btn-info">Next</button>
-				</div>
-				<!-- end home variation -->
-				<!-- end component -->
+	<%@ include file="/WEB-INF/views/frame/nav.jsp" %>
+    <!--/#header-->
+    <section id="page-breadcrumb" style="background-image: url(images/cate/Vocal_img.jpg); height: 150px;" >
+        <div class="vertical-center sun">
+			<div id="title_wrap" class="container">
+				<h1 class="title">${data.cate_name}</h1>
+				<p>소개</p>
 			</div>
-			<!-- end container -->
 		</div>
-		<!-- end demo content -->
-		<!-- footer -->
-		<%@include file="/WEB-INF/views/frame/contents/footer.jsp"%>
-	</div>
-	
-<script type="text/javascript">
+   </section>
+    <!--/#action-->
 
+	<section id="blog" class="padding-top padding-bottom">
+		<div class="container">
+			<div class="row">
+				<div class="col-md">
+					<div id="request_form_wrap">
+						<div class="progress">
+							<div
+								class="progress-bar progress-bar-info progress-bar-striped active"
+								role="progressbar" aria-valuemin="0" aria-valuemax="100">
+								<div id="dd"></div>
+							</div>
+						</div>
+						<form role="form" method="post" id="requestForm">
+							<div>
+								<!-- 분야번호 -->
+								<input type="hidden" value="${data.cate_idx}" id="cate_idx"
+									name="cate_idx">
+								<!-- 회원번호 -->
+								<input type="hidden" placeholder="회원ID" name="m_idx" value="1">
+							</div>
+							<div class="step well">
+								<div>
+									<p>${data.cate_name}분야에서 원하는 서비스는 ?</p>
+									<div>
+										<c:forEach items="${data.service}" var="service"
+											varStatus="stat">
+											<input id="${ service.service_idx }_service" type="radio" value="${ service.service_idx }" name="service_idx">
+											<label for="${ service.service_idx }_service">${ service.service_name }</label>
+											<br>
+										</c:forEach>
+									</div>
+								</div>
+							</div>
+							<c:forEach items="${data.quest}" var="quest" varStatus="stat">
+								<div class="step well">
+									<div>
+										<input type="hidden" value="${ quest.quest_idx }" class="quest_idx" name="answerDatas[${stat.index}].qurest_idx">
+										<input type="hidden" value="${ quest.quest_type }" class="${ quest.quest_idx }_type">
+										<p>${ quest.quest_name }</p>
+										<div id="${ quest.quest_idx }_item_wrap">
+										
+										</div>
+									</div>
+								</div>
+							</c:forEach>
+						</form>
+						<button id="submit_btn" class="action submit btn btn-success">보내기</button>
+						<button class="action back btn btn-info">Back</button>
+						<button class="action next btn btn-info">Next</button>
+					</div>
+				</div>
+				<div id="cate_select_wrap">
+                     <a href="<c:url value="/" />"><i class="fa fa-chevron-left" style=""></i><span>다른 분야 선택하러가기</span></a>
+                </div>
+			</div>
+		</div>
+	</section>
+	<!--/#blog-->
+
+    <%@ include file="/WEB-INF/views/frame/footer.jsp" %>
+
+	<script>
+		
 	$(document).ready(function() {
-				
+		
 		var cnt = 0;
 		
 		$(".quest_idx").each(function(){
@@ -162,7 +168,10 @@
 			
 		})
 		
-		
+		$('#submit_btn').click(function() { 
+			$('#requestForm').submit(); 
+		});
+
 		$('#requestForm').submit(function() {
 			  
 			if($('input[name="answerDatas['+c+'].answer_cont"]').val() == '') {
@@ -173,7 +182,7 @@
 		});
 		
 	});
-
+	
 	// Change progress bar action
 	setProgress = function(currstep) {
 		var percent = parseFloat(100 / widget.length) * currstep;
@@ -208,7 +217,7 @@
 					
 					if(quest_idx == 999) {
 						for (var i = 0; i < data.length; i++) {
-							html += '<input id="'+data[i].item_idx+'_item" type="'+$('.'+quest_idx+'_type').val()+'"'
+							html += '<input class="form-control" id="'+data[i].item_idx+'_item" type="'+$('.'+quest_idx+'_type').val()+'"'
 							if($('#cate_idx').val() == 1){
 								html +=	'placeholder="ex) 음치탈출하고싶어요"';
 							}else if($('#cate_idx').val() == 2){
@@ -220,8 +229,8 @@
 						}
 					}else if(quest_idx == 6){
 						
+						html += '<input class="form-control" type="text" id="city_idx" name="answerDatas['+cnt+'].answer_cont">';
 						html += '<input type="button" value="주소가져오기" onclick="openMap()">';
-						html += '주소 : <input type="text" id="city_idx" name="answerDatas['+cnt+'].answer_cont">';
 						
 						
 					}else {
@@ -247,7 +256,7 @@
             // window.open("open할 window", "자식창 이름", "팝업창 옵션");
             window.open('<c:url value="/request/map" />', 'mapForm', "width=800, height=600,top = 100, left = 100, resizable = no, scrollbars = no");
 		}
-		
-</script>
+	
+	</script>
 </body>
 </html>

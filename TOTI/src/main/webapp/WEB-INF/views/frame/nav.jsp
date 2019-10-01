@@ -11,9 +11,9 @@
 						class="icon-bar"></span>
 				</button>
 				<!-- logo -->
-				<a class="navbar-brand" href="index.html">
+				<a class="navbar-brand" href="<c:url value="/" />">
 					<h1>
-						<img height="80" src="images/toti_logo.png" alt="logo">
+						<img height="80" src="<c:url value="/images/toti_logo.png" />" alt="logo">
 					</h1>
 				</a>
 			</div>
@@ -21,15 +21,15 @@
 			<div class="collapse navbar-collapse">
 				<ul class="nav navbar-nav navbar-right">
 					<!-- 로그인전 nav-->
-					<li><a href="index.html">분야선택</a></li>
-					<li><a href="index.html">멘토찾기</a></li>
-					<li><a href="index.html">로그인</a></li>
-					<li class="active"><a href="index.html">회원가입</a></li>
-
+					<!-- 
+					<li class="active"><a href="<c:url value="/" />">Home</a></li>
+					<li><a href="#">멘토찾기</a></li>
+					<li><a href="#">로그인</a></li>
+					<li><a href="#">회원가입</a></li>
+					 -->
+					
 					<!-- 멘티 로그인 -->
-					<!--
-                        <li><a href="index.html">분야선택</a></li>
-                        <li><a href="index.html">보낸요청</a></li>
+                        <li><a href="<c:url value="/user/requests" />">보낸요청</a></li>
                         <li><a href="index.html">채팅</a></li>
                         <li><a href="index.html">멘토찾기</a></li>
                         <li class="dropdown"><a href="#">OO 멘티님<i class="fa fa-angle-down"></i></a>
