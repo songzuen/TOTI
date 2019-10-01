@@ -19,13 +19,11 @@ var connection = mysql.createConnection({
 connection.connect();
 
 var server = http
-  .createServer(function(req, res) {
-    res.writeHead(200, { "Content-Type": "text/html" });
-    res.end();
-  })
+  .createServer(app)
   .listen(82, function() {
     console.log("listening 82 port");
   });
+
 
 // 소켓 서버 생성
 var io = socketio.listen(server);

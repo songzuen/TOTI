@@ -9,7 +9,9 @@
 <!-- title -->
 <title>SamplePage</title>
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-<script src="http://localhost:82/socket.io/socket.io.js"></script>
+<script
+	src="http://ec2-13-125-96-18.ap-northeast-2.compute.amazonaws.com:3000/socket.io/socket.io.js"></script>
+<!-- <script src="http://localhost:82/socket.io/socket.io.js"></script> -->
 <style>
 #content {
 	width: 100%;
@@ -335,7 +337,8 @@ hr {
 						}
 					});
 
-			var socket = io.connect('http://localhost:82/');
+			var socket = io
+					.connect('http://ec2-13-125-96-18.ap-northeast-2.compute.amazonaws.com:3000/');
 
 			var room_num = $('input#chat_room').val();
 
@@ -355,7 +358,7 @@ hr {
 				var html = '';
 
 				for (var i = 0; i < data.length; i++) {
-					console.log(data[i]);
+					/* 					console.log(data[i]); */
 
 					if (user == data[i].room_user) {
 						html += '<div id = "msgbox" class="text_right">';

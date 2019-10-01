@@ -7,7 +7,6 @@
 <!-- title -->
 <title>SamplePage</title>
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-<script src="http://localhost:82/socket.io/socket.io.js"></script>
 <style>
 </style>
 </head>
