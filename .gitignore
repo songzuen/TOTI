@@ -105,3 +105,12 @@ target/
 *.properties
 *.MF
 *.properties
+TOTI/src/main/webapp/WEB-INF/views/yu/member/regMember.jsp
+TOTI/src/main/webapp/WEB-INF/views/yu/member/2.jsp
+TOTI/src/main/webapp/WEB-INF/views/main2.jsp
+TOTI/src/main/webapp/WEB-INF/spring/appServlet/servlet-context-yu.xml
+TOTI/src/main/webapp/WEB-INF/mappers/memberMapper.xml
+TOTI/src/main/webapp/uploadfile/userphoto/no_img.jpg
+TOTI/src/main/java/com/yal/toti/yu/member/MainController.java
+TOTI/src/main/java/com/yal/toti/yu/member/interceptor/AuthCheckInterceptor.java
+TOTI/src/main/java/com/yal/toti/HomeController.java

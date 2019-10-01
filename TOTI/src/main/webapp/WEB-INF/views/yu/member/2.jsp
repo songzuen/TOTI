@@ -31,4 +31,4 @@
 	</div>
 	<!-- end content -->
 </section>
-<!-- end about section -->
+<!-- end about section -->            

@@ -20,31 +20,6 @@
 		<beans:property name="prefix" value="/WEB-INF/views/" />
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
-	
-	<!-- JDBC설정 -->
-	<beans:bean id="dataSource"
-      class="org.apache.commons.dbcp2.BasicDataSource"
-      p:driverClassName="com.mysql.cj.jdbc.Driver"
-      p:url="jdbc:mysql://mysql-mm.chvivg7pudki.ap-northeast-2.rds.amazonaws.com/toti?characterEncoding=utf8&amp;serverTimezone=UTC"
-      p:username="bit" p:password="bit" />
-
-	<beans:bean id="jdbcTemplate"
-		class="org.springframework.jdbc.core.JdbcTemplate"
-		p:dataSource-ref="dataSource" />
-		
-	<!-- JDBC설정 끝-->
-	
-	<!-- my batis 설정  : datasoruce, mapper 서버 실행시 기준의 경로 -->
-	<beans:bean id="sqlSessionFactory"
-				class="org.mybatis.spring.SqlSessionFactoryBean"
-				p:dataSource-ref="dataSource"
-				p:mapperLocations="/WEB-INF/mappers/*.xml" />
-	
-	<beans:bean id="sqlSession"
-				class="org.mybatis.spring.SqlSessionTemplate">
-		<beans:constructor-arg index="0" ref="sqlSessionFactory"/>
-	</beans:bean>
-	<!-- my batis 설정 끝 -->
 
 	<!-- 트랜잭션 설정 -->
 	<!-- PlatformTransactionManager 빈 설정 -->
