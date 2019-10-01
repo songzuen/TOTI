@@ -4,7 +4,7 @@
 <html>
 <head>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css">
-<%@include file="/WEB-INF/views/frame/contents/header.jsp"%>
+<%@include file="/WEB-INF/views/frame/header.jsp"%>
 <!-- title -->
 <title>[관리자] TOTI :: 제공 서비스 관리</title>
 <style>
@@ -12,11 +12,9 @@
 </style>
 </head>
 <body>
-	<%@include file="/WEB-INF/views/frame/loading.jsp"%>
 	<!-- page container -->
 	<div class="page-container">
-		<%@include file="/WEB-INF/views/frame/contents/contentsHeader.jsp"%>
-		<%@include file="/WEB-INF/views/frame/contents/nav.jsp"%>
+		<%@include file="/WEB-INF/views/frame/nav.jsp"%>
 		<!-- demo content -->
 		<div class="demo-content mrg-top-md">
 			<!-- container -->
@@ -53,7 +51,7 @@
 		</div>
 		<!-- end demo content -->
 		<!-- footer -->
-		<%@include file="/WEB-INF/views/frame/contents/footer.jsp"%>
+		<%@include file="/WEB-INF/views/frame/footer.jsp"%>
 	</div>
 
 	<script>

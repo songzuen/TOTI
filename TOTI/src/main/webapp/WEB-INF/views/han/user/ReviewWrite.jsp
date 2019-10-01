@@ -3,18 +3,16 @@
 <!DOCTYPE html>
 <html>
 <head>
-<%@include file="/WEB-INF/views/frame/contents/header.jsp"%>
+<%@include file="/WEB-INF/views/frame/header.jsp"%>
 <!-- title -->
 <title>TOTI :: 리뷰 쓰기</title>
 <style>
 </style>
 </head>
 <body>
-	<%@include file="/WEB-INF/views/frame/loading.jsp"%>
 	<!-- page container -->
 	<div class="page-container">
-		<%@include file="/WEB-INF/views/frame/contents/contentsHeader.jsp"%>
-		<%@include file="/WEB-INF/views/frame/contents/nav.jsp"%>
+		<%@include file="/WEB-INF/views/frame/nav.jsp"%>
 		<!-- demo content -->
 		<div class="demo-content mrg-top-md">
 			<!-- container -->
@@ -44,7 +42,7 @@
 		</div>
 		<!-- end demo content -->
 		<!-- footer -->
-		<%@include file="/WEB-INF/views/frame/contents/footer.jsp"%>
+		<%@include file="/WEB-INF/views/frame/footer.jsp"%>
 	</div>
 
 	<script>
