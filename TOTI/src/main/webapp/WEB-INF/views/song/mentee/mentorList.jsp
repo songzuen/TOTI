@@ -4,7 +4,7 @@
 <html>
 <head>
 
-<%@include file="/WEB-INF/views/frame/contents/header.jsp"%>
+<%@include file="/WEB-INF/views/frame/header.jsp"%>
 <!-- title -->
 <title>SamplePage</title>
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
@@ -15,18 +15,19 @@
 }
 
 body {
-	width:100%;
-	height:100%;
+	width: 100%;
+	height: 100%;
 	overflow: auto;
 }
 
-.container {
+#blog {
 	width: 75%;
 	margin: 20px auto;
 }
-h1,h2,h3,h4,h5,h6{
-color:black;
-letter-spacing: 1px;
+
+h1, h2, h3, h4, h5, h6 {
+	color: black;
+	letter-spacing: 1px;
 }
 
 #searchDiv {
@@ -34,11 +35,12 @@ letter-spacing: 1px;
 }
 
 #searchDiv span:first-child {
-	margin: 20px 40px;
+	margin: 0 40px;
 	float: left;
 }
 
 #searchDiv span:last-child {
+margin: 0 40px;
 	float: right;
 	width: 25%;
 }
@@ -49,7 +51,11 @@ letter-spacing: 1px;
 
 #keyword {
 	padding-left: 5px;
-	width: 50%;
+	width: 40%;
+	border: 0px;
+	border-bottom: 1px solid #ddd;
+	margin: 0 20px;
+	
 }
 
 input[type=checkbox] {
@@ -57,19 +63,19 @@ input[type=checkbox] {
 }
 
 #mentorList {
-width: 80%;
-margin: 20px auto;
+	width: 80%;
+	margin: 20px auto;
 }
 
 #mentor {
 	/* margin: 10px auto; */
-	width:100%;
+	width: 100%;
 	height: 70%;
 }
 
-img{
-width: 100px;
-border-radius: 50%;
+#m_photo {
+	width: 100px;
+	border-radius: 50%;
 }
 
 table {
@@ -78,23 +84,23 @@ table {
 	margin: 20px auto;
 }
 
-table tr:nth-child(1) td:nth-child(1){
-width: 150px;
-text-align: center;
+table tr:nth-child(1) td:nth-child(1) {
+	width: 150px;
+	text-align: center;
 }
 
 table tr td {
-padding: 3px 0;
+	padding: 3px 0;
 }
 
-.comment{
-width:16px;
-padding : 3px; 
-color: #a0a0a0;
+.comment {
+	width: 16px;
+	padding: 3px;
+	color: #a0a0a0;
 }
 
-#star{
-width: 15px;
+#star {
+	width: 15px;
 }
 
 .btn {
@@ -104,41 +110,63 @@ width: 15px;
 .labelfor {
 	color: #aaa;
 	font-size: 13px;
-} 
+}
+#searchBtn {
+border: 0px;
+}
 </style>
 </head>
 <body>
-	<%@include file="/WEB-INF/views/frame/loading.jsp"%>
-	<!-- page container -->
-	<div>
-		<%@include file="/WEB-INF/views/frame/contents/contentsHeader.jsp"%>
-		<%@include file="/WEB-INF/views/frame/contents/nav.jsp"%>
-		<!-- demo content -->
-		<div class="demo-content mrg-top-md">
-			<!-- container -->
-			<div class="container" style="margin-top: -50px;">
-			
-				<div id="searchDiv">
-					<!-- <h3 style="margin-bottom: 30px;">고수찾기</h3> -->
-					<span> <input type="checkbox" id="rCnt" name="rCnt"
-						value=true onclick="listByReviewCnt()"><label for="rCnt"
-						style="cursor: pointer"><strong class="labelfor"
-							id="label_rcnt">리뷰순</strong></label> | <input type="checkbox" id="str"
-						name="str" value=true onclick="listByStr()"><label
-						for="str" style="cursor: pointer"><strong class="labelfor"
-							id="label_str">별점순</strong></label>
-					</span> <span>
-						<form id="searchForm" method="post" onsubmit="return false">
-							<select name="stype" id="stype">
-								<option value="both">분야+멘토명</option>
-								<option value="cate">분야</option>
-								<option value="name">멘토명</option>
-							</select> <input type="text" name="keyword" id="keyword"> <input
-								type="submit" id="searchBtn" value="검색" onclick="search()">
-					</span>
-				</div>
+		<%@include file="/WEB-INF/views/frame/nav.jsp"%>
 
-				<!-- <div id="selectDiv">
+		<!--/#header-->
+		<section id="page-breadcrumb">
+			<div class="vertical-center sun">
+				<div class="container">
+					<div class="row">
+						<div class="action">
+							<div class="col-sm-12">
+								<h1 class="title">고수 찾기</h1>
+								<input type="hidden" id="request_idx" value="${request_idx}">
+								<p>레슨 받고 싶은 분야의 고수를 찾아보세요!</p>
+								<hr>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		<!--/#home-slider-->
+
+		<!-- demo content -->
+		<section id="blog" class="padding-top padding-bottom">
+			<div class="container">
+				<div class="row">
+					<div class="col-md">
+						<div id="searchDiv">
+						<span> <input type="checkbox" id="rCnt" name="rCnt"
+							value=true onclick="listByReviewCnt()"><label for="rCnt"
+							style="cursor: pointer"><strong class="labelfor"
+								id="label_rcnt">리뷰순</strong></label> | <input type="checkbox" id="str"
+							name="str" value=true onclick="listByStr()"><label
+							for="str" style="cursor: pointer"><strong
+								class="labelfor" id="label_str">별점순</strong></label>
+						</span> 
+						<span>
+							<form id="searchForm" method="post" onsubmit="return false">
+								<select name="stype" id="stype">
+									<option value="both">분야+멘토명</option>
+									<option value="cate">분야</option>
+									<option value="name">멘토명</option>
+								</select> 
+								<input type="text" name="keyword" id="keyword"> 
+								<input
+									type="submit" id="searchBtn" value="검색" onclick="search()">
+									</form>
+						</span>
+						</div>
+
+					<!-- <div id="selectDiv">
 				<form>
 					<select name="location" id="location">
 						<option value="total">전체</option>
@@ -149,17 +177,19 @@ width: 15px;
 				</form>
 			</div> -->
 
-				<div id="mentorList"></div>
-				<!-- end home variation -->
-				<!-- end component -->
-			</div>
-			<!-- end container -->
+					<div id="mentorList"></div>
+					<!-- end home variation -->
+					<!-- end component -->
+				</div>
+				<!-- end container -->
 
-		</div>
-		<!-- end demo content -->
-		<!-- footer -->
-		<%@include file="/WEB-INF/views/frame/contents/footer.jsp"%>
-	</div>
+			</div>
+			</div>
+			</section>
+			<!-- end demo content -->
+			<!-- footer -->
+			<%@include file="/WEB-INF/views/frame/footer.jsp"%>
+
 </body>
 <script>
 	$(document).ready(function() {
@@ -167,14 +197,15 @@ width: 15px;
 	});
 
 	function list() {
-		if ($('#str').is(':checked')||$('#rCnt').is(':checked')) {
+		if ($('#str').is(':checked') || $('#rCnt').is(':checked')) {
 
 			$("#str").prop("checked", false);
 			$('#label_str').css('color', '#aaa');
 
 			$("#rCnt").prop("checked", false);
 			$('#label_rcnt').css('color', '#aaa');
-		};
+		}
+		;
 		$
 				.ajax({
 					url : 'http://localhost:8080/toti/mentee/mentorList',
@@ -189,7 +220,7 @@ width: 15px;
 							html += '<tr>';
 							html += '<td rowspan="6" style=\"text-aline:center">';
 							html += '<span id="photo">';
-							html += '<img src = "<c:url value="/img/user/'+data[i].m_photo+'"/>"';
+							html += '<img id="m_photo" src = "<c:url value="/images/user/'+data[i].m_photo+'"/>"';
 							html += '</span></label>';
 							html += '</td>';
 							html += '</tr>';
@@ -197,8 +228,8 @@ width: 15px;
 							html += '<tr>';
 							html += '<td>';
 							/* html += '<h2>'+data[i].m_name + '</h2>' + data[i].cate_name + '</td>'; */
-							html += '<h2>'+data[i].m_name + '</h2></td>';
-									html += '</tr>';
+							html += '<h2>' + data[i].m_name + '</h2></td>';
+							html += '</tr>';
 							/* html += '제공 서비스 : ' + data[i].tor_sname+ '<br>'; */
 							/* html += '활동가능 지역 : ' + data[i].tor_location+ '<br>'; */
 							html += '<tr>';
@@ -209,85 +240,79 @@ width: 15px;
 							html += '<tr>';
 							html += '<td>';
 							html += '<div id="starBox2">';
-							
+
 							var fullStar = '<span><img id=\"star\" src=\"https://d1hhkexwnh74v.cloudfront.net/icons/icon-common-review-star-small-full.svg\"></span>';
 							var halfStar = '<span><img id=\"star\" src=\"https://d1hhkexwnh74v.cloudfront.net/icons/icon-common-review-star-small-half.svg\"></span>';
-							
+
 							if (data[i].str != 0) {
-								if(data[i].str == 5){
-									for(var j=0; j< 5; j++){
-										$('#starBox2').append(html+=fullStar);
-										
+								if (data[i].str == 5) {
+									for (var j = 0; j < 5; j++) {
+										$('#starBox2').append(html += fullStar);
+
 									}
 									/* $('#starBox2').append(html+=fullStar);
 									$('#starBox2').append(html+=fullStar);
 									$('#starBox2').append(html+=fullStar);
 									$('#starBox2').append(html+=fullStar);
 									$('#starBox2').append(html+=fullStar); */
-									
-								}
-								else if(data[i].str > 4 && data[i].str < 5){
-									for(var j=0;j<4;j++){
-										$('#starBox2').append(html+=fullStar);
+
+								} else if (data[i].str > 4 && data[i].str < 5) {
+									for (var j = 0; j < 4; j++) {
+										$('#starBox2').append(html += fullStar);
 									}
-									$('#starBox2').append(html+=halfStar);
-									
-								}else if(data[i].str == 4){
-									for(var j=0;j<4;j++){
-										$('#starBox2').append(html+=fullStar);
+									$('#starBox2').append(html += halfStar);
+
+								} else if (data[i].str == 4) {
+									for (var j = 0; j < 4; j++) {
+										$('#starBox2').append(html += fullStar);
 									}
-								}
-								else if(data[i].str > 3 && data[i].str <4){
-									for(var j=0;j<3;j++){
-										$('#starBox2').append(html+=fullStar);
+								} else if (data[i].str > 3 && data[i].str < 4) {
+									for (var j = 0; j < 3; j++) {
+										$('#starBox2').append(html += fullStar);
 									}
-									$('#starBox2').append(html+=halfStar);
-								}
-								else if(data[i].str == 3){
-									for(var j=0;j<3;j++){
-										$('#starBox2').append(html+=fullStar);
+									$('#starBox2').append(html += halfStar);
+								} else if (data[i].str == 3) {
+									for (var j = 0; j < 3; j++) {
+										$('#starBox2').append(html += fullStar);
 									}
-								}
-								else if(data[i].str > 2 && data[i].str < 3){
-									for(var j=0;j<2;j++){
-										$('#starBox2').append(html+=fullStar);
+								} else if (data[i].str > 2 && data[i].str < 3) {
+									for (var j = 0; j < 2; j++) {
+										$('#starBox2').append(html += fullStar);
 									}
-									$('#starBox2').append(html+=halfStar);
-								}
-								else if(data[i].str == 2){
-									for(var j=0;j<2;j++){
-										$('#starBox2').append(html+=fullStar);
+									$('#starBox2').append(html += halfStar);
+								} else if (data[i].str == 2) {
+									for (var j = 0; j < 2; j++) {
+										$('#starBox2').append(html += fullStar);
 									}
-								}
-								else if(data[i].str > 1&& data[i].str <2){
-									for(var j=0;j<2;j++){
-										$('#starBox2').append(html+=fullStar);
+								} else if (data[i].str > 1 && data[i].str < 2) {
+									for (var j = 0; j < 2; j++) {
+										$('#starBox2').append(html += fullStar);
 									}
-									$('#starBox2').append(html+=halfStar);
+									$('#starBox2').append(html += halfStar);
+								} else if (data[i].str == 1) {
+									$('#starBox2').append(html += fullStar);
+								} else {
+									$('#starBox2').append(html += halfStar);
 								}
-								else if(data[i].str ==1){
-									$('#starBox2').append(html+=fullStar);
-								}
-								else {
-									$('#starBox2').append(html+=halfStar);
-								}
-								html += '<span style="margin-left:15px; font-size:12px;">'+data[i].str +'</span>';
-								html += '<span style="margin-left:15px; font-size:12px; font-weight:300; color:#aaa;">('+data[i].cont_cnt +'개)</span>';
-								}
+								html += '<span style="margin-left:15px; font-size:12px;">'
+										+ data[i].str + '</span>';
+								html += '<span style="margin-left:15px; font-size:12px; font-weight:300; color:#aaa;">('
+										+ data[i].cont_cnt + '개)</span>';
+							}
 							html += '</div>';
 							html += '</td>';
 							html += '</tr>';
 							html += '<tr>';
 							html += '<td>';
-							if(data[i].str != 0){
-							html += '<span class="comment">최신 리뷰 </span>'
-									+ data[i].review_cont;
+							if (data[i].str != 0) {
+								html += '<span class="comment">최신 리뷰 </span>'
+										+ data[i].review_cont;
 							}/* else{
-								html+='<div>';
-								html+='리뷰없음';
-								html+='</div>';
-							} */
-							
+															html+='<div>';
+															html+='리뷰없음';
+															html+='</div>';
+														} */
+
 							html += '<button id="pageBtn' + data[i].mento_idx
 									+ '" class="btn" onclick="selectMentor('
 									+ data[i].mento_idx
@@ -298,7 +323,7 @@ width: 15px;
 
 							//html += '<a href="http://localhost:8080/toti/mentorpage/'+data[i].mento_idx+'">고수 페이지</a>';
 							html += '</div><label for="pageBtn'+data[i].mento_idx+'" style="cursor:pointer">';
-							html+='<hr>'
+							html += '<hr>'
 						}
 						$('#mentorList').html(html);
 					}
@@ -309,14 +334,15 @@ width: 15px;
 		var stype = $('#stype option:selected').val();
 		var keyword = $('#keyword').val();
 		$('#mentorList').html('');
-		if ($('#str').is(':checked')||$('#rCnt').is(':checked')) {
+		if ($('#str').is(':checked') || $('#rCnt').is(':checked')) {
 
 			$("#str").prop("checked", false);
 			$('#label_str').css('color', '#aaa');
 
 			$("#rCnt").prop("checked", false);
 			$('#label_rcnt').css('color', '#aaa');
-		};
+		}
+		;
 		$
 				.ajax({
 					url : 'http://localhost:8080/toti/mentee/mentorList',
@@ -337,7 +363,7 @@ width: 15px;
 							html += '<tr>';
 							html += '<td rowspan="6" style=\"text-aline:center">';
 							html += '<span id="photo">';
-							html += '<img src = "<c:url value="/img/user/'+data[i].m_photo+'"/>"';
+							html += '<img id="m_photo"  src = "<c:url value="/images/user/'+data[i].m_photo+'"/>"';
 							html += '</span></label>';
 							html += '</td>';
 							html += '</tr>';
@@ -345,8 +371,8 @@ width: 15px;
 							html += '<tr>';
 							html += '<td>';
 							/* html += '<h2>'+data[i].m_name + '</h2>' + data[i].cate_name + '</td>'; */
-							html += '<h2>'+data[i].m_name + '</h2></td>';
-									html += '</tr>';
+							html += '<h2>' + data[i].m_name + '</h2></td>';
+							html += '</tr>';
 							/* html += '제공 서비스 : ' + data[i].tor_sname+ '<br>'; */
 							/* html += '활동가능 지역 : ' + data[i].tor_location+ '<br>'; */
 							html += '<tr>';
@@ -357,85 +383,79 @@ width: 15px;
 							html += '<tr>';
 							html += '<td>';
 							html += '<div id="starBox2">';
-							
+
 							var fullStar = '<span><img id=\"star\" src=\"https://d1hhkexwnh74v.cloudfront.net/icons/icon-common-review-star-small-full.svg\"></span>';
 							var halfStar = '<span><img id=\"star\" src=\"https://d1hhkexwnh74v.cloudfront.net/icons/icon-common-review-star-small-half.svg\"></span>';
-							
+
 							if (data[i].str != 0) {
-								if(data[i].str == 5){
-									for(var j=0; j< 5; j++){
-										$('#starBox2').append(html+=fullStar);
-										
+								if (data[i].str == 5) {
+									for (var j = 0; j < 5; j++) {
+										$('#starBox2').append(html += fullStar);
+
 									}
 									/* $('#starBox2').append(html+=fullStar);
 									$('#starBox2').append(html+=fullStar);
 									$('#starBox2').append(html+=fullStar);
 									$('#starBox2').append(html+=fullStar);
 									$('#starBox2').append(html+=fullStar); */
-									
-								}
-								else if(data[i].str > 4 && data[i].str < 5){
-									for(var j=0;j<4;j++){
-										$('#starBox2').append(html+=fullStar);
+
+								} else if (data[i].str > 4 && data[i].str < 5) {
+									for (var j = 0; j < 4; j++) {
+										$('#starBox2').append(html += fullStar);
 									}
-									$('#starBox2').append(html+=halfStar);
-									
-								}else if(data[i].str == 4){
-									for(var j=0;j<4;j++){
-										$('#starBox2').append(html+=fullStar);
+									$('#starBox2').append(html += halfStar);
+
+								} else if (data[i].str == 4) {
+									for (var j = 0; j < 4; j++) {
+										$('#starBox2').append(html += fullStar);
 									}
-								}
-								else if(data[i].str > 3 && data[i].str <4){
-									for(var j=0;j<3;j++){
-										$('#starBox2').append(html+=fullStar);
+								} else if (data[i].str > 3 && data[i].str < 4) {
+									for (var j = 0; j < 3; j++) {
+										$('#starBox2').append(html += fullStar);
 									}
-									$('#starBox2').append(html+=halfStar);
-								}
-								else if(data[i].str == 3){
-									for(var j=0;j<3;j++){
-										$('#starBox2').append(html+=fullStar);
+									$('#starBox2').append(html += halfStar);
+								} else if (data[i].str == 3) {
+									for (var j = 0; j < 3; j++) {
+										$('#starBox2').append(html += fullStar);
 									}
-								}
-								else if(data[i].str > 2 && data[i].str < 3){
-									for(var j=0;j<2;j++){
-										$('#starBox2').append(html+=fullStar);
+								} else if (data[i].str > 2 && data[i].str < 3) {
+									for (var j = 0; j < 2; j++) {
+										$('#starBox2').append(html += fullStar);
 									}
-									$('#starBox2').append(html+=halfStar);
-								}
-								else if(data[i].str == 2){
-									for(var j=0;j<2;j++){
-										$('#starBox2').append(html+=fullStar);
+									$('#starBox2').append(html += halfStar);
+								} else if (data[i].str == 2) {
+									for (var j = 0; j < 2; j++) {
+										$('#starBox2').append(html += fullStar);
 									}
-								}
-								else if(data[i].str > 1&& data[i].str <2){
-									for(var j=0;j<2;j++){
-										$('#starBox2').append(html+=fullStar);
+								} else if (data[i].str > 1 && data[i].str < 2) {
+									for (var j = 0; j < 2; j++) {
+										$('#starBox2').append(html += fullStar);
 									}
-									$('#starBox2').append(html+=halfStar);
+									$('#starBox2').append(html += halfStar);
+								} else if (data[i].str == 1) {
+									$('#starBox2').append(html += fullStar);
+								} else {
+									$('#starBox2').append(html += halfStar);
 								}
-								else if(data[i].str ==1){
-									$('#starBox2').append(html+=fullStar);
-								}
-								else {
-									$('#starBox2').append(html+=halfStar);
-								}
-								html += '<span style="margin-left:15px; font-size:12px;">'+data[i].str +'</span>';
-								html += '<span style="margin-left:15px; font-size:12px; font-weight:300; color:#aaa;">('+data[i].cont_cnt +'개)</span>';
-								}
+								html += '<span style="margin-left:15px; font-size:12px;">'
+										+ data[i].str + '</span>';
+								html += '<span style="margin-left:15px; font-size:12px; font-weight:300; color:#aaa;">('
+										+ data[i].cont_cnt + '개)</span>';
+							}
 							html += '</div>';
 							html += '</td>';
 							html += '</tr>';
 							html += '<tr>';
 							html += '<td>';
-							if(data[i].str != 0){
-							html += '<span class="comment">최신 리뷰 </span>'
-									+ data[i].review_cont;
+							if (data[i].str != 0) {
+								html += '<span class="comment">최신 리뷰 </span>'
+										+ data[i].review_cont;
 							}/* else{
-								html+='<div>';
-								html+='리뷰없음';
-								html+='</div>';
-							} */
-							
+															html+='<div>';
+															html+='리뷰없음';
+															html+='</div>';
+														} */
+
 							html += '<button id="pageBtn' + data[i].mento_idx
 									+ '" class="btn" onclick="selectMentor('
 									+ data[i].mento_idx
@@ -446,7 +466,7 @@ width: 15px;
 
 							//html += '<a href="http://localhost:8080/toti/mentorpage/'+data[i].mento_idx+'">고수 페이지</a>';
 							html += '</div><label for="pageBtn'+data[i].mento_idx+'" style="cursor:pointer">';
-							html+='<hr>'
+							html += '<hr>'
 						}
 						$('#mentorList').html(html);
 					}
@@ -481,7 +501,7 @@ width: 15px;
 													html += '<tr>';
 													html += '<td rowspan="6" style=\"text-aline:center">';
 													html += '<span id="photo">';
-													html += '<img src = "<c:url value="/img/user/'+data[i].m_photo+'"/>"';
+													html += '<img id="m_photo"  src = "<c:url value="/images/user/'+data[i].m_photo+'"/>"';
 													html += '</span></label>';
 													html += '</td>';
 													html += '</tr>';
@@ -489,8 +509,10 @@ width: 15px;
 													html += '<tr>';
 													html += '<td>';
 													/* html += '<h2>'+data[i].m_name + '</h2>' + data[i].cate_name + '</td>'; */
-													html += '<h2>'+data[i].m_name + '</h2></td>';
-															html += '</tr>';
+													html += '<h2>'
+															+ data[i].m_name
+															+ '</h2></td>';
+													html += '</tr>';
 													/* html += '제공 서비스 : ' + data[i].tor_sname+ '<br>'; */
 													/* html += '활동가능 지역 : ' + data[i].tor_location+ '<br>'; */
 													html += '<tr>';
@@ -501,86 +523,115 @@ width: 15px;
 													html += '<tr>';
 													html += '<td>';
 													html += '<div id="starBox2">';
-													
+
 													var fullStar = '<span><img id=\"star\" src=\"https://d1hhkexwnh74v.cloudfront.net/icons/icon-common-review-star-small-full.svg\"></span>';
 													var halfStar = '<span><img id=\"star\" src=\"https://d1hhkexwnh74v.cloudfront.net/icons/icon-common-review-star-small-half.svg\"></span>';
-													
+
 													if (data[i].str != 0) {
-														if(data[i].str == 5){
-															for(var j=0; j< 5; j++){
-																$('#starBox2').append(html+=fullStar);
-																
+														if (data[i].str == 5) {
+															for (var j = 0; j < 5; j++) {
+																$('#starBox2')
+																		.append(
+																				html += fullStar);
+
 															}
 															/* $('#starBox2').append(html+=fullStar);
 															$('#starBox2').append(html+=fullStar);
 															$('#starBox2').append(html+=fullStar);
 															$('#starBox2').append(html+=fullStar);
 															$('#starBox2').append(html+=fullStar); */
-															
-														}
-														else if(data[i].str > 4 && data[i].str < 5){
-															for(var j=0;j<4;j++){
-																$('#starBox2').append(html+=fullStar);
+
+														} else if (data[i].str > 4
+																&& data[i].str < 5) {
+															for (var j = 0; j < 4; j++) {
+																$('#starBox2')
+																		.append(
+																				html += fullStar);
 															}
-															$('#starBox2').append(html+=halfStar);
-															
-														}else if(data[i].str == 4){
-															for(var j=0;j<4;j++){
-																$('#starBox2').append(html+=fullStar);
+															$('#starBox2')
+																	.append(
+																			html += halfStar);
+
+														} else if (data[i].str == 4) {
+															for (var j = 0; j < 4; j++) {
+																$('#starBox2')
+																		.append(
+																				html += fullStar);
 															}
-														}
-														else if(data[i].str > 3 && data[i].str <4){
-															for(var j=0;j<3;j++){
-																$('#starBox2').append(html+=fullStar);
+														} else if (data[i].str > 3
+																&& data[i].str < 4) {
+															for (var j = 0; j < 3; j++) {
+																$('#starBox2')
+																		.append(
+																				html += fullStar);
 															}
-															$('#starBox2').append(html+=halfStar);
-														}
-														else if(data[i].str == 3){
-															for(var j=0;j<3;j++){
-																$('#starBox2').append(html+=fullStar);
+															$('#starBox2')
+																	.append(
+																			html += halfStar);
+														} else if (data[i].str == 3) {
+															for (var j = 0; j < 3; j++) {
+																$('#starBox2')
+																		.append(
+																				html += fullStar);
 															}
-														}
-														else if(data[i].str > 2 && data[i].str < 3){
-															for(var j=0;j<2;j++){
-																$('#starBox2').append(html+=fullStar);
+														} else if (data[i].str > 2
+																&& data[i].str < 3) {
+															for (var j = 0; j < 2; j++) {
+																$('#starBox2')
+																		.append(
+																				html += fullStar);
 															}
-															$('#starBox2').append(html+=halfStar);
-														}
-														else if(data[i].str == 2){
-															for(var j=0;j<2;j++){
-																$('#starBox2').append(html+=fullStar);
+															$('#starBox2')
+																	.append(
+																			html += halfStar);
+														} else if (data[i].str == 2) {
+															for (var j = 0; j < 2; j++) {
+																$('#starBox2')
+																		.append(
+																				html += fullStar);
 															}
-														}
-														else if(data[i].str > 1&& data[i].str <2){
-															for(var j=0;j<2;j++){
-																$('#starBox2').append(html+=fullStar);
+														} else if (data[i].str > 1
+																&& data[i].str < 2) {
+															for (var j = 0; j < 2; j++) {
+																$('#starBox2')
+																		.append(
+																				html += fullStar);
 															}
-															$('#starBox2').append(html+=halfStar);
+															$('#starBox2')
+																	.append(
+																			html += halfStar);
+														} else if (data[i].str == 1) {
+															$('#starBox2')
+																	.append(
+																			html += fullStar);
+														} else {
+															$('#starBox2')
+																	.append(
+																			html += halfStar);
 														}
-														else if(data[i].str ==1){
-															$('#starBox2').append(html+=fullStar);
-														}
-														else {
-															$('#starBox2').append(html+=halfStar);
-														}
-														html += '<span style="margin-left:15px; font-size:12px;">'+data[i].str +'</span>';
-														html += '<span style="margin-left:15px; font-size:12px; font-weight:300; color:#aaa;">('+data[i].cont_cnt +'개)</span>';
-														}
+														html += '<span style="margin-left:15px; font-size:12px;">'
+																+ data[i].str
+																+ '</span>';
+														html += '<span style="margin-left:15px; font-size:12px; font-weight:300; color:#aaa;">('
+																+ data[i].cont_cnt
+																+ '개)</span>';
+													}
 													html += '</div>';
 													html += '</td>';
 													html += '</tr>';
 													html += '<tr>';
 													html += '<td>';
-													if(data[i].str != 0){
-													html += '<span class="comment">최신 리뷰 </span>'
-															+ data[i].review_cont;
+													if (data[i].str != 0) {
+														html += '<span class="comment">최신 리뷰 </span>'
+																+ data[i].review_cont;
 													}/* else{
-														html+='<div>';
-														html+='리뷰없음';
-														html+='</div>';
-													} */
-													
-													html += '<button id="pageBtn' + data[i].mento_idx
+																											html+='<div>';
+																											html+='리뷰없음';
+																											html+='</div>';
+																										} */
+
+													html += '<button id="pageBtn'
+															+ data[i].mento_idx
 															+ '" class="btn" onclick="selectMentor('
 															+ data[i].mento_idx
 															+ ')">고수 페이지로 이동</button>';
@@ -590,7 +641,7 @@ width: 15px;
 
 													//html += '<a href="http://localhost:8080/toti/mentorpage/'+data[i].mento_idx+'">고수 페이지</a>';
 													html += '</div><label for="pageBtn'+data[i].mento_idx+'" style="cursor:pointer">';
-													html+='<hr>'
+													html += '<hr>'
 												}
 												$('#mentorList').html(html);
 											}
@@ -630,7 +681,7 @@ width: 15px;
 													html += '<tr>';
 													html += '<td rowspan="6" style=\"text-aline:center">';
 													html += '<span id="photo">';
-													html += '<img src = "<c:url value="/img/user/'+data[i].m_photo+'"/>"';
+													html += '<img id="m_photo"  src = "<c:url value="/images/user/'+data[i].m_photo+'"/>"';
 													html += '</span></label>';
 													html += '</td>';
 													html += '</tr>';
@@ -638,8 +689,10 @@ width: 15px;
 													html += '<tr>';
 													html += '<td>';
 													/* html += '<h2>'+data[i].m_name + '</h2>' + data[i].cate_name + '</td>'; */
-													html += '<h2>'+data[i].m_name + '</h2></td>';
-															html += '</tr>';
+													html += '<h2>'
+															+ data[i].m_name
+															+ '</h2></td>';
+													html += '</tr>';
 													/* html += '제공 서비스 : ' + data[i].tor_sname+ '<br>'; */
 													/* html += '활동가능 지역 : ' + data[i].tor_location+ '<br>'; */
 													html += '<tr>';
@@ -650,86 +703,115 @@ width: 15px;
 													html += '<tr>';
 													html += '<td>';
 													html += '<div id="starBox2">';
-													
+
 													var fullStar = '<span><img id=\"star\" src=\"https://d1hhkexwnh74v.cloudfront.net/icons/icon-common-review-star-small-full.svg\"></span>';
 													var halfStar = '<span><img id=\"star\" src=\"https://d1hhkexwnh74v.cloudfront.net/icons/icon-common-review-star-small-half.svg\"></span>';
-													
+
 													if (data[i].str != 0) {
-														if(data[i].str == 5){
-															for(var j=0; j< 5; j++){
-																$('#starBox2').append(html+=fullStar);
-																
+														if (data[i].str == 5) {
+															for (var j = 0; j < 5; j++) {
+																$('#starBox2')
+																		.append(
+																				html += fullStar);
+
 															}
 															/* $('#starBox2').append(html+=fullStar);
 															$('#starBox2').append(html+=fullStar);
 															$('#starBox2').append(html+=fullStar);
 															$('#starBox2').append(html+=fullStar);
 															$('#starBox2').append(html+=fullStar); */
-															
-														}
-														else if(data[i].str > 4 && data[i].str < 5){
-															for(var j=0;j<4;j++){
-																$('#starBox2').append(html+=fullStar);
+
+														} else if (data[i].str > 4
+																&& data[i].str < 5) {
+															for (var j = 0; j < 4; j++) {
+																$('#starBox2')
+																		.append(
+																				html += fullStar);
 															}
-															$('#starBox2').append(html+=halfStar);
-															
-														}else if(data[i].str == 4){
-															for(var j=0;j<4;j++){
-																$('#starBox2').append(html+=fullStar);
+															$('#starBox2')
+																	.append(
+																			html += halfStar);
+
+														} else if (data[i].str == 4) {
+															for (var j = 0; j < 4; j++) {
+																$('#starBox2')
+																		.append(
+																				html += fullStar);
 															}
-														}
-														else if(data[i].str > 3 && data[i].str <4){
-															for(var j=0;j<3;j++){
-																$('#starBox2').append(html+=fullStar);
+														} else if (data[i].str > 3
+																&& data[i].str < 4) {
+															for (var j = 0; j < 3; j++) {
+																$('#starBox2')
+																		.append(
+																				html += fullStar);
 															}
-															$('#starBox2').append(html+=halfStar);
-														}
-														else if(data[i].str == 3){
-															for(var j=0;j<3;j++){
-																$('#starBox2').append(html+=fullStar);
+															$('#starBox2')
+																	.append(
+																			html += halfStar);
+														} else if (data[i].str == 3) {
+															for (var j = 0; j < 3; j++) {
+																$('#starBox2')
+																		.append(
+																				html += fullStar);
 															}
-														}
-														else if(data[i].str > 2 && data[i].str < 3){
-															for(var j=0;j<2;j++){
-																$('#starBox2').append(html+=fullStar);
+														} else if (data[i].str > 2
+																&& data[i].str < 3) {
+															for (var j = 0; j < 2; j++) {
+																$('#starBox2')
+																		.append(
+																				html += fullStar);
 															}
-															$('#starBox2').append(html+=halfStar);
-														}
-														else if(data[i].str == 2){
-															for(var j=0;j<2;j++){
-																$('#starBox2').append(html+=fullStar);
+															$('#starBox2')
+																	.append(
+																			html += halfStar);
+														} else if (data[i].str == 2) {
+															for (var j = 0; j < 2; j++) {
+																$('#starBox2')
+																		.append(
+																				html += fullStar);
 															}
-														}
-														else if(data[i].str > 1&& data[i].str <2){
-															for(var j=0;j<2;j++){
-																$('#starBox2').append(html+=fullStar);
+														} else if (data[i].str > 1
+																&& data[i].str < 2) {
+															for (var j = 0; j < 2; j++) {
+																$('#starBox2')
+																		.append(
+																				html += fullStar);
 															}
-															$('#starBox2').append(html+=halfStar);
+															$('#starBox2')
+																	.append(
+																			html += halfStar);
+														} else if (data[i].str == 1) {
+															$('#starBox2')
+																	.append(
+																			html += fullStar);
+														} else {
+															$('#starBox2')
+																	.append(
+																			html += halfStar);
 														}
-														else if(data[i].str ==1){
-															$('#starBox2').append(html+=fullStar);
-														}
-														else {
-															$('#starBox2').append(html+=halfStar);
-														}
-														html += '<span style="margin-left:15px; font-size:12px;">'+data[i].str +'</span>';
-														html += '<span style="margin-left:15px; font-size:12px; font-weight:300; color:#aaa;">('+data[i].cont_cnt +'개)</span>';
-														}
+														html += '<span style="margin-left:15px; font-size:12px;">'
+																+ data[i].str
+																+ '</span>';
+														html += '<span style="margin-left:15px; font-size:12px; font-weight:300; color:#aaa;">('
+																+ data[i].cont_cnt
+																+ '개)</span>';
+													}
 													html += '</div>';
 													html += '</td>';
 													html += '</tr>';
 													html += '<tr>';
 													html += '<td>';
-													if(data[i].str != 0){
-													html += '<span class="comment">최신 리뷰 </span>'
-															+ data[i].review_cont;
+													if (data[i].str != 0) {
+														html += '<span class="comment">최신 리뷰 </span>'
+																+ data[i].review_cont;
 													}/* else{
-														html+='<div>';
-														html+='리뷰없음';
-														html+='</div>';
-													} */
-													
-													html += '<button id="pageBtn' + data[i].mento_idx
+																											html+='<div>';
+																											html+='리뷰없음';
+																											html+='</div>';
+																										} */
+
+													html += '<button id="pageBtn'
+															+ data[i].mento_idx
 															+ '" class="btn" onclick="selectMentor('
 															+ data[i].mento_idx
 															+ ')">고수 페이지로 이동</button>';
@@ -739,7 +821,7 @@ width: 15px;
 
 													//html += '<a href="http://localhost:8080/toti/mentorpage/'+data[i].mento_idx+'">고수 페이지</a>';
 													html += '</div><label for="pageBtn'+data[i].mento_idx+'" style="cursor:pointer">';
-													html+='<hr>'
+													html += '<hr>'
 												}
 												$('#mentorList').html(html);
 											}

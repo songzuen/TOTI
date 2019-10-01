@@ -7,6 +7,7 @@ join toti.toti_service s on s.service_idx = ms.service_idx
 join toti.toti_cate c on c.cate_idx = s.cate_idx
 join toti.toti_answer a on a.request_idx = r.request_idx
 join toti.toti_chatroom rm on rm.room_num = e.est_idx
-where quest_idx = 999 and mento_idx = 3
+where quest_idx = 999 and mento_idx = 3 and
+m_name like CONCAT('%%')
 order by est_date desc;
 

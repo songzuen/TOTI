@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<%@include file="/WEB-INF/views/frame/contents/header.jsp"%>
+<%@include file="/WEB-INF/views/frame/header.jsp"%>
 <!-- title -->
 <title>SamplePage</title>
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
@@ -27,6 +27,7 @@ overflow: auto
 #requestList{
 width: 100%;
 height:100%;
+text-align: center;
 }
 #nList{
 width: 500px;
@@ -38,13 +39,12 @@ text-align: center;
 }
 
 #list{
-margin : 10px 10px;
+margin : 0 10px;
 padding-bottom : 10px;
 float: left;
 text-align: center;
 width: 200px;
 height:  300px;
-
 border: 1px solid #ddd;
 border-radius: 7px;
 
@@ -53,15 +53,11 @@ border-radius: 7px;
 background-color: #F2F3CA;
 } */
 
-img{
+#m_photo{
 width: 100px;
 border-radius: 50%;
 text-align: center;
-margin: 30px 0;
-}
-
-#photo{
-margin-bottom: 20px;
+margin:30px 0;
 }
 
 .btn{
@@ -74,9 +70,9 @@ color: #a0a0a0;
 }
 #listInfo{
 text-align: left;
-margin-left: 30px;
-margin-right : 10px;
-width :150px;
+margin-left: 20%;
+margin-right : 3%;
+width :70%;
 
 white-space: nowrap; 
 overflow: hidden;
@@ -87,31 +83,47 @@ text-overflow: ellipsis;
 </style>
 </head>
 <body>
-	<%@include file="/WEB-INF/views/frame/loading.jsp"%>
+	
 	<!-- page container -->
 	<div>
-		<%@include file="/WEB-INF/views/frame/contents/contentsHeader.jsp"%>
-		<%@include file="/WEB-INF/views/frame/contents/nav.jsp"%>
-		<!-- demo content -->
-		<div class="wrapper">
-			<!-- container -->
-			<div id="mainwrapper">
-				<!-- <h3 style="margin-bottom: 30px;">요청서</h3> -->
-				<!-- 세션 값으로 바꿔야함 -->
-				<input type="hidden" name="mento_idx" id="mento_idx" value="3">
+		
+		<%@include file="/WEB-INF/views/frame/nav.jsp"%>
+		
+		 <section id="page-breadcrumb">
+        <div class="vertical-center sun">
+             <div class="container">
+                <div class="row">
+                    <div class="action">
+                        <div class="col-sm-12">
+                            <h1 class="title">요청서 리스트</h1>
+                            <p>고객으로 받은 요청서</p>
+                            <hr>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+        
+    <section id="blog" class="padding-top padding-bottom">
+        <div class="container">
+            <div class="row">
+                   <div class="col-md">
+                       <input type="hidden" name="mento_idx" id="mento_idx" value="3">
 				
 				
 				<div id="noList"></div>
 				<div id="requestList"></div>
-				<!-- end home variation -->
-				<!-- end component -->
-			</div>
-			<!-- end container -->
-
-		</div>
-		<!-- end demo content -->
+                
+                    </div>
+                </div>
+            </div>
+    </section>
+    <!--/#blog-->
+		
 		<!-- footer -->
-		<%@include file="/WEB-INF/views/frame/contents/footer.jsp"%>
+		<%@include file="/WEB-INF/views/frame/footer.jsp"%>
 	</div>
 </body>
 <script>
@@ -143,13 +155,13 @@ text-overflow: ellipsis;
 							var day = date.getDate();
 							
 							html += '<label for="estimateBtn('+data[i].request_idx+')" style="cursor:pointer"><div id="list">';
-							html += '<div><img src = "<c:url value="/img/user/'+data[i].m_photo+'"/>"</div><br>';
+							html += '<div><img id="m_photo" src = "<c:url value="/images/user/'+data[i].m_photo+'"/>"</div><br>';
 							html += '<div id="listInfo"><h3>'
 							html += data[i].m_name+'(' + data[i].service_name
 									+ ')</h3>';
-							html += '<br><h5><span class="comment" id="cont">요청 사항 </span><br>';
+							html += '<h5><span class="comment" id="cont">요청 사항 </span>';
 							html += '<span id="cont">'+data[i].answer_cont+'</span></h5>';
-							html += '<br><span style="font-size:11px; color:#000; font-weight:400; margin-right:20px;">'+year+'.'+month+'.'+day+'</span>';
+							html += '<span style="font-size:11px; color:#000; font-weight:400; margin-right:20px;">'+year+'.'+month+'.'+day+'</span>';
 							html += '</div>'
 							html += '<button id= "estimateBtn('+data[i].request_idx+')" class="btn" onclick="selectRequest('
 							+ data[i].request_idx + ')">이동</button><br>';

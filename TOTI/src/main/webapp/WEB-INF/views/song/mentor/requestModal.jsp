@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<%@include file="/WEB-INF/views/frame/contents/header.jsp"%>
+<%@include file="/WEB-INF/views/frame/header.jsp"%>
 <!-- title -->
 <title>SamplePage</title>
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
@@ -13,14 +13,14 @@
 	margin: 0;
 	padding: 0; 
 }
-
-body {
-	min-width: 900px;
+ body {
+	margin: 0;
+	padding: 0; 
 	overflow: auto;
-}
+} 
 
 .wrapper {
-	width: 60%;
+	width: 80%;
 	margin: 20px auto;
 }
 
@@ -38,7 +38,7 @@ h1, h2, h3, h4, h5, h6 {
 	
 }
 
-img {
+#m_photo {
 width: 100px;
 border-radius: 50%;
 margin-bottom: 20px;
@@ -101,9 +101,17 @@ margin-top: 20px;
 	font-size: 9px;
 }
 
+input[type=text]{
+border:0px;
+}
+textarea{
+border:0px;
+width: 100%;
+}
 .modal-body #est_price {
 	height: 40px;
 	line-height: 40px;
+	border: 0px;
 }
 
 .modal-body #textarea {
@@ -130,24 +138,52 @@ margin-right: 15px;
 </style>
 </head>
 <body>
-	<%--  <%@include file="/WEB-INF/views/frame/loading.jsp"%>  --%>
-	<!-- page container -->
-	<div>
-		<%@include file="/WEB-INF/views/frame/contents/contentsHeader.jsp"%>
-		<%@include file="/WEB-INF/views/frame/contents/nav.jsp"%>
-		<!-- demo content -->
-		<div class="container wrapper">
-			<!-- container -->
-			<div>
-				<!-- 요청서 -->
-				<div id="request">
-					<h3>요청서</h3>
-					<input type="hidden" id="request_idx" value="${request_idx}">
-					<hr>
-					<div id="req"></div>
+
+		<%@include file="/WEB-INF/views/frame/nav.jsp"%>
+		
+		<!--/#header-->
+    <section id="page-breadcrumb">
+        <div class="vertical-center sun">
+             <div class="container">
+                <div class="row">
+                    <div class="action">
+                        <div class="col-sm-12">
+                            <h1 class="title">요청서</h1>
+                            <input type="hidden" id="request_idx" value="${request_idx}">
+                            <p>고객으로 받은 요청서</p>
+                            <hr>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+     <!--/#action-->
+    
+    <section id="blog" class="padding-top padding-bottom">
+        <div class="container wrapper">
+            <div class="row">
+                   <div class="col-md">
+                      	<div id="req"></div>
+                        <!-- 제공하는 컨텐츠 이렇게 넣으세여 예시↓ -->
+                        <div class="single-blog two-column">
+                            <div class="post-thumb">
+                                <a href="blogdetails.html"><img src="images/blog/masonary/9.jpg" class="img-responsive" alt=""></a>
+                                <div class="post-overlay">
+                                   <!--  <span class="uppercase"><a href="#">14 <br><small>Feb</small></a></span> -->
+                                </div>
+                            </div>
+                            <div class="post-content overflow">
+                               <!--  <ul class="nav nav-justified post-nav">
+                                    <li><a href="#"><i class="fa fa-tag"></i>Creative</a></li>
+                                </ul> -->
+                               <!--  <h2 class="post-title bold"><a href="blogdetails.html">Advanced business cards design</a></h2>
+                                <h3 class="post-author"><a href="#">Posted by micron News</a></h3>
+                                <p> -->
+                                
+                                <div id="est"></div>
 				</div>
-				<!-- 견적서 -->
-				<div id="est">
 				</div>
 				<!-- The Modal -->
 				<div class="modal" id="myModal">
@@ -157,7 +193,7 @@ margin-right: 15px;
 							<!-- Modal Header -->
 							<div class="modal-header">
 								<h1 class="modal-title">견적서</h1>
-								<button type="button" class="close" data-dismiss="modal">×</button>
+								<button type="button" class="close" style="margin-top:-50px;" data-dismiss="modal">×</button>
 							</div>
 
 							<!-- Modal body -->
@@ -169,7 +205,7 @@ margin-right: 15px;
 									
 									<!-- 세션 값 받기 -->
 									<input type="text" name="mento_idx" id="mento_idx"
-										name="mento_idx" value="3">
+										name="mento_idx" value="2">
 										
 										
 									<table>
@@ -232,24 +268,25 @@ margin-right: 15px;
 								<button type="button" class="btn btn-danger"
 									data-dismiss="modal">Close</button>
 							</div>
-
 						</div>
 					</div>
 				</div>
-				<!-- end home variation -->
-				<!-- end component -->
-			</div>
-			<!-- end container -->
+				<!-- 모달 끝 -->
+		
+		
+			</div></div>
 		</div>
-		<!-- end demo content -->
+	 </section>
 		<!-- footer -->
-		<%@include file="/WEB-INF/views/frame/contents/footer.jsp"%>
-	</div>
+		<%@include file="/WEB-INF/views/frame/footer.jsp"%>
 </body>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=c69d5f862cf8316938343efcf4a7d402&libraries=services"></script>
 <script>
+
 	$(document).ready(function() {
 
 		request($('#request_idx').val());
+		menteeLocation($('#request_idx').val())
 		
 	});
 
@@ -264,7 +301,7 @@ margin-right: 15px;
 
 				for (var i = 0; i < data.length; i++) {
 					html += '<div id="mInfo">'
-					html += '<img src = "<c:url value="/img/user/'+data[i].m_photo+'"/>"';
+					html += '<img id="m_photo" src = "<c:url value="/images/user/'+data[i].m_photo+'"/>"';
 					html += '<span style="float:left;"><h2 style="height:100px;line-height:60px;">' + data[i].m_name;
 					html += '<p>' + data[i].cate_name;
 					html += ' - ';
@@ -274,10 +311,36 @@ margin-right: 15px;
 					break;
 				}
 
-				for (var i = 0; i < data.length; i++) {
+				for (var i = 0; i < 3; i++) {
 					html += '<div id="reqInfo">'
 					html += '<p style="font-weight: 700">Q'+ (i+1) +'. '+ data[i].quest_name+'</p>';
-					html += '<p>' + data[i].answer_cont + '</p>';
+					html += '<p id="'+data[i].answer_cont+'_div">' + data[i].answer_cont;
+					html += '</p>';
+					html += '<hr>';
+					html += '</div>'
+					
+				}
+				
+				for (var i = 3; i < 4; i++) {
+					html += '<div id="reqInfo">'
+					html += '<p style="font-weight: 700">Q'+ (i+1) +'. '+ data[i].quest_name+'</p>';
+					html += '<p id="'+data[i].answer_cont+'_div">' + data[i].answer_cont;
+					
+					/* html += '<button style="border:0px; color:#337AB7; font-size:12px; margin-left: 30px;" onclick="menteeLocation('+request_idx+')">위치 보기</button>'; */
+					html += '<p style="margin:15px 0;">';
+					html += '</p>';
+					html += '<div id="map" style="width:100%;height:350px;"></div>';
+					html += '</p>';
+					html += '<hr>'; 
+					html += '</div>';
+					
+				}
+				
+				for (var i = 4; i < data.length; i++) {
+					html += '<div id="reqInfo">'
+					html += '<p style="font-weight: 700">Q'+ (i+1) +'. '+ data[i].quest_name+'</p>';
+					html += '<p id="'+data[i].answer_cont+'_div">' + data[i].answer_cont;
+					html += '</p>';
 					html += '<hr>';
 					html += '</div>'
 					
@@ -298,6 +361,55 @@ margin-right: 15px;
 				req_idx += '<input type="hidden" id="request_idx" name="request_idx" value="'+request_idx+'">';
 				$('#req_idx').html(req_idx);
 
+			}
+		});
+	}
+	
+	function menteeLocation(request_idx){
+		
+		$.ajax({
+			url : 'http://localhost:8080/toti/requestInfo/' + request_idx,
+			type : 'GET',
+			success : function(data) {
+				
+		var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+	    mapOption = {
+	        center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+	        level: 2 // 지도의 확대 레벨
+	    };  
+
+	// 지도를 생성합니다    
+	var map = new kakao.maps.Map(mapContainer, mapOption); 
+
+	// 주소-좌표 변환 객체를 생성합니다
+	var geocoder = new kakao.maps.services.Geocoder();
+
+	for (var i = 3; i < 4; i++) {
+	// 주소로 좌표를 검색합니다
+	geocoder.addressSearch(data[i].answer_cont, function(result, status) {
+	
+	    // 정상적으로 검색이 완료됐으면 
+	     if (status === kakao.maps.services.Status.OK) {
+
+	        var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+
+	        // 결과값으로 받은 위치를 마커로 표시합니다
+	        var marker = new kakao.maps.Marker({
+	            map: map,
+	            position: coords
+	        });
+
+	        // 인포윈도우로 장소에 대한 설명을 표시합니다
+	        var infowindow = new kakao.maps.InfoWindow({
+	            content: '<div style="width:150px;text-align:center;padding:6px 0;">고객 희망 위치</div>'
+	        });
+	        infowindow.open(map, marker);
+
+	        // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+	        map.setCenter(coords);
+	    } 
+	}); 
+	}
 			}
 		});
 	}

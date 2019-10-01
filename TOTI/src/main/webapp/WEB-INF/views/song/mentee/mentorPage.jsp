@@ -6,7 +6,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<%@include file="/WEB-INF/views/frame/contents/header.jsp"%>
+<%@include file="/WEB-INF/views/frame/header.jsp"%>
 
 <!-- title -->
 <title>SamplePage</title>
@@ -52,7 +52,7 @@ h2,h3, h4, h5, h6 {
 padding: 5px 0;
 font-size: 12px;
 }
-img {
+#m_photo {
 width: 100px;
 border-radius : 50%;
 }
@@ -73,11 +73,6 @@ table tr:nth-child(1) td:nth-child(1) {
 margin-top: 20px;
 margin-left: 25px;
 }
-
-#review_name{
-font-weight: 800;
-}
-
 
 .rBox {
 	border: 1px solid #ddd;
@@ -101,11 +96,26 @@ margin-top: 6px;
 </style>
 </head>
 <body>
-	<%-- <%@include file="/WEB-INF/views/frame/loading.jsp"%>  --%>
 	<!-- page container -->
 	<div>
-		<%@include file="/WEB-INF/views/frame/contents/contentsHeader.jsp"%>
-		<%@include file="/WEB-INF/views/frame/contents/nav.jsp"%>
+		<%@include file="/WEB-INF/views/frame/nav.jsp"%>
+		
+		 <!--/#header-->
+    <section id="page-breadcrumb">
+        <div class="vertical-center sun">
+             <div class="container">
+                <div class="row">
+                    <div class="action">
+                        <div class="col-sm-12">
+                            <h1 class="title">멘토 정보</h1>
+                            <p>멘토가 제공하는 서비스 및 정보 </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--/#action-->
 		<!-- demo content -->
 		<div class="wrapper">
 			<!-- container -->
@@ -126,7 +136,7 @@ margin-top: 6px;
 		</div>
 		<!-- end demo content -->
 		<!-- footer -->
-		<%@include file="/WEB-INF/views/frame/contents/footer.jsp"%>
+		<%@include file="/WEB-INF/views/frame/footer.jsp"%>
 	</div>
 </body>
 
@@ -150,7 +160,7 @@ margin-top: 6px;
 				for(var i = 0; i<data.length; i++){
 						
 						/*고수 프로필*/
-						html+='<div class="info"><span id="img"><img src = "<c:url value="/img/user/'+data[i].m_photo+'"/>"><span></div>';
+						html+='<div class="info"><span id="img"><img id="m_photo" src = "<c:url value="/images/user/'+data[i].m_photo+'"/>"><span></div>';
 						
 						html+='<div class="info" style="height:100px; padding:30px 10px;"><b><h2>'+data[i].m_name+'</h2></b><span style="color:black; font-size:9px;">';
 						
@@ -335,10 +345,10 @@ margin-top: 6px;
 						html+='<div id="reviewTable">';
 						html+='<table>';
 						html+='<tr>';
-						html+='	<td><h5 id="review_name">';
+						html+='	<td id="review_name" style="font-weight:600;">';
 						html+=data[i].member_name;
 
-						html+='</h5>';
+						html+='</td>';
 						html+='<td style="width:100px;"><div id=rev_star>';
 
 						if (data[i].review_star != 0) {
@@ -394,8 +404,8 @@ margin-top: 6px;
 								$('#rev_star').append(html+=halfStar);
 							}
 							}
-						html += '</div></td>';
-							html+='<td style="color:#acacac;">'+year+'.'+month+'.'+day+'</td>';
+						html += '<span style="margin-left:15px; font-size:12px; font-weight:600;">'+data[i].review_star+'</span></div></td>';
+							html+='<td style="color:#acacac; padding-left:15px;">'+year+'.'+month+'.'+day+'</td>';
 
 							html+='</tr>';
 							html+='<tr>';

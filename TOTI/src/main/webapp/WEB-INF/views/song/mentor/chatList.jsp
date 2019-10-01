@@ -6,7 +6,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<%@include file="/WEB-INF/views/frame/contents/header.jsp"%>
+<%@include file="/WEB-INF/views/frame/header.jsp"%>
 
 <!-- title -->
 <title>SamplePage</title>
@@ -18,27 +18,25 @@
 }
 
 body {
-	min-width: 700px;
+	
 	overflow: auto;
 }
+
 h1,h2,h3,h4,h5,h6{
 color:black;
 letter-spacing: 1px;
 }
-.wrapper {
-	width: 55%;
-	margin: 20px auto;
-}
 
 #chatList{
-margin: 70px 0;
+width: 70%;
+margin: 0 auto;
 }
 #chat {
 	margin: 5px auto;
 	height: 70%;
 }
 
-img{
+#m_photo{
 width: 100px;
 border-radius: 50%;
 }
@@ -60,36 +58,49 @@ text-align: center;
 font-weight: 400;
 font-size: 11px;
 }
+#searchBtn {
+border: 0px;
+}
 </style>
 </head>
 <body>
-	<%-- <%@include file="/WEB-INF/views/frame/loading.jsp"%>  --%>
-	<!-- page container -->
-	<div>
-		<%@include file="/WEB-INF/views/frame/contents/contentsHeader.jsp"%>
-		<%@include file="/WEB-INF/views/frame/contents/nav.jsp"%>
-		<!-- demo content -->
-		<div class="wrapper">
-			<!-- container -->
-			<div>
-			
-			<!-- 로그인 세션값으로 변경 -->
-			<input type="hidden" name="mento_idx" id="mento_idx" value="3">
-				<!-- 채팅리스트 -->
-				<!-- <h3 style="margin-bottom: 30px;">채팅 목록</h3> -->
-				<div id="chatList">
-					
+		<%@include file="/WEB-INF/views/frame/nav.jsp"%>
+<!--/#header-->
+		<section id="page-breadcrumb">
+			<div class="vertical-center sun">
+				<div class="container">
+					<div class="row">
+						<div class="action">
+							<div class="col-sm-12">
+								<h1 class="title">채팅</h1>
+								<p>견적서를 보낸 고객과 채팅을 시작해보세요!</p>
+								<hr>
+							</div>
+						</div>
+					</div>
 				</div>
-
-				<!-- end home variation -->
-				<!-- end component -->
 			</div>
-			<!-- end container -->
-		</div>
-		<!-- end demo content -->
-		<!-- footer -->
-		<%@include file="/WEB-INF/views/frame/contents/footer.jsp"%>
-	</div>
+		</section>
+		<!--/#home-slider-->		
+		<!-- demo content -->
+		<section id="blog" class="padding-top padding-bottom">
+			<div class="container">
+				<div class="row">
+					<div class="col-md">
+					
+					<input type="hidden" name="mento_idx" id="mento_idx" value="3">
+					<div id="chatList"></div>
+					<!-- end home variation -->
+					<!-- end component -->
+				</div>
+				<!-- end container -->
+
+			</div>
+			</div>
+			</section>
+			<!-- end demo content -->
+			<!-- footer -->
+		<%@include file="/WEB-INF/views/frame/footer.jsp"%>
 </body>
 
 <script>
@@ -111,7 +122,7 @@ font-size: 11px;
 							html += '<tr>';
 							html += '<td rowspan="6" style="text-aline:center">';
 							html += '<span id="photo">';
-							html += '<img src = "<c:url value="/img/user/'+data[i].m_photo+'"/>"';
+							html += '<img id="m_photo" src = "<c:url value="/images/user/'+data[i].m_photo+'"/>"';
 							html += '</span>';
 							html += '</td>';
 							html += '</tr>';

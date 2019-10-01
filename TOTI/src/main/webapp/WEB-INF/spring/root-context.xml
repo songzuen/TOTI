@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.1.xsd
+		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
+	
+	<!-- Root Context: defines shared resources visible to all other web components -->
+	<mvc:resources mapping="/resources/**" location="/resources/" />
+	<mvc:resources mapping="/css/**" location="/css/" />
+	<mvc:resources mapping="/images/**" location="/images/" />
+	<mvc:resources mapping="/js/**" location="/js/" />
+	<mvc:resources mapping="/fonts/**" location="/fonts/" />
+	<mvc:resources mapping="/uploadfile/**" location="/uploadfile/" />
+	
+	<!-- JDBC설정 -->
+	<bean id="dataSource"
+      class="org.apache.commons.dbcp2.BasicDataSource"
+      p:driverClassName="com.mysql.cj.jdbc.Driver"
+      p:url="jdbc:mysql://mysql-mm.chvivg7pudki.ap-northeast-2.rds.amazonaws.com/toti?characterEncoding=utf8&amp;serverTimezone=UTC"
+      p:username="bit" p:password="bit" />
+
+	<bean id="jdbcTemplate"
+		class="org.springframework.jdbc.core.JdbcTemplate"
+		p:dataSource-ref="dataSource" />
+	<!-- JDBC설정 끝-->
+	
+	<!-- my batis 설정  : datasoruce, mapper 서버 실행시 기준의 경로 -->
+	<bean id="sqlSessionFactory"
+				class="org.mybatis.spring.SqlSessionFactoryBean"
+				p:dataSource-ref="dataSource"
+				p:mapperLocations="/WEB-INF/mappers/*.xml" />
+	
+	<bean id="sqlSession"
+				class="org.mybatis.spring.SqlSessionTemplate">
+		<constructor-arg index="0" ref="sqlSessionFactory"/>
+	</bean>
+	<!-- my batis 설정 끝 -->
+	
+</beans>
