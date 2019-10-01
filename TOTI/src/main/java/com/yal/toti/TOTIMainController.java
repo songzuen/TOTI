@@ -5,11 +5,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 public class TOTIMainController {
-	
-	@RequestMapping("/main") 
-	  public String getMain() {
-		  return "main";
-	 }
 
-	  
+	@RequestMapping("/main")
+	public String getMain() {
+		return "main";
+	}
+
 }

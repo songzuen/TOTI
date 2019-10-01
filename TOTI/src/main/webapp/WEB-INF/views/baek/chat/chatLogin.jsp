@@ -3,40 +3,56 @@
 <!DOCTYPE html>
 <html>
 <head>
-<%@include file="/WEB-INF/views/frame/contents/header.jsp"%>
-<!-- title -->
-<title>SamplePage</title>
+
+<title>TOTI</title>
+
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-<style>
-</style>
+<script
+	src="http://ec2-13-125-96-18.ap-northeast-2.compute.amazonaws.com:3000/socket.io/socket.io.js"></script>
+<%@ include file="/WEB-INF/views/frame/header.jsp"%>
 </head>
+<!--/head-->
 <body>
-	<%@include file="/WEB-INF/views/frame/loading.jsp"%>
-	<!-- page container -->
-	<div class="page-container">
-		<%@include file="/WEB-INF/views/frame/contents/contentsHeader.jsp"%>
-		<%@include file="/WEB-INF/views/frame/contents/nav.jsp"%>
-		<!-- demo content -->
-		<div class="demo-content mrg-top-md">
-			<!-- container -->
-			<div class="container" style="margin: 50px;">
-				<div id="content">
-					<form method="post">
-						<input type="text" name="m_id" required="required"> <input type="submit">
-					</form>
+	<%@ include file="/WEB-INF/views/frame/nav.jsp"%>
+	<!--/#header-->
+	<section id="page-breadcrumb">
+		<div class="vertical-center sun">
+			<div class="container">
+				<div class="row">
+					<div class="action">
+						<div class="col-sm-12">
+							<h1 class="title">여기가 타이틀</h1>
+							<p>로그인</p>
+						</div>
+					</div>
 				</div>
-				<!-- end home variation -->
-				<!-- end component -->
 			</div>
-			<!-- end container -->
 		</div>
-		<!-- end demo content -->
-		<!-- footer -->
-		<%@include file="/WEB-INF/views/frame/contents/footer.jsp"%>
-	</div>
+	</section>
+	<!--/#action-->
+
+	<section id="blog" class="padding-top padding-bottom">
+		<div class="container">
+			<div class="row">
+				<div class="col-md">
+
+					<form method="post">
+						<input type="text" name="m_id" required="required"> <input
+							type="submit">
+					</form>
+					<!-- 예시 끝 -->
+				</div>
+			</div>
+		</div>
+	</section>
+	<!--/#blog-->
+
+	<%@ include file="/WEB-INF/views/frame/footer.jsp"%>
 
 	<script>
-		
+		$(document).ready(function() {
+
+		});
 	</script>
 </body>
 </html>
