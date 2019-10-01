@@ -32,12 +32,10 @@ public class RequestController {
 	
 	@RequestMapping(value = ("/request"), method = RequestMethod.POST)
 	public String request(RequestData data, Model model) {		
-		
-		int cnt;
+
 		try {
-			cnt = requestService.insertRequest(data);
-			
-			model.addAttribute("cnt", cnt);
+			requestService.insertRequest(data);
+
 			model.addAttribute("request_idx", data.getRequest_idx());
 			
 		} catch (Exception e) {
