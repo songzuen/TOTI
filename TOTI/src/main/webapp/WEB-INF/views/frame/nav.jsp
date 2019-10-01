@@ -19,7 +19,7 @@
 			</div>
 			<!-- nav -->
 			<div class="collapse navbar-collapse">
-				<ul class="nav navbar-nav navbar-right">
+				<ul class="nav navbar-nav navbar-right" id="menu">
 					<!-- 로그인전 nav-->
 					<!-- 
 					<li class="active"><a href="<c:url value="/" />">Home</a></li>
@@ -33,15 +33,15 @@
                         <li><a href="#">채팅</a></li>
                         <li><a href="<c:url value="/mentorList" />">멘토찾기</a></li>
                         <li class="dropdown"><a href="#">OO 멘티님<i class="fa fa-angle-down"></i></a>
-                            <ul role="menu" class="sub-menu">
-                               <li style="padding: 5px 0 10px 15px">
+                            <ul  role="menu" class="sub-menu">
+                               <li class="menu_title">
                                   <div>안녕하세요, OO님 </div>
                                 </li>
-                                <li><a href="<c:url value="/user/requests" />">보낸요청</a></li>
-                                <li><a href="#">설정</a></li>
+                                <li><a href="<c:url value="/user/requests" />"><i class="fa fa-envelope"></i>보낸요청</a></li>
+                                <li><a href="#"><i class="fa fa-cog"></i>설정</a></li>
                                 <hr>
-                                <li><a href="#">멘토로 전환</a></li>
-                                <li><a href="#">로그아웃</a></li>
+                                <li><a href="#"><i class="fa fa-refresh"></i>멘토로 전환</a></li>
+                                <li><a href="#"><i class="fa fa-circle-o-notch"></i>로그아웃</a></li>
                             </ul>
                         </li>
                         
@@ -52,15 +52,15 @@
                         <li><a href="index.html">프로필</a></li>
                         <li class="dropdown"><a href="#">OO 멘토님<i class="fa fa-angle-down"></i></a>
                             <ul role="menu" class="sub-menu">
-                               <li style="padding: 5px 0 10px 15px">
+                               <li class="menu_title">
                                    <div>안녕하세요, OO님</div>
-                                   <div>★ 평점 5.0 | 리뷰 1</div>
+                                   <div><i class="fa fa-star"></i>평점 5.0 | 리뷰 1</div>
                                 </li>
-                                <li><a href="aboutus.html">프로필 관리</a></li>
-                                <li><a href="aboutus2.html">설정</a></li>
+                                <li><a href="aboutus.html"><i class="fa fa-user"></i>프로필 관리</a></li>
+                                <li><a href="aboutus2.html"><i class="fa fa-cog"></i>설정</a></li>
                                 <hr>
-                                <li><a href="service.html">고객으로 전환</a></li>
-                                <li><a href="pricing.html">로그아웃</a></li>
+                                <li><a href="service.html"><i class="fa fa-refresh"></i>고객으로 전환</a></li>
+                                <li><a href="pricing.html"><i class="fa fa-circle-o-notch"></i>로그아웃</a></li>
                             </ul>
                         </li>
 
