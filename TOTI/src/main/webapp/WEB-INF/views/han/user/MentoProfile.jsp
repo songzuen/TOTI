@@ -8,10 +8,7 @@
 <!-- title -->
 <title>TOTI :: 프로필 관리</title>
 <style>
-	ul li {
-		list-style: none;
-        float: left;
-	}
+
 	
 	table {
 		width: 100%;
@@ -19,12 +16,16 @@
 	
 		
 	#mentorProfile {
-		width: 900px;
-		margin: auto;
+		float: left;
+		width: 80%;
 	}
 	
 	.btn-edit{
 		width: 50px;
+	}
+	
+	.date{
+		width: 80px;
 	}
 	
 	h4{
@@ -39,15 +40,46 @@
 		width: 130px;
 		float: left;
 		border-radius: 10%;
+		margin: 10px;
 	}
 	
 	.overview{
+		width: 200px;
+		margin: 20px 150px;
+		padding-top: 70px;
 		height: 180px;
-		margin-bottom: 0;
+	}
+
+	.aview{
+		font-weight: 500;
+		text-align: center;
+	    vertical-align: middle;
+		color: #fff;
+	    background-color: #00c7ae;
+	    border-color: #00c7ae;
+	    text-align: center;
+	}
+
+	#overtable{
+		text-align: center;
 	}
 	
-	.overview span {
-		margin:50px 0 0 0;
+	#num{
+		font-size: 25px;
+		font-weight: bold;
+	}
+	
+	#avgrev img{
+		width: 23px;
+	}
+	
+	#m-name{
+		font-weight: bold;
+	}
+	
+	#url_field{
+		width: 250px;
+		height: 25px;
 	}
 </style>
 </head>
@@ -63,7 +95,12 @@
 				<input type="hidden" id="mento_idx" value="${mento_idx}">
 				<div id="mentorProfile">
 				</div>
-				
+				<div style="float:right; width:20%" >
+					<h4>리뷰 요청하기</h4>
+					링크를 공유하고 고객들에게 리뷰를 받아 보세요. 긍정적인 리뷰가 있는 고수는 고용될 확률이 2배 이상 높습니다.
+					<input type="text" id="url_field" value="http://localhost:8080/toti/review/${mento_idx}" readonly><br>
+					<input id="copy_btn" type="button" value="복사하기">
+				</div>
 				<!-- end home variation -->
 				<!-- end component -->
 			</div>
@@ -93,11 +130,16 @@
 					/*간략한 고수정보*/
 					html += '<div class="info" id="overview">';
 					html += '<img class="img" src="<c:url value="/img/'+data[i].m_photo+'" />">';
-					html += '<div class="overview"> <ul> ';
-					html += '<span><li class="overview-li">'+ data[i].review_avg +'.0 <br>리뷰 평점</span></li>';
-					html += '<span><li class="overview-li">'+ data[i].review_cnt +'<br>리뷰수</span></li>';
-					html +='</ul></div>';
-					html +='</div>';
+					html += '<div class="overview"> ';
+					html += '<table id="overtable"><tr>';
+					html += '<td id="num">'+ data[i].review_avg +'.0</td>';
+					html += '<td id="num">'+ data[i].review_cnt +'</td>';
+					html += '</tr>';
+					html += '<tr><td>';
+					html += '리뷰 평균</td>';
+					html += '<td>리뷰 수</td></tr></table></div></div>';
+					
+					
 					
 					/* 이름 */
 					html += '<div class="info" id="pname">';
@@ -365,45 +407,68 @@
 					html += '</table></div>';
     				
 					/* 리뷰  */
+					var star= '<img src="https://d1hhkexwnh74v.cloudfront.net/icons/icon-common-review-star-small-full.svg">';
+					var nostar='<img src="https://d1hhkexwnh74v.cloudfront.net/icons/icon-common-review-star-small-empty.svg">';
+					
 					html += '<hr><div id="reviewBox" class="info">';
-					html += '<h4>';
+					html += '<h4><div id="avgrev">';
+					
 					html += '리뷰<span>'
 							+ data[i].review_cnt
 							+ '개 (평균 '
 							+ data[i].review_avg
 							+ '점)</span>';
-					html += '</h4>';
+							
+					if(data[i].review_avg == 5){
+						html += star+star+star+star+star;
+					}
+					else if(data[i].review_avg == 4){
+						html += star+star+star+star+nostar;
+					}
+					else if(data[i].review_avg == 3){
+						html += star+star+star+nostar+nostar;
+					}
+					else if(data[i].review_avg == 2){
+						html += star+star+nostar+nostar+nostar;
+					}
+					else if(data[i].review_avg == 1){
+						html += star+nostar+nostar+nostar+nostar;
+					}
+					html += '</h4></div>';
 					break;
 				}
 				for (var i = 0; i < data.length; i++) {
-					var date = new Date(data[i].review_date);
-					var year = date.getFullYear();
-					var month = date.getMonth();
-					var day = date.getDate();
-					html += '<table>';
+					html += '<table style="width:100%">';
 					html += '<tr>';
-					html += '	<td><h5 id="review_name">';
-					html += data[i].member_name;
-					html += '</h5></td>';
-					html += '<td>'+data[i].review_star+'점</td>';
+					html += '<td id="m-name">';
+					html += data[i].member_name + '</td>';
+					if(data[i].review_star == 5){
+						html += star+star+star+star+star;
+					}
+					if(data[i].review_star == 4){
+						html += star+star+star+star+nostar;
+					}
+					if(data[i].review_star == 3){
+						html += star+star+star+nostar+nostar;
+					}
+					if(data[i].review_star == 2){
+						html += star+star+nostar+nostar+nostar;
+					}
+					if(data[i].review_star == 1){
+						html += star+nostar+nostar+nostar+nostar;
+					}
+					html += '<td class="date">'+data[i].review_date+'</td>';
 					html += '</tr>';
 					html += '<tr>';
 					html += '<td colspan="2">' + data[i].cont
 							+ '</td>';
 					html += '</tr>';
-					html += '<tr>';
-					html += '<td colspan="2">' + year + '.' + month + '.' + day 
-						+ '</td>';
-					html += '</tr>';
-					html += '</table>';
+					html += '</table><br>';
 				}
 				html += '</div>';
 				$('#mentorProfile').html(html);
-
 				}
-
 			});
-
 		}
 	
 	/* 고수 이름 */
@@ -698,6 +763,15 @@
 		});
 		
     }
+	
+	var copyBtn = document.querySelector('#copy_btn');
+	copyBtn.addEventListener('click', function () {
+	  var urlField = document.querySelector('#url_field');
+	  // select the contents
+	  urlField.select();
+	   
+	  document.execCommand('copy'); // or 'cut'
+	}, false);
 </script>
 </body>
 </html>

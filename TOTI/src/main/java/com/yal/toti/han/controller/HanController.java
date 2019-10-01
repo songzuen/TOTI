@@ -16,9 +16,9 @@ public class HanController {
 		return "han/admin/adminQuestion";
 	}
 
-	@RequestMapping("/mento")
+	@RequestMapping("/profile/${mento_idx}")
 	public String getList() {
-		return "han/user/mentoList";
+		return "han/user/profile/${mento_idx}";
 	}
 	
 }
