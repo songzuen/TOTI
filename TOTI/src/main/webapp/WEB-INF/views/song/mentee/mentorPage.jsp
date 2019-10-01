@@ -22,6 +22,11 @@ body {
 	overflow: auto;
 }
 
+.wrapper {
+	width: 60%;
+	margin: 20px auto;
+	padding-left: 10px;
+}
 h2,h3, h4, h5, h6 {
 	color: black;
 	letter-spacing: 2px;
@@ -30,14 +35,12 @@ h2,h3, h4, h5, h6 {
 }
 
 #mentorPage {
-	width: 60%;
-	padding-left : 50px;
+	width: 70%;
 	float: left;
 }
 
 .buttonWrapper {
 	widows: 30%;
-	padding-left:10%;
 	float: left;
 }
 
@@ -113,14 +116,11 @@ margin-top: 6px;
         </div>
     </section>
     <!--/#action-->
-    
-    
-        <section id="blog" class="padding-top padding-bottom">
-        <div class="container">
-            <div class="row">
-                   <div class="col-md">
-                     
-            <input type="hidden" id="mento_idx" value="${mento_idx}">
+		<!-- demo content -->
+		<div class="wrapper">
+			<!-- container -->
+			<div>
+				<input type="hidden" id="mento_idx" value="${mento_idx}">
 				<!-- 고수 마이페이지 -->
 				<div id="mentorPage"></div>
 
@@ -129,14 +129,12 @@ margin-top: 6px;
 				
 					<div id="reviewBtnBox" class="rBox"></div>
 				</div>
-                    
-                
-                    </div>
-                </div>
-            </div>
-    </section>
-    <!--/#blog-->
-	
+				<!-- end home variation -->
+				<!-- end component -->
+			</div>
+			<!-- end container -->
+		</div>
+		<!-- end demo content -->
 		<!-- footer -->
 		<%@include file="/WEB-INF/views/frame/footer.jsp"%>
 	</div>

@@ -5,7 +5,7 @@
 		<div class="row">
 			<div class="col-sm-12 text-center bottom-separator">
 				<img src="<c:url value="/images/home/under.png" />" class="img-responsive inline"
-					alt=""> 
+					alt="">
 			</div>
 			<div class="col-sm-12">
 				<div class="copyright-text text-center">
