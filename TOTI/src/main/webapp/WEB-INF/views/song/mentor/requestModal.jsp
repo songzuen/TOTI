@@ -158,7 +158,7 @@ margin-right: 15px;
     
      <!--/#action-->
     
-    <section id="blog" class="padding-top padding-bottom">
+    <section id="blog" class="padding-bottom">
         <div class="container wrapper">
             <div class="row">
                    <div class="col-md">

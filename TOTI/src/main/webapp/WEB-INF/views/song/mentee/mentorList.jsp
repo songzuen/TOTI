@@ -139,7 +139,7 @@ border: 0px;
 		<!--/#home-slider-->
 
 		<!-- demo content -->
-		<section id="blog" class="padding-top padding-bottom">
+		<section id="blog" class="padding-bottom">
 			<div class="container">
 				<div class="row">
 					<div class="col-md">
