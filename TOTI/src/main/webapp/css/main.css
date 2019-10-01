@@ -755,6 +755,7 @@ ul.sub-menu {
 }
 
 #page-breadcrumb {
+  /* background-color: #f5f5f5; */
   background-position: center;
   display: table;
   position: static;

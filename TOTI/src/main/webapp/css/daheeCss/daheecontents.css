@@ -66,9 +66,28 @@
 
 #requsr_my_list {
 	
-	background-color: #f5f5f5;
+	border: 1px solid #7adbfc;
 	padding: 25px;
 	border-radius: 10px;
 	margin: 10px 0;
+	box-shadow: 1px 1px 8px #d0d0d0;
 	
+}
+
+#requsr_my_list h2 {
+	color: black;
+}
+
+#requsr_my_list a {
+	 display: block;
+     text-decoration: underline;
+}
+
+#requsr_my_list a:last-child {
+	text-decoration: none;
+	margin-top: 15px;
+}
+
+#list_wrap {
+	margin-bottom: 50px; 
 }

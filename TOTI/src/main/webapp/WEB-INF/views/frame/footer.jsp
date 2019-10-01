@@ -4,7 +4,7 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-sm-12 text-center bottom-separator">
-				<img src="images/home/under.png" class="img-responsive inline"
+				<img src="<c:url value="/images/home/under.png" />" class="img-responsive inline"
 					alt="">
 			</div>
 			<div class="col-sm-12">
