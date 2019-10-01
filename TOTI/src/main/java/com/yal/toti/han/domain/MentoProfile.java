@@ -9,6 +9,7 @@ public class MentoProfile {
 	private String m_name; //회원 이름
 	private String m_photo; //회원 사진
 	
+	private int cate_idx;
 	private String cate_name; //대표서비스(분야)명
 	private String service_name; //서비스명
 	private String mento_service; //고수가 저장한 서비스명
@@ -52,6 +53,12 @@ public class MentoProfile {
 	}
 	public void setM_photo(String m_photo) {
 		this.m_photo = m_photo;
+	}
+	public int getCate_idx() {
+		return cate_idx;
+	}
+	public void setCate_idx(int cate_idx) {
+		this.cate_idx = cate_idx;
 	}
 	public String getCate_name() {
 		return cate_name;

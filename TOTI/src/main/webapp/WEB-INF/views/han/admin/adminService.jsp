@@ -3,11 +3,12 @@
 <!DOCTYPE html>
 <html>
 <head>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css">
 <%@include file="/WEB-INF/views/frame/contents/header.jsp"%>
 <!-- title -->
 <title>[관리자] TOTI :: 제공 서비스 관리</title>
 <style>
-
+	
 </style>
 </head>
 <body>
@@ -20,25 +21,31 @@
 		<div class="demo-content mrg-top-md">
 			<!-- container -->
 			<div class="container" style="margin-top: -50px">
-				<h1 style="color: black">서비스 리스트</h1>
-				<hr>
-				<div id="countdown"></div>
-				<div id="servicelistBycate" style="display: none"></div>
-				<hr>
-				<h1 style="color: black">서비스 추가</h1>
-				<hr>
-				<form id="serviceForm">
-					<div>
-						<label for="cate_idx">분야를 선택하세요.</label>
-				        <select id="cate_idx" name="cate_idx">
+				<div id="addService">
+					<hr><h3 style="color: black">상세 서비스 추가</h3>
+					<form id="serviceForm">
+						<div>
+							<label for="cate_idx">분야를 선택하세요.</label>
+					        <select id="cate_idx" name="cate_idx">
+								
+							</select>
+						</div>
+						 <input type="text" name="service_name" id="service_name"
+							style="border-color: black"> 
+						<input type="submit" value="+">
+					</form>
+				</div>
+				<div id="checkService" style="float: left">
+					<hr><h3 style="color: black" >서비스 관리</h3>
+					<div id="countdown"></div><br>
+					<div style="border:1px solid; padding:10px; width:800px;" id="cateBox">
+						<div id="boxIn">서비스를 확인할 분야의 버튼을 클릭해주세요.</div>
+						<div id="servicelistBycate" style="display: none">
 							
-						</select>
+						</div>
 					</div>
-					 <input type="text" name="service_name" id="service_name"
-						style="border-color: black"> 
-					<input type="submit" value="+">
-				</form>
-			
+				</div>
+				
 				<!-- end home variation -->
 				<!-- end component -->
 			</div>
@@ -61,12 +68,15 @@
 				type : 'GET',
 				success : function(data) {
 					var html = '';
-					for (var i = 0; i < data.length-1; i++) {
-						html += '<div>\n';
-						html += '<button onclick="listByCate('+data[i].cate_idx+')">'+ data[i].cate_name +'</button>\n';
-						html += '</div>\n';
-						html += '</div>\n';
-					}
+					
+						html += '<div class="container">';
+						html += '<div class="btn-group" role="group" aria-label="Basic example">';
+						for (var i = 0; i < data.length-1; i++) {
+						html += '<button type="button" class="btn btn-secondary" onclick="listByCate('+data[i].cate_idx+')">'+ data[i].cate_name +'</button>';
+						}
+						html += '</div>';
+						html += '</div>';
+						
 					$('#countdown').html(html);
 				}
 			});
@@ -80,7 +90,7 @@
 				dataType : 'json',
 				success : function(data) {
 					var html = '';
-					html += '<option selected>분야를 선택하세요.</option>';
+					html += '<option selected>분야</option>';
 					for (var i = 0; i < data.length-1; i++) {
 						html += '<option value="'+ data[i].cate_idx +'">'+ data[i].cate_name + '</option>';
 					}
@@ -97,7 +107,10 @@
 					var html = '';
 
 					for (var i = 0; i < data.length; i++) {
-						html += '<div class="service">\n';
+						html += '<h4>'+data[i].cate_name+' 서비스</h4><div class="service">\n';
+						break;
+					}
+					for (var i = 0; i < data.length; i++) {
 						html += data[i].service_name
 								+ '\n';
 						html += '<button style="height : 20px; border-radius : 15px; margine : 10px 0;" onclick="del(' + data[i].service_idx
@@ -105,6 +118,7 @@
 						html += '</div>\n';
 					}
 					$('#servicelistBycate').html(html);
+					$('#boxIn').css('display', 'none');
 					$('#servicelistBycate').css('display', 'block');
 				}
 			});

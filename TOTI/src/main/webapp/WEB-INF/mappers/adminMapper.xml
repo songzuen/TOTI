@@ -16,7 +16,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<id property="quest_idx" column="quest_idx"/>
 		<result property="cate_idx" column="cate_idx"/>
 		<result property="quest_name" column="quest_name"/>
-		<result property="quest_name" column="quest_name"/>
 	</resultMap>
 	
 	<!-- 분야 리스트 -->
@@ -43,7 +42,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</delete>
 	
 	
-	<!-- 종목별 질문 리스트 -->
+	<!-- 분야별 질문 리스트 -->
 	<select id="selectQuestionByCate" resultMap="resultQuestionInfo">
 		select * from toti.toti_question q inner join toti.toti_cate c 
 		on q.cate_idx=c.cate_idx 

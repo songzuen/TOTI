@@ -12,14 +12,14 @@ import com.yal.toti.han.domain.ReviewInfo;
 import com.yal.toti.han.service.ReviewService;
 
 @RestController
-@RequestMapping("/review")
+@RequestMapping
 public class ReviewRestController {
 	
 	@Autowired
 	private ReviewService reviewservice;
 	
 	@CrossOrigin
-	@PostMapping("/insert")
+	@PostMapping("/review")
 	public ResponseEntity<String> questionInsert(ReviewInfo reviewInfo) {
 
 		int cnt = reviewservice.ReviewInsert(reviewInfo);

@@ -54,7 +54,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			review_avg,
 			(select round(count(arv.review_idx))
 			from toti_review arv join toti_mentor amt on arv.mento_idx=amt.mento_idx
-			where amt.mento_idx = mt.mento_idx) review_cnt, ct.cate_name,
+			where amt.mento_idx = mt.mento_idx) review_cnt, ct.cate_idx, ct.cate_name,
 			(select group_concat(ssv.service_name separator ' / ')
 			from toti_mentor smt
 			inner join toti_mentor_service sms on smt.mento_idx=sms.mento_idx
@@ -91,7 +91,32 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		update toti_mentor_profile set p_shot=#{p_shot} where mento_idx=#{mento_idx}
 	</update>
 	
-	<!-- 제공 서비스 수정 -->
+	<!-- 등록 가능한 서비스 받아오기 -->
+	<select id="getService" resultType="com.yal.toti.han.domain.ServiceEdit">
+		select *
+		from toti_service s
+		join toti_mentor m on s.cate_idx=m.cate_idx
+		left outer join toti_mentor_service ms on s.service_idx=ms.service_idx and m.mento_idx=ms.mento_idx
+		where s.service_idx not in (select ss.service_idx from toti_mentor_service ss where mento_idx=#{mento_idx}) 
+		and m.mento_idx=#{mento_idx}
+	</select>
+	
+	<!-- 고수가 선택한 서비스 -->
+	<select id="getService2" resultType="com.yal.toti.han.domain.ServiceEdit">
+		select * from toti_mentor_service sms
+	    inner join toti_service ssv on sms.service_idx=ssv.service_idx
+	    where sms.mento_idx=#{mento_idx};
+	</select>
+	
+	<!-- 고수의 서비스 등록 -->
+	<insert id="updateService" parameterType="com.yal.toti.han.domain.ServiceEdit">
+		insert into toti_mentor_service (mento_idx, service_idx) values (#{param1}, #{param2})
+	</insert>
+	
+	<!-- 고수의 서비스 삭제 -->
+	<delete id="deleteService">
+		delete from toti_mentor_service where mento_idx=#{param1} and service_idx=#{param2}
+	</delete>
 	
 	
 	<!-- 활동 지역 수정 -->

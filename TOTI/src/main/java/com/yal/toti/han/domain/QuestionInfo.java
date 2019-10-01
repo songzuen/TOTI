@@ -6,6 +6,7 @@ public class QuestionInfo {
 	private int cate_idx;
 	private String quest_name;
 	private String quest_type;
+	private String cate_name;
 	
 	public int getQuest_idx() {
 		return quest_idx;
@@ -30,6 +31,12 @@ public class QuestionInfo {
 	}
 	public void setQuest_type(String quest_type) {
 		this.quest_type = quest_type;
+	}
+	public String getCate_name() {
+		return cate_name;
+	}
+	public void setCate_name(String cate_name) {
+		this.cate_name = cate_name;
 	}
 	
 	
