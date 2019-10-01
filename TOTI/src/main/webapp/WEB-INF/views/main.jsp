@@ -14,10 +14,10 @@
         <div class="container">
             <div class="row">
                 <div class="main-slider">
-                    <div class="slide-text">
-                        <h1>We Are Creative Nerds</h1>
-                        <p>Boudin doner frankfurter pig. Cow shank bresaola pork loin tri-tip tongue venison pork belly meatloaf short loin landjaeger biltong beef ribs shankle chicken andouille.</p>
-                        <a href="#" class="btn btn-common">SIGN UP</a>
+                     <div class="slide-text">
+                        <h1>원하는 분야의 멘토를 소개해드립니다.</h1>
+                        <p>어떤 분야의 전문가를 찾으시나요? 원하는 분야의 멘토를 찾아 매칭해드립니다. 분야를 선택하여 요청서를 작성해보세요!</p>
+                        <a href="#cate_select" class="btn btn-common">분야찾기</a>
                     </div>
                     <img src="images/home/slider/hill.png" class="slider-hill" alt="slider image">
                     <img src="images/home/slider/house.png" class="slider-house" alt="slider image">
@@ -34,32 +34,11 @@
     <section id="services">
         <div class="container">
             <div class="row">
-                <div class="col-sm-4 text-center padding wow fadeIn" data-wow-duration="1000ms" data-wow-delay="300ms">
-                    <div class="single-service">
-                        <div class="wow scaleIn" data-wow-duration="500ms" data-wow-delay="300ms">
-                            <img src="images/home/icon1.png" alt="">
-                        </div>
-                        <h2>Incredibly Responsive</h2>
-                        <p>Ground round tenderloin flank shank ribeye. Hamkevin meatball swine. Cow shankle beef sirloin chicken ground round.</p>
-                    </div>
+                <div id="cate_select" style="padding: 20px 0 20px 30px;">
+                    <h2>원하는 분야를 선택하세요.</h2>
                 </div>
-                <div class="col-sm-4 text-center padding wow fadeIn" data-wow-duration="1000ms" data-wow-delay="600ms">
-                    <div class="single-service">
-                        <div class="wow scaleIn" data-wow-duration="500ms" data-wow-delay="600ms">
-                            <img src="images/home/icon2.png" alt="">
-                        </div>
-                        <h2>Superior Typography</h2>
-                        <p>Hamburger ribeye drumstick turkey, strip steak sausage ground round shank pastrami beef brisket pancetta venison.</p>
-                    </div>
-                </div>
-                <div class="col-sm-4 text-center padding wow fadeIn" data-wow-duration="1000ms" data-wow-delay="900ms">
-                    <div class="single-service">
-                        <div class="wow scaleIn" data-wow-duration="500ms" data-wow-delay="900ms">
-                            <img src="images/home/icon3.png" alt="">
-                        </div>
-                        <h2>Swift Page Builder</h2>
-                        <p>Venison tongue, salami corned beef ball tip meatloaf bacon. Fatback pork belly bresaola tenderloin bone pork kevin shankle.</p>
-                    </div>
+                <div id="cate_wrap">
+                
                 </div>
             </div>
         </div>
@@ -175,13 +154,16 @@
 					var html = '';
 
 					for (var i = 0; i < data.length-1; i++) {
-						html += '<div class="dash days_dash">\n<div class="counter">\n';
-						html += '<div class="dash_title"><a style="color: white" href="<c:url value="/request?cate_idx='+data[i].cate_idx+'" />"> '+ data[i].cate_name +'</a></div>\n';
-						html += '</div>\n';
-						html += '</div>\n';
+						html += '<div class="col-sm-4 text-center wow fadeIn" data-wow-duration="1000ms" data-wow-delay="300ms">\n';
+						html += '<a href="<c:url value="/request?cate_idx='+data[i].cate_idx+'" />">\n';
+						html += '<div class="single-service">\n';
+						html += '<div style="padding: 50px; border: 1px solid; margin: 20px;">\n';
+						html += '<h2>'+data[i].cate_name+'</h2>\n';
+						html += '<p>분야설명넣고싶은데 넣으려면 DB에 추가해야한다ㅏㅏㅏㅏㅏㅏ</p>\n';
+						html += '</div></div></a></div>';
 					}
 
-					$('#countdown').html(html);
+					$('#cate_wrap').html(html);
 					
 				}
 

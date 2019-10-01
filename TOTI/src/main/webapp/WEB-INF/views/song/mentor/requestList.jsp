@@ -106,7 +106,7 @@ text-overflow: ellipsis;
     </section>
     
         
-    <section id="blog" class="padding-bottom">
+    <section id="blog" class="padding-top padding-bottom">
         <div class="container">
             <div class="row">
                    <div class="col-md">
