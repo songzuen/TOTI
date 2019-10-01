@@ -4,6 +4,7 @@
 <html>
 <head>
 	<%@ include file="/WEB-INF/views/frame/header.jsp" %>
+	<link href="<c:url value="/css/daheeCss/daheecontents.css" />" rel="stylesheet">
 	<title>TOTI</title>
 </head><!--/head-->
 <body>
@@ -15,7 +16,7 @@
                 <div class="row">
                     <div class="action">
                         <div class="col-sm-12">
-                            <h1 class="title">요청서보냄</h1>
+                            <h1 class="title">보낸 요청서</h1>
                         </div>
                     </div>
                 </div>
@@ -24,14 +25,15 @@
     </section>
     <!--/#action-->
     
-    <section id="blog" class="padding-top padding-bottom">
+    <section id="blog" class="padding-bottom">
         <div class="container">
             <div class="row">
 				<div class="col-md">
 					<input type="hidden" value="${request_idx}" id="request_idx">
-					<input type="hidden" value="1" id="m_idx"> 견적서를 기다려주세요!<br>
-					<hr>
-					작성한 요청서
+					<input type="hidden" value="1" id="m_idx">
+					<div id="cate_select_wrap">
+                         <a onclick="history.back()"><i class="fa fa-chevron-left"></i><span>이전으로</span></a>
+                    </div>
 					<div id="request">
 					
 					</div>
@@ -64,21 +66,19 @@
 				
 				var html = '';
 				
-				html += '<img alt="이미지없음" height="100px" src="<c:url value="/images/user/'+data.userInfo.m_photo+'" />"><br>';
-				html += data.userInfo.m_name+'님';
-				html += '<p style="text-align: right;">'+data.request_date+'</p>';
-				html += '<p>분야 : '+data.cate_name+'</p>';
-				html += '<p>선택한 서비스 : '+data.service_name+'</p>';
+				html += '<img src="<c:url value="/images/user/'+data.userInfo.m_photo+'" />">';
+				html += '<div id="requesr_user"><p>'+data.request_date+'</p>';
+				html += '<h2>'+data.cate_name+'('+data.service_name+')</h2><h3>'+data.userInfo.m_name+'님</h3></div>';
+				html += '<div id="request_con">'
 				
 				for (var i = 0; i < data.answer.length; i++) {
-					
-					html += '<p>'+data.answer[i].quest_name+'</p>';
-					html += '<p>'+data.answer[i].answer_cont+'</p>';
-					
+					html += '<p class="con_p1">'+data.answer[i].quest_name+'</p>';
+					html += '<p class="con_p2">'+data.answer[i].answer_cont+'</p>';			
 				}
+				
+				html += '</div>';
 
 				$('#request').html(html);
-				
 			}
 
 		});

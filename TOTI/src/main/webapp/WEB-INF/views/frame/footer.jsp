@@ -24,3 +24,5 @@
 <script type="text/javascript" src="<c:url value="/js/lightbox.min.js" />"></script>
 <script type="text/javascript" src="<c:url value="/js/wow.min.js" />"></script>
 <script type="text/javascript" src="<c:url value="/js/main.js" />"></script>
+<script type="text/javascript" src="<c:url value="/js/jquery.fitvids.js" />"></script>
+<script type="text/javascript" src="<c:url value="/js/holder.js" />"></script>

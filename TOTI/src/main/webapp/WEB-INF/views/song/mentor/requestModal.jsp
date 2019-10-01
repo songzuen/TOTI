@@ -19,11 +19,6 @@
 	overflow: auto;
 } 
 
-.wrapper {
-	width: 80%;
-	margin: 20px auto;
-}
-
 h1, h2, h3, h4, h5, h6 {
 	color: black;
 }
@@ -33,9 +28,10 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 #req {
-	width: 50%;
+	width: 60%;
 	float: left;
-	
+	margin: 0 auto;
+	padding-left: 100px;
 }
 
 #m_photo {
@@ -44,6 +40,7 @@ border-radius: 50%;
 margin-bottom: 20px;
 margin-right: 30px;
 }
+
 #request h3 {
 	text-align: left;
 }
@@ -51,13 +48,14 @@ margin-right: 30px;
 #mInfo{
 margin-bottom: 20px;
 }
+
 #est {
 	float: left;
 	text-align: center;
 	border: 1px solid #ddd;
 	border-radius: 3px;
 	padding: 15px;
-	margin: 5px;
+	margin: 20%;
 	font-size: 14px;
 }
 
@@ -161,28 +159,16 @@ margin-right: 15px;
     
      <!--/#action-->
     
-    <section id="blog" class="padding-top padding-bottom">
+    <section id="blog" class="padding-bottom">
         <div class="container wrapper">
             <div class="row">
                    <div class="col-md">
                       	<div id="req"></div>
                         <!-- 제공하는 컨텐츠 이렇게 넣으세여 예시↓ -->
                         <div class="single-blog two-column">
-                            <div class="post-thumb">
-                                <a href="blogdetails.html"><img src="images/blog/masonary/9.jpg" class="img-responsive" alt=""></a>
-                                <div class="post-overlay">
-                                   <!--  <span class="uppercase"><a href="#">14 <br><small>Feb</small></a></span> -->
-                                </div>
-                            </div>
                             <div class="post-content overflow">
-                               <!--  <ul class="nav nav-justified post-nav">
-                                    <li><a href="#"><i class="fa fa-tag"></i>Creative</a></li>
-                                </ul> -->
-                               <!--  <h2 class="post-title bold"><a href="blogdetails.html">Advanced business cards design</a></h2>
-                                <h3 class="post-author"><a href="#">Posted by micron News</a></h3>
-                                <p> -->
-                           <div id="est"></div>
-					</div>
+                           		<div id="est"></div>
+							</div>
 				</div>
 				<!-- The Modal -->
 				<div class="modal" id="myModal">

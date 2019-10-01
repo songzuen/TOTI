@@ -91,3 +91,47 @@
 #list_wrap {
 	margin-bottom: 50px; 
 }
+
+#request {
+	border: 1px solid #ededed;
+	margin: 20px auto;
+	width: 70%;
+	padding: 50px;
+	border-radius: 10px;
+	box-shadow: 1px 1px 20px 1px #f2f2f2;
+	
+}
+
+#request img {
+	border-radius: 50%;
+	height: 130px;
+	width: 130px;
+	display: inline;
+}
+
+#requesr_user {
+	display: inline-block;
+	width: 80%;
+	padding: 0 0 0 40px;
+}
+
+#requesr_user p {
+	text-align: right
+}
+
+#requesr_user h2 {
+	color: black;
+}
+
+#request_con {
+	padding: 20px 0;
+}
+
+.con_p1 {
+	font-weight: bold;
+	font-size: 16px;
+}
+
+.con_p2 {
+	font-size: 14px;
+}
