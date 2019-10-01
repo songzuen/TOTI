@@ -44,7 +44,6 @@ public class EstimateService {
 				write.getEst_file().transferTo(new File(dir, newFileName));
 				est.setEst_file(newFileName);
 			}
-			System.out.println(est.toString());
 			rCnt = dao.insertEstimate(est);
 		} catch (IllegalStateException e) {
 			// TODO Auto-generated catch block

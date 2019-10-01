@@ -35,7 +35,6 @@ public class CreditController {
 	public ResponseEntity<String> updateCredit(@PathVariable("mento_idx")int mento_idx){
 	 
 		int cnt = estimateService.updateCoin(mento_idx);
-		System.out.println(cnt);
 		return new ResponseEntity<String>(cnt>0?"success":"fail",HttpStatus.OK);
 	}
 }

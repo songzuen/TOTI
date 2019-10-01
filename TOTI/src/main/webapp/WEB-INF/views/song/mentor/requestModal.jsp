@@ -19,10 +19,6 @@
 	overflow: auto;
 } 
 
-.wrapper {
-	width: 80%;
-	margin: 20px auto;
-}
 
 h1, h2, h3, h4, h5, h6 {
 	color: black;
@@ -33,7 +29,8 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 #req {
-	width: 70%;
+	width: 65%;
+	margin:0 auto;
 	float: left;
 	
 }
@@ -57,7 +54,7 @@ margin-bottom: 20px;
 	border: 1px solid #ddd;
 	border-radius: 3px;
 	padding: 15px;
-	margin: 5px;
+	margin:0 20%;
 	font-size: 14px;
 }
 

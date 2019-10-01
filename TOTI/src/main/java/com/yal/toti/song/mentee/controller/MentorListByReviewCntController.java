@@ -28,7 +28,6 @@ public class MentorListByReviewCntController {
 
 			list = mentorListService.getListByRCnt();
 			
-		//System.out.println(list.toString());
 		ResponseEntity<List<MentorMemberInfo>> entity = new ResponseEntity<List<MentorMemberInfo>>(list, HttpStatus.OK);
 		return entity;
 	}
