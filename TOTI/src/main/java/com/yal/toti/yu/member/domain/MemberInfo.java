@@ -35,13 +35,24 @@ public class MemberInfo {
 		this.code = getRandom();
 	}
  
-	
+	// ver생성자
+	public MemberInfo(char ver) {
+		this.ver = ver;
+	}
+
+
+	public MemberInfo(String id, char ver) {
+		this.id = id;
+		this.ver = ver;
+	}
+
 	
 	
 	public int getIdx() {
 		return idx;
 	}
 
+	
 	public void setIdx(int idx) {
 		this.idx = idx;
 	}

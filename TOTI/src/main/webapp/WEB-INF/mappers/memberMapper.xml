@@ -29,21 +29,21 @@
 	
 
 	<insert id="insertMen" parameterType="com.yal.toti.yu.member.domain.MentorInfo">
-	
-	insert into toti_mentor (mento_idx, tor_coin, tor_location) values
-	(#{m_idx},#{coin},#{location})
+	insert into toti_mentor (mento_idx, tor_coin, tor_location, cate_idx) values
+   (#{m_idx}, 100,#{location},#{cate_idx});
+   
+   insert into toti_mentor_profile (mento_idx) values (#{m_idx})
 	
 	</insert>
 	
-	<!-- 회원가입 -->
-	<insert id="insertMem"
-		parameterType="com.yal.toti.yu.member.domain.MemberInfo">
+	<!-- 회원가입 --><insert id="insertMem" parameterType="com.yal.toti.yu.member.domain.MemberInfo">
 		
 		insert into toti_member (m_id, m_name, m_pw, m_ver, m_gender,m_date, m_code) 
 		  values
 		(#{id},#{name},#{pw},#{ver},#{gender},#{regDate},#{code})
 		
 	</insert>
+	
 	
 	
 	<!-- 회원로그인 -->
@@ -64,6 +64,13 @@
 			<if test="photo_name != null">
 			m_photo = #{photo_name} where m_id = #{id}
 			</if>
+	</update>
+	
+	<!-- 멘토에서 멘티로 -->
+	<update id="goMentee" parameterType="com.yal.toti.yu.member.domain.MemberInfo">
+		update toti_member set m_ver = #{ver} where m_id = #{id}
+	
+	
 	</update>
 
 	<!-- verChange  -->

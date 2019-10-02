@@ -35,12 +35,27 @@ public class RequestVerEditMemberInfo {
 		this.code = getRandom();
 	}
  
+	// ver생성자
+	public RequestVerEditMemberInfo(char ver) {
+		this.ver = ver;
+	}
+
+	
+	public RequestVerEditMemberInfo(String id, char ver) {
+		super();
+		this.id = id;
+		this.ver = ver;
+	}
+
 	
 	
 	
+
 	public int getIdx() {
 		return idx;
 	}
+
+
 
 	public void setIdx(int idx) {
 		this.idx = idx;

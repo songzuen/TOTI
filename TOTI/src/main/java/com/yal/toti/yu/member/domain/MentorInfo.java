@@ -5,6 +5,7 @@ public class MentorInfo {
 	private int m_idx;
 	private int coin;
 	private String location;
+	private int cate_idx;
 	
 	//default
 	
@@ -53,18 +54,36 @@ public class MentorInfo {
 	
 	
 
-	@Override
-	public String toString() {
-		return "MentorInfo [m_idx=" + m_idx + ", coin=" + coin + ", location=" + location + "]";
+	public int getCate_idx() {
+		return cate_idx;
 	}
 
 
 
-	public MentorInfo(int m_idx, int coin, String location) {
+	public void setCate_idx(int cate_idx) {
+		this.cate_idx = cate_idx;
+	}
+
+
+
+	
+
+
+
+	@Override
+	public String toString() {
+		return "MentorInfo [m_idx=" + m_idx + ", coin=" + coin + ", location=" + location + ", cate_idx=" + cate_idx
+				+ "]";
+	}
+
+
+
+	public MentorInfo(int m_idx, int coin, String location, int cate_idx) {
 		super();
 		this.m_idx = m_idx;
 		this.coin = coin;
 		this.location = location;
+		this.cate_idx = cate_idx;
 
 	}
 

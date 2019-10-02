@@ -7,33 +7,33 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 
 <meta
-	content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0'
-	name='viewport' />
+   content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0'
+   name='viewport' />
 <meta name="viewport" content="width=device-width" />
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 
-	<%@ include file="/WEB-INF/views/frame/header.jsp" %>
-	<title>Blog Masonry | Triangle</title>
-	<style type="text/css">
-	#mainTable{
-		
-		left: 30%;
-		margin: auto;
-		background-color: #A9F5F2;
-	}
-	
-	input{
-		margin: 5px;
-	}
+   <%@ include file="/WEB-INF/views/frame/header.jsp" %>
+   <title>Blog Masonry | Triangle</title>
+   <style type="text/css">
+   #mainTable{
+      
+      left: 30%;
+      margin: auto;
+      background-color: #A9F5F2;
+   }
+   
+   input{
+      margin: 5px;
+   }
 
-	input[type=checkbox] {
-    	display: none;
-	}
-	
-	</style>
+   input[type=checkbox] {
+       display: none;
+   }
+   
+   </style>
 </head><!--/head-->
 <body>
-	<%@ include file="/WEB-INF/views/frame/nav.jsp" %>
+   <%@ include file="/WEB-INF/views/frame/nav.jsp" %>
     <!--/#header-->
     
     <section id="blog" class="padding-top padding-bottom">
@@ -52,8 +52,8 @@
                                  <div class="form-group">
                                      <input type="email" name="id" id="id" class="form-control" placeholder="id" required>
                                      <input class="btn btn-primary" type="button" onclick="checkId()" value="아이디 중복체크">
-										<input type="checkbox" id="idCheck"><br>
-										<span id="checkIdSpan"></span>
+                              <input type="checkbox" id="idCheck"><br>
+                              <span id="checkIdSpan"></span>
                                  </div>
                                  <div class="form-group">
                                      <input type="password" name="pw" id="pw" class="form-control"  placeholder="password" required>
@@ -70,8 +70,10 @@
                                  </div>
                                  
                                  <div class="form-group">
-                                     <input type="text" name="gender" id="gender" class="form-control"  placeholder="gender" required>
-                                     <span id="nameSpan"></span>
+                        
+                              <input type="radio" name="gender" id="gender" value="F" /> 여자
+                           <input type="radio" name="gender" id="gender" value="M" /> 남자
+                     
                                  </div>
                                  
                                  <div class="form-group">
@@ -121,92 +123,92 @@
     <script>
     $(document).ready(function() {
 
-		$('#pw2, #pw').focusout(function() {
-			if ($('#pw').val() == $('#pw2').val()) {
-				$('#pwSpan').html('비밀번호가 일치합니다.');
-				$('#pwSpan').css('color', 'green');
-				$('#pwCheck').prop('checked', true);
-			} else { 
-				$('#pwSpan').html('비밀번호가 서로 일치하지 않습니다.');
-				$('#pwSpan').css('color', 'red');
-				$('#pwSpan').focus();
-				$('#pwCheck').prop('checked', false);
-			}
-		});
+      $('#pw2, #pw').focusout(function() {
+         if ($('#pw').val() == $('#pw2').val()) {
+            $('#pwSpan').html('비밀번호가 일치합니다.');
+            $('#pwSpan').css('color', 'green');
+            $('#pwCheck').prop('checked', true);
+         } else { 
+            $('#pwSpan').html('비밀번호가 서로 일치하지 않습니다.');
+            $('#pwSpan').css('color', 'red');
+            $('#pwSpan').focus();
+            $('#pwCheck').prop('checked', false);
+         }
+      });
 
-		$('#form').submit(function() {
+      $('#form').submit(function() {
 
-			if (!$('#idCheck').prop('checked')) {
-				alert('아이디가 중복체크를 해주세요');
-				return false;
-			}
-			if (!$('#pwCheck').prop('checked')) {
-				alert('비밀번호를 다시 확인하세요');
-				return false;
-			}
+         if (!$('#idCheck').prop('checked')) {
+            alert('아이디가 중복체크를 해주세요');
+            return false;
+         }
+         if (!$('#pwCheck').prop('checked')) {
+            alert('비밀번호를 다시 확인하세요');
+            return false;
+         }
 
-			var checkPw = RegExp(/^(?=.*[a-zA-Z])((?=.*\d)|(?=.*\W)).{4,16}$/);
-			var checkName = RegExp(/^[가-힣a-zA-Z]+$/); // 이름: 한글,영문만 가능
-			if (!checkPw.test($('#pw').val())) {
-				$('#pwSpan2').html('영문과 최소 숫자한개이상 섞어주세요');
-				$('#pwSpan2').css('color', 'red');
-				$('#pw2').focus();
-				return false;
-			}
-			if (!checkName.test($('#name').val())) {
-				$('#nameSpan').html('한글.영문가능');
-				$('#nameSpan').css('color', 'red');
-				$('#name').focus();
-				return false;
-			}
-			var formData = new FormData(); 
-			formData.append('id', $('#id').val());
-			formData.append('pw', $('#pw').val());
-			formData.append('name', $('#name').val());
-			formData.append('gender', $('#gender').val());
-			formData.append('ver', $('#ver').val());
-			$.ajax({
-				url : 'http://localhost:8080/toti/member/reg',
-				type : 'POST',
-				data : formData,
-				processData : false,
-				contentType : false, 
-				dataType: 'text',
-				success : function(data) {
-					//alert(data);
-					alert('이메일로 인증키를 발송했습니다. 메일에서 인증후에 다시 사용해주시기바랍니다.');
-					location.href = "http://localhost:8080/toti/main";
-				}
-			});
-			return false;
-		});
-	});
+         var checkPw = RegExp(/^(?=.*[a-zA-Z])((?=.*\d)|(?=.*\W)).{4,16}$/);
+         var checkName = RegExp(/^[가-힣a-zA-Z]+$/); // 이름: 한글,영문만 가능
+         if (!checkPw.test($('#pw').val())) {
+            $('#pwSpan2').html('영문과 최소 숫자한개이상 섞어주세요');
+            $('#pwSpan2').css('color', 'red');
+            $('#pw2').focus();
+            return false;
+         }
+         if (!checkName.test($('#name').val())) {
+            $('#nameSpan').html('한글.영문가능');
+            $('#nameSpan').css('color', 'red');
+            $('#name').focus();
+            return false;
+         }
+         var formData = new FormData(); 
+         formData.append('id', $('#id').val());
+         formData.append('pw', $('#pw').val());
+         formData.append('name', $('#name').val());
+         formData.append('gender', $('#gender').val());
+         formData.append('ver', $('#ver').val());
+         $.ajax({
+            url : 'http://localhost:8080/toti/member/reg',
+            type : 'POST',
+            data : formData,
+            processData : false,
+            contentType : false, 
+            dataType: 'text',
+            success : function(data) {
+               //alert(data);
+               alert('이메일로 인증키를 발송했습니다. 메일에서 인증후에 다시 사용해주시기바랍니다.');
+               location.href = "http://localhost:8080/toti/main";
+            }
+         });
+         return false;
+      });
+   });
 
-	function checkId() {
+   function checkId() {
 
-		var id = $('#id').val();
-		if (id.length < 1) {
-			alert('아이디를 입력해주시기 바랍니다.	');
-		} else {
-			$.ajax({
-				url : 'http://localhost:8080/toti/member/reg?id='+id,
-				type : 'GET',
-				success : function(data) {
-					if (data == 'Y') {
-						$('#checkIdSpan').html("이 아이디를 사용하실 수 있습니다.");
-						$('#checkIdSpan').css('color', 'green');
-						$('#idCheck').prop('checked', true);
-					} else {
-						$('#checkIdSpan').html("이미 사용중인 아이디입니다.");
-						$('#checkIdSpan').css('color', 'red');
-						$('#idCheck').prop('checked', false);
-					}
-				}
-			});
-		}
+      var id = $('#id').val();
+      if (id.length < 1) {
+         alert('아이디를 입력해주시기 바랍니다.   ');
+      } else {
+         $.ajax({
+            url : 'http://localhost:8080/toti/member/reg?id='+id,
+            type : 'GET',
+            success : function(data) {
+               if (data == 'Y') {
+                  $('#checkIdSpan').html("이 아이디를 사용하실 수 있습니다.");
+                  $('#checkIdSpan').css('color', 'green');
+                  $('#idCheck').prop('checked', true);
+               } else {
+                  $('#checkIdSpan').html("이미 사용중인 아이디입니다.");
+                  $('#checkIdSpan').css('color', 'red');
+                  $('#idCheck').prop('checked', false);
+               }
+            }
+         });
+      }
 
-	}
-	</script>
+   }
+   </script>
     
     
 </body>

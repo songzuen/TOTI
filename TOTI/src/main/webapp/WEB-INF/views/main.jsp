@@ -78,9 +78,7 @@
 	
     <script>
 		$(document).ready(function() {
-
 			kategorieList();
-
 		});
 		
 		function kategorieList() {
@@ -91,7 +89,6 @@
 				success : function(data) {
 					
 					var html = '';
-
 					for (var i = 0; i < data.length-1; i++) {
 						html += '<div class="col-sm-4 text-center wow fadeIn" data-wow-duration="1000ms" data-wow-delay="300ms">\n';
 						html += '<a href="<c:url value="/request?cate_idx='+data[i].cate_idx+'" />">\n';
@@ -101,9 +98,7 @@
 						html += '<p style="width: 230px; padding: 0;">'+data[i].cate_con+'</p>\n';
 						html += '</div></div></a></div>';
 					}
-
 					$('#cate_wrap').html(html);
-
 					html = '';
 					
 					for (var j = 0; j < data.length-1; j++) {
@@ -127,7 +122,6 @@
 					
 					$('#cate_list').html(html);
 				}
-
 			});
 			
 		}

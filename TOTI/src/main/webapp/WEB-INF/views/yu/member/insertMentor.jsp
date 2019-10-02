@@ -268,8 +268,8 @@
                             contentType: 'application/json; charset=utf-8',
                             dataType: 'text',
                             success: function(data) {
-                                //alert(요청하신 정보로 변경되었습니다.);
-                                location.href = "http://localhost:8080/toti/main";
+                                alert('멘토님의 상세 정보를 등록해주세요');
+                                location.href = "http://localhost:8080/toti/insertMen";
                               //alert(요청하신 정보로 변경되었습니다.);
                             }
                         });

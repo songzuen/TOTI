@@ -29,7 +29,7 @@ public class MentorRegService {
 		
 		int resultCnt = 0;
 		
-		resultCnt = dao.insertMentor(mentorInfo);
+		resultCnt = dao.insertMen(mentorInfo);
 		
 		return resultCnt;
 		
