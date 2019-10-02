@@ -1,5 +1,7 @@
 package com.yal.toti.baek.service;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -28,6 +30,14 @@ public class RoomService {
 
 		if (room == null) {
 			dao.insertChatRoom(roomnum, category, user, target);
+
+			Date d = new Date();
+			SimpleDateFormat format = new SimpleDateFormat("yyyy년 MM월 dd일 E요일 HH:mm");
+			String date = format.format(d);
+			dao.insertEstPriceToChatRoom(roomnum, user, date);
+			dao.insertEstContToChatRoom(roomnum, user, date);
+			dao.updateLastMsgAtChatRoom(roomnum);
+			
 			room = dao.searchChatRoom(user, target, category);
 		}
 

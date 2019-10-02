@@ -31,7 +31,7 @@
 
 					<!-- 멘티 로그인 -->
 					<li><a href="<c:url value="/user/requests" />">보낸요청</a></li>
-					<li><a href="chat/chatLogin">채팅</a></li>
+					<li><a href="/toti/chat/chatLogin">채팅</a></li>
 					<li><a href="index.html">멘토찾기</a></li>
 					<li class="dropdown"><a href="#">OO 멘티님<i
 							class="fa fa-angle-down"></i></a>

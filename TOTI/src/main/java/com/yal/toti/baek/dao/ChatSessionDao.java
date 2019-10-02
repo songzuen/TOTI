@@ -31,4 +31,10 @@ public interface ChatSessionDao {
 
 	public List<MentorReview> selectMentorReview(int user);
 
+	public int insertEstPriceToChatRoom(int roomnum, int user, String date);
+	
+	public int insertEstContToChatRoom(int roomnum, int user, String date);
+
+	public int updateLastMsgAtChatRoom(int roomnum);
+
 }

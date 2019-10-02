@@ -23,7 +23,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-ma
 		<result column="last_msg" property="last_msg" />
 	</resultMap>
 	<!-- 견적서 등록 -->
-	<insert id="insertEstimate"
+	<insert id="insertEstimate" keyProperty="est_idx" useGeneratedKeys="true"
 		parameterType="com.yal.toti.song.mentor.domain.EstimateInfo">
 		insert into toti.toti_estimatee (mento_idx, request_idx, est_price,
 		est_cont, est_file)

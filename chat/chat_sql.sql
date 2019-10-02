@@ -44,5 +44,14 @@ SELECT mentor.mento_idx, member.m_id, member.m_name, member.m_gender, member.m_p
 
 FROM toti.toti_mentor_profile as mentor join toti.toti_member as member on mentor.mento_idx = member.m_idx;
 
+select * from toti.toti_review;
 
-SELECT * FROM toti.toti_review as review join toti.toti_member as member on review.m_idx = member.m_idx;
+SELECT review.m_idx, member.m_name, review.review_star, review.review_cont, review.review_date FROM toti.toti_review as review join toti.toti_member as member on review.m_idx = member.m_idx where review.mento_idx=3 order by m_idx limit 0, 3;
+
+(select est_price from toti.toti_estimatee where est_idx = 30);
+
+select * from toti.toti_chatlog;
+ 
+insert into toti.toti_chatlog (message, room_user, message_date, room_num) values ((select est_price from toti.toti_estimatee where est_idx = param1), param2);
+
+select * from toti.toti_chatroom;

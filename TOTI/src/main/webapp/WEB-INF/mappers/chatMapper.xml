@@ -80,6 +80,26 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		#{param4})
 	</insert>
 
+	<insert id="insertEstPriceToChatRoom">
+		insert into toti.toti_chatlog (message, room_user,
+		message_date, room_num) values ((select est_price from
+		toti.toti_estimatee where est_idx = #{param1}), #{param2}, #{param3},
+		#{param1});
+	</insert>
+
+	<insert id="insertEstContToChatRoom">
+		insert into toti.toti_chatlog (message, room_user,
+		message_date, room_num) values ((select est_cont from
+		toti.toti_estimatee where est_idx = #{param1}), #{param2}, #{param3},
+		#{param1});
+	</insert>
+
+	<update id="updateLastMsgAtChatRoom">
+		update toti_chatroom set last_msg = (select est_cont from
+		toti.toti_estimatee
+		where est_idx = #{param1}) where room_num = #{param1}
+	</update>
+
 	<select id="selectMentorProfile"
 		resultType="com.yal.toti.baek.domain.MentorProfile">
 		SELECT mentor.mento_idx, member.m_id, member.m_name,

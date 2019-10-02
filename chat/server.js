@@ -45,23 +45,23 @@ io.sockets.on("connection", function(socket) {
     });
 
     // 입장한 유저의 정보를 출력한다.
-    io.sockets.in(data.room).emit("contact", {
-      name: data.name,
-      message: data.user + "님이 접속했습니다."
-    });
+    //io.sockets.in(data.room).emit("contact", {
+      //name: data.name,
+      //message: data.user + "님이 접속했습니다."
+    //});
 
     chatLog(data);
 
     roomInfo = loginIds[0];
   });
 
-  socket.on("disconnect", function() {
-    if (roomInfo != undefined) {
-      io.sockets.in(roomInfo.room).emit("contact", {
-        message: roomInfo.user + "님이 접속을 종료했습니다."
-      });
-    }
-  });
+  //socket.on("disconnect", function() {
+    //if (roomInfo != undefined) {
+      //io.sockets.in(roomInfo.room).emit("contact", {
+       // message: roomInfo.user + "님이 접속을 종료했습니다."
+     // });
+   // }
+  //});
 
   socket.on("send_msg", function(data) {
     // console.log(data.message, data.room, data.name, data.time);
@@ -113,5 +113,5 @@ io.sockets.on("connection", function(socket) {
         socket.emit("loadChatLog", log);
       }
     );
-  }
+  };
 });
