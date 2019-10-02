@@ -11,5 +11,4 @@ public class TOTIMainController {
 		  return "main";
 	 }
 
-	  
 }

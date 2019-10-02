@@ -159,6 +159,7 @@
 						html += '<div class="single-service">\n';
 						html += '<div style="padding: 50px; border: 1px solid; margin: 20px;">\n';
 						html += '<h2>'+data[i].cate_name+'</h2>\n';
+						html += '<p style="width: 230px; padding: 0;">'+data[i].cate_con+'</p>\n';
 						html += '</div></div></a></div>';
 					}
 

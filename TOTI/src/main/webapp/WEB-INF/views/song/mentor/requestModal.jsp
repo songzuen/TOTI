@@ -5,6 +5,7 @@
 <html>
 <head>
 <%@include file="/WEB-INF/views/frame/header.jsp"%>
+<% int idx = (int)session.getAttribute("idx"); %>
 <!-- title -->
 <title>SamplePage</title>
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
@@ -189,8 +190,8 @@ margin-right: 15px;
 									</div>
 									
 									<!-- 세션 값 받기 -->
-									<input type="text" name="mento_idx" id="mento_idx"
-										name="mento_idx" value="2">
+									<input type="hidden" id="mento_idx"
+										name="mento_idx" value="${idx}">
 										
 										
 									<table>

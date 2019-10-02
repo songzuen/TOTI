@@ -12,8 +12,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<!-- 분야번호에 맞는 분야명 -->
-	<select id="cate_naem" resultType="String" parameterType="int">
-		select cate_name from toti_cate where cate_idx=#{cate_idx}
+	<select id="cate_data" resultType="com.yal.toti.kang.domain.CategoriData" parameterType="int">
+		select * from toti_cate where cate_idx=#{cate_idx}
 	</select>
 	
 	<!-- 분야번호에 맞는 서비스번호, 서비스명 리스트 -->
@@ -104,7 +104,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<!-- 시간 -->
 	<select id="requestDate" resultType="String">
-		select date_format(request_date, '%Y년 %m월 %d일 %H시 %m분') request_date
+		select date_format(request_date, '%Y년 %m월 %d일') request_date
 		from toti_request
 		where request_idx = #{param1}
 	</select>
