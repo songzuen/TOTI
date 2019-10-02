@@ -3,12 +3,15 @@
 <!DOCTYPE html>
 <html>
 <head>
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css">
 <%@include file="/WEB-INF/views/frame/header.jsp"%>
 <!-- title -->
 <title>[관리자] TOTI :: 요청서 질문 관리</title>
 <style>
 
+#addQuestion, #checkService, #editFrame{
+	width: 900px;
+	margin : 0 auto;
+}
 </style>
 </head>
 <body>
@@ -18,7 +21,7 @@
 		<!-- demo content -->
 		<div class="demo-content mrg-top-md">
 			<!-- container -->
-			<div class="container" style="margin-top: -50px">
+			<div class="container" style="margin-top: -50px; margin-bottom: 50px;">
 				<div id="addQuestion">
 				<hr>
 				<h3 style="color: black">질문 추가</h3>
@@ -36,16 +39,15 @@
 							<option id="select" value="select">목록 선택</option>
 						</select>
 					</div>
-					 <input type="text" name="quest_name" id="quest_name"style="border-color: black; width: 300px;">
-					<input type="submit" value="+">
+					 <input type="text" name="quest_name" id="quest_name" style="width: 300px; height: 30px; ">
+					<input type="submit" class="btn btn-secondary" value="추가하기" style="margin-bottom: 3px;">
 				</form>
 				</div>
-				<div id="checkService" style="float: left">
+				<div id="checkService">
 					<hr>
 					<h3 style="color: black">질문 리스트</h3>
-				        <div>질문을 확인할 분야의 버튼을 클릭해주세요.</div><br>
-					<div id="countdown"></div><br>
-					<div style="border:1px solid; padding:10px; width:800px;" id="cateBox">
+					<div id="catelist"></div><br>
+					<div style="border:1px solid; padding:10px; width:45%;" id="cateBox">
 						<div id="boxIn">질문을 확인할 분야의 버튼을 클릭해주세요.</div>
 						<div id="questionlistBycate" style="display: none">
 						</div>
@@ -101,7 +103,7 @@
 						html += '</div>\n';
 						html += '</div>\n';
 					
-					$('#countdown').html(html);
+					$('#catelist').html(html);
 				}
 			});
 		}
@@ -131,15 +133,15 @@
 					var html = '';
 					
 					for (var i = 0; i < data.length; i++) {
-						html += '<h4>'+data[i].cate_name+' 질문</h4><div class="service">\n';
+						html += '<h4><'+data[i].cate_name+' 질문></h4><div class="service">\n';
 						break;
 					}
 					for (var i = 0; i < data.length; i++) {
 						html += data[i].quest_name + '\n';
-						html += '<button style="height : 20px; border-radius : 15px; margine : 10px 0;" onclick="edit('
+						html += '<button class="btn btn-secondary" style="height:20px; padding: 0px 4px; text-align: center; " onclick="edit('
 								+ data[i].quest_idx +')">···</button>\n';
-						html += '<button style="height : 20px; border-radius : 15px; margine : 10px 0;" onclick="del(' 
-								+ data[i].quest_idx + ')">X</button><br>\n';
+						html += '<button class="btn btn-secondary" style="height:20px; padding: 0px 4px; text-align: center; " onclick="del(' 
+								+ data[i].quest_idx + ')">x</button><br>\n';
 						html += '</div>\n';
 					}
 					$('#questionlistBycate').html(html);
