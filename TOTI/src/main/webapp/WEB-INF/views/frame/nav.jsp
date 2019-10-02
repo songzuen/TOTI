@@ -34,7 +34,7 @@
 					<li class="active"><a href="<c:url value="/reg" />">회원가입</a></li>
 					
 				<%
-				} else if (idxstr != null && id == "admin@admin"){%>
+				} else if (idxstr != null && id.equals("admin@admin")){%>
 				 <!-- --------------- -->
 				<li><a href="<c:url value="/service" />">상세 서비스</a></li>
 			      <li><a href="<c:url value="/question" />">요청서 질문</a></li>
