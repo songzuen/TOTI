@@ -98,7 +98,8 @@ margin-top: 6px;
 <body>
 	<!-- page container -->
 	<div>
-		<%@include file="/WEB-INF/views/frame/nav.jsp"%>
+	<%@include file="/WEB-INF/views/frame/nav.jsp"%>
+		
 		
 		 <!--/#header-->
     <section id="page-breadcrumb">
@@ -228,9 +229,11 @@ margin-top: 6px;
 						html+='</div></div>';
 
 						/* 고수 한 줄 소개 */
+						if(data[i].p_shot != null){
 						html+='<div class="info">';
 						html+='<h3>한줄 소개</h3><div>'+data[i].p_shot+'<br>';
 						html+='</div></div>';
+						}
 						
 						/* 제공 서비스 */
 						
@@ -429,7 +432,7 @@ margin-top: 6px;
 				for(var i = 0; i<data.length;i++){
 				revBtn += data[i].m_name+' 멘토님의 수업이 어떠셨나요?<br>';
 				revBtn += data[i].m_name+' 멘토님에 관한 후기를 남겨주세요<br>';
-				revBtn +='<button type="button" id="revBtn" class="btn btn-primary">리뷰 작성하기</button>';
+				revBtn +='<button type="button" id="revBtn" class="btn btn-primary" onclick="review('+data[i].mento_idx+')">리뷰 작성하기</button>';
 				break;
 				}
 				$('#reviewBtnBox').html(revBtn);
@@ -438,5 +441,9 @@ margin-top: 6px;
 		});
 		
 	}
+	
+	function review(mento_idx){
+	      location.href="http://localhost:8080/toti/review/"+mento_idx;
+	   }
 </script>
 </html>
