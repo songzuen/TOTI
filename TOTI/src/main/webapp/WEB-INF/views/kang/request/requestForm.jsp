@@ -10,11 +10,11 @@
 <body>
 	<%@ include file="/WEB-INF/views/frame/nav.jsp" %>
     <!--/#header-->
-    <section id="page-breadcrumb" style="background-image: url(images/cate/Vocal_img.jpg); height: 150px;" >
+    <section id="page-breadcrumb" style="background-image: url(<c:url value="/images/request/${ data.catedata.cate_img }" />); height: 170px;" >
         <div class="vertical-center sun">
 			<div id="title_wrap" class="container">
-				<h1 class="title">${data.cate_name}</h1>
-				<p>소개</p>
+				<h1 class="title">${data.catedata.cate_name}</h1>
+				<p>${data.catedata.cate_con}</p>
 			</div>
 		</div>
    </section>
@@ -35,14 +35,14 @@
 						<form role="form" method="post" id="requestForm">
 							<div>
 								<!-- 분야번호 -->
-								<input type="hidden" value="${data.cate_idx}" id="cate_idx"
+								<input type="hidden" value="${data.catedata.cate_idx}" id="cate_idx"
 									name="cate_idx">
 								<!-- 회원번호 -->
 								<input type="hidden" id="m_idx" placeholder="회원ID" name="m_idx" value="${ idx }">
 							</div>
 							<div class="step well">
 								<div>
-									<p>${data.cate_name}분야에서 원하는 서비스는 ?</p>
+									<p>${data.catedata.cate_name}분야에서 원하는 서비스는 ?</p>
 									<div>
 										<c:forEach items="${data.service}" var="service"
 											varStatus="stat">
