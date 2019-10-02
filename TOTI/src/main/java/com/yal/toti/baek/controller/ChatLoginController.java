@@ -14,7 +14,7 @@ import com.yal.toti.baek.domain.MemberInfo;
 import com.yal.toti.baek.service.LoginService;
 
 @Controller
-public class LoginController {
+public class ChatLoginController {
 
 	@Autowired
 	private LoginService loginService;

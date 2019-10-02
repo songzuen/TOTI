@@ -21,6 +21,8 @@ public class ChatRoomController {
 	public int createChatRoom(@PathVariable("est_idx") int roomnum, @PathVariable("cate_idx") int category,
 			@PathVariable("user") int user, @PathVariable("m_idx") int target) {
 
+		System.out.println(roomnum);
+		
 		int cnt = service.insertChatRoom(roomnum, category, user, target);
 
 		return cnt;

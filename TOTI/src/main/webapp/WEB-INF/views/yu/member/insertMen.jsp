@@ -6,7 +6,7 @@
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 
 	<%@ include file="/WEB-INF/views/frame/header.jsp" %>
-	<% int idx = (int)session.getAttribute("idx"); %>
+<%-- 	<% int idx = (int)session.getAttribute("idx"); %> --%>
 	<title>Blog Masonry | Triangle</title>
 	<style type="text/css">
 	#mainTable{

@@ -32,6 +32,7 @@ public class EstimateService {
 		String dir = request.getSession().getServletContext().getRealPath(path);
 
 		int rCnt = 0;
+		int cnt = 0;
 		String newFileName = "";
 
 		EstimateInfo est = write.toEstimateInfo();
@@ -46,6 +47,9 @@ public class EstimateService {
 			}
 			System.out.println(est.toString());
 			rCnt = dao.insertEstimate(est);
+			if (rCnt != 0) {
+				cnt = est.getEst_idx();
+			}
 		} catch (IllegalStateException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -53,26 +57,26 @@ public class EstimateService {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (Exception e) {
-			if(write.getEst_file() != null) {
+			if (write.getEst_file() != null) {
 				new File(dir, newFileName).delete();
 			}
 		}
-		return rCnt;
+		return cnt;
 	}
 
 	public int updateCoin(int mento_idx) {
 		dao = template.getMapper(EstimateDao.class);
-		
+
 		int rCnt = 0;
 		rCnt = dao.updateCoin(mento_idx);
-		
+
 		return rCnt;
 	}
 
 	public List<Coin> coinCheck(int mento_idx) {
 		dao = template.getMapper(EstimateDao.class);
 		List<Coin> list = dao.coinCheck(mento_idx);
-		
+
 		return list;
 	}
 
