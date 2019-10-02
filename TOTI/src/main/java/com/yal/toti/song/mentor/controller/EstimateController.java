@@ -25,6 +25,7 @@ public class EstimateController {
 			@PathVariable("request_idx") int request_idx){
 		
 		int cnt = estimateService.insertEstimate(write, request, request_idx);
+		System.out.println(cnt);
 		return new ResponseEntity<String>(cnt>0?"success":"fail",HttpStatus.OK);
 	}
 }

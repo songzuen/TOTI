@@ -110,7 +110,7 @@ text-overflow: ellipsis;
         <div class="container">
             <div class="row">
                    <div class="col-md">
-                       <input type="hidden" name="mento_idx" id="mento_idx" value="${idx}">
+                       <input type="hidden" name="mento_idx" id="mento_idx" value="<%= session.getAttribute("idx") %>">
 				
 				
 				<div id="noList"></div>
