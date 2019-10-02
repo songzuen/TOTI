@@ -159,7 +159,6 @@
 						html += '<div class="single-service">\n';
 						html += '<div style="padding: 50px; border: 1px solid; margin: 20px;">\n';
 						html += '<h2>'+data[i].cate_name+'</h2>\n';
-						html += '<p>분야설명넣고싶은데 넣으려면 DB에 추가해야한다ㅏㅏㅏㅏㅏㅏ</p>\n';
 						html += '</div></div></a></div>';
 					}
 

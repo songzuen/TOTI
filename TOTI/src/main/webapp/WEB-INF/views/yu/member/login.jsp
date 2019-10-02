@@ -139,7 +139,7 @@
 											},
 								success : function(data) {
 								
-											location.href = "http://localhost:8080/toti/main";
+											location.href = "<c:url value="/" />";
 											
 														}
 												});

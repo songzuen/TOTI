@@ -38,7 +38,7 @@
 								<input type="hidden" value="${data.cate_idx}" id="cate_idx"
 									name="cate_idx">
 								<!-- 회원번호 -->
-								<input type="hidden" placeholder="회원ID" name="m_idx" value="1">
+								<input type="hidden" id="m_idx" placeholder="회원ID" name="m_idx" value="${ idx }">
 							</div>
 							<div class="step well">
 								<div>
@@ -178,6 +178,11 @@
 				alert('빈칸채우세여');
 				
 				return false;
+			}else if($('#m_idx').val() == ''){
+				alert('로그인 후 이용해주세요.');
+				location.href = '<c:url value="/login" />';
+				
+				return false;
 			}
 		});
 		
@@ -229,7 +234,7 @@
 						}
 					}else if(quest_idx == 6){
 						
-						html += '<input class="form-control" type="text" id="city_idx" name="answerDatas['+cnt+'].answer_cont">';
+						html += '<input class="form-control" type="'+$('.'+quest_idx+'_type').val()+'" id="city_idx" name="answerDatas['+cnt+'].answer_cont">';
 						html += '<input type="button" value="주소가져오기" onclick="openMap()">';
 						
 						

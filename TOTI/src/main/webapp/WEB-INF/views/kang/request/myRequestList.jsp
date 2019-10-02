@@ -30,7 +30,7 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-md">
-					<input type="hidden" value="1" id="m_idx">
+					<input type="hidden" value="${ idx }" id="m_idx">
 					<div id="feature-container">
 						<div class="row">
 							<div id="list_wrap">
@@ -61,23 +61,29 @@
 					success : function(data) {
 					
 						var html = '';
-
-						for (var i = 0; i < data.length; i++) {
-							html += '<div class="col-sm-3 wow fadeInUp">\n';
-							html += '<div class="feature-inner">\n';
-							html += '<div id="requsr_my_list">\n';
-							html += '<h2>' + data[i].cate_name + '</h2>';
-							html += '<h3>' + data[i].service_name + '</h3>';
-							html += '<p>' + data[i].request_date + '</p>';
-							html += '<a onclick="requestDel('+ data[i].request_idx + ')">요청취소</a>';
-							if (data[i].request_cnt > 0) {
-								html += '<a class="btn btn-info" href="<c:url value="/user/estimatee/'+data[i].request_idx+'" />">'
-										+ data[i].request_cnt+ '개의 견적서 보기</a>';
-							} else {
-								html += '<a class="btn btn-info" href="<c:url value="/user/request/'+data[i].request_idx+'" />">요청서 보기</a>';
+						
+						if(data.length == 0) {
+							html+= '<h2>없어</h2>';
+						}else {
+							for (var i = 0; i < data.length; i++) {
+								html += '<div class="col-sm-3 wow fadeInUp">\n';
+								html += '<div class="feature-inner">\n';
+								html += '<div id="requsr_my_list">\n';
+								html += '<h2>' + data[i].cate_name + '</h2>';
+								html += '<h3>' + data[i].service_name + '</h3>';
+								html += '<p>' + data[i].request_date + '</p>';
+								html += '<a onclick="requestDel('+ data[i].request_idx + ')">요청취소</a>';
+								if (data[i].request_cnt > 0) {
+									html += '<a class="btn btn-info" href="<c:url value="/user/estimatee/'+data[i].request_idx+'" />">'
+											+ data[i].request_cnt+ '개의 견적서 보기</a>';
+								} else {
+									html += '<a class="btn btn-info" href="<c:url value="/user/request/'+data[i].request_idx+'" />">요청서 보기</a>';
+									}
+									html += '</div></div></div>';
 								}
-								html += '</div></div></div>';
 							}
+						
+						
 							$('#list_wrap').html(html);
 						}
 
