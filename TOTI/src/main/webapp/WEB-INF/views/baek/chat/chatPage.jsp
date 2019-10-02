@@ -7,8 +7,7 @@
 <link href="<c:url value="/css/minjongCss/chat.css" />" rel="stylesheet">
 <title>TOTI</title>
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-<script
-	src="http://ec2-13-125-96-18.ap-northeast-2.compute.amazonaws.com:3000/socket.io/socket.io.js"></script>
+<script src="http://localhost:82/socket.io/socket.io.js"></script>
 </head>
 <!--/head-->
 <body>
@@ -181,8 +180,7 @@
 			$('#chatRoomList').css('display', 'none');
 			$
 					.ajax({
-						url : 'http://localhost:8080/toti/chat/room/' + est_idx
-								+ '/' + cate_idx + '/' + user + '/' + m_idx,
+						url : 'http://localhost:8080/toti/chat/room/' + est_idx,
 						type : 'GET',
 						success : function(data) {
 
@@ -195,8 +193,7 @@
 						}
 					});
 
-			var socket = io
-					.connect('http://ec2-13-125-96-18.ap-northeast-2.compute.amazonaws.com:3000/');
+			var socket = io.connect('http://localhost:82/');
 
 			var room_num = $('input#chat_room').val();
 
@@ -342,13 +339,13 @@
 			function chatUser(user) {
 				$
 						.ajax({
-							url : 'http://localhost:8080/toti/chat/room/'
+							url : 'http://localhost:8080/toti/chat/room/name/'
 									+ user,
 							type : 'GET',
 							success : function(data) {
 								// alert(data);
 								var html = '';
-								html += '<input type="hidden" id="user" value="' + data + '">'
+								html += '<input type="text" id="user" value="' + data + '">'
 								$('#userName').html(html);
 							}
 						});

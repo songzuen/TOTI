@@ -19,27 +19,28 @@ public class RoomService {
 
 	private ChatSessionDao dao;
 
-	public String searchChatRoom(int roomnum, int category, int user, int target) {
+	public int insertChatRoom(int roomnum, int category, int user, int target) {
 		dao = template.getMapper(ChatSessionDao.class);
 
-		String room = dao.searchChatRoom(user, target, category);
+		int cnt = 0;
 
-		if (room == null) {
-			room = dao.searchChatRoom(target, user, category);
-		}
+		dao.insertChatRoom(roomnum, category, user, target);
 
-		if (room == null) {
-			dao.insertChatRoom(roomnum, category, user, target);
+		Date d = new Date();
+		SimpleDateFormat format = new SimpleDateFormat("yyyy년 MM월 dd일 E요일 HH:mm");
+		String date = format.format(d);
+		cnt += dao.insertEstPriceToChatRoom(roomnum, user, date);
+		cnt += dao.insertEstContToChatRoom(roomnum, user, date);
+		cnt += dao.updateLastMsgAtChatRoom(roomnum);
 
-			Date d = new Date();
-			SimpleDateFormat format = new SimpleDateFormat("yyyy년 MM월 dd일 E요일 HH:mm");
-			String date = format.format(d);
-			dao.insertEstPriceToChatRoom(roomnum, user, date);
-			dao.insertEstContToChatRoom(roomnum, user, date);
-			dao.updateLastMsgAtChatRoom(roomnum);
-			
-			room = dao.searchChatRoom(user, target, category);
-		}
+		return cnt;
+
+	}
+
+	public String searchChatRoom(int roomnum) {
+		dao = template.getMapper(ChatSessionDao.class);
+
+		String room = dao.searchChatRoom(roomnum);
 
 		return room;
 	}

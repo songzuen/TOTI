@@ -8,6 +8,7 @@
 <!-- title -->
 <title>SamplePage</title>
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="http://localhost:82/socket.io/socket.io.js"></script>
 <style>
 * {
 	margin: 0;
@@ -545,25 +546,37 @@ p {
 																		+ mento_idx,
 																type : 'PUT',
 																success : function(
-																		dataC) {
-																	alert('1코인이 사용 되었습니다.');
-																	/* 																	location.href = "http://localhost:8080/toti/chat/createroom?est_idx="
-																	 + est_idx
-																	 + "&cate_idx="
-																	 + cate_idx
-																	 + "&user="
-																	 + user
-																	 + "&m_idx="
-																	 + m_idx; */
-																	/* 																	location.href = "http://localhost:8080/toti/chat/createroom/"
-																	 + +est_idx
-																	 + "/"
-																	 + cate_idx
-																	 + "/"
-																	 + user
-																	 + "/"
-																	 + m_idx; */
-																	location.href = "http://localhost:8080/toti/chat/chatLogin";
+																		data) {
+																	 
+																	 $.ajax({
+																		 url: "http://localhost:8080/toti/chat/room/"
+																				+ +est_idx
+																				+ "/"
+																				+ cate_idx
+																				+ "/"
+																				+ user
+																				+ "/"
+																				+ m_idx,
+																				type : 'GET',
+																				success :function() {
+																			 var socket = io
+					                                                            .connect('http://localhost:82/');
+
+					                                                        var room_num = est_idx;
+
+					                                                        // alert($('#chat_room').val());
+					                                                        // alert(room_num);
+
+					                                                        socket.emit("join", {
+					                                                            room: room_num,
+					                                                            user: user,
+					                                                            target: m_idx
+					                                                        });
+					            											alert('1코인이 사용 되었습니다.');
+																				}
+																	 });
+																	 
+															
 																}
 
 															});

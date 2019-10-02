@@ -43,9 +43,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<select id="searchChatRoom" resultType="String">
 		select room_num from
-		toti_chatroom where room_user =
-		#{param1} and room_target = #{param2}
-		and room_cat = #{param3}
+		toti_chatroom where room_num = #{param1};
 	</select>
 
 	<select id="searchTargetName" resultType="String">
@@ -95,9 +93,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</insert>
 
 	<update id="updateLastMsgAtChatRoom">
-		update toti_chatroom set last_msg = (select est_cont from
+		update toti_chatroom set last_msg = (select est_cont
+		from
 		toti.toti_estimatee
-		where est_idx = #{param1}) where room_num = #{param1}
+		where est_idx = #{param1}) where room_num =
+		#{param1}
 	</update>
 
 	<select id="selectMentorProfile"

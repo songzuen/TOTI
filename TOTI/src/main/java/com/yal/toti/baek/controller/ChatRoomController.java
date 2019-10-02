@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.yal.toti.baek.service.RoomService;
 
 @RestController
-@RequestMapping("chat/room")
+@RequestMapping("/chat/room")
 public class ChatRoomController {
 
 	@Autowired
@@ -18,10 +18,18 @@ public class ChatRoomController {
 
 	@CrossOrigin
 	@GetMapping("/{est_idx}/{cate_idx}/{user}/{m_idx}")
-	public String searchChatRoom(@PathVariable("est_idx") int roomnum, @PathVariable("cate_idx") int category,
+	public int createChatRoom(@PathVariable("est_idx") int roomnum, @PathVariable("cate_idx") int category,
 			@PathVariable("user") int user, @PathVariable("m_idx") int target) {
 
-		String room = service.searchChatRoom(roomnum, category, user, target);
+		int cnt = service.insertChatRoom(roomnum, category, user, target);
+
+		return cnt;
+	}
+
+	@GetMapping("/{est_idx}")
+	public String searchChatRoom(@PathVariable("est_idx") int roomnum) {
+
+		String room = service.searchChatRoom(roomnum);
 
 		return room;
 	}
@@ -36,7 +44,7 @@ public class ChatRoomController {
 	}
 
 	@CrossOrigin
-	@GetMapping(value = "/{user}", produces = "application/text; charset=utf8")
+	@GetMapping(value = "/name/{user}", produces = "application/text; charset=utf8")
 	public String usertName(@PathVariable("user") int user) {
 
 		String name = service.userName(user);

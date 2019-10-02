@@ -21,8 +21,8 @@
 				<div class="row">
 					<div class="action">
 						<div class="col-sm-12">
-							<h1 class="title">여기가 타이틀</h1>
-							<p>로그인</p>
+							<h1 class="title">채 팅</h1>
+							<p>로그인 먼저 해주세요</p>
 						</div>
 					</div>
 				</div>

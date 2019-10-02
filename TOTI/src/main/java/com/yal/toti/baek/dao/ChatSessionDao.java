@@ -13,7 +13,7 @@ public interface ChatSessionDao {
 
 	public List<EstInfo> selectAllList(int user);
 
-	public String searchChatRoom(int user, int target, int category);
+	public String searchChatRoom(int roomnum);
 
 	public int insertChatRoom(int user, int target, int category, int roomnum);
 
@@ -32,7 +32,7 @@ public interface ChatSessionDao {
 	public List<MentorReview> selectMentorReview(int user);
 
 	public int insertEstPriceToChatRoom(int roomnum, int user, String date);
-	
+
 	public int insertEstContToChatRoom(int roomnum, int user, String date);
 
 	public int updateLastMsgAtChatRoom(int roomnum);
