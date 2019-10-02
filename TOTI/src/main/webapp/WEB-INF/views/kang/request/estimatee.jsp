@@ -4,7 +4,6 @@
 <html>
 <head>
 	<%@ include file="/WEB-INF/views/frame/header.jsp" %>
-	<link href="<c:url value="/css/daheeCss/daheecontents.css" />" rel="stylesheet">
 	<title>TOTI</title>
 </head><!--/head-->
 <body>
@@ -17,7 +16,6 @@
                     <div class="action">
                         <div class="col-sm-12">
                             <h1 class="title">견적서</h1>
-                            <h3 id="re_date"></h3>
                         </div>
                     </div>
                 </div>
@@ -26,37 +24,18 @@
     </section>
     <!--/#action-->
     
-    <section id="blog" class="padding-bottom">
+    <section id="blog" class="padding-top padding-bottom">
         <div class="container">
             <div class="row">
 				<div class="col-md">
 					<input type="hidden" value="${ request_idx }" id="request_idx">
-					<input type="hidden" value="${ idx }" id="m_idx">
-					<div id="cate_select_wrap">
-                         <a onclick="history.back()"><i class="fa fa-chevron-left"></i><span>이전으로</span></a>
-                    </div>
-                    <div>
-                    	
-                    </div>
-					<div id="estimatee_wrap">
-						<ul id="tab1" class="nav nav-tabs">
-							<li class="active"><a id="est_list_title" href="#tab1-item1" data-toggle="tab">견적서 목록</a></li>
-							<li><a href="#tab1-item2" data-toggle="tab">보낸 요청서</a></li>
-						</ul>
-						<div class="tab-content">
-							<div class="tab-pane fade active in" id="tab1-item1">
-								<div id="est_wrap">
-								
-								</div>
-							</div>
-							<div class="tab-pane fade" id="tab1-item2">
-							<div id="est_request">
-								<div id="myRequest">
-									
-								</div>
-							</div>
-							</div>
-						</div>
+					<input type="hidden" value="1" id="m_idx">
+					<div id="request_wrap">
+					</div>
+					<div id="est_wrap">
+					</div>
+					<hr>
+					<div id="request">
 					</div>
 				</div>
 			</div>
@@ -76,31 +55,34 @@
 
 		function estimateeList(request_idx) {
 
-			$.ajax({
-						url : 'http://localhost:8080/toti/user/estimateeList/'+ request_idx,
+			$
+					.ajax({
+						url : 'http://localhost:8080/toti/user/estimateeList/'
+								+ request_idx,
 						type : 'GET',
 						success : function(data) {
 
 							var html1 = '';
-							html1 += data.request_date;
-							$('#re_date').text(html1);
 
-							html1 ='';
-							html1 += data.cate_name+'('+data.service_name+') 견적서 목록';
-							$('#est_list_title').text(html1);
-							
-							var html = '';
+							html1 += '<h2>' + data.cate_name + '</h2>';
+							html1 += '<h3>' + data.service_name + '</h3>';
+							html1 += '<h4>' + data.request_date + '</h4>';
+
+							$('#request_wrap').html(html1);
+
+							html = '';
 
 							for (var i = 0; i < data.estiData.length; i++) {
-								
-								html += '<div class="est_wrap"><input type="hidden" value="'+data.estiData[i].mento_idx+'">';
-								html += '<div class="est_user"><div class="est_user_img">';
-								html += '<img src="<c:url value="/images/user/'+data.estiData[i].m_photo+'"/>"></div>';
-								html += '<div class="est_user_info">';
-								html += '<p class="info_con">'+data.estiData[i].p_shot+'</p>';
-								html += '<p class="info_name">'+data.estiData[i].m_name+' <i class="fa fa-star"></i>'+data.estiData[i].str+' ('+data.estiData[i].cont_cnt+'개)</p>';
-								html += '<p class="info_map">'+data.estiData[i].tor_location+'</p></div></div>';
-								html += '<div class="est_pay"><hr><div><span>예상금액</span> '+data.estiData[i].est_price+'원';
+								html += '<div id="est" class="card bg-light text-dark"><div class="card-body"><input type="hidden" value="'+data.estiData[i].mento_idx+'"> <div style="display: inline-block; float: left;">';
+								html += '<img alt="이미지없음" height="75px" src="<c:url value="/images/user/'+data.estiData[i].m_photo+'" />"></div>';
+								html += '<div>' + data.estiData[i].p_shot
+										+ '<br>' + data.estiData[i].m_name
+										+ ' ★ ' + data.estiData[i].str + '('
+										+ data.estiData[i].cont_cnt + '개)<br>'
+										+ data.estiData[i].tor_location
+										+ '</div><hr>';
+								html += '<div>예상금액 : '
+										+ data.estiData[i].est_price + '원';
 								html += '</div></div></div>';
 							}
 
@@ -114,33 +96,41 @@
 
 		function request() {
 
-			$.ajax({
-				url : 'http://localhost:8080/toti/requestData',
-				type : 'GET',
-				data : {
-					request_idx : $('#request_idx').val(),
-					m_idx : $('#m_idx').val()
-				},
-				success : function(data) {
-					
-					var html = '';
-					
-					html += '<img src="<c:url value="/images/user/'+data.userInfo.m_photo+'" />">';
-					html += '<div id="requesr_user"><p>'+data.request_date+'</p>';
-					html += '<h2>'+data.cate_name+'('+data.service_name+')</h2><h3>'+data.userInfo.m_name+'님</h3></div>';
-					html += '<div id="request_con">'
-					
-					for (var i = 0; i < data.answer.length; i++) {
-						html += '<p class="con_p1">'+data.answer[i].quest_name+'</p>';
-						html += '<p class="con_p2">'+data.answer[i].answer_cont+'</p>';			
-					}
-					
-					html += '</div>';
+			$
+					.ajax({
+						url : 'http://localhost:8080/toti/requestData',
+						type : 'GET',
+						data : {
+							request_idx : $('#request_idx').val(),
+							m_idx : $('#m_idx').val()
+						},
+						success : function(data) {
 
-					$('#myRequest').html(html);
-				}
+							var html = '';
 
-			});
+							html += '<img alt="이미지없음" height="100px" src="<c:url value="/img/user/'+data.userInfo.m_photo+'" />"><br>';
+							html += data.userInfo.m_name + '님';
+							html += '<p style="text-align: right;">'
+									+ data.request_date + '</p>';
+							html += '<p>분야 : ' + data.cate_name + '</p>';
+							html += '<p>선택한 서비스 : ' + data.service_name
+									+ '</p>';
+
+							for (var i = 0; i < data.answer.length; i++) {
+
+								html += '<p>' + data.answer[i].quest_name
+										+ '</p>';
+								html += '<p>' + data.answer[i].answer_cont
+										+ '</p>';
+
+							}
+
+							$('#request').html(html);
+
+						}
+
+					});
+
 		}
 	</script>
 </body>

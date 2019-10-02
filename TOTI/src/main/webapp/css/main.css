@@ -174,14 +174,6 @@
   position: relative;
 }
 
-#header i {
-	padding-right: 7px;
-}
-
-.menu_title {
-	padding: 5px 0 10px 15px;
-}
-
 .search{
   position: absolute;
   top: 20px;
@@ -396,7 +388,7 @@ ul.sub-menu {
   background-image: url(../images/home/footer.png);
   background-repeat: repeat-x;
   background-position: bottom;
-  background-size: cover;
+  background-size: contain;
 }
 
 #footer h1{

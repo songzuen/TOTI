@@ -3,8 +3,9 @@
 <footer id="footer">
 	<div class="container">
 		<div class="row">
-			<div class="col-sm-12 text-center bottom-separator" style="height: 200px;">
-				
+			<div class="col-sm-12 text-center bottom-separator">
+				<img src="<c:url value="/images/home/under.png" />" class="img-responsive inline"
+					alt="">
 			</div>
 			<div class="col-sm-12">
 				<div class="copyright-text text-center">

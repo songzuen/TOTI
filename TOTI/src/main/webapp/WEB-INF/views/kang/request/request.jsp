@@ -30,12 +30,12 @@
             <div class="row">
 				<div class="col-md">
 					<input type="hidden" value="${request_idx}" id="request_idx">
-					<input type="hidden" value="${ idx }" id="m_idx">
+					<input type="hidden" value="1" id="m_idx">
 					<div id="cate_select_wrap">
                          <a onclick="history.back()"><i class="fa fa-chevron-left"></i><span>이전으로</span></a>
                     </div>
 					<div id="request">
-						<div id="myRequest"></div>
+					
 					</div>
 				</div>
 			</div>
@@ -78,7 +78,7 @@
 				
 				html += '</div>';
 
-				$('#myRequest').html(html);
+				$('#request').html(html);
 			}
 
 		});

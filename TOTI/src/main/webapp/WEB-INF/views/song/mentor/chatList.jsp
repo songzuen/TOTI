@@ -3,7 +3,7 @@
 	isELIgnored="false"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<% session.getAttribute("idx"); %>
+<% int idx = (int)session.getAttribute("idx"); %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -89,7 +89,7 @@ border: 0px;
 				<div class="row">
 					<div class="col-md">
 					
-					<input type="hidden" name="mento_idx" id="mento_idx" value="<%= session.getAttribute("idx") %>">
+					<input type="hidden" name="mento_idx" id="mento_idx" value="${idx}">
 					<div id="chatList"></div>
 					<!-- end home variation -->
 					<!-- end component -->
