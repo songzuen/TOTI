@@ -35,7 +35,7 @@
                          <a onclick="history.back()"><i class="fa fa-chevron-left"></i><span>이전으로</span></a>
                     </div>
 					<div id="request">
-					
+						<div id="myRequest"></div>
 					</div>
 				</div>
 			</div>
@@ -78,7 +78,7 @@
 				
 				html += '</div>';
 
-				$('#request').html(html);
+				$('#myRequest').html(html);
 			}
 
 		});

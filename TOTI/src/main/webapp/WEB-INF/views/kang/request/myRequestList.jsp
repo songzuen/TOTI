@@ -61,9 +61,9 @@
 					success : function(data) {
 					
 						var html = '';
-						
+
 						for (var i = 0; i < data.length; i++) {
-							html += '<div class="col-sm-3 wow fadeInUp" data-wow-duration="500ms" data-wow-delay="300ms">\n';
+							html += '<div class="col-sm-3 wow fadeInUp">\n';
 							html += '<div class="feature-inner">\n';
 							html += '<div id="requsr_my_list">\n';
 							html += '<h2>' + data[i].cate_name + '</h2>';
@@ -78,10 +78,9 @@
 								}
 								html += '</div></div></div>';
 							}
-
 							$('#list_wrap').html(html);
-
 						}
+
 				});
 		}
 
@@ -111,5 +110,6 @@
 
 		}
 	</script>
+
 </body>
 </html>
