@@ -34,20 +34,19 @@
 					<li class="active"><a href="<c:url value="/reg" />">회원가입</a></li>
 					
 				<%
-				} else if (idxstr != null && id == "admin@admin"){%>
+				} else if (idxstr != null && id.equals("admin@admin")){%>
 				 <!-- --------------- -->
 				<li><a href="<c:url value="/service" />">상세 서비스</a></li>
 			      <li><a href="<c:url value="/question" />">요청서 질문</a></li>
 			      <li><a href="<c:url value="/profile" />">프로필 관리</a></li>
 			        <li class="dropdown"><a href="#">${name}님<i class="fa fa-angle-down"></i></a>
 			       <ul role="menu" class="sub-menu">
-                               <li style="padding: 5px 0 10px 15px">
-                                  <div>안녕하세요, ${name}님 </div>
-                                </li>
-                                <hr>
-                                <li><a href="<c:url value="/member/logout"/>">로그아웃</a></li>
-                                
-                            </ul>
+                         <li style="padding: 5px 0 10px 15px">
+                         <div>안녕하세요, ${name}님 </div>
+                         </li>
+                         <hr>
+                        <li><a href="<c:url value="/member/logout"/>">로그아웃</a></li>     
+                  </ul>
 			    <% 
 			    } else { 
 				%>
