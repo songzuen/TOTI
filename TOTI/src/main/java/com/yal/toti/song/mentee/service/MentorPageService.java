@@ -24,7 +24,6 @@ public class MentorPageService {
 		
 		dao = template.getMapper(MentorListDao.class);
 		List<MentorMemberInfo> list = dao.getMentorPage(mento_idx);
-		System.out.println(list.toString());
 		return list;
 	}
 }
