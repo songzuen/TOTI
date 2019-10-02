@@ -30,7 +30,7 @@
 				%>
 					<!-- 로그인전 nav-->
 					<li><a href="<c:url value="/login" />">로그인</a></li>
-					<li><a href="<c:url value="/mypage" />">마이페이지</a></li>
+					
 					<li class="active"><a href="<c:url value="/reg" />">회원가입</a></li>
 					
 				<%
@@ -63,7 +63,9 @@
                                 </li>
                                 <li><a href="<c:url value="/user/requests" />">보낸요청</a></li>
                                 <li><a href="#">설정</a></li>
+                                <li><a href="<c:url value="/mypage" />">마이페이지</a></li>
                                 <hr>
+                                
                                 <li><a href="#">멘토로 전환</a></li>
                                 <li><a href="<c:url value="/member/logout"/>">로그아웃</a></li>
                                 
