@@ -12,6 +12,6 @@
 	String c = (String) session.getAttribute("name");
 	String d = (String) session.getAttribute("photo_name");
 	
-response.sendRedirect("main");
+	response.sendRedirect("/toti/main");
 	
 %>

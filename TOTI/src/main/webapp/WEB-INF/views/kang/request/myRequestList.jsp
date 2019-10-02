@@ -63,7 +63,7 @@
 						var html = '';
 						
 						if(data.length == 0) {
-							html+= '<h2>없어</h2>';
+							html+= '<div id="not_request"><p>보낸 요청서가 없습니다.</p><p>요청서를 작성해주세요.</p><a href="<c:url value="/" />">요청서 작성하러가기</a></div>';
 						}else {
 							for (var i = 0; i < data.length; i++) {
 								html += '<div class="col-sm-3 wow fadeInUp">\n';
