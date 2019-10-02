@@ -3,12 +3,23 @@
 <!DOCTYPE html>
 <html>
 <head>
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css">
 <%@include file="/WEB-INF/views/frame/header.jsp"%>
 <!-- title -->
 <title>[관리자] TOTI :: 제공 서비스 관리</title>
 <style>
+	#addService, #checkService {
+		width: 900px;
+		margin : 0 auto;
+	}
 	
+	#cateN{
+		font-size: 18px;
+		font-weight: bolder;
+		
+	}
+	span{
+		margin: 10px 0;
+	}
 </style>
 </head>
 <body>
@@ -18,7 +29,7 @@
 		<!-- demo content -->
 		<div class="demo-content mrg-top-md">
 			<!-- container -->
-			<div class="container" style="margin-top: -50px">
+			<div class="container" style="margin-top: -50px; margin-bottom: 50px;">
 				<div id="addService">
 					<hr><h3 style="color: black">상세 서비스 추가</h3>
 					<form id="serviceForm">
@@ -29,14 +40,14 @@
 							</select>
 						</div>
 						 <input type="text" name="service_name" id="service_name"
-							style="border-color: black"> 
+							style="width:174px;"> 
 						<input type="submit" value="+">
 					</form>
-				</div>
-				<div id="checkService" style="float: left">
-					<hr><h3 style="color: black" >서비스 관리</h3>
-					<div id="countdown"></div><br>
-					<div style="border:1px solid; padding:10px; width:800px;" id="cateBox">
+				</div><hr>
+				<div id="checkService">
+					<h3 style="color: black" >서비스 관리</h3>
+					<div id="catelist"></div><br>
+					<div id="cateBox" style="border:1px solid #ddd; padding:10px; width:400px; border-radius: 10px;" >
 						<div id="boxIn">서비스를 확인할 분야의 버튼을 클릭해주세요.</div>
 						<div id="servicelistBycate" style="display: none">
 							
@@ -75,7 +86,7 @@
 						html += '</div>';
 						html += '</div>';
 						
-					$('#countdown').html(html);
+					$('#catelist').html(html);
 				}
 			});
 		}
@@ -105,14 +116,20 @@
 					var html = '';
 
 					for (var i = 0; i < data.length; i++) {
-						html += '<h4>'+data[i].cate_name+' 서비스</h4><div class="service">\n';
+						html += '<table style="width:100%;"><tr>';
+						html += '<td><h4 style="font-weight: bolder;">'+data[i].cate_name+'서비스</h4></td>';
+						html += '<td style="width: 50px;">';
+						html += '<button class="btn btn-secondary" id="addService" style="height:20px; width:45px; padding: 0px 4px; text-align: center; ">추가</button>';
+						html += '</td></tr></table>';
+						
 						break;
 					}
 					for (var i = 0; i < data.length; i++) {
+						html += '<div class="service">';
 						html += data[i].service_name
 								+ '\n';
-						html += '<button style="height : 20px; border-radius : 15px; margine : 10px 0;" onclick="del(' + data[i].service_idx
-								+ ')">X</button><br>\n';
+						html += '<button class="btn btn-secondary" style="height:20px; padding: 0px 4px; text-align: center; " onclick="del(' + data[i].service_idx
+								+ ')">x</button>\n';
 						html += '</div>\n';
 					}
 					$('#servicelistBycate').html(html);
