@@ -66,7 +66,7 @@
 
 #requsr_my_list {
 	
-	border: 1px solid #7adbfc;
+	border: 1px solid #d5e8e8;
 	padding: 25px;
 	border-radius: 10px;
 	margin: 10px 0;
@@ -92,17 +92,22 @@
 	margin-bottom: 50px; 
 }
 
-#request {
+#request{
 	border: 1px solid #ededed;
 	margin: 20px auto;
-	width: 70%;
+	width: 50%;
 	padding: 50px;
 	border-radius: 10px;
-	box-shadow: 1px 1px 20px 1px #f2f2f2;
-	
+	box-shadow: 1px 1px 20px 1px #f2f2f2;	
 }
 
-#request img {
+#est_request {
+	margin: 20px auto;
+	width: 50%;
+	padding: 50px;
+}
+
+#request img, #est_request img {
 	border-radius: 50%;
 	height: 130px;
 	width: 130px;
@@ -111,7 +116,7 @@
 
 #requesr_user {
 	display: inline-block;
-	width: 80%;
+	width: 70%;
 	padding: 0 0 0 40px;
 }
 
@@ -134,4 +139,56 @@
 
 .con_p2 {
 	font-size: 14px;
+}
+
+#estimatee_wrap li {
+	width: 50%; text-align: center;
+}
+
+.est_wrap {
+	border: 1px solid #d8d8d8; border-radius: 15px; padding: 10px; margin: 10px 0;
+}
+
+.est_user {
+	padding: 0 10px;
+}
+
+.est_user_img {
+	float: left; width: auto; padding: 10px 15px 10px 0;
+}
+
+.est_user_img img {
+	width: 80px; height: 80px; border-radius: 50%;
+}
+
+.est_user_info {
+	padding: 10px;
+}
+
+.info_con {
+	font-weight: bold; font-size: 16px;
+}
+
+.info_name {
+	font-weight: 400; font-size: 15px;
+}
+
+.info_map {
+	font-weight: 400; font-size: 15px;
+}
+
+.est_pay {
+	clear: both;
+}
+
+.est_pay hr {
+	margin: -5px 10px 5px 10px;
+}
+
+.est_pay div {
+	padding: 10px;
+}
+
+.est_pay div span {
+	border: 1px solid #cccccc; border-radius: 5px; padding: 3px;
 }
