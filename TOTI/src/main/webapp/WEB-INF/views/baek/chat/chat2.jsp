@@ -7,7 +7,7 @@
 <link href="<c:url value="/css/minjongCss/chat.css" />" rel="stylesheet">
 <title>TOTI</title>
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-<script src="http://localhost:82/socket.io/socket.io.js"></script>
+<script src="http://ec2-13-125-96-18.ap-northeast-2.compute.amazonaws.com:3000/socket.io/socket.io.js"></script>
 </head>
 <!--/head-->
 <body>

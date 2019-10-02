@@ -30,7 +30,6 @@ public class MentorListByStrController {
 
 			list = mentorListService.getListByStr();
 			
-		//System.out.println(list.toString());
 		ResponseEntity<List<MentorMemberInfo>> entity = new ResponseEntity<List<MentorMemberInfo>>(list, HttpStatus.OK);
 		return entity;
 	}

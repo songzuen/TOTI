@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -44,8 +45,7 @@ public class EstimateService {
 				est.setEst_file(newFileName);
 			}
 			System.out.println(est.toString());
-			dao.insertEstimate(est);
-			rCnt = est.getEst_idx();
+			rCnt = dao.insertEstimate(est);
 		} catch (IllegalStateException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
