@@ -12,14 +12,14 @@
                     	    	<div class="service col-md-4">
                     		    	<!-- icon container -->
                         	    	<div class="icon-container">
-                        		    	<i class="fa fa-css3"></i>
+                        		    	<a href="<c:url value="mypage" />"><i class="fa fa-css3"></i></a>
                         	    	</div>
                         	    	<!-- end icon container -->
                         
                         	    	<!-- text container -->
                         	    	<div class="text-container">
-                        		    	<h6>WEB DESIGN</h6>
-                        	        	<p class="mrg-top-xs">Claritas est etiam processus dynamicus, qui sequitur mutationem consuetudium lectorum nteposuerit.</p>
+                        		    	<h6>내 정보</h6>
+                        	        	<p class="mrg-top-xs">회원님의 정보를 확인하시고 변경사항을 수정하실 수 있습니다.</p>
                         	    	</div>
                         	    	<!-- end text container -->
                     	    	</div>
@@ -29,14 +29,14 @@
                     	    	<div class="service col-md-4">
                     		    	<!-- icon container -->
                         	    	<div class="icon-container">
-                        		    	<i class="fa fa-pencil"></i>
+                        		    	<a href="<c:url value="member/mentorInsert" />"><i class="fa fa-pencil"></i></a>
                         	    	</div>
                         	    	<!-- end icon container -->
                         
                         	    	<!-- text container -->
                         	    	<div class="text-container">
-                        		    	<h6>GRAPHIC DESIGN</h6>
-                        	        	<p class="mrg-top-xs">Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl aliquip ex ea commodo .</p>
+                        		    	<h6>멘토 등록</h6>
+                        	        	<p class="mrg-top-xs">회원님의 능력을 적극 발휘하여 다른 회원님들의 멘토가 될 수 있습니다.</p>
                         	    	</div>
                         	    	<!-- end text container -->
                     	    	</div>
@@ -50,8 +50,8 @@
                         	    	<!-- end icon container -->                        
                         	    	<!-- text container -->
                         	    	<div class="text-container">
-                        		    	<h6>DEVELOPMENT</h6>
-                        	        	<p class="mrg-top-xs">Vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent.</p>
+                        		    	<h6>나의 멘토링 정보</h6>
+                        	        	<p class="mrg-top-xs">회원님의 TCoin 충전과 멘토정보를 확인하세요.</p>
                         	    	</div>
                         	    	<!-- end text container -->
                     	    	</div>

@@ -189,8 +189,8 @@ margin-right: 15px;
 									</div>
 									
 									<!-- 세션 값 받기 -->
-									<input type="text" name="mento_idx" id="mento_idx"
-										name="mento_idx" value="2">
+									<input type="text" id="mento_idx"
+										name="mento_idx" value="<%= session.getAttribute("idx") %>">
 										
 										
 									<table>
