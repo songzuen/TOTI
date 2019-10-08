@@ -38,7 +38,7 @@
 						<!-- container -->
 						<div class="container" style="margin: 50px auto;">
 							<div id=backBtn>
-								<a href="http://localhost:8080/toti/chat/chatLogin" onclick="">뒤로가기</a>
+								<a href="http://13.209.47.16:8080/toti/chat/chatLogin" onclick="">뒤로가기</a>
 							</div>
 							<div id="chatArea">
 								<div id="chatInfo"></div>
@@ -99,7 +99,7 @@
 			$('#chatRoomList').css('display', 'none');
 			$
 					.ajax({
-						url : 'http://localhost:8080/toti/chat/room/' + est_idx
+						url : 'http://13.209.47.16:8080/toti/chat/room/' + est_idx
 								+ '/' + cate_idx + '/' + user + '/' + m_idx,
 						type : 'GET',
 						success : function(data) {
@@ -114,7 +114,7 @@
 					});
 
 			var socket = io
-					.connect('http://localhost:82/');
+					.connect('http://13.209.47.16:82/');
 
 			var room_num = est_idx();
 
@@ -233,7 +233,7 @@
 				$
 						.ajax({
 
-							url : 'http://localhost:8080/toti/chat/mentorcheck/'
+							url : 'http://13.209.47.16:8080/toti/chat/mentorcheck/'
 									+ user,
 							type : 'GET',
 							success : function(data) {
@@ -249,7 +249,7 @@
 			function chatTarget(user) {
 				$
 						.ajax({
-							url : 'http://localhost:8080/toti/chat/room/'
+							url : 'http://13.209.47.16:8080/toti/chat/room/'
 									+ m_idx + '/' + user,
 							type : 'GET',
 							success : function(data) {
@@ -264,7 +264,7 @@
 			function chatUser(user) {
 				$
 						.ajax({
-							url : 'http://localhost:8080/toti/chat/room/'
+							url : 'http://13.209.47.16:8080/toti/chat/room/'
 									+ user,
 							type : 'GET',
 							success : function(data) {
@@ -279,7 +279,7 @@
 				if ($('#check').val() == 'Y') {
 					$
 							.ajax({
-								url : 'http://localhost:8080/toti/chat/profile/mentor/'
+								url : 'http://13.209.47.16:8080/toti/chat/profile/mentor/'
 										+ user,
 								type : 'GET',
 								success : function(data) {
@@ -315,7 +315,7 @@
 			function mentorProfileReview(user) {
 				$
 						.ajax({
-							url : 'http://localhost:8080/toti/chat/profile/mentor/review/'
+							url : 'http://13.209.47.16:8080/toti/chat/profile/mentor/review/'
 									+ user,
 							type : 'GET',
 							success : function(data) {

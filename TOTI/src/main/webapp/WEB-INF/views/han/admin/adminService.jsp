@@ -73,7 +73,7 @@
 		
 		function categoryList() {
 			$.ajax({
-				url : 'http://localhost:8080/toti/admin/service/categoryList',
+				url : 'http://13.209.47.16:8080/toti/admin/service/categoryList',
 				type : 'GET',
 				success : function(data) {
 					var html = '';
@@ -93,7 +93,7 @@
 		
 		function categoryOption() {
 			$.ajax({
-				url : 'http://localhost:8080/toti/admin/service/categoryList',
+				url : 'http://13.209.47.16:8080/toti/admin/service/categoryList',
 				type : 'GET',
 				contentType : 'application/json; charset=utf-8',
 				dataType : 'json',
@@ -110,7 +110,7 @@
 		
 		function listByCate(cate_idx){
 			$.ajax({
-				url : 'http://localhost:8080/toti/admin/service/list/'+cate_idx,
+				url : 'http://13.209.47.16:8080/toti/admin/service/list/'+cate_idx,
 				type : 'GET',
 				success : function(data){
 					var html = '';
@@ -142,7 +142,7 @@
 		$('#serviceForm').submit(function() {
 			alert($('#serviceForm').serialize());
 			$.ajax({
-				url : 'http://localhost:8080/toti/admin/service/insert',
+				url : 'http://13.209.47.16:8080/toti/admin/service/insert',
 				type : 'POST',
 				data : $('#serviceForm').serialize(),
 				success : function(data) {
@@ -160,7 +160,7 @@
 		function del(service_idx){
 	        if(confirm('서비스를 삭제할까요?')){
 	           $.ajax({
-	                url : 'http://localhost:8080/toti/admin/service/delete/'+service_idx,
+	                url : 'http://13.209.47.16:8080/toti/admin/service/delete/'+service_idx,
 	                type : 'DELETE',
 	                success : function(data){
 	                    if(data=='success'){

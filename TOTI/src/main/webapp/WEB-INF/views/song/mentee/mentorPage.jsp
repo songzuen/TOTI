@@ -152,7 +152,7 @@ margin-top: 6px;
 		var halfStar = '<span><img id=\"star\" src=\"https://d1hhkexwnh74v.cloudfront.net/icons/icon-common-review-star-small-half.svg\"></span>';
 		
 		$.ajax({
-			url : 'http://localhost:8080/toti/mentorpage/'+mento_idx,
+			url : 'http://13.209.47.16:8080/toti/mentorpage/'+mento_idx,
 			type : 'GET',
 			success : function(data){
 				var html = '';
@@ -443,7 +443,7 @@ margin-top: 6px;
 	}
 	
 	function review(mento_idx){
-	      location.href="http://localhost:8080/toti/review/"+mento_idx;
+	      location.href="http://13.209.47.16:8080/toti/review/"+mento_idx;
 	   }
 </script>
 </html>

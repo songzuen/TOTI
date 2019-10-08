@@ -208,7 +208,7 @@ border: 0px;
 		;
 		$
 				.ajax({
-					url : 'http://localhost:8080/toti/mentee/mentorList',
+					url : 'http://13.209.47.16:8080/toti/mentee/mentorList',
 					type : 'GET',
 					success : function(data) {
 						var html = '';
@@ -321,7 +321,7 @@ border: 0px;
 							html += '</tr>';
 							html += '</table>';
 
-							//html += '<a href="http://localhost:8080/toti/mentorpage/'+data[i].mento_idx+'">고수 페이지</a>';
+							//html += '<a href="http://13.209.47.16:8080/toti/mentorpage/'+data[i].mento_idx+'">고수 페이지</a>';
 							html += '</div><label for="pageBtn'+data[i].mento_idx+'" style="cursor:pointer">';
 							html += '<hr>'
 						}
@@ -345,7 +345,7 @@ border: 0px;
 		;
 		$
 				.ajax({
-					url : 'http://localhost:8080/toti/mentee/mentorList',
+					url : 'http://13.209.47.16:8080/toti/mentee/mentorList',
 					type : 'GET',
 					dataType : 'json',
 					data : {
@@ -464,7 +464,7 @@ border: 0px;
 							html += '</tr>';
 							html += '</table>';
 
-							//html += '<a href="http://localhost:8080/toti/mentorpage/'+data[i].mento_idx+'">고수 페이지</a>';
+							//html += '<a href="http://13.209.47.16:8080/toti/mentorpage/'+data[i].mento_idx+'">고수 페이지</a>';
 							html += '</div><label for="pageBtn'+data[i].mento_idx+'" style="cursor:pointer">';
 							html += '<hr>'
 						}
@@ -486,7 +486,7 @@ border: 0px;
 							;
 							$
 									.ajax({
-										url : 'http://localhost:8080/toti/mentee/mentorListByRCnt',
+										url : 'http://13.209.47.16:8080/toti/mentee/mentorListByRCnt',
 										type : 'GET',
 										success : function(data) {
 											if ($('#rCnt').is(':checked')) {
@@ -639,7 +639,7 @@ border: 0px;
 													html += '</tr>';
 													html += '</table>';
 
-													//html += '<a href="http://localhost:8080/toti/mentorpage/'+data[i].mento_idx+'">고수 페이지</a>';
+													//html += '<a href="http://13.209.47.16:8080/toti/mentorpage/'+data[i].mento_idx+'">고수 페이지</a>';
 													html += '</div><label for="pageBtn'+data[i].mento_idx+'" style="cursor:pointer">';
 													html += '<hr>'
 												}
@@ -665,7 +665,7 @@ border: 0px;
 
 							$
 									.ajax({
-										url : 'http://localhost:8080/toti/mentee/mentorListByStr',
+										url : 'http://13.209.47.16:8080/toti/mentee/mentorListByStr',
 										type : 'GET',
 										success : function(data) {
 											if ($('#str').is(':checked')) {
@@ -819,7 +819,7 @@ border: 0px;
 													html += '</tr>';
 													html += '</table>';
 
-													//html += '<a href="http://localhost:8080/toti/mentorpage/'+data[i].mento_idx+'">고수 페이지</a>';
+													//html += '<a href="http://13.209.47.16:8080/toti/mentorpage/'+data[i].mento_idx+'">고수 페이지</a>';
 													html += '</div><label for="pageBtn'+data[i].mento_idx+'" style="cursor:pointer">';
 													html += '<hr>'
 												}
@@ -832,7 +832,7 @@ border: 0px;
 						});
 	}
 	function selectMentor(mento_idx) {
-		location.href = "http://localhost:8080/toti/mentor/" + mento_idx;
+		location.href = "http://13.209.47.16:8080/toti/mentor/" + mento_idx;
 	}
 </script>
 </html>

@@ -83,10 +83,10 @@
                                    <div>★ 평점 5.0 | 리뷰 1</div>
                                 </li>
                                 <li><a href="<c:url value="/profile/${idx}" />">프로필 관리</a></li>
-                                <li><a href="aboutus2.html">설정</a></li>
+                                <li><a href="#">설정</a></li>
                                 <hr>
-                                <li><a href="service.html">고객으로 전환</a></li>
-                                <li><a href="pricing.html">로그아웃</a></li>
+                                <li><a href="#">고객으로 전환</a></li>
+                                <li><a href="<c:url value="/member/logout"/>">로그아웃</a></li> 
                             </ul>
                         </li>
                         <%

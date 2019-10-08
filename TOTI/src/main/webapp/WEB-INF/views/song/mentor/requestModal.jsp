@@ -277,7 +277,7 @@ margin-right: 15px;
 
 	function request(request_idx) {
 		$.ajax({
-			url : 'http://localhost:8080/toti/requestInfo/' + request_idx,
+			url : 'http://13.209.47.16:8080/toti/requestInfo/' + request_idx,
 			type : 'GET',
 			success : function(data) {
 				var html = '';
@@ -286,8 +286,8 @@ margin-right: 15px;
 
 				for (var i = 0; i < data.length; i++) {
 					html += '<div id="mInfo">'
-						html += '<input type ="text" id="m_idx" name="m_idx" value="'+ data[i].m_idx+'">';
-					html += '<input type ="text" id="cate_idx" name="cate_idx" value="'+ data[i].cate_idx+'">';
+						html += '<input type ="hidden" id="m_idx" name="m_idx" value="'+ data[i].m_idx+'">';
+					html += '<input type ="hidden" id="cate_idx" name="cate_idx" value="'+ data[i].cate_idx+'">';
 					html += '<img id="m_photo" src = "<c:url value="/images/user/'+data[i].m_photo+'"/>"';
 					html += '<span style="float:left;"><h2 style="height:100px;line-height:60px;">' + data[i].m_name;
 					html += '<p>' + data[i].cate_name;
@@ -355,7 +355,7 @@ margin-right: 15px;
 	function menteeLocation(request_idx){
 		
 		$.ajax({
-			url : 'http://localhost:8080/toti/requestInfo/' + request_idx,
+			url : 'http://13.209.47.16:8080/toti/requestInfo/' + request_idx,
 			type : 'GET',
 			success : function(data) {
 				
@@ -407,7 +407,7 @@ margin-right: 15px;
 		
 			
 				$.ajax({
-					url : 'http://localhost:8080/toti/credit/'+mento_idx,
+					url : 'http://13.209.47.16:8080/toti/credit/'+mento_idx,
 					type : 'GET',
 					success : function(item){
 							
@@ -462,7 +462,7 @@ margin-right: 15px;
 							var request_idx = $('#request_idx').val();
 							
 							$.ajax({
-								url : 'http://localhost:8080/toti/estimateform/' + request_idx,
+								url : 'http://13.209.47.16:8080/toti/estimateform/' + request_idx,
 								type : 'POST',
 								processData : false,
 								contentType : false,
@@ -473,19 +473,19 @@ margin-right: 15px;
 										alert('전송되었습니다.');
 										
 										$.ajax({
-											url : 'http://localhost:8080/toti/credit/'+mento_idx,
+											url : 'http://13.209.47.16:8080/toti/credit/'+mento_idx,
 											type : 'PUT',
 											success : function(data){
 												$
 												.ajax({
-													url : 'http://localhost:8080/toti/credit/'
+													url : 'http://13.209.47.16:8080/toti/credit/'
 															+ mento_idx,
 													type : 'PUT',
 													success : function(
 															data) {
 														 
 														 $.ajax({
-															 url: "http://localhost:8080/toti/chat/room/"
+															 url: "http://13.209.47.16:8080/toti/chat/room/"
 																	+ +est_idx
 																	+ "/"
 																	+ cate_idx
