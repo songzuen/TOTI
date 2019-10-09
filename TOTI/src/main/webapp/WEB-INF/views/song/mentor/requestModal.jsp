@@ -9,7 +9,7 @@
 <!-- title -->
 <title>SamplePage</title>
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-<script src="http://ec2-13-125-96-18.ap-northeast-2.compute.amazonaws.com:3000/socket.io/socket.io.js"></script>
+<script src="http://localhost:3000/socket.io/socket.io.js"></script>
 <style>
 * {
 	margin: 0;
@@ -277,7 +277,7 @@ margin-right: 15px;
 
 	function request(request_idx) {
 		$.ajax({
-			url : 'http://13.209.47.16:8080/toti/requestInfo/' + request_idx,
+			url : 'http://localhost:8080/toti/requestInfo/' + request_idx,
 			type : 'GET',
 			success : function(data) {
 				var html = '';
@@ -355,7 +355,7 @@ margin-right: 15px;
 	function menteeLocation(request_idx){
 		
 		$.ajax({
-			url : 'http://13.209.47.16:8080/toti/requestInfo/' + request_idx,
+			url : 'http://localhost:8080/toti/requestInfo/' + request_idx,
 			type : 'GET',
 			success : function(data) {
 				
@@ -407,7 +407,7 @@ margin-right: 15px;
 		
 			
 				$.ajax({
-					url : 'http://13.209.47.16:8080/toti/credit/'+mento_idx,
+					url : 'http://localhost:8080/toti/credit/'+mento_idx,
 					type : 'GET',
 					success : function(item){
 							
@@ -462,7 +462,7 @@ margin-right: 15px;
 							var request_idx = $('#request_idx').val();
 							
 							$.ajax({
-								url : 'http://13.209.47.16:8080/toti/estimateform/' + request_idx,
+								url : 'http://localhost:8080/toti/estimateform/' + request_idx,
 								type : 'POST',
 								processData : false,
 								contentType : false,
@@ -473,19 +473,19 @@ margin-right: 15px;
 										alert('전송되었습니다.');
 										
 										$.ajax({
-											url : 'http://13.209.47.16:8080/toti/credit/'+mento_idx,
+											url : 'http://localhost:8080/toti/credit/'+mento_idx,
 											type : 'PUT',
 											success : function(data){
 												$
 												.ajax({
-													url : 'http://13.209.47.16:8080/toti/credit/'
+													url : 'http://localhost:8080/toti/credit/'
 															+ mento_idx,
 													type : 'PUT',
 													success : function(
 															data) {
 														 
 														 $.ajax({
-															 url: "http://13.209.47.16:8080/toti/chat/room/"
+															 url: "http://localhost:8080/toti/chat/room/"
 																	+ +est_idx
 																	+ "/"
 																	+ cate_idx
@@ -496,7 +496,7 @@ margin-right: 15px;
 																	type : 'GET',
 																	success :function() {
 																 var socket = io
-		                                                            .connect('http://ec2-13-125-96-18.ap-northeast-2.compute.amazonaws.com:3000/');
+		                                                            .connect('http://localhost:3000/');
 
 		                                                        var room_num = est_idx;
 

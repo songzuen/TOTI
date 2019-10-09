@@ -84,7 +84,7 @@
 		function kategorieList() {
 			
 			$.ajax({
-				url : 'http://13.209.47.16:8080/toti/kategorieList',
+				url : 'http://localhost:8080/toti/kategorieList',
 				type : 'GET',
 				success : function(data) {
 					

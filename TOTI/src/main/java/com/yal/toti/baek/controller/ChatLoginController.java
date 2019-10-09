@@ -22,12 +22,7 @@ public class ChatLoginController {
 	@RequestMapping(value = "chat/chatLogin", method = RequestMethod.GET)
 	public String loginForm(HttpServletRequest request) {
 
-		String view = "/baek/chat/chatLogin";
-		HttpSession session = request.getSession(false);
-
-		if (session != null && session.getAttribute("loginInfo") != null) {
-			view = "/baek/chat/chatPage";
-		}
+		String view = "/baek/chat/chatPage";
 
 		return view;
 	}

@@ -111,7 +111,7 @@ border: 0px;
 	
 	function list(mento_idx) {
 		$.ajax({
-					url : 'http://13.209.47.16:8080/toti/mentor/chattingList/'+mento_idx,
+					url : 'http://localhost:8080/toti/mentor/chattingList/'+mento_idx,
 					type : 'GET',
 					success : function(data) {
 						var html = '';
@@ -161,7 +161,7 @@ border: 0px;
 							html += '</tr>';
 							html += '</table>';
 
-							//html += '<a href="http://13.209.47.16:8080/toti/mentorpage/'+data[i].mento_idx+'">고수 페이지</a>';
+							//html += '<a href="http://localhost:8080/toti/mentorpage/'+data[i].mento_idx+'">고수 페이지</a>';
 							html += '</div></label>';
 							html += '<hr>';
 						}

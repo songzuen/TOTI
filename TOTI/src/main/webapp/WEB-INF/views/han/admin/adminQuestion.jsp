@@ -91,7 +91,7 @@
 		
 		function categoryList() {
 			$.ajax({
-				url : 'http://13.209.47.16:8080/toti/admin/service/categoryList',
+				url : 'http://localhost:8080/toti/admin/service/categoryList',
 				type : 'GET',
 				success : function(data) {
 					var html = '';
@@ -110,7 +110,7 @@
 		
 		function categoryOption() {
 			$.ajax({
-				url : 'http://13.209.47.16:8080/toti/admin/service/categoryList',
+				url : 'http://localhost:8080/toti/admin/service/categoryList',
 				type : 'GET',
 				contentType : 'application/json; charset=utf-8',
 				dataType : 'json',
@@ -127,7 +127,7 @@
 		
 		function listByCate(cate_idx){
 			$.ajax({
-				url : 'http://13.209.47.16:8080/toti/admin/question/list/'+cate_idx,
+				url : 'http://localhost:8080/toti/admin/question/list/'+cate_idx,
 				type : 'GET',
 				success : function(data){
 					var html = '';
@@ -154,7 +154,7 @@
 		$('#questionForm').submit(function() {
 			alert($('#questionForm').serialize());
 			$.ajax({
-				url : 'http://13.209.47.16:8080/toti/admin/question/insert',
+				url : 'http://localhost:8080/toti/admin/question/insert',
 				type : 'POST',
 				data : $('#questionForm').serialize(),
 				success : function(data) {
@@ -172,7 +172,7 @@
 		function del(quest_idx){
 	        if(confirm('서비스를 삭제할까요?')){
 	           $.ajax({
-	                url : 'http://13.209.47.16:8080/toti/admin/question/delete/'+quest_idx,
+	                url : 'http://localhost:8080/toti/admin/question/delete/'+quest_idx,
 	                type : 'DELETE',
 	                success : function(data){
 	                    if(data=='success'){
@@ -190,7 +190,7 @@
 	        $('#editFrame').css('display', 'block');
 	        
 			$.ajax({
-				url : 'http://13.209.47.16:8080/toti/admin/question/edit/'+quest_idx,
+				url : 'http://localhost:8080/toti/admin/question/edit/'+quest_idx,
 				type : 'GET',
 				success : function(data){
 	                $('#quest_idx').val(quest_idx);
@@ -202,7 +202,7 @@
 		
 		$('#editForm').submit(function(){            
             $.ajax({
-                url : 'http://13.209.47.16:8080/toti/admin/question/edit/'+$('#quest_idx').val(),
+                url : 'http://localhost:8080/toti/admin/question/edit/'+$('#quest_idx').val(),
                 type : 'PUT',
                 data : JSON.stringify({quest_name : $('#equest_name').val(), quest_type : $('#equest_type').val()}),
                 contentType : 'application/json; charset=utf-8',                

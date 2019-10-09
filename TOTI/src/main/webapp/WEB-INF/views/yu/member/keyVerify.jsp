@@ -128,7 +128,7 @@
 			//alert('id: ' + id);
 
 			$.ajax({
-				url : 'http://13.209.47.16:8080/toti/member/verifyidx',
+				url : 'http://localhost:8080/toti/member/verifyidx',
 				type : 'GET',
 				data : {
 					code : code,
@@ -140,7 +140,7 @@
 						alert('메일 인증이 완료되었습니다.');
 						var chk = confirm('다시 로그인 후 이용해주세요');
 						if(chk){
-							location.href = "http://13.209.47.16:8080/toti/main";
+							location.href = "http://localhost:8080/toti/main";
 						}
 					} else {
 						alert('인증 실패');

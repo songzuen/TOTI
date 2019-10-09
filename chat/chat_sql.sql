@@ -52,6 +52,18 @@ SELECT review.m_idx, member.m_name, review.review_star, review.review_cont, revi
 
 select * from toti.toti_chatlog;
  
-insert into toti.toti_chatlog (message, room_user, message_date, room_num) values ((select est_price from toti.toti_estimatee where est_idx = param1), param2);
+insert into toti.toti_chatlog (message, room_user, message_date, room_num) values ((select est_price from toti.toti_estimatee where est_idx = param1), param2, param3, param1);
 
 select * from toti.toti_chatroom;
+
+update toti.toti_chatroom set last_msg = est_cont where room_num = 95;
+
+select chatlog.message, chatlog.message_date, chatlog.room_num, chatlog.room_user, member.m_name from toti.toti_chatlog as chatlog join toti.toti_member as member on chatlog.room_user = member.m_idx where room_num = 90;
+
+select * from toti.toti_estimatee;
+
+select * from toti.toti_member;
+
+select * from toti.toti_request;
+
+select request_idx from toti.toti_estimatee where est_idx = 95;

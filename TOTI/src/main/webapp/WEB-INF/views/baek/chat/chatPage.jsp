@@ -7,7 +7,7 @@
 <link href="<c:url value="/css/minjongCss/chat.css" />" rel="stylesheet">
 <title>TOTI</title>
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-<script src="http://ec2-13-125-96-18.ap-northeast-2.compute.amazonaws.com:3000/socket.io/socket.io.js"></script>
+<script src="http://localhost:3000/socket.io/socket.io.js"></script>
 </head>
 <!--/head-->
 <body>
@@ -30,6 +30,15 @@
 	<!--/#action-->
 
 	<section id="blog" class="padding-top padding-bottom">
+		<div id="myModal" class="modal">
+
+			<!-- Modal content -->
+			<div class="modal-content">
+				<span class="close">&times;</span>
+				<div id="estInfo"></div>
+			</div>
+
+		</div>
 		<div class="container">
 			<div class="row">
 				<div class="col-md">
@@ -38,12 +47,13 @@
 						<!-- container -->
 						<div class="container" style="margin: 50px auto;">
 							<div id=backBtn>
-								<a href="http://13.209.47.16:8080/toti/chat/chatLogin" onclick="">뒤로가기</a>
+								<a href="http://localhost:8080/toti/chat/chatLogin" onclick="">뒤로가기</a>
 							</div>
 							<div id="chatArea">
 								<div id="chatInfo"></div>
 								<div id="targetName"></div>
 								<div id="userName"></div>
+								<button id="myBtn">견적서 내용</button>
 								<div id="chat_box"></div>
 								<input type="text" id="input_msg">
 								<button id="msg_process">전송</button>
@@ -94,7 +104,7 @@
 
 	<script>
 		// 사용자 계정 정보
-		var user = '${loginInfo.m_idx}';
+		var user = (${idx});
 
 		// 요일 구할 때 사용할 배열
 		var week = new Array('일', '월', '화', '수', '목', '금', '토');
@@ -115,7 +125,7 @@
 			$('#chat_box').empty();
 
 			$.ajax({
-				url : 'http://13.209.47.16:8080/toti/chat/estlist/' + user,
+				url : 'http://localhost:8080/toti/chat/estlist/' + user,
 				type : 'GET',
 				success : function(data) {
 					var html = '';
@@ -140,7 +150,7 @@
 			$('#chatRoomList').css('display', 'block');
 
 			$.ajax({
-				url : 'http://13.209.47.16:8080/toti/chat/roomlist/' + user,
+				url : 'http://localhost:8080/toti/chat/roomlist/' + user,
 				type : 'GET',
 				success : function(data) {
 					var html = '';
@@ -180,20 +190,20 @@
 			$('#chatRoomList').css('display', 'none');
 			$
 					.ajax({
-						url : 'http://13.209.47.16:8080/toti/chat/room/' + est_idx,
+						url : 'http://localhost:8080/toti/chat/room/' + est_idx,
 						type : 'GET',
 						success : function(data) {
 
 							var html = '';
-							html += '<input type="hidden" id="chat_room" value="' + data + '">'
+							html += '채팅방 번호 <input type="text" id="chat_room" value="' + data + '">'
 							$('#chatInfo').html(html);
-							mentorCheck(user);
+							mentorCheck(m_idx);
 							chatTarget(user);
 							chatUser(user);
 						}
 					});
 
-			var socket = io.connect('http://ec2-13-125-96-18.ap-northeast-2.compute.amazonaws.com:3000/');
+			var socket = io.connect('http://localhost:3000/');
 
 			var room_num = $('input#chat_room').val();
 
@@ -207,6 +217,20 @@
 					target : m_idx
 				});
 			}, 500);
+
+			socket.on("loadEst", function(data) {
+
+				var html = '';
+
+				for (var i = 0; i < data.length; i++) {
+					html += '<div id = "msg" class = "alarmbox">';
+					html += '금액 : ' + data[i].price + '<br>' + data[i].cont;
+					html += '</div>';
+				}
+				var bannerOffset = $('.topFixBanner').offset();
+
+				$('#estInfo').html(html);
+			});
 
 			socket.on("loadChatLog", function(data) {
 
@@ -308,7 +332,7 @@
 				$
 						.ajax({
 
-							url : 'http://13.209.47.16:8080/toti/chat/mentorcheck/'
+							url : 'http://localhost:8080/toti/chat/mentorcheck/'
 									+ user,
 							type : 'GET',
 							success : function(data) {
@@ -324,13 +348,13 @@
 			function chatTarget(user) {
 				$
 						.ajax({
-							url : 'http://13.209.47.16:8080/toti/chat/room/'
+							url : 'http://localhost:8080/toti/chat/room/'
 									+ m_idx + '/' + user,
 							type : 'GET',
 							success : function(data) {
 
 								var html = '';
-								html += '<input type="hidden" id="target" value="' + data + '">'
+								html += '상대방 <input type="text" id="target" value="' + data + '">'
 								$('#targetName').html(html);
 							}
 						});
@@ -339,13 +363,13 @@
 			function chatUser(user) {
 				$
 						.ajax({
-							url : 'http://13.209.47.16:8080/toti/chat/room/name/'
+							url : 'http://localhost:8080/toti/chat/room/name/'
 									+ user,
 							type : 'GET',
 							success : function(data) {
 								// alert(data);
 								var html = '';
-								html += '<input type="text" id="user" value="' + data + '">'
+								html += '사용자 <input type="text" id="user" value="' + data + '">'
 								$('#userName').html(html);
 							}
 						});
@@ -354,7 +378,7 @@
 				if ($('#check').val() == 'Y') {
 					$
 							.ajax({
-								url : 'http://13.209.47.16:8080/toti/chat/profile/mentor/'
+								url : 'http://localhost:8080/toti/chat/profile/mentor/'
 										+ user,
 								type : 'GET',
 								success : function(data) {
@@ -384,13 +408,65 @@
 							});
 
 				}
-			}
-			;
+				else {
+					
+					var room_num = $('input#chat_room').val();
+					
+					$
+							.ajax({
+								url : 'http://localhost:8080/toti/chat/checkreq/'
+										+ room_num,
+								type : 'GET',
+								success : function(data) {
+									var req_idx = data;
+									
+									
+									
+									$.ajax({
+										url : 'http://localhost:8080/toti/requestData',
+										type : 'GET',
+										data : {
+											request_idx : req_idx,
+											m_idx : user
+										},
+										success : function(data) {
+											
+											var html = '';
+											
+											html += '<div class ="text_center"><img src="<c:url value="/images/user/'+data.userInfo.m_photo+'" />" class = "profileImg"><div>';
+											html += '<div id="requesr_user"><p>'+data.request_date+'</p>';
+											html += '<h2>'+data.cate_name+'('+data.service_name+')</h2><h3>'+data.userInfo.m_name+'님</h3></div>';
+											html += '<div id="request_con">'
+											
+											for (var i = 0; i < data.answer.length; i++) {
+												html += '<p class="con_p1">'+data.answer[i].quest_name+'</p>';
+												html += '<p class="con_p2">'+data.answer[i].answer_cont+'</p>';			
+											}
+											
+											html += '</div>';
+
+											$('#profile').append(html);
+											
+										}
+
+									});
+								}
+							});
+
+				}
+				
+				
+				
+				
+				
+				
+				
+			};
 
 			function mentorProfileReview(user) {
 				$
 						.ajax({
-							url : 'http://13.209.47.16:8080/toti/chat/profile/mentor/review/'
+							url : 'http://localhost:8080/toti/chat/profile/mentor/review/'
 									+ user,
 							type : 'GET',
 							success : function(data) {
@@ -414,6 +490,41 @@
 
 		function scrollDown() {
 			$('#chat_box').scrollTop($('#chat_box').prop('scrollHeight'));
+		}
+
+		$("#chat_box").scroll(function() { //window에 스크롤링이 발생하면
+			if ($(document).scrollTop() > bannerOffset.top) { // 위치 및 사이즈를 파악하여 미리 정한 css class를 add 또는 remove 합니다.
+				$('.topFixBanner').addClass('topFixBannerFixed');
+			} else {
+				$('.topFixBanner').removeClass('topFixBannerFixed');
+			}
+
+		});
+
+		// Get the modal
+		var modal = document.getElementById('myModal');
+
+		// Get the button that opens the modal
+		var btn = document.getElementById("myBtn");
+
+		// Get the <span> element that closes the modal
+		var span = document.getElementsByClassName("close")[0];
+
+		// When the user clicks on the button, open the modal 
+		btn.onclick = function() {
+			modal.style.display = "block";
+		}
+
+		// When the user clicks on <span> (x), close the modal
+		span.onclick = function() {
+			modal.style.display = "none";
+		}
+
+		// When the user clicks anywhere outside of the modal, close it
+		window.onclick = function(event) {
+			if (event.target == modal) {
+				modal.style.display = "none";
+			}
 		}
 	</script>
 </body>

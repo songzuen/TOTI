@@ -214,7 +214,7 @@
 		function itemList(quest_idx, cnt) {
 			
 			$.ajax({
-				url : 'http://13.209.47.16:8080/toti/itemList/'+quest_idx,
+				url : 'http://localhost:8080/toti/itemList/'+quest_idx,
 				type : 'GET',
 				success : function(data) {
 					

@@ -24,7 +24,6 @@ var server = http
     console.log("listening 3000 port");
   });
 
-
 // 소켓 서버 생성
 var io = socketio.listen(server);
 
@@ -32,7 +31,6 @@ io.sockets.on("connection", function(socket) {
   // 사용자의 방 이름, 사용자 명, socket.id 값을 저장할 변수
   const loginIds = new Array();
 
-  var roomInfo;
   // 채팅방 입장시 실행
   socket.on("join", function(data) {
     socket.leave(socket.id);
@@ -40,7 +38,7 @@ io.sockets.on("connection", function(socket) {
 
     loginIds.push({
       room: data.room, // 접속한 채팅방의 이름
-      user: data.user, // 유저의 이름
+      user: data.user, // 유저의 인덱스
       target: data.target
     });
 
@@ -50,6 +48,7 @@ io.sockets.on("connection", function(socket) {
       //message: data.user + "님이 접속했습니다."
     //});
 
+    chatEst(data);
     chatLog(data);
 
     roomInfo = loginIds[0];
@@ -112,6 +111,31 @@ io.sockets.on("connection", function(socket) {
         // 여기에 콜백 함수
         // io.sockets.in(data.room).emit("loadChatLog", log);
         socket.emit("loadChatLog", log);
+      }
+    );
+  };
+
+  function chatEst(data) {
+    const est = new Array();
+
+    connection.query(
+      "select est_price, est_cont from toti_chatroom where room_num = ?",
+      [data.room],
+      function(error, results) {
+        if (error) {
+          console.log(error);
+        }
+        for (var i = 0; i < results.length; i++) {
+          console.log(results[i]);
+
+          est.push({
+            price: results[i].est_price + '원',
+            cont: results[i].est_cont
+          });
+        }
+        // 여기에 콜백 함수
+        // io.sockets.in(data.room).emit("loadChatLog", log);
+        socket.emit("loadEst", est);
       }
     );
   };
