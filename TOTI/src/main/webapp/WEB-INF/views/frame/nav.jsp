@@ -52,7 +52,7 @@
             %>
             
                <!-- 멘티 로그인 -->
-                        <li><a href="<c:url value="/user/requests" />">보낸요청</a></li>
+                        <li><a href="<c:url value="/requests" />">보낸요청</a></li>
                         <li><a href="<c:url value="/chat/chatLogin" />">채팅</a></li>
                         <li><a href="<c:url value="/mentorList" />">멘토찾기</a></li>
                         <li class="dropdown"><a href="#">${name} 멘티님<i class="fa fa-angle-down"></i></a>
@@ -60,7 +60,7 @@
                                <li style="padding: 5px 0 10px 15px">
                                   <div>안녕하세요, ${name}님 </div>
                                 </li>
-                                <li><a href="<c:url value="/user/requests" />">보낸요청</a></li>
+                                <li><a href="<c:url value="/requests" />">보낸요청</a></li>
                                 <li><a href="#">설정</a></li>
                                 <li><a href="<c:url value="/mypage" />">마이페이지</a></li>
                                 <hr>
