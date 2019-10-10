@@ -9,6 +9,7 @@ public interface MemberDaoInterface {
 	public int updateVerify(String id); // verify값 변경
 	public int updateMem(MemberInfo memberInfo); // 내 정보 수정
 	public int deleteMem(String id); // 회원탈퇴
-	public int insertMentor(MentorInfo mentorInfo); //멘토등록
+	public int insertMen(MentorInfo mentorInfo); //멘토등록
 	public int verUpdate (MemberInfo memberInfo);//멘토여부변경
+	public int goMentee(MemberInfo memberInfo); //멘토여부변경
 }

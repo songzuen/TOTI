@@ -151,7 +151,8 @@
                     html += '<tr><td><button class="btn btn-primary" onclick="edit(\'' + data.id + '\')">회원수정</button></td>';
                     // html += '<button onclick="deleteMem(\'' + data.id + '\')">회원탈퇴</button>';
                     html += '<td><button class="btn btn-primary" onclick="deleteMem(\'' + data.id + '\')">회원탈퇴</button>';
-                    html += '<button style=\"background-color:gold;\" class=\"btn btn-primary\"><a href=\"http://localhost:8080/toti/insertMentor\">멘토등록</a></button></td></tr></table>';
+                    html += '<button style=\"background-color:gold;\" class=\"btn btn-primary\"><a href=\"http://localhost:8080/toti/insertMentor\">멘토등록</a></button>';
+                   //html += '<button style=\"background-color:gold;\" class=\"btn btn-primary\"><a href=\"http://localhost:8080/toti/insertMentor\">멘티로 전환</a></button></td></tr></table>';
                     
 
                     $('#myInfo').html(html);
@@ -232,7 +233,6 @@
                     id: id
                 },
                 success: function(data) {
-                    //alert(JSON.stringify(data));
 
                     var html = '';
 
@@ -269,14 +269,13 @@
 
                     $('#photoEditbtn').click(function() {
 						
-                    	//alert('사진업로드 ajax');
-                        var formData = new FormData(); // 파일 전송 -> FormData()활용
+                        var formData = new FormData(); 
 
                         formData.append('id', $('#id').val());
                         if ($('#photo').val()) {
                             formData.append('photo', $('photo')[0].files[0]);
                         } else {
-                           // alert('사진을 업로드 해주세요!');
+
                             return false;
                         }
                         $.ajax({

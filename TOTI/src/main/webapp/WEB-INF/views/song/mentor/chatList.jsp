@@ -3,7 +3,7 @@
 	isELIgnored="false"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<% int idx = (int)session.getAttribute("idx"); %>
+<%-- <% int idx = (int)session.getAttribute("idx"); %> --%>
 <!DOCTYPE html>
 <html>
 <head>

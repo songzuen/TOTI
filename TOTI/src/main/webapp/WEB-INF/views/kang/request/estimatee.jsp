@@ -77,7 +77,7 @@
 		function estimateeList(request_idx) {
 
 			$.ajax({
-						url : 'http://localhost:8080/toti/user/estimateeList/'+ request_idx,
+						url : 'http://localhost:8080/toti/user/estimateeList/'+request_idx,
 						type : 'GET',
 						success : function(data) {
 

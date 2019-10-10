@@ -5,10 +5,11 @@
 <html>
 <head>
 <%@include file="/WEB-INF/views/frame/header.jsp"%>
-<% int idx = (int)session.getAttribute("idx"); %>
+<%-- <% int idx = (int)session.getAttribute("idx"); %> --%>
 <!-- title -->
 <title>SamplePage</title>
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="http://localhost:3000/socket.io/socket.io.js"></script>
 <style>
 * {
 	margin: 0;
@@ -285,6 +286,8 @@ margin-right: 15px;
 
 				for (var i = 0; i < data.length; i++) {
 					html += '<div id="mInfo">'
+						html += '<input type ="hidden" id="m_idx" name="m_idx" value="'+ data[i].m_idx+'">';
+					html += '<input type ="hidden" id="cate_idx" name="cate_idx" value="'+ data[i].cate_idx+'">';
 					html += '<img id="m_photo" src = "<c:url value="/images/user/'+data[i].m_photo+'"/>"';
 					html += '<span style="float:left;"><h2 style="height:100px;line-height:60px;">' + data[i].m_name;
 					html += '<p>' + data[i].cate_name;
@@ -451,6 +454,10 @@ margin-right: 15px;
 							if (file != null) {
 								formData.append('est_file', file);
 							}
+							
+							var user = $('#mento_idx').val();
+							var m_idx = $('#m_idx').val();
+							var cate_idx = $('#cate_idx').val();
 
 							var request_idx = $('#request_idx').val();
 							
@@ -461,29 +468,66 @@ margin-right: 15px;
 								contentType : false,
 								data : formData,
 								success : function(data) {
-
-									if (data == 'success') {
+									var est_idx = data;
+									if (data > 0) {
 										alert('전송되었습니다.');
+										
 										$.ajax({
 											url : 'http://localhost:8080/toti/credit/'+mento_idx,
 											type : 'PUT',
-											success : function(dataC){
-												alert('1코인이 사용 되었습니다.');
-											
-											}
-											
-										});
-										
-									}else{
+											success : function(data){
+												$
+												.ajax({
+													url : 'http://localhost:8080/toti/credit/'
+															+ mento_idx,
+													type : 'PUT',
+													success : function(
+															data) {
+														 
+														 $.ajax({
+															 url: "http://localhost:8080/toti/chat/room/"
+																	+ +est_idx
+																	+ "/"
+																	+ cate_idx
+																	+ "/"
+																	+ user
+																	+ "/"
+																	+ m_idx,
+																	type : 'GET',
+																	success :function() {
+																 var socket = io
+		                                                            .connect('http://localhost:3000/');
+
+		                                                        var room_num = est_idx;
+
+		                                                        // alert($('#chat_room').val());
+		                                                        // alert(room_num);
+
+		                                                        socket.emit("join", {
+		                                                            room: room_num,
+		                                                            user: user,
+		                                                            target: m_idx
+		                                                        });
+		            											alert('1코인이 사용 되었습니다.');
+																	}
+														 });
+														 
+												
+													}
+
+												});
+									}
+								});
+									} else {
 										alert('이미 견적서를 전송한 요청서 입니다.');
 									}
 								}
 							});
-						}
-						}
-					}
-				});
-		
-	}
+				}
+			}
+		}
+	});
+
+}
 </script>
 </html>

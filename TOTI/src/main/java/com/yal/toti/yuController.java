@@ -39,4 +39,8 @@ public class yuController {
 	public String getMentorReg() {
 		return "yu/member/insertMentor";
 	}
+	@RequestMapping(value = "/insertMen")
+	public String getMen() {
+		return "yu/member/insertMen";
+	}
 }
