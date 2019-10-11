@@ -20,7 +20,7 @@ public interface RequestDaoInterface {
 	public List<CategoriData> categorieList();
 	
 	//분야번호에 맞는 분야명
-	public String cate_naem(int cate_idx);
+	public CategoriData cate_data(int cate_idx);
 	
 	//분야번호에 맞는 서비스번호, 서비스명 리스트
 	public List<ServiceData> serviceData(int cate_idx);

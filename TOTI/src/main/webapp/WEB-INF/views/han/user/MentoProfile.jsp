@@ -255,7 +255,7 @@
 					html += '</tr>';
 					html += '<tr>';
 					html += '<td colspan="2">';
-					if (data[i].p_shot !=null){
+					if (data[i].p_pay !=null){
 						html += data[i].p_pay + '<br>';	
 					} else {
 						html += '';
@@ -585,7 +585,7 @@
 	
 	/* 서비스 추가하기 */
 	function addService(mento_idx, service_idx){
-		alert(service_idx);
+
 		$.ajax({
 			url : 'http://localhost:8080/toti/mento/addservice',
 			type : 'POST',
@@ -606,8 +606,6 @@
 	
     /* 서비스 삭제하기 */
     function delService(mento_idx, service_idx){
-    	alert(service_idx);
-    	alert(mento_idx);
 		$.ajax({
 			url : 'http://localhost:8080/toti/mento/delservice',
 			type : 'GET',

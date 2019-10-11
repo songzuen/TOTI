@@ -12,8 +12,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<!-- 분야번호에 맞는 분야명 -->
-	<select id="cate_naem" resultType="String" parameterType="int">
-		select cate_name from toti_cate where cate_idx=#{cate_idx}
+	<select id="cate_data" resultType="com.yal.toti.kang.domain.CategoriData" parameterType="int">
+		select * from toti_cate where cate_idx=#{cate_idx}
 	</select>
 	
 	<!-- 분야번호에 맞는 서비스번호, 서비스명 리스트 -->
