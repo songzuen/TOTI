@@ -7,7 +7,8 @@
 <link href="<c:url value="/css/minjongCss/chat.css" />" rel="stylesheet">
 <title>TOTI</title>
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-<script src="http://localhost:3000/socket.io/socket.io.js"></script>
+<script
+	src="http://ec2-13-125-96-18.ap-northeast-2.compute.amazonaws.com:3000/socket.io/socket.io.js"></script>
 </head>
 <!--/head-->
 <body>
@@ -30,7 +31,7 @@
 	<!--/#action-->
 
 	<section id="blog" class="padding-top padding-bottom">
-		<div id="myModal" class="modal">
+		<div id="estModal" class="modal">
 
 			<!-- Modal content -->
 			<div class="modal-content">
@@ -53,7 +54,8 @@
 								<div id="chatInfo"></div>
 								<div id="targetName"></div>
 								<div id="userName"></div>
-								<button id="myBtn">견적서 내용</button>
+								<button id="estBtn">견적서 내용</button>
+								<button id="rtcBtn" onclick="goRtcPage()">화상 채팅</button>
 								<div id="chat_box"></div>
 								<input type="text" id="input_msg">
 								<button id="msg_process">전송</button>
@@ -203,7 +205,7 @@
 						}
 					});
 
-			var socket = io.connect('http://localhost:3000/');
+			var socket = io.connect('http://ec2-13-125-96-18.ap-northeast-2.compute.amazonaws.com:3000/');
 
 			var room_num = $('input#chat_room').val();
 
@@ -491,27 +493,24 @@
 		function scrollDown() {
 			$('#chat_box').scrollTop($('#chat_box').prop('scrollHeight'));
 		}
+		
+		function goRtcPage() {
+			var room_num = $('input#chat_room').val();
+			window.open("/toti/chat/rtc?roomnum=" + room_num);
 
-		$("#chat_box").scroll(function() { //window에 스크롤링이 발생하면
-			if ($(document).scrollTop() > bannerOffset.top) { // 위치 및 사이즈를 파악하여 미리 정한 css class를 add 또는 remove 합니다.
-				$('.topFixBanner').addClass('topFixBannerFixed');
-			} else {
-				$('.topFixBanner').removeClass('topFixBannerFixed');
-			}
-
-		});
+		}
 
 		// Get the modal
-		var modal = document.getElementById('myModal');
+		var modal = document.getElementById('estModal');
 
 		// Get the button that opens the modal
-		var btn = document.getElementById("myBtn");
+		var estBtn = document.getElementById("estBtn");
 
 		// Get the <span> element that closes the modal
 		var span = document.getElementsByClassName("close")[0];
 
 		// When the user clicks on the button, open the modal 
-		btn.onclick = function() {
+		estBtn.onclick = function() {
 			modal.style.display = "block";
 		}
 
@@ -526,6 +525,8 @@
 				modal.style.display = "none";
 			}
 		}
+	
+		
 	</script>
 </body>
 

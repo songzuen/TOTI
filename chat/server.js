@@ -52,6 +52,8 @@ io.sockets.on("connection", function(socket) {
     chatLog(data);
 
     roomInfo = loginIds[0];
+
+
   });
 
   //socket.on("disconnect", function() {
