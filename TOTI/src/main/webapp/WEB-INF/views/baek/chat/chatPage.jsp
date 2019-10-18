@@ -9,6 +9,9 @@
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script
 	src="http://ec2-13-125-96-18.ap-northeast-2.compute.amazonaws.com:3000/socket.io/socket.io.js"></script>
+
+<style>
+</style>
 </head>
 <!--/head-->
 <body>
@@ -57,7 +60,7 @@
 								<button id="estBtn">견적서 내용</button>
 								<button id="rtcBtn" onclick="goRtcPage()">화상 채팅</button>
 								<div id="chat_box"></div>
-								<input type="text" id="input_msg">
+								<textarea id="input_msg"></textarea>
 								<button id="msg_process">전송</button>
 							</div>
 							<div id="profileArea">
@@ -122,7 +125,7 @@
 			$('#chatArea').css('display', 'none');
 			$('#backBtn').css('display', 'none');
 			$('#profileArea').css('display', 'none');
-			$('#estList').css('display', 'block');
+			$('#list').css('display', 'block');
 
 			$('#chat_box').empty();
 
@@ -188,7 +191,7 @@
 			$('#backBtn').css('display', 'block');
 			$('#chatArea').css('display', 'inline-block');
 			$('#profileArea').css('display', 'inline-block');
-			$('#estList').css('display', 'none');
+			$('#list').css('display', 'none');
 			$('#chatRoomList').css('display', 'none');
 			$
 					.ajax({
@@ -304,10 +307,14 @@
 
 			$("#input_msg").keydown(function(key) {
 				// 해당하는 키가 엔터키(13) 이라면
-				if (key.keyCode == 13) {
-					// "msg_process"를 클릭한다.
-					msg_process.click();
+				if (key.keyCode == 13 && key.shiftKey == true) {
+					
+				} else if (key.keyCode == 13) {
+					msg_process.click();// "msg_process"를 클릭한다.
+					return false;
 				}
+				
+
 			});
 
 			$("#msg_process").click(
@@ -319,15 +326,20 @@
 								+ (d.getMonth() + 1) + "월 " + d.getDate()
 								+ "일 " + week[d.getDay()] + "요일 ";
 						var currentTime = d.getHours() + ":" + d.getMinutes();
+						
+						// 줄 바꿈 적용
+						var str = document.getElementById("input_msg").value;
+						str = str.replace(/(?:\r\n|\r|\n)/g, '<br/>');
+						document.getElementById("input_msg").value = str;
 
 						socket.emit("send_msg", {
 							room : $('#chat_room').val(),
 							useridx : user,
 							username : $('#user').val(),
-							message : $("#input_msg").val(),
+							message : str,
 							time : currentDate + currentTime
 						});
-						$("#input_msg").val("");
+						$("#input_msg").val('');
 					});
 
 			function mentorCheck(user) {
