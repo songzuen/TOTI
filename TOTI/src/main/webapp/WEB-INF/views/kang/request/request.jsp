@@ -56,7 +56,7 @@
 	function rquestData() {
 
 		$.ajax({
-			url : 'http://localhost:8080/toti/requestData',
+			url : 'http://13.209.47.16:8080/toti/requestData',
 			type : 'GET',
 			data : {
 				request_idx : $('#request_idx').val(),

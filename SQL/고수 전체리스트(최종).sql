@@ -21,3 +21,5 @@ select t.mento_idx,m_photo, m_name, cate_name, tor_location, p_shot,
         ) rev
 		on rev.midx=t.mento_idx;
         
+        update toti.toti_mentor_profile set p_shot = null where mento_idx =44;
+        

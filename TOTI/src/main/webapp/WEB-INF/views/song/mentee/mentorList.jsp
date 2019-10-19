@@ -40,7 +40,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 #searchDiv span:last-child {
-margin: 0 40px;
+	margin: 0 40px;
 	float: right;
 	width: 25%;
 }
@@ -55,7 +55,6 @@ margin: 0 40px;
 	border: 0px;
 	border-bottom: 1px solid #ddd;
 	margin: 0 20px;
-	
 }
 
 input[type=checkbox] {
@@ -111,39 +110,40 @@ table tr td {
 	color: #aaa;
 	font-size: 13px;
 }
+
 #searchBtn {
-border: 0px;
+	border: 0px;
 }
 </style>
 </head>
 <body>
-		<%@include file="/WEB-INF/views/frame/nav.jsp"%>
+	<%@include file="/WEB-INF/views/frame/nav.jsp"%>
 
-		<!--/#header-->
-		<section id="page-breadcrumb">
-			<div class="vertical-center sun">
-				<div class="container">
-					<div class="row">
-						<div class="action">
-							<div class="col-sm-12">
-								<h1 class="title">고수 찾기</h1>
-								<input type="hidden" id="request_idx" value="${request_idx}">
-								<p>레슨 받고 싶은 분야의 고수를 찾아보세요!</p>
-								<hr>
-							</div>
+	<!--/#header-->
+	<section id="page-breadcrumb">
+		<div class="vertical-center sun">
+			<div class="container">
+				<div class="row">
+					<div class="action">
+						<div class="col-sm-12">
+							<h1 class="title">고수 찾기</h1>
+							<input type="hidden" id="request_idx" value="${request_idx}">
+							<p>레슨 받고 싶은 분야의 고수를 찾아보세요!</p>
+							<hr>
 						</div>
 					</div>
 				</div>
 			</div>
-		</section>
-		<!--/#home-slider-->
+		</div>
+	</section>
+	<!--/#home-slider-->
 
-		<!-- demo content -->
-		<section id="blog" class="padding-top padding-bottom">
-			<div class="container">
-				<div class="row">
-					<div class="col-md">
-						<div id="searchDiv">
+	<!-- demo content -->
+	<section id="blog" class="padding-top padding-bottom">
+		<div class="container">
+			<div class="row">
+				<div class="col-md">
+					<div id="searchDiv">
 						<span> <input type="checkbox" id="rCnt" name="rCnt"
 							value=true onclick="listByReviewCnt()"><label for="rCnt"
 							style="cursor: pointer"><strong class="labelfor"
@@ -151,20 +151,17 @@ border: 0px;
 							name="str" value=true onclick="listByStr()"><label
 							for="str" style="cursor: pointer"><strong
 								class="labelfor" id="label_str">별점순</strong></label>
-						</span> 
-						<span>
+						</span> <span>
 							<form id="searchForm" method="post" onsubmit="return false">
 								<select name="stype" id="stype">
 									<option value="both">분야+멘토명</option>
 									<option value="cate">분야</option>
 									<option value="name">멘토명</option>
-								</select> 
-								<input type="text" name="keyword" id="keyword"> 
-								<input
+								</select> <input type="text" name="keyword" id="keyword"> <input
 									type="submit" id="searchBtn" value="검색" onclick="search()">
-									</form>
+							</form>
 						</span>
-						</div>
+					</div>
 
 					<!-- <div id="selectDiv">
 				<form>
@@ -184,11 +181,11 @@ border: 0px;
 				<!-- end container -->
 
 			</div>
-			</div>
-			</section>
-			<!-- end demo content -->
-			<!-- footer -->
-			<%@include file="/WEB-INF/views/frame/footer.jsp"%>
+		</div>
+	</section>
+	<!-- end demo content -->
+	<!-- footer -->
+	<%@include file="/WEB-INF/views/frame/footer.jsp"%>
 
 </body>
 <script>
@@ -308,10 +305,10 @@ border: 0px;
 								html += '<span class="comment">최신 리뷰 </span>'
 										+ data[i].review_cont;
 							}/* else{
-															html+='<div>';
-															html+='리뷰없음';
-															html+='</div>';
-														} */
+																						html+='<div>';
+																						html+='리뷰없음';
+																						html+='</div>';
+																					} */
 
 							html += '<button id="pageBtn' + data[i].mento_idx
 									+ '" class="btn" onclick="selectMentor('
@@ -451,10 +448,10 @@ border: 0px;
 								html += '<span class="comment">최신 리뷰 </span>'
 										+ data[i].review_cont;
 							}/* else{
-															html+='<div>';
-															html+='리뷰없음';
-															html+='</div>';
-														} */
+																						html+='<div>';
+																						html+='리뷰없음';
+																						html+='</div>';
+																					} */
 
 							html += '<button id="pageBtn' + data[i].mento_idx
 									+ '" class="btn" onclick="selectMentor('
@@ -625,10 +622,10 @@ border: 0px;
 														html += '<span class="comment">최신 리뷰 </span>'
 																+ data[i].review_cont;
 													}/* else{
-																											html+='<div>';
-																											html+='리뷰없음';
-																											html+='</div>';
-																										} */
+																																								html+='<div>';
+																																								html+='리뷰없음';
+																																								html+='</div>';
+																																							} */
 
 													html += '<button id="pageBtn'
 															+ data[i].mento_idx
@@ -697,8 +694,12 @@ border: 0px;
 													/* html += '활동가능 지역 : ' + data[i].tor_location+ '<br>'; */
 													html += '<tr>';
 													html += '<td><h5 style="color:black;letter-spacing:3px;">';
-													html += data[i].p_shot;
-													html += '<h5></td>';
+													if (data[i].p_shot = null) {
+														html += '';
+													} else {
+														html += data[i].p_shot;
+													}
+													html += '</h5></td>';
 													html += '</tr>';
 													html += '<tr>';
 													html += '<td>';
@@ -804,11 +805,11 @@ border: 0px;
 													if (data[i].str != 0) {
 														html += '<span class="comment">최신 리뷰 </span>'
 																+ data[i].review_cont;
-													}/* else{
-																											html+='<div>';
-																											html+='리뷰없음';
-																											html+='</div>';
-																										} */
+													} else {
+														html += '<div>';
+														html += '리뷰없음';
+														html += '</div>';
+													}
 
 													html += '<button id="pageBtn'
 															+ data[i].mento_idx

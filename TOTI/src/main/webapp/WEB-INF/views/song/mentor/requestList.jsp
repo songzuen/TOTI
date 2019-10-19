@@ -39,7 +39,7 @@ text-align: center;
 }
 
 #list{
-margin : 0 10px;
+margin : 10px 10px;
 padding-bottom : 10px;
 float: left;
 text-align: center;
@@ -47,11 +47,7 @@ width: 200px;
 height:  300px;
 border: 1px solid #ddd;
 border-radius: 7px;
-
 }
-/* #requestList :hover{
-background-color: #F2F3CA;
-} */
 
 #m_photo{
 width: 100px;
@@ -70,9 +66,9 @@ color: #a0a0a0;
 }
 #listInfo{
 text-align: left;
-margin-left: 20%;
-margin-right : 3%;
-width :70%;
+margin-left: 10%;
+margin-right : 0;
+width :80%;
 
 white-space: nowrap; 
 overflow: hidden;
@@ -154,7 +150,7 @@ text-overflow: ellipsis;
 							var month = date.getMonth();
 							var day = date.getDate();
 							
-							html += '<label for="estimateBtn('+data[i].request_idx+')" style="cursor:pointer"><div id="list">';
+							html += '<div id="list"><label for="estimateBtn('+data[i].request_idx+')" style="cursor:pointer">';
 							html += '<div><img id="m_photo" src = "<c:url value="/images/user/'+data[i].m_photo+'"/>"</div><br>';
 							html += '<div id="listInfo"><h3>'
 							html += data[i].m_name+'(' + data[i].service_name
@@ -165,7 +161,7 @@ text-overflow: ellipsis;
 							html += '</div>'
 							html += '<button id= "estimateBtn('+data[i].request_idx+')" class="btn" onclick="selectRequest('
 							+ data[i].request_idx + ')">이동</button><br>';
-							html += '</div></label>';
+							html += '</label></div>';
 							html += '</div>';
 						}
 						}

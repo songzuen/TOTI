@@ -53,7 +53,7 @@
             
                <!-- 멘티 로그인 -->
                         <li><a href="<c:url value="/user/requests" />">보낸요청</a></li>
-                        <li><a href="#">채팅</a></li>
+                        <li><a href="<c:url value="/chat/chatLogin" />">채팅</a></li>
                         <li><a href="<c:url value="/mentorList" />">멘토찾기</a></li>
                         <li class="dropdown"><a href="#">${name} 멘티님<i class="fa fa-angle-down"></i></a>
                             <ul role="menu" class="sub-menu">
@@ -83,10 +83,10 @@
                                    <div>★ 평점 5.0 | 리뷰 1</div>
                                 </li>
                                 <li><a href="<c:url value="/profile/${idx}" />">프로필 관리</a></li>
-                                <li><a href="aboutus2.html">설정</a></li>
+                                <li><a href="#">설정</a></li>
                                 <hr>
-                                <li><a href="service.html">고객으로 전환</a></li>
-                                <li><a href="pricing.html">로그아웃</a></li>
+                                <li><a href="#">고객으로 전환</a></li>
+                                <li><a href="<c:url value="/member/logout"/>">로그아웃</a></li> 
                             </ul>
                         </li>
                         <%
@@ -107,3 +107,4 @@
       </div>
    </div>
 </header>
+<script src="./push.min.js"></script> <!-- CDN link -->

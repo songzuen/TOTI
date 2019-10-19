@@ -6,7 +6,7 @@
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 
 	<%@ include file="/WEB-INF/views/frame/header.jsp" %>
-	<% int idx = (int)session.getAttribute("idx"); %>
+<%-- 	<% int idx = (int)session.getAttribute("idx"); %> --%>
 	<title>Blog Masonry | Triangle</title>
 	<style type="text/css">
 	#mainTable{
@@ -141,7 +141,7 @@ $(document).ready(function(){
             
   
        $.ajax({
-           url : 'http://localhost:8080/toti/member/mentor',
+           url : 'http://13.209.47.16:8080/toti/member/mentor',
            type : 'POST',
            data : { 
         	   m_idx : $('#m_idx').val(),
@@ -158,20 +158,18 @@ $(document).ready(function(){
            	if (data == 'success') {
            	
            	alert('멘토님의 정보가 저장되었습니다.');
-           	location.href = "http://localhost:8080/toti/main";
+           	location.href = "http://13.209.47.16:8080/toti/main";
   			 }
   			 },
   			 error: function(e) {
   			 alert('실패임');
-  			location.href = "http://localhost:8080/toti/insertMen";
+  			location.href = "http://13.209.47.16:8080/toti/insertMen";
       	 }
            
 
        });
      return false;
 
-   
- 
  
 	  });
   }); 
