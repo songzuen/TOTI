@@ -56,14 +56,20 @@ insert into toti.toti_chatlog (message, room_user, message_date, room_num) value
 
 select * from toti.toti_chatroom;
 
+select * from toti.toti_request;
+
 update toti.toti_chatroom set last_msg = est_cont where room_num = 95;
 
 select chatlog.message, chatlog.message_date, chatlog.room_num, chatlog.room_user, member.m_name from toti.toti_chatlog as chatlog join toti.toti_member as member on chatlog.room_user = member.m_idx where room_num = 90;
 
 select * from toti.toti_estimatee;
 
+select * from toti.t;
+
 select * from toti.toti_member;
+
+select * from toti.toti_mentor;
 
 select * from toti.toti_request;
 
-select request_idx from toti.toti_estimatee where est_idx = 95;
+select room_num from toti.toti_chatroom where room_num = 1;

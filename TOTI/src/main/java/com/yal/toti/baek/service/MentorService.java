@@ -18,12 +18,12 @@ public class MentorService {
 
 	private ChatSessionDao dao;
 
-	public String mentorCheck(int user) {
+	public String mentorCheck(int user, int roomnum) {
 		dao = template.getMapper(ChatSessionDao.class);
 
-		String check = dao.selectMentorCheck(user);
+		int room_user = dao.selectMentorCheck(roomnum);
 
-		return check;
+		return room_user == user ? "Y" : "N";
 	}
 
 	public MentorProfile getMentorProfile(int user) {

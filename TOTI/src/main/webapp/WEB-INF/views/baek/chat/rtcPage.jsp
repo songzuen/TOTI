@@ -11,14 +11,19 @@ body {
 }
 
 video {
-	max-width: 100%;
-	width: 45%;
+	width: 100%;
 	background-color: black;
-	margin: 15px 15px;
 }
 
 #videos {
 	width: 100%;
+}
+
+#videos div {
+	width: 47%;
+	text-align: center;
+	display: inline-block;
+	margin: 15px 15px;
 }
 </style>
 </head>
@@ -26,11 +31,15 @@ video {
 <body>
 
 	<h1>TOTI-WebRTC</h1>
-	<h3>roomnum</h3>
 	<div id="videos">
-		<video id="localVideo" autoplay muted playsinline></video>
-
-		<video id="remoteVideo" autoplay playsinline></video>
+		<div>
+			<video id="localVideo" autoplay muted playsinline></video>
+			${user}
+		</div>
+		<div>
+			<video id="remoteVideo" autoplay playsinline></video>
+			${target}
+		</div>
 	</div>
 
 	<!-- This file is automatically added/served when running "node index.js". -->
@@ -50,15 +59,19 @@ video {
 	var turnReady;
 
 
-	function getParameterByName(name) {
+/* 	function getParameterByName(name) {
 	    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
 	    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
 	        results = regex.exec(location.search);
 	    return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
-	}
-	var roomnum = getParameterByName('roomnum');
+	} */
+	var roomnum = ${roomnum};
+	var target = '${target}';
+	var user = '${user}';
 
-	alert("roomnum : " + roomnum);
+	alert("roomnum : " + roomnum + ", target : " + target + ", user : " + user);
+	
+	
 
 	var pcConfig = {
 	    'iceServers': [{
@@ -183,6 +196,7 @@ video {
 	        createPeerConnection();
 	        pc.addStream(localStream);
 	        isStarted = true;
+	       
 	        console.log('isInitiator', isInitiator);
 	        if (isInitiator) {
 	            doCall();

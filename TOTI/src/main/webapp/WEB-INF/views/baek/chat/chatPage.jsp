@@ -49,19 +49,22 @@
 					<!-- 제공하는 컨텐츠 이렇게 넣으세여 예시↓ -->
 					<div class="demo-content">
 						<!-- container -->
-						<div class="container" style="margin: 50px auto;">
-							<div id=backBtn>
+						<div id="chat" class="container" style="margin: 30px auto;">
+							<div id="backBtn" class="buttons">
 								<a href="http://localhost:8080/toti/chat/chatLogin" onclick="">뒤로가기</a>
+								<a href='#' id="estBtn">견적서 내용</a> <a href='#'
+									onclick="goRtcPage()">화상채팅</a>
 							</div>
 							<div id="chatArea">
 								<div id="chatInfo"></div>
 								<div id="targetName"></div>
 								<div id="userName"></div>
-								<button id="estBtn">견적서 내용</button>
-								<button id="rtcBtn" onclick="goRtcPage()">화상 채팅</button>
+								<!-- <button id="rtcBtn" onclick="goRtcPage()">화상 채팅</button> -->
 								<div id="chat_box"></div>
-								<textarea id="input_msg"></textarea>
-								<button id="msg_process">전송</button>
+								<div id="chat_input">
+									<textarea id="input_msg"></textarea>
+									<button id="msg_process">전송</button>
+								</div>
 							</div>
 							<div id="profileArea">
 
@@ -93,6 +96,7 @@
 							</div>
 						</div>
 
+						<div id="rtcPage" class="container"></div>
 						<!-- end home variation -->
 						<!-- end component -->
 					</div>
@@ -200,9 +204,9 @@
 						success : function(data) {
 
 							var html = '';
-							html += '채팅방 번호 <input type="text" id="chat_room" value="' + data + '">'
+							html += '<input type="hidden" id="chat_room" value="' + data + '">'
 							$('#chatInfo').html(html);
-							mentorCheck(m_idx);
+							mentorCheck(user);
 							chatTarget(user);
 							chatUser(user);
 						}
@@ -228,8 +232,13 @@
 				var html = '';
 
 				for (var i = 0; i < data.length; i++) {
-					html += '<div id = "msg" class = "alarmbox">';
-					html += '금액 : ' + data[i].price + '<br>' + data[i].cont;
+					
+					// 천의 자리 마다 , 찍기
+					var regexp = /\B(?=(\d{3})+(?!\d))/g;
+					var price = data[i].price.toString().replace(regexp, ',');
+					
+					html += '<div id = "alarmMsg" class = "alarmbox">';
+					html += '금액 : ' + price + '<br>' + data[i].cont;
 					html += '</div>';
 				}
 				var bannerOffset = $('.topFixBanner').offset();
@@ -343,15 +352,18 @@
 					});
 
 			function mentorCheck(user) {
+				
+				var room_num = $('input#chat_room').val();
+				
 				$
 						.ajax({
 
 							url : 'http://localhost:8080/toti/chat/mentorcheck/'
-									+ user,
+									+ user + '/' + room_num,
 							type : 'GET',
 							success : function(data) {
 								var html = '';
-								html += '<input type="input" id="check" value="' + data + '">'
+								html += '<input type="hidden" id="check" value="' + data + '">'
 								$('#profile').html(html);
 								mentorProfile(user);
 							}
@@ -368,7 +380,7 @@
 							success : function(data) {
 
 								var html = '';
-								html += '상대방 <input type="text" id="target" value="' + data + '">'
+								html += '<input type="hidden" id="target" value="' + data + '">'
 								$('#targetName').html(html);
 							}
 						});
@@ -383,7 +395,7 @@
 							success : function(data) {
 								// alert(data);
 								var html = '';
-								html += '사용자 <input type="text" id="user" value="' + data + '">'
+								html += '<input type="hidden" id="user" value="' + data + '">'
 								$('#userName').html(html);
 							}
 						});
@@ -398,23 +410,22 @@
 								success : function(data) {
 									var html = '';
 									html += '<div class = "profileTitle">멘토 프로필</div>';
-									html += '<div class = "profileImg"> '
-											+ data.m_photo + '</div>';
+									html += '<div class = "profileImg"><img src="<c:url value="/images/user/' + data.m_photo + '"/>"class = "profileImg"></div>';
 									html += '<div class = "profileName">'
 											+ data.m_name + ' (' + data.m_id
-											+ ')</div>';
-									html += '<div class = "profileSubTitle">코멘트</div>';
-									html += '<div class = "profileSubContent">'
-											+ data.p_shot + '</div>';
-									html += '<div class = "profileSubTitle">학력</div>';
-									html += '<div class = "profileSubContent">'
-											+ data.p_edu + '</div>';
-									html += '<div class = "profileSubTitle">경력</div>';
-									html += '<div class = "profileSubContent">'
-											+ data.p_career + '</div>';
-									html += '<div class = "profileSubTitle">결제 방식</div>';
-									html += '<div class = "profileSubContent">'
-											+ data.p_pay + '</div><hr>';
+											+ ')</div><div>';
+									html += '<p class = "con_p1">코멘트</p>';
+									html += '<p class = "con_p2">'
+											+ data.p_shot + '</p>';
+									html += '<p class = "con_p1">학력</p>';
+									html += '<p class = "con_p2">'
+											+ data.p_edu + '</p>';
+									html += '<p class = "con_p1">경력</p>';
+									html += '<p class = "con_p2">'
+											+ data.p_career + '</p></div>';
+									html += '<p class = "con_p1">결제 방식</p>';
+									html += '<p class = "con_p2">'
+											+ data.p_pay + '</p><hr>';
 									html += '<div class = "mentorReview"></div>';
 									$('#profile').append(html);
 									mentorProfileReview(user)
@@ -478,6 +489,10 @@
 			};
 
 			function mentorProfileReview(user) {
+				
+				var fullStar = '<span><img id=\"star\" src=\"https://d1hhkexwnh74v.cloudfront.net/icons/icon-common-review-star-small-full.svg\"></span>';
+				var halfStar = '<span><img id=\"star\" src=\"https://d1hhkexwnh74v.cloudfront.net/icons/icon-common-review-star-small-half.svg\"></span>';
+				
 				$
 						.ajax({
 							url : 'http://localhost:8080/toti/chat/profile/mentor/review/'
@@ -485,16 +500,30 @@
 							type : 'GET',
 							success : function(data) {
 								for (var i = 0; i < data.length; i++) {
+									
+									var star = data[i].review_star;
+									var halfCheck = 'N'
+									
+									if (star % 1 == 0.5) {
+										halfCheck = 'Y'
+									}
+									
 									var html = '<div class = review>'
 									html += '<div class = reviewName>'
-											+ data[i].m_name + ' / '
-											+ data[i].review_star + '</div>';
+											+ data[i].m_name + '</div><div class="reviewStar"></div>';
 									html += '<div class = reviewDate>'
 											+ data[i].review_date + '</div>';
 									html += '<div>' + data[i].review_cont
 											+ '</div>';
 									html += '</div>';
 									$('.mentorReview').append(html);
+									
+									for(var i = 0; i < star; i++) {
+										$('.reviewStar').append(fullStar);
+									}
+									if (star % 1 == 0.5) {
+										$('.reviewStar').append(halfStar);
+									}
 								}
 							}
 						});
@@ -507,37 +536,62 @@
 		}
 		
 		function goRtcPage() {
-			var room_num = $('input#chat_room').val();
-			window.open("/toti/chat/rtc?roomnum=" + room_num);
+			var roomnum = $('input#chat_room').val();
+			var target = $('input#target').val();
+			var user = $('input#user').val();
+			var html = '';
+
+			html += '<div class="buttons">';
+			html += '<a href=# onclick="goChatPage()">화상 종료</a></div>';
+			
+/* 			html += '<iframe src="/toti/chat/rtc?roomnum= '+ room_num +'"></iframe>'; */
+			html += '<iframe src="/toti/chat/rtc/' + roomnum + '/' + target + '/' + user +'" onLoad="autoResize(this);"></iframe>';
+ 
+				$('#rtcPage').html(html);
+				
+				$('#chat').css('display', 'none');
 
 		}
+		
+		function goChatPage() {
+			$('#rtcPage').empty();
+			$('#chat').css('display', 'block');
+		}
 
-		// Get the modal
+		
+		// modal
 		var modal = document.getElementById('estModal');
-
-		// Get the button that opens the modal
 		var estBtn = document.getElementById("estBtn");
-
-		// Get the <span> element that closes the modal
 		var span = document.getElementsByClassName("close")[0];
 
-		// When the user clicks on the button, open the modal 
 		estBtn.onclick = function() {
 			modal.style.display = "block";
 		}
 
-		// When the user clicks on <span> (x), close the modal
 		span.onclick = function() {
 			modal.style.display = "none";
 		}
 
-		// When the user clicks anywhere outside of the modal, close it
 		window.onclick = function(event) {
 			if (event.target == modal) {
 				modal.style.display = "none";
 			}
 		}
-	
+		
+		// iframe 사이즈 조절
+		function autoResize(obj){
+			var newheight;
+			var newwidth;
+				if(obj.contentDocument){
+					newheight = obj.contentDocument.documentElement.scrollHeight+30;
+					newwidth = obj.contentDocument.documentElement.scrollWidth+30;
+				} else {
+					newheight=obj.contentWindow.document.body.scrollHeight+30;
+					newwidth=obj.contentWindow.document.body.scrollWidth+30;
+				}
+			obj.height= newheight + "px";
+			obj.width= newwidth + "px";
+		}
 		
 	</script>
 </body>

@@ -23,7 +23,7 @@ public interface ChatSessionDao {
 
 	public String searchUserName(int user);
 
-	public String selectMentorCheck(int user);
+	public int selectMentorCheck(int roomnum);
 
 	public List<ChatRoomInfo> selectChatRoomListByUser(int user);
 

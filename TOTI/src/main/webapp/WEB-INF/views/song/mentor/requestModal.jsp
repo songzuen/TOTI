@@ -9,7 +9,7 @@
 <!-- title -->
 <title>SamplePage</title>
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-<script src="http://localhost:3000/socket.io/socket.io.js"></script>
+<script src="http://ec2-13-125-96-18.ap-northeast-2.compute.amazonaws.com:3000/socket.io/socket.io.js"></script>
 <style>
 * {
 	margin: 0;
@@ -496,7 +496,7 @@ margin-right: 15px;
 																	type : 'GET',
 																	success :function() {
 																 var socket = io
-		                                                            .connect('http://localhost:3000/');
+		                                                            .connect('http://ec2-13-125-96-18.ap-northeast-2.compute.amazonaws.com:3000/');
 
 		                                                        var room_num = est_idx;
 
