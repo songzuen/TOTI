@@ -18,6 +18,7 @@
                         <div class="col-sm-12">
                             <h1 class="title">보낸 요청서</h1>
                             <p>보낸 요청서를 확인하고 해당 요청서의 견적서를 확인하세요!</p>
+                            <p style="font-size: 15px; padding-top: 5px;">* 해당 요청서들은 5일이 지나면 자동 삭제됩니다.</p>
                         </div>
                     </div>
                 </div>
@@ -65,27 +66,49 @@
 						if(data.length == 0) {
 							html+= '<div id="not_request"><p>보낸 요청서가 없습니다.</p><p>요청서를 작성해주세요.</p><a href="<c:url value="/" />">요청서 작성하러가기</a></div>';
 						}else {
-							for (var i = 0; i < data.length; i++) {
-								html += '<div class="col-sm-3 wow fadeInUp">\n';
-								html += '<div class="feature-inner">\n';
-								html += '<div id="requsr_my_list">\n';
-								html += '<h2>' + data[i].cate_name + '</h2>';
-								html += '<h3>' + data[i].service_name + '</h3>';
-								html += '<p>' + data[i].request_date + '</p>';
-								html += '<a onclick="requestDel('+ data[i].request_idx + ')">요청취소</a>';
-								if (data[i].request_cnt > 0) {
-									html += '<a class="btn btn-info" href="<c:url value="/estimatee/'+data[i].request_idx+'" />">'
-											+ data[i].request_cnt+ '개의 견적서 보기</a>';
-								} else {
-									html += '<a class="btn btn-info" href="<c:url value="/'+data[i].request_idx+'" />">요청서 보기</a>';
+							
+							$.ajax({
+								url : 'requestsDelList/'+ m_idx,
+								type : 'GET',
+								success : function(delNum) {
+									
+									var chk = true;
+									
+									for (var i = 0; i < data.length; i++) {
+										html += '<div class="col-sm-3 wow fadeInUp">\n';
+										html += '<div class="feature-inner">\n';
+										html += '<div id="requsr_my_list">\n';
+										html += '<h2>' + data[i].cate_name + '</h2>';
+										html += '<h3>' + data[i].service_name + '</h3>';
+										html += '<p>' + data[i].request_date + '</p>';
+
+										for (var j=0; j<delNum.length; j++) {
+											if(delNum[j] == data[i].request_idx) {
+												html += '<p>이 요청서는 삭제될예정입니다.</p>';
+												chk = false;
+											}
+										}
+										
+										if(chk) {
+											html += '<a onclick="requestDel('+ data[i].request_idx + ')">요청취소</a>';
+										}
+										
+										if (data[i].request_cnt > 0) {
+											html += '<a class="btn btn-info" href="<c:url value="/estimatee/'+data[i].request_idx+'" />">'
+												+ data[i].request_cnt+ '개의 견적서 보기</a>';
+										} else {
+											html += '<a class="btn btn-info" href="<c:url value="/'+data[i].request_idx+'" />">요청서 보기</a>';
+										}
+										
+										html += '</div></div></div>';
 									}
-									html += '</div></div></div>';
+									
+									$('#list_wrap').html(html);
 								}
-							}
-						
-						
-							$('#list_wrap').html(html);
+							});
+														
 						}
+					}
 
 				});
 		}

@@ -39,7 +39,16 @@ public class RequestRestController {
 		
 		return entity;	
 	}
+	
+	@GetMapping("/getkateidx/{m_idx}")
+	public ResponseEntity<String> getKateIdx(@PathVariable("m_idx") int m_idx) {
 		
+		String data = requestService.getKategorIdx(m_idx);
+
+		ResponseEntity<String> entity = new ResponseEntity<String>(data, HttpStatus.OK);
+				
+		return entity;	
+	}
 	
 	@GetMapping("/request/itemList/{quest_idx}")
 	public ResponseEntity<List<ItemListData>> getItemList(@PathVariable("quest_idx") int quest_idx) {
@@ -61,6 +70,17 @@ public class RequestRestController {
 		
 		return entity;
 	}
+	
+	@GetMapping("/requestsDelList/{m_idx}")
+	public ResponseEntity<List<Integer>> getUserDelRequests(@PathVariable("m_idx") int m_idx) {
+		
+		List<Integer> list = requestService.getUserDelRequests(m_idx);
+		
+		ResponseEntity<List<Integer>> entity = new ResponseEntity<List<Integer>>(list, HttpStatus.OK);
+		
+		return entity;
+	}
+	
 	
 	@DeleteMapping("/requests/{request_idx}")
 	public ResponseEntity<Integer> requestDelete(@PathVariable("request_idx") int request_idx) {

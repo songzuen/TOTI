@@ -10,6 +10,7 @@ public class EstimateeListData {
 	private String tor_location;
 	private String str;
 	private int cont_cnt;
+	private String est_date;
 	
 	
 	public int getMento_idx() {
@@ -60,8 +61,11 @@ public class EstimateeListData {
 	public void setCont_cnt(int cont_cnt) {
 		this.cont_cnt = cont_cnt;
 	}
-	
-	
-	
+	public String getEst_date() {
+		return est_date;
+	}
+	public void setEst_date(String est_date) {
+		this.est_date = est_date;
+	}
 	
 }

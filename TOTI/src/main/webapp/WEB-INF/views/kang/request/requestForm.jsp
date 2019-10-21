@@ -110,12 +110,12 @@
 		btnnext.click(function() {
 	
 			if(!$('input:radio[name=service_idx]').is(':checked')) {
-				alert("체크해주세요");
+				alert("체크해주세요.");
 			}else if(current > 1){
 				
 				if ($('input[name="answerDatas['+c+'].answer_cont"]').attr('type') == 'checkbox' || $('input[name="answerDatas['+c+'].answer_cont"]').attr('type') == 'radio') {
 					if($('input[name="answerDatas['+c+'].answer_cont"]:checked').length == 0) {
-						alert('체크 ㅠ');
+						alert('체크해주세요.');
 					}else {
 						if (current < widget.length) {
 							widget.show();
@@ -127,7 +127,7 @@
 					}
 				}else {
 					if($('input[name="answerDatas['+c+'].answer_cont"]').val() == '') {
-						alert('빈칸채우세여');
+						alert('빈칸채워주세요.');
 					}else{
 						if (current < widget.length) {
 							widget.show();
@@ -175,15 +175,11 @@
 		$('#requestForm').submit(function() {
 			  
 			if($('input[name="answerDatas['+c+'].answer_cont"]').val() == '') {
-				alert('빈칸채우세여');
-				
-				return false;
-			}else if($('#m_idx').val() == ''){
-				alert('로그인 후 이용해주세요.');
-				location.href = '<c:url value="/login" />';
+				alert('빈칸채워주세요.');
 				
 				return false;
 			}
+			
 		});
 		
 	});
@@ -259,7 +255,7 @@
 			
             window.name = 'requestForm';
             // window.open("open할 window", "자식창 이름", "팝업창 옵션");
-            window.open('<c:url value="/request/map" />', 'mapForm', "width=800, height=600,top = 100, left = 100, resizable = no, scrollbars = no");
+            window.open('<c:url value="/request/map" />', 'mapForm', "width=800, height=620,top = 100, left = 100, resizable = no, scrollbars = no");
 		}
 	
 	</script>

@@ -16,7 +16,7 @@
                 <div class="row">
                     <div class="action">
                         <div class="col-sm-12">
-                            <h1 class="title"><a href="<c:url value="/requests" />">보낸 요청서</a></h1>
+                            <h1 class="title"><a href="<c:url value="/requests" />">분야찾기</a></h1>
                         </div>
                     </div>
                 </div>
@@ -34,8 +34,10 @@
 					<div id="cate_select_wrap">
                          <a onclick="history.back()"><i class="fa fa-chevron-left"></i><span>이전으로</span></a>
                     </div>
-					<div id="request">
-						<div id="myRequest"></div>
+					<div class="sidebar-item popular">
+						<ul class="gallery" id="kate_ul">
+							
+						</ul>
 					</div>
 				</div>
 			</div>
@@ -47,41 +49,65 @@
 
 	<script>
 		
+	var idx = "${ idx }";
+	
 	$(document).ready(function() {
 		
-		rquestData();
+		kateList();
 	
 	});
 
-	function rquestData() {
-
+	function kateList() {
+		
 		$.ajax({
-			url : 'request/requestData',
+			url : '../kategorieList',
 			type : 'GET',
-			data : {
-				request_idx : $('#request_idx').val(),
-				m_idx : $('#m_idx').val()
-			},
 			success : function(data) {
 				
 				var html = '';
-				
-				html += '<img src="<c:url value="/images/user/'+data.userInfo.m_photo+'" />">';
-				html += '<div id="requesr_user"><p>'+data.request_date+'</p>';
-				html += '<h2>'+data.cate_name+'('+data.service_name+')</h2><h3>'+data.userInfo.m_name+'님</h3></div>';
-				html += '<div id="request_con">'
-				
-				for (var i = 0; i < data.answer.length; i++) {
-					html += '<p class="con_p1">'+data.answer[i].quest_name+'</p>';
-					html += '<p class="con_p2">'+data.answer[i].answer_cont+'</p>';			
+				for (var i = 0; i < data.length-1; i++) {
+					
+					html += '<li><a onclick="selectR('+data[i].cate_idx+', '+idx+')">';
+					html += '<img src="<c:url value="/images/request/'+data[i].cate_img+'" ></a></li>';
+					
+					
+					html += '<div class="col-sm-4 text-center wow fadeIn" data-wow-duration="1000ms" data-wow-delay="300ms">\n';
+					html += '<a onclick="selectR('+data[i].cate_idx+', '+idx+')" >\n';
+					html += '<div class="single-service">\n';
+					html += '<div style="padding: 50px; border: 1px solid; margin: 20px;">\n';
+					html += '<h2>'+data[i].cate_name+'</h2>\n';
+					html += '<p style="width: 230px; padding: 0;">'+data[i].cate_con+'</p>\n';
+					html += '</div></div></a></div>';
 				}
 				
-				html += '</div>';
+				$('#kate_ul').html(html);
 
-				$('#myRequest').html(html);
 			}
-
 		});
+	}
+	
+	function selectR(cate_idx){			
+		
+		if(idx != '' && idx != null){
+			
+			$.ajax({
+				url : 'getkateidx/'+idx,
+				type : 'GET',
+				success : function(data) {
+					
+					if(cate_idx == data) {
+						alert('자신의 분야에는 요청하실 수 없습니다.');
+					}else {
+						location.href = '<c:url value="/request?cate_idx='+cate_idx+'" />';
+					}
+					
+				}
+			});
+			
+		}else {
+			alert('로그인 후 이용해주세요.');
+			location.href = '<c:url value="/login" />';
+		}
 		
 	}
 	

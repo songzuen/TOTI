@@ -1370,7 +1370,7 @@ Portfolio with right sidebar
 }
 
 .popular ul.gallery li a img:hover {
-  border-radius: 60px;
+  border-radius: 50%;
 }
 
 

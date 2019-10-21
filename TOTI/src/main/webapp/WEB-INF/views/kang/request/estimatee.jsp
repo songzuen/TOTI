@@ -97,7 +97,7 @@
 								html += '<div class="est_user"><div class="est_user_img">';
 								html += '<img src="<c:url value="/images/user/'+data.estiData[i].m_photo+'"/>"></div>';
 								html += '<div class="est_user_info">';
-								html += '<p class="info_con">'+data.estiData[i].p_shot+'</p>';
+								html += '<p class="info_con">'+data.estiData[i].p_shot+'</p><p class="info_date">'+data.estiData[i].est_date+'</p>';
 								html += '<p class="info_name">'+data.estiData[i].m_name+' <i class="fa fa-star"></i>'+data.estiData[i].str+' ('+data.estiData[i].cont_cnt+'개)</p>';
 								html += '<p class="info_map">'+data.estiData[i].tor_location+'</p></div></div>';
 								html += '<div class="est_pay"><hr><div><span>예상금액</span> '+data.estiData[i].est_price+'원';

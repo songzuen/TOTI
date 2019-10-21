@@ -77,6 +77,9 @@
 	<%@ include file="/WEB-INF/views/frame/footer.jsp" %>
 	
     <script>
+    	
+    	var idx = "${ idx }";
+    	
 		$(document).ready(function() {
 			kategorieList();
 		});
@@ -91,7 +94,7 @@
 					var html = '';
 					for (var i = 0; i < data.length-1; i++) {
 						html += '<div class="col-sm-4 text-center wow fadeIn" data-wow-duration="1000ms" data-wow-delay="300ms">\n';
-						html += '<a href="<c:url value="/request?cate_idx='+data[i].cate_idx+'" />">\n';
+						html += '<a onclick="selectR('+data[i].cate_idx+', '+idx+')" >\n';
 						html += '<div class="single-service">\n';
 						html += '<div style="padding: 50px; border: 1px solid; margin: 20px;">\n';
 						html += '<h2>'+data[i].cate_name+'</h2>\n';
@@ -102,7 +105,7 @@
 					html = '';
 					
 					for (var j = 0; j < data.length-1; j++) {
-						html += '<a href="<c:url value="/request?cate_idx='+data[j].cate_idx+'" />">\n';
+						html += '<a onclick="selectR('+data[i].cate_idx+', '+idx+')">\n';
 						html += '<div class="single-features">\n';
 						if(i%j==0){
 							html += '<div class="col-sm-6 col-sm-offset-1 align-right wow fadeInLeft" data-wow-duration="500ms" data-wow-delay="300ms">';
@@ -125,6 +128,33 @@
 			});
 			
 		}
+		
+		function selectR(cate_idx){			
+			
+			if(idx != '' && idx != null){
+				
+				$.ajax({
+					url : 'getkateidx/'+idx,
+					type : 'GET',
+					success : function(data) {
+						
+						if(cate_idx == data) {
+							alert('자신의 분야에는 요청하실 수 없습니다.');
+						}else {
+							location.href = '<c:url value="/request?cate_idx='+cate_idx+'" />';
+						}
+						
+					}
+				});
+				
+			}else {
+				alert('로그인 후 이용해주세요.');
+				location.href = '<c:url value="/login" />';
+			}
+			
+		}
+		
+		
 	</script>
 </body>
 </html>
