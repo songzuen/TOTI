@@ -42,4 +42,6 @@ public interface UserDaoInterface {
 	
 	// 리뷰 작성
 	public int insertReview(ReviewInfo reviewInfo);
+	// 리뷰 삭제
+	public int deleteReview(int review_idx);
 }

@@ -8,14 +8,14 @@
 <title>[관리자] TOTI :: 요청서 질문 관리</title>
 <style>
 
-#checkService, #editFrame{
-	width: 900px;
-	margin : 0 auto;
-}
-h2{
+	#checkService, #editFrame{
+		width: 900px;
+		margin : 0 auto;
+	}
+	h2{
 		font-weight: bold;
 	}
-#addbtn{
+	#addbtn{
 		height:26px; 
 		width:26px; 
 		padding: 0px 4px; 
@@ -37,6 +37,21 @@ h2{
 	}
 	.service{
 		height: 30px;
+	}
+	#itemdelbtn{
+		height:20px;
+		margin: 0px 4px;
+		padding: 0px 4px; 
+		padding-bottom: 20px;
+		text-align: center;
+		float: left;
+	}
+	#item_cont{
+		width:180px;
+	}
+	#additembtn{
+		margin-left: 10px;
+		
 	}
 </style>
 </head>
@@ -98,8 +113,8 @@ h2{
 												<td id="tdwrite">
 													<select name="quest_type" id="quest_type" style="width:100%; height:26px;">
 														<option selected>답변</option>
-														<option id="checkbox" value="checkbox">단일 선택</option>
-														<option id="radio" value="radio">중복 선택</option>
+														<option id="radio" value="radio">단일 선택</option>
+														<option id="checkbox" value="checkbox">중복 선택</option>
 														<option id="select" value="select">목록 선택</option>
 													</select>
 												</td>
@@ -128,28 +143,31 @@ h2{
 				<!-- 모달 끝 -->
 				
 				
-				
-				
 				<div id="editFrame" style="display: none">
 			        <form id="editForm">
 				        <hr>
 				        <div>
-					        <h3>질문 수정</h3>
+					        <h2>질문 수정</h2><br>
+						    <label for="question"> 질문 내용을 수정하세요. </label>
+						    <input type="text" name="quest_name" id="equest_name" style="width:50%; height:26px;" required><br>
 				            <input type="hidden" name="quest_idx" id="quest_idx">
-						      <label for="cate_idx">답변 방식을 선택하세요.</label>
-						      <select name="quest_type" id="equest_type">
+						      <label for="cate_idx">답변 방식을 수정하세요.</label>
+						      <select name="quest_type" id="equest_type" style="width:50%; height:26px;">
 								<option selected>답변</option>
-								<option id="checkbox" value="checkbox">단일 선택</option>
-								<option id="radio" value="radio">중복 선택</option>
+								<option id="radio" value="radio">단일 선택</option>
+								<option id="checkbox" value="checkbox">중복 선택</option>
 								<option id="select" value="select">목록 선택</option>
-							</select> <br>
-						    <label for="question"> 질문 내용 </label>
-						    <input type="text" name="quest_name" id="equest_name" style="width: 300px; height: 40px;" required><br>
-				            <input type="submit" value="수정">
+							</select><br>
+				            <div style="width: 700px;">
+				            	<input type="submit" value="수정" style="float:right;"><br>
+				            </div>
 			            </div>
 			        </form>
+			        <hr>
+					<div id="itemByQuest" style="display: none">
+					</div>			        
 			    </div>
-				
+			    
 				<!-- end home variation -->
 				<!-- end component -->
 			</div>
@@ -165,6 +183,8 @@ h2{
 			categoryList();
 			categoryOption();
 		});
+		
+		
 		
 		function categoryList() {
 			$.ajax({
@@ -220,7 +240,7 @@ h2{
 						html += '<button class="btn btn-secondary" id="delbtn" onclick="del(' 
 								+ data[i].quest_idx + ')">삭제</button>\n';
 						html += '<button class="btn btn-secondary" id="editbtn"  data-toggle="modal2" data-target="#myModal" onclick="edit('
-							+ data[i].quest_idx +')">수정</button><br>\n';
+							+ data[i].quest_idx +'); itemByQuest('+data[i].quest_idx+')">수정</button><br>\n';
 						html += '</div>\n';
 					}
 					html += '</div>';
@@ -300,6 +320,62 @@ h2{
             
             return false;
         });
+		
+		function itemByQuest(quest_idx){
+			$.ajax({
+				url : 'http://localhost:8080/toti/admin/question/itemlist/'+quest_idx,
+				type : 'GET',
+				success : function(data){
+					var html = '';
+					html += '<form id="addItemForm"><h2>답변 관리</h2>';
+					html += '<input type="hidden" name="quest_idx" id="quest_idx" value="'+quest_idx+'">';
+					html += '<label>질문에 관한 답변 항목을 직접 지정해주세요.</label><br>';
+					html += '<input type="text" name="item_cont" id="item_cont"><button id="additembtn" onclick="additem()">항목 추가</button><br><br>';
+					for (var i = 0; i < data.length; i++) {
+						html += '<label><input type="'+data[i].quest_type+'">'+data[i].item_cont;
+						html += '<button class="btn btn-secondary" id="itemdelbtn" onclick="delitem('+data[i].item_idx+')">-</button></label><br>';						
+					}
+					html += '</form><br>';
+					$('#itemByQuest').html(html);
+					$('#boxIn').css('display', 'none');
+					$('#itemByQuest').css('display', 'block');
+				}
+			});
+	    }
+		
+		function delitem(item_idx){
+			if(confirm('답변 항목을 삭제할까요?')){
+				$.ajax({
+					url : 'http://localhost:8080/toti/admin/question/deleteItem/'+item_idx,
+					type : 'DELETE',
+					success : function(data){
+						if(data=='success'){
+	                        alert('답변 항목이 삭제되었습니다');
+	                        location.reload();
+	                    }else {
+	                    	alert('삭제실패');
+	                    }
+					}
+				});
+			}
+		}
+		
+		function additem() {
+			$.ajax({
+				url : 'http://localhost:8080/toti/admin/question/insertItem',
+				type : 'POST',
+				data : $('#addItemForm').serialize(),
+				success : function(data) {
+					if(data == 'success'){
+						alert('등록되었습니다.');
+						location.reload();
+					}else{
+						alert('실패');
+					}
+				}
+			});
+			
+		}
 	</script>
 </body>
 </html>

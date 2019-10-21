@@ -9,6 +9,10 @@
 	table {
 		width: 100%;
 	}
+	
+	button {
+		margin: 1px;
+	}
 		
 	#mentorProfile {
 		float: left;
@@ -41,7 +45,7 @@
 	.overview{
 		width: 200px;
 		margin: 20px 150px;
-		padding-top: 70px;
+		padding-top: 55px;
 		height: 180px;
 	}
 
@@ -73,8 +77,23 @@
 	}
 	
 	#url_field{
-		width: 250px;
+		width: 280px;
 		height: 25px;
+		border: 2px solid #48A0DC;
+		border-radius: 3px;
+		font-size: 15px;
+		font-weight: 400;
+		margin: 5px;
+		padding: 5px;
+	}
+	
+	.subinfo {
+		color: red;
+		margin-top: 3px;
+	}
+	
+	a:hover {
+		color: red;
 	}
 	
 </style>
@@ -94,7 +113,7 @@
 					<h4>리뷰 요청하기</h4>
 					링크를 공유하고 고객들에게 리뷰를 받아 보세요. 긍정적인 리뷰가 있는 고수는 고용될 확률이 2배 이상 높습니다.
 					<input type="text" id="url_field" value="http://localhost:8080/toti/review/${mento_idx}" readonly><br>
-					<input class="btn btn-outline-danger" id="copy_btn" type="button" value="복사하기">
+					<button class="btn btn-outline-danger" id="copy_btn" style="margin-top: 5px;"> 복사하기 </button>
 				</div>
 				<!-- end home variation -->
 				<!-- end component -->
@@ -182,7 +201,7 @@
 					if (data[i].p_shot !=null){
 						html += data[i].p_shot + '<br>';	
 					} else {
-						html += '';
+						html += '<div class="subinfo">한줄 소개를 작성해주세요.</div>';
 					}
 					html += '</td>'
 					html += '</tr>';
@@ -213,7 +232,10 @@
 					html += '<table>';
 					html += '<tr>';
 					html += '<td><h4>제공 서비스</h4></td>';
-					html += '<td class="btn-edit"><button class="btn btn-outline-danger" onclick="getService2('+mento_idx+')">삭제</button></td>';
+					html += '<td class="btn-edit">';
+					if (data[i].mento_service != null){
+						html += '<button class="btn btn-outline-danger" onclick="getService2('+mento_idx+')">삭제</button></td>';
+					}
 					html += '<td class="btn-edit"><button class="btn btn-outline-danger" onclick="getService('+mento_idx+')">추가</button></td>';
 					html += '</tr>';
 					html += '<tr>';
@@ -222,8 +244,8 @@
 						html += '<div class="info">';
 						html += data[i].mento_service + '</div>';
 					} else {
-						html += '<div class="info">';
-						html += '서비스를 추가해주세요</div>';
+						html += '<div class="subinfo">';
+						html += '서비스를 추가해주세요.</div>';
 					}
 					html += '</td>'
 					html += '</tr>';
@@ -258,7 +280,7 @@
 					if (data[i].p_pay !=null){
 						html += data[i].p_pay + '<br>';	
 					} else {
-						html += '';
+						html += '<div class="subinfo">결제 수단을 등록해주세요.</div>';
 					}
 					html += '</td>'
 					html += '</tr>';
@@ -295,7 +317,7 @@
 					if (data[i].p_edu !=null){
 						html += data[i].p_edu + '<br>';	
 					} else {
-						html += '';
+						html += '<div class="subinfo">고수님의 최종학력을 작성해주세요.</div>';
 					}
 					html += '</td>'
 					html += '</tr>';
@@ -333,7 +355,7 @@
 					if (data[i].p_career !=null){
 						html += data[i].p_career + '<br>';	
 					} else {
-						html += '';
+						html += '<div class="subinfo">고수님의 경력사항을 작성해주세요.</div>';
 					}
 					html += '</td>'
 					html += '</tr>';
@@ -371,7 +393,7 @@
 					if (data[i].p_long !=null){
 						html += data[i].p_long + '<br>';	
 					} else {
-						html += '';
+						html += '<div class="subinfo">고수님의 레슨에 대한 상세한 정보를 작성해주세요.</div>';
 					}
 					html += '</td>'
 					html += '</tr>';
@@ -402,13 +424,9 @@
 					
 					html += '<hr><div id="reviewBox" class="info">';
 					html += '<h4><div id="avgrev">';
-					
 					html += '리뷰<span>'
 							+ data[i].review_cnt
-							+ '개 (평균 '
-							+ data[i].review_avg
-							+ '점)</span>';
-							
+							+ '개 </span>('+data[i].review_avg+')';
 					if(data[i].review_avg == 5){
 						html += star+star+star+star+star;
 					}else if(data[i].review_avg == 4){
@@ -420,47 +438,50 @@
 					}else if(data[i].review_avg == 1){
 						html += star+nostar+nostar+nostar+nostar;
 					}
-					html += '</h4></div>';
+					html += '</h4></div><br>';
 					break;
 				}
 				for (var i = 0; i < data.length; i++) {
-					html += '<table style="width:100%">';
+					html += '<input type="hidden" name="review_idx" value="'+data[i].review_idx+'">';
+					html += '<table style="width:95%; margin-left:20px;">';
 					html += '<tr>';
 					html += '<td id="m-name">';
 					if (data[i].member_name !=null){
 						html += data[i].member_name ;	
-					} else {
-						html += '등록된 리뷰가 없습니다.</td>';
-					}
-					if(data[i].review_star == 5){
-						html += star+star+star+star+star;
-					}else if(data[i].review_star == 4){
-						html += star+star+star+star+nostar;
-					}else if(data[i].review_star == 3){
-						html += star+star+star+nostar+nostar;
-					}else if(data[i].review_star == 2){
-						html += star+star+nostar+nostar+nostar;
-					}else if(data[i].review_star == 1){
-						html += star+nostar+nostar+nostar+nostar;
-					}
-					html += '<td class="date">';
-					if (data[i].review_date !=null){
-						html += data[i].review_date ;	
-					} else {
 						html += '</td>';
+					
+						if(data[i].review_star == 5){
+							html += star+star+star+star+star;
+						}else if(data[i].review_star == 4){
+							html += star+star+star+star+nostar;
+						}else if(data[i].review_star == 3){
+							html += star+star+star+nostar+nostar;
+						}else if(data[i].review_star == 2){
+							html += star+star+nostar+nostar+nostar;
+						}else if(data[i].review_star == 1){
+							html += star+nostar+nostar+nostar+nostar;
+						}
+						html += '<td class="date">';
+						if (data[i].review_date !=null){
+							html += data[i].review_date ;	
+						} else {
+							html += '</td>';
+						}
+						html += '</tr>';
+						html += '<tr>';
+						html += '<td>';
+						if (data[i].cont !=null){
+							html += data[i].cont ;	
+						} else {
+							html += '';
+						}
+						html += '</td>';
+						html += '<td style="float:right;"><a onclick="delreview('+data[i].review_idx+')" style="color:#48A0DC; ">삭제</a></td><br>';
+						html += '</tr>';
+						html += '</table><br>';
+					}else {
+						html += '등록된 리뷰가 없습니다.';
 					}
-					html += '</tr>';
-					html += '<tr>';
-					html += '<td colspan="2">';
-							+ '</td>';
-					if (data[i].cont !=null){
-						html += data[i].cont ;	
-					} else {
-						html += '';
-					}
-					html += '</td>';
-					html += '</tr>';
-					html += '</table><br>';
 				}
 				html += '</div>';
 				$('#mentorProfile').html(html);
@@ -758,6 +779,23 @@
 		});
 		
     }
+	
+	function delreview(review_idx){
+		if(confirm('리뷰를 삭제할까요?')){
+	           $.ajax({
+	                url : 'http://localhost:8080/toti/delreview/'+review_idx,
+	                type : 'DELETE',
+	                success : function(data){
+	                    if(data=='success'){
+	                        alert('삭제되었습니다');
+	                        location.reload();
+	                    }else {
+	                    	alert('삭제실패');
+	                    }
+	                }
+	            });
+	        }
+	}
 	
 	var copyBtn = document.querySelector('#copy_btn');
 	copyBtn.addEventListener('click', function () {

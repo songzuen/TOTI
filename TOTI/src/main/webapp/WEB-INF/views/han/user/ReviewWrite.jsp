@@ -110,7 +110,6 @@
 		}
 		
 		$('#reviewFrom').submit(function(){
-			alert($('#review_star').html());
 	            $.ajax({
 	                url : 'http://localhost:8080/toti/review' ,
 	                type : 'POST',
