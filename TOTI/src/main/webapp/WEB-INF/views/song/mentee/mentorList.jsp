@@ -139,7 +139,7 @@ table tr td {
 	<!--/#home-slider-->
 
 	<!-- demo content -->
-	<section id="blog" class="padding-top padding-bottom">
+	<section id="blog" class="padding-bottom">
 		<div class="container">
 			<div class="row">
 				<div class="col-md">
@@ -231,7 +231,11 @@ table tr td {
 							/* html += '활동가능 지역 : ' + data[i].tor_location+ '<br>'; */
 							html += '<tr>';
 							html += '<td><h5 style="color:black;">';
+							if(data[i].p_shot == null){
+								html += '';
+							}else {
 							html += data[i].p_shot;
+							}
 							html += '<h5></td>';
 							html += '</tr>';
 							html += '<tr>';
@@ -360,7 +364,7 @@ table tr td {
 							html += '<tr>';
 							html += '<td rowspan="6" style=\"text-aline:center">';
 							html += '<span id="photo">';
-							html += '<img id="m_photo"  src = "<c:url value="/images/user/'+data[i].m_photo+'"/>"';
+							html += '<img id="m_photo" src = "<c:url value="/images/user/'+data[i].m_photo+'"/>"';
 							html += '</span></label>';
 							html += '</td>';
 							html += '</tr>';
@@ -373,8 +377,12 @@ table tr td {
 							/* html += '제공 서비스 : ' + data[i].tor_sname+ '<br>'; */
 							/* html += '활동가능 지역 : ' + data[i].tor_location+ '<br>'; */
 							html += '<tr>';
-							html += '<td><h5 style="color:black;letter-spacing:3px;">';
+							html += '<td><h5 style="color:black;">';
+							if(data[i].p_shot == null){
+								html += '';
+							}else {
 							html += data[i].p_shot;
+							}
 							html += '<h5></td>';
 							html += '</tr>';
 							html += '<tr>';
@@ -498,7 +506,7 @@ table tr td {
 													html += '<tr>';
 													html += '<td rowspan="6" style=\"text-aline:center">';
 													html += '<span id="photo">';
-													html += '<img id="m_photo"  src = "<c:url value="/images/user/'+data[i].m_photo+'"/>"';
+													html += '<img id="m_photo" src = "<c:url value="/images/user/'+data[i].m_photo+'"/>"';
 													html += '</span></label>';
 													html += '</td>';
 													html += '</tr>';
@@ -506,15 +514,17 @@ table tr td {
 													html += '<tr>';
 													html += '<td>';
 													/* html += '<h2>'+data[i].m_name + '</h2>' + data[i].cate_name + '</td>'; */
-													html += '<h2>'
-															+ data[i].m_name
-															+ '</h2></td>';
+													html += '<h2>' + data[i].m_name + '</h2></td>';
 													html += '</tr>';
 													/* html += '제공 서비스 : ' + data[i].tor_sname+ '<br>'; */
 													/* html += '활동가능 지역 : ' + data[i].tor_location+ '<br>'; */
 													html += '<tr>';
-													html += '<td><h5 style="color:black;letter-spacing:3px;">';
+													html += '<td><h5 style="color:black;">';
+													if(data[i].p_shot == null){
+														html += '';
+													}else {
 													html += data[i].p_shot;
+													}
 													html += '<h5></td>';
 													html += '</tr>';
 													html += '<tr>';
@@ -527,9 +537,7 @@ table tr td {
 													if (data[i].str != 0) {
 														if (data[i].str == 5) {
 															for (var j = 0; j < 5; j++) {
-																$('#starBox2')
-																		.append(
-																				html += fullStar);
+																$('#starBox2').append(html += fullStar);
 
 															}
 															/* $('#starBox2').append(html+=fullStar);
@@ -538,80 +546,48 @@ table tr td {
 															$('#starBox2').append(html+=fullStar);
 															$('#starBox2').append(html+=fullStar); */
 
-														} else if (data[i].str > 4
-																&& data[i].str < 5) {
+														} else if (data[i].str > 4 && data[i].str < 5) {
 															for (var j = 0; j < 4; j++) {
-																$('#starBox2')
-																		.append(
-																				html += fullStar);
+																$('#starBox2').append(html += fullStar);
 															}
-															$('#starBox2')
-																	.append(
-																			html += halfStar);
+															$('#starBox2').append(html += halfStar);
 
 														} else if (data[i].str == 4) {
 															for (var j = 0; j < 4; j++) {
-																$('#starBox2')
-																		.append(
-																				html += fullStar);
+																$('#starBox2').append(html += fullStar);
 															}
-														} else if (data[i].str > 3
-																&& data[i].str < 4) {
+														} else if (data[i].str > 3 && data[i].str < 4) {
 															for (var j = 0; j < 3; j++) {
-																$('#starBox2')
-																		.append(
-																				html += fullStar);
+																$('#starBox2').append(html += fullStar);
 															}
-															$('#starBox2')
-																	.append(
-																			html += halfStar);
+															$('#starBox2').append(html += halfStar);
 														} else if (data[i].str == 3) {
 															for (var j = 0; j < 3; j++) {
-																$('#starBox2')
-																		.append(
-																				html += fullStar);
+																$('#starBox2').append(html += fullStar);
 															}
-														} else if (data[i].str > 2
-																&& data[i].str < 3) {
+														} else if (data[i].str > 2 && data[i].str < 3) {
 															for (var j = 0; j < 2; j++) {
-																$('#starBox2')
-																		.append(
-																				html += fullStar);
+																$('#starBox2').append(html += fullStar);
 															}
-															$('#starBox2')
-																	.append(
-																			html += halfStar);
+															$('#starBox2').append(html += halfStar);
 														} else if (data[i].str == 2) {
 															for (var j = 0; j < 2; j++) {
-																$('#starBox2')
-																		.append(
-																				html += fullStar);
+																$('#starBox2').append(html += fullStar);
 															}
-														} else if (data[i].str > 1
-																&& data[i].str < 2) {
+														} else if (data[i].str > 1 && data[i].str < 2) {
 															for (var j = 0; j < 2; j++) {
-																$('#starBox2')
-																		.append(
-																				html += fullStar);
+																$('#starBox2').append(html += fullStar);
 															}
-															$('#starBox2')
-																	.append(
-																			html += halfStar);
+															$('#starBox2').append(html += halfStar);
 														} else if (data[i].str == 1) {
-															$('#starBox2')
-																	.append(
-																			html += fullStar);
+															$('#starBox2').append(html += fullStar);
 														} else {
-															$('#starBox2')
-																	.append(
-																			html += halfStar);
+															$('#starBox2').append(html += halfStar);
 														}
 														html += '<span style="margin-left:15px; font-size:12px;">'
-																+ data[i].str
-																+ '</span>';
+																+ data[i].str + '</span>';
 														html += '<span style="margin-left:15px; font-size:12px; font-weight:300; color:#aaa;">('
-																+ data[i].cont_cnt
-																+ '개)</span>';
+																+ data[i].cont_cnt + '개)</span>';
 													}
 													html += '</div>';
 													html += '</td>';
@@ -622,13 +598,12 @@ table tr td {
 														html += '<span class="comment">최신 리뷰 </span>'
 																+ data[i].review_cont;
 													}/* else{
-																																								html+='<div>';
-																																								html+='리뷰없음';
-																																								html+='</div>';
-																																							} */
+																												html+='<div>';
+																												html+='리뷰없음';
+																												html+='</div>';
+																											} */
 
-													html += '<button id="pageBtn'
-															+ data[i].mento_idx
+													html += '<button id="pageBtn' + data[i].mento_idx
 															+ '" class="btn" onclick="selectMentor('
 															+ data[i].mento_idx
 															+ ')">고수 페이지로 이동</button>';
@@ -678,7 +653,7 @@ table tr td {
 													html += '<tr>';
 													html += '<td rowspan="6" style=\"text-aline:center">';
 													html += '<span id="photo">';
-													html += '<img id="m_photo"  src = "<c:url value="/images/user/'+data[i].m_photo+'"/>"';
+													html += '<img id="m_photo" src = "<c:url value="/images/user/'+data[i].m_photo+'"/>"';
 													html += '</span></label>';
 													html += '</td>';
 													html += '</tr>';
@@ -686,20 +661,18 @@ table tr td {
 													html += '<tr>';
 													html += '<td>';
 													/* html += '<h2>'+data[i].m_name + '</h2>' + data[i].cate_name + '</td>'; */
-													html += '<h2>'
-															+ data[i].m_name
-															+ '</h2></td>';
+													html += '<h2>' + data[i].m_name + '</h2></td>';
 													html += '</tr>';
 													/* html += '제공 서비스 : ' + data[i].tor_sname+ '<br>'; */
 													/* html += '활동가능 지역 : ' + data[i].tor_location+ '<br>'; */
 													html += '<tr>';
-													html += '<td><h5 style="color:black;letter-spacing:3px;">';
-													if (data[i].p_shot = null) {
+													html += '<td><h5 style="color:black;">';
+													if(data[i].p_shot == null){
 														html += '';
-													} else {
-														html += data[i].p_shot;
+													}else {
+													html += data[i].p_shot;
 													}
-													html += '</h5></td>';
+													html += '<h5></td>';
 													html += '</tr>';
 													html += '<tr>';
 													html += '<td>';
@@ -711,9 +684,7 @@ table tr td {
 													if (data[i].str != 0) {
 														if (data[i].str == 5) {
 															for (var j = 0; j < 5; j++) {
-																$('#starBox2')
-																		.append(
-																				html += fullStar);
+																$('#starBox2').append(html += fullStar);
 
 															}
 															/* $('#starBox2').append(html+=fullStar);
@@ -722,80 +693,48 @@ table tr td {
 															$('#starBox2').append(html+=fullStar);
 															$('#starBox2').append(html+=fullStar); */
 
-														} else if (data[i].str > 4
-																&& data[i].str < 5) {
+														} else if (data[i].str > 4 && data[i].str < 5) {
 															for (var j = 0; j < 4; j++) {
-																$('#starBox2')
-																		.append(
-																				html += fullStar);
+																$('#starBox2').append(html += fullStar);
 															}
-															$('#starBox2')
-																	.append(
-																			html += halfStar);
+															$('#starBox2').append(html += halfStar);
 
 														} else if (data[i].str == 4) {
 															for (var j = 0; j < 4; j++) {
-																$('#starBox2')
-																		.append(
-																				html += fullStar);
+																$('#starBox2').append(html += fullStar);
 															}
-														} else if (data[i].str > 3
-																&& data[i].str < 4) {
+														} else if (data[i].str > 3 && data[i].str < 4) {
 															for (var j = 0; j < 3; j++) {
-																$('#starBox2')
-																		.append(
-																				html += fullStar);
+																$('#starBox2').append(html += fullStar);
 															}
-															$('#starBox2')
-																	.append(
-																			html += halfStar);
+															$('#starBox2').append(html += halfStar);
 														} else if (data[i].str == 3) {
 															for (var j = 0; j < 3; j++) {
-																$('#starBox2')
-																		.append(
-																				html += fullStar);
+																$('#starBox2').append(html += fullStar);
 															}
-														} else if (data[i].str > 2
-																&& data[i].str < 3) {
+														} else if (data[i].str > 2 && data[i].str < 3) {
 															for (var j = 0; j < 2; j++) {
-																$('#starBox2')
-																		.append(
-																				html += fullStar);
+																$('#starBox2').append(html += fullStar);
 															}
-															$('#starBox2')
-																	.append(
-																			html += halfStar);
+															$('#starBox2').append(html += halfStar);
 														} else if (data[i].str == 2) {
 															for (var j = 0; j < 2; j++) {
-																$('#starBox2')
-																		.append(
-																				html += fullStar);
+																$('#starBox2').append(html += fullStar);
 															}
-														} else if (data[i].str > 1
-																&& data[i].str < 2) {
+														} else if (data[i].str > 1 && data[i].str < 2) {
 															for (var j = 0; j < 2; j++) {
-																$('#starBox2')
-																		.append(
-																				html += fullStar);
+																$('#starBox2').append(html += fullStar);
 															}
-															$('#starBox2')
-																	.append(
-																			html += halfStar);
+															$('#starBox2').append(html += halfStar);
 														} else if (data[i].str == 1) {
-															$('#starBox2')
-																	.append(
-																			html += fullStar);
+															$('#starBox2').append(html += fullStar);
 														} else {
-															$('#starBox2')
-																	.append(
-																			html += halfStar);
+															$('#starBox2').append(html += halfStar);
 														}
 														html += '<span style="margin-left:15px; font-size:12px;">'
-																+ data[i].str
-																+ '</span>';
+																+ data[i].str + '</span>';
 														html += '<span style="margin-left:15px; font-size:12px; font-weight:300; color:#aaa;">('
-																+ data[i].cont_cnt
-																+ '개)</span>';
+																+ data[i].cont_cnt + '개)</span>';
 													}
 													html += '</div>';
 													html += '</td>';
@@ -805,14 +744,13 @@ table tr td {
 													if (data[i].str != 0) {
 														html += '<span class="comment">최신 리뷰 </span>'
 																+ data[i].review_cont;
-													} else {
-														html += '<div>';
-														html += '리뷰없음';
-														html += '</div>';
-													}
+													}/* else{
+																												html+='<div>';
+																												html+='리뷰없음';
+																												html+='</div>';
+																											} */
 
-													html += '<button id="pageBtn'
-															+ data[i].mento_idx
+													html += '<button id="pageBtn' + data[i].mento_idx
 															+ '" class="btn" onclick="selectMentor('
 															+ data[i].mento_idx
 															+ ')">고수 페이지로 이동</button>';

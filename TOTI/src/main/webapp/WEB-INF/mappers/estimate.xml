@@ -94,7 +94,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-ma
 		join toti.toti_chatroom rm on rm.room_num = e.est_idx
 		<where> quest_idx=999 and mento_idx = #{mento_idx} </where>
 	</select> -->
-	<select id="getChatList" parameterType="com.yal.toti.song.mentor.domain.ChatList" statementType="CALLABLE">
+	<select id="getChatList" parameterType="com.yal.toti.song.mentor.domain.ChatList" resultMap="chat" statementType="CALLABLE">
 		{call getChatList(#{mento_idx})}
 	</select>
 </mapper>

@@ -68,7 +68,7 @@ color: #a0a0a0;
 text-align: left;
 margin-left: 10%;
 margin-right : 0;
-width :80%;
+width :200px;
 
 white-space: nowrap; 
 overflow: hidden;
@@ -102,7 +102,7 @@ text-overflow: ellipsis;
     </section>
     
         
-    <section id="blog" class="padding-top padding-bottom">
+    <section id="blog" class="padding-bottom">
         <div class="container">
             <div class="row">
                    <div class="col-md">
@@ -147,8 +147,8 @@ text-overflow: ellipsis;
 							
 							var date = new Date(data[i].request_date);
 							var year = date.getFullYear();
-							var month = date.getMonth();
-							var day = date.getDate();
+							var month = (date.getMonth()+1);
+							var day = (date.getDate()-1);
 							
 							html += '<div id="list"><label for="estimateBtn('+data[i].request_idx+')" style="cursor:pointer">';
 							html += '<div><img id="m_photo" src = "<c:url value="/images/user/'+data[i].m_photo+'"/>"</div><br>';
