@@ -7,8 +7,7 @@
 <link href="<c:url value="/css/minjongCss/chat.css" />" rel="stylesheet">
 <title>TOTI</title>
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-<script
-	src="http://ec2-13-125-96-18.ap-northeast-2.compute.amazonaws.com:3000/socket.io/socket.io.js"></script>
+<script src="https://chat.yal-toti.tk/socket.io/socket.io.js"></script>
 
 <style>
 </style>
@@ -50,8 +49,8 @@
 					<div class="demo-content">
 						<!-- container -->
 						<div id="chat" class="container" style="margin: 30px auto;">
-							<div id="backBtn" class="buttons">
-								<a href="http://localhost:8080/toti/chat/chatLogin" onclick="">뒤로가기</a>
+							<div id="buttons">
+								<a href="/toti2/chat/chatLogin" onclick="">뒤로가기</a>
 								<a href='#' id="estBtn">견적서 내용</a> <a href='#'
 									onclick="goRtcPage()">화상채팅</a>
 							</div>
@@ -127,14 +126,14 @@
 		function estlist() {
 
 			$('#chatArea').css('display', 'none');
-			$('#backBtn').css('display', 'none');
+			$('#buttons').css('display', 'none');
 			$('#profileArea').css('display', 'none');
 			$('#list').css('display', 'block');
 
 			$('#chat_box').empty();
 
 			$.ajax({
-				url : 'http://localhost:8080/toti/chat/estlist/' + user,
+				url : '/toti2/chat/estlist/' + user,
 				type : 'GET',
 				success : function(data) {
 					var html = '';
@@ -159,7 +158,7 @@
 			$('#chatRoomList').css('display', 'block');
 
 			$.ajax({
-				url : 'http://localhost:8080/toti/chat/roomlist/' + user,
+				url : '/toti2/chat/roomlist/' + user,
 				type : 'GET',
 				success : function(data) {
 					var html = '';
@@ -192,14 +191,14 @@
 
 		function chat(est_idx, cate_idx, m_idx) {
 
-			$('#backBtn').css('display', 'block');
+			$('#buttons').css('display', 'block');
 			$('#chatArea').css('display', 'inline-block');
 			$('#profileArea').css('display', 'inline-block');
 			$('#list').css('display', 'none');
 			$('#chatRoomList').css('display', 'none');
 			$
 					.ajax({
-						url : 'http://localhost:8080/toti/chat/room/' + est_idx,
+						url : '/toti2/chat/room/' + est_idx,
 						type : 'GET',
 						success : function(data) {
 
@@ -212,7 +211,7 @@
 						}
 					});
 
-			var socket = io.connect('http://ec2-13-125-96-18.ap-northeast-2.compute.amazonaws.com:3000/');
+			var socket = io.connect('https://chat.yal-toti.tk/');
 
 			var room_num = $('input#chat_room').val();
 
@@ -358,7 +357,7 @@
 				$
 						.ajax({
 
-							url : 'http://localhost:8080/toti/chat/mentorcheck/'
+							url : '/toti2/chat/mentorcheck/'
 									+ user + '/' + room_num,
 							type : 'GET',
 							success : function(data) {
@@ -374,7 +373,7 @@
 			function chatTarget(user) {
 				$
 						.ajax({
-							url : 'http://localhost:8080/toti/chat/room/'
+							url : '/toti2/chat/room/'
 									+ m_idx + '/' + user,
 							type : 'GET',
 							success : function(data) {
@@ -389,7 +388,7 @@
 			function chatUser(user) {
 				$
 						.ajax({
-							url : 'http://localhost:8080/toti/chat/room/name/'
+							url : '/toti2/chat/room/name/'
 									+ user,
 							type : 'GET',
 							success : function(data) {
@@ -404,7 +403,7 @@
 				if ($('#check').val() == 'Y') {
 					$
 							.ajax({
-								url : 'http://localhost:8080/toti/chat/profile/mentor/'
+								url : '/toti2/chat/profile/mentor/'
 										+ user,
 								type : 'GET',
 								success : function(data) {
@@ -439,7 +438,7 @@
 					
 					$
 							.ajax({
-								url : 'http://localhost:8080/toti/chat/checkreq/'
+								url : '/toti2/chat/checkreq/'
 										+ room_num,
 								type : 'GET',
 								success : function(data) {
@@ -448,7 +447,7 @@
 									
 									
 									$.ajax({
-										url : 'http://localhost:8080/toti/requestData',
+										url : '/toti2/requestData',
 										type : 'GET',
 										data : {
 											request_idx : req_idx,
@@ -495,7 +494,7 @@
 				
 				$
 						.ajax({
-							url : 'http://localhost:8080/toti/chat/profile/mentor/review/'
+							url : '/toti2/chat/profile/mentor/review/'
 									+ user,
 							type : 'GET',
 							success : function(data) {
@@ -545,7 +544,7 @@
 			html += '<a href=# onclick="goChatPage()">화상 종료</a></div>';
 			
 /* 			html += '<iframe src="/toti/chat/rtc?roomnum= '+ room_num +'"></iframe>'; */
-			html += '<iframe src="/toti/chat/rtc/' + roomnum + '/' + target + '/' + user +'" onLoad="autoResize(this);"></iframe>';
+			html += '<iframe src="/toti2/chat/rtc/' + roomnum + '/' + target + '/' + user +'" onLoad="autoResize(this);"></iframe>';
  
 				$('#rtcPage').html(html);
 				

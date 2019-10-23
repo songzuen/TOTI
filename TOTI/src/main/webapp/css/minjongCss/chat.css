@@ -7,10 +7,10 @@
 
 #chatArea {
 	border: 1px solid black;
-	width: 72%;
+	width: 73%;
 	display: none;
 	float: left;
-	margin-right: 20px;
+	margin-right: 10px;
 	border: 0;
 }
 
@@ -174,7 +174,6 @@ hr {
 
 .reviewStar {
 	display: inline-block;
-	
 }
 
 .reviewDate {
@@ -243,7 +242,11 @@ hr {
 	font-weight: bold;
 }
 
-.buttons a {
+#buttons {
+	margin-bottom: 5px;
+}
+
+#buttons a {
 	margin-right: 5px;
 }
 

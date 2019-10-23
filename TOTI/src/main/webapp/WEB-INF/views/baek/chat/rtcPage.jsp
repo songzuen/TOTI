@@ -4,6 +4,8 @@
 <head>
 
 <title>toti-WebRTC</title>
+<script src="https://rtc.yal-toti.tk/socket.io/socket.io.js"></script>
+<script src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
 
 <style>
 body {
@@ -42,10 +44,7 @@ video {
 		</div>
 	</div>
 
-	<!-- This file is automatically added/served when running "node index.js". -->
-	<script
-		src="http://ec2-13-125-96-18.ap-northeast-2.compute.amazonaws.com:4000/socket.io/socket.io.js"></script>
-	<script src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
+
 	<script>
 	
 	'use strict';
@@ -75,7 +74,12 @@ video {
 
 	var pcConfig = {
 	    'iceServers': [{
-	        'urls': 'stun:stun.l.google.com:19302'
+	        urls: 'stun:stun.l.google.com:19302'
+	  },
+	  {
+			url: 'turn:numb.viagenie.ca',
+			credential: 'muazkh',
+			username: 'webrtc@live.com'
 	  }]
 	};
 
@@ -91,7 +95,7 @@ video {
 	// Could prompt for room name:
 	// room = prompt('Enter room name:');
 
-	var socket = io.connect('http://ec2-13-125-96-18.ap-northeast-2.compute.amazonaws.com:4000/');
+	var socket = io.connect('https://rtc.yal-toti.tk/');
 
 	if (room !== '') {
 	    socket.emit('create or join', room);
@@ -185,7 +189,7 @@ video {
 
 	if (location.hostname !== 'localhost') {
 	    requestTurn(
-	        'https://computeengineondemand.appspot.com/turn?username=41784574&key=4080218913'
+	        'stun:stun.l.google.com:19302'
 	    );
 	}
 
@@ -212,9 +216,9 @@ video {
 
 	function createPeerConnection() {
 	    try {
-	        pc = new RTCPeerConnection(null);
+	        pc = new RTCPeerConnection(pcConfig);
 	        pc.onicecandidate = handleIceCandidate;
-	        pc.onaddstream = handleRemoteStreamAdded;
+	        pc.onaddstream = handleRemoteStreamAdded;h
 	        pc.onremovestream = handleRemoteStreamRemoved;
 	        console.log('Created RTCPeerConnnection');
 	    } catch (e) {
@@ -262,20 +266,20 @@ video {
 	}
 
 	function onCreateSessionDescriptionError(error) {
-	    trace('Failed to create session description: ' + error.toString());
+	    console.log('Failed to create session description: ' + error.toString());
 	}
 
 	function requestTurn(turnURL) {
-	    var turnExists = false;
-	    for (var i in pcConfig.iceServers) {
+	    var turnExists = true;
+	    /* for (var i in pcConfig.iceServers) {
 	        if (pcConfig.iceServers[i].urls.substr(0, 5) === 'turn:') {
 	            turnExists = true;
 	            turnReady = true;
 	            break;
 	        }
-	    }
+	    } */
 	    if (!turnExists) {
-	        console.log('Getting TURN server from ', turnURL);
+	        /* console.log('Getting TURN server from ', turnURL);
 	        // No TURN server. Get one from computeengineondemand.appspot.com:
 	        var xhr = new XMLHttpRequest();
 	        xhr.onreadystatechange = function () {
@@ -290,7 +294,7 @@ video {
 	            }
 	        };
 	        xhr.open('GET', turnURL, true);
-	        xhr.send();
+	        xhr.send(); */
 	    }
 	}
 

@@ -7,7 +7,7 @@
 <link href="<c:url value="/css/minjongCss/chat.css" />" rel="stylesheet">
 <title>TOTI</title>
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-<script src="http://13.209.47.16:82/socket.io/socket.io.js"></script>
+<script src="http://toti-node-server.tk:3000/socket.io/socket.io.js"></script>
 </head>
 <!--/head-->
 <body>
@@ -38,7 +38,8 @@
 						<!-- container -->
 						<div class="container" style="margin: 50px auto;">
 							<div id=backBtn>
-								<a href="http://13.209.47.16:8080/toti/chat/chatLogin" onclick="">뒤로가기</a>
+								<a href="localhost:8080/toti/chat/chatLogin"
+									onclick="">뒤로가기</a>
 							</div>
 							<div id="chatArea">
 								<div id="chatInfo"></div>
@@ -54,7 +55,7 @@
 
 							</div>
 						</div>
-						
+
 
 						<!-- end home variation -->
 						<!-- end component -->
@@ -67,7 +68,7 @@
 		</div>
 	</section>
 	<!--/#blog-->
-<%-- 
+	<%-- 
 	<%@ include file="/WEB-INF/views/frame/footer.jsp"%> --%>
 
 	<script>
@@ -80,18 +81,34 @@
 
 		$(document).ready(function() {
 			/* alert(${est_idx} +', '+ ${cate_idx} +', '+ ${user} +', '+ ${m_idx}); */
-			
-			var est_idx = ${est_idx};
-			var cate_idx = ${cate_idx};
-			var user = ${user};
-			var m_idx = ${m_idx};
-			
+
+			var est_idx = $
+			{
+				est_idx
+			}
+			;
+			var cate_idx = $
+			{
+				cate_idx
+			}
+			;
+			var user = $
+			{
+				user
+			}
+			;
+			var m_idx = $
+			{
+				m_idx
+			}
+			;
+
 			chat(est_idx, cate_idx, user, m_idx);
-			
+
 		});
 
 		function chat(est_idx, cate_idx, user, m_idx) {
-			alert(est_idx +', '+ cate_idx +', '+ user +', '+ m_idx);
+			alert(est_idx + ', ' + cate_idx + ', ' + user + ', ' + m_idx);
 			$('#backBtn').css('display', 'block');
 			$('#chatArea').css('display', 'inline-block');
 			$('#profileArea').css('display', 'inline-block');
@@ -99,8 +116,9 @@
 			$('#chatRoomList').css('display', 'none');
 			$
 					.ajax({
-						url : 'http://13.209.47.16:8080/toti/chat/room/' + est_idx
-								+ '/' + cate_idx + '/' + user + '/' + m_idx,
+						url : 'localhost:8080/toti/chat/room/'
+								+ est_idx + '/' + cate_idx + '/' + user + '/'
+								+ m_idx,
 						type : 'GET',
 						success : function(data) {
 
@@ -113,8 +131,7 @@
 						}
 					});
 
-			var socket = io
-					.connect('http://13.209.47.16:82/');
+			var socket = io.connect('http://toti-node-server.tk:3000/');
 
 			var room_num = est_idx();
 
@@ -122,16 +139,15 @@
 			// alert(room_num);
 
 			setTimeout(function() {
-			 	socket.emit("join", {
-			 	room : $('#chat_room').val(),
-			 	user : user,
-			 	target : m_idx
-			 	});
+				socket.emit("join", {
+					room : $('#chat_room').val(),
+					user : user,
+					target : m_idx
+				});
 			}, 500);
 
-			
 			loadChatLog();
-			
+
 			socket.on("receiv_msg", function(data) {
 				var receiveMsg = '';
 				receiveMsg += '<div id = "msgbox">';
@@ -180,60 +196,68 @@
 				}
 			});
 
-			$("#msg_process").click(function() {
+			$("#msg_process").click(
+					function() {
 
-				// 현재 시간
-				var d = new Date();
-				var currentDate = d.getFullYear() + "년 " + (d.getMonth() + 1)
-				+ "월 " + d.getDate() + "일 " + week[d.getDay()] + "요일 ";
-				var currentTime = d.getHours() + ":" + d.getMinutes();
+						// 현재 시간
+						var d = new Date();
+						var currentDate = d.getFullYear() + "년 "
+								+ (d.getMonth() + 1) + "월 " + d.getDate()
+								+ "일 " + week[d.getDay()] + "요일 ";
+						var currentTime = d.getHours() + ":" + d.getMinutes();
 
-				socket.emit("send_msg", {
-					room : $('#chat_room').val(),
-					useridx : user,
-					username : $('#user').val(),
-					message : $("#input_msg").val(),
-					time : currentDate + currentTime
-				});
-				$("#input_msg").val("");
-			});
-			
-			function loadChatLog(){
-				socket.on("loadChatLog", function(data) {
+						socket.emit("send_msg", {
+							room : $('#chat_room').val(),
+							useridx : user,
+							username : $('#user').val(),
+							message : $("#input_msg").val(),
+							time : currentDate + currentTime
+						});
+						$("#input_msg").val("");
+					});
 
-					var html = '';
+			function loadChatLog() {
+				socket
+						.on(
+								"loadChatLog",
+								function(data) {
 
-					for (var i = 0; i < data.length; i++) {
-						/* 					console.log(data[i]); */
+									var html = '';
 
-						if (user == data[i].room_user) {
-							html += '<div id = "msgbox" class="text_right">';
-							html += '<span class = "time">' + data[i].message_date
-									+ '</span>';
-							html += '<div id = "msg" class = "sendbox">';
-							html += '나 : ' + data[i].message;
-							html += '</div></div>';
+									for (var i = 0; i < data.length; i++) {
+										/* 					console.log(data[i]); */
 
-						} else {
-							html += '<div id = "msgbox">';
-							html += '<div id = "msg" class = "receivebox">';
-							html += data[i].user_name + ' : ' + data[i].message;
-							html += '</div><span class = "time">'
-									+ data[i].message_date + '</span></div>';
-						}
+										if (user == data[i].room_user) {
+											html += '<div id = "msgbox" class="text_right">';
+											html += '<span class = "time">'
+													+ data[i].message_date
+													+ '</span>';
+											html += '<div id = "msg" class = "sendbox">';
+											html += '나 : ' + data[i].message;
+											html += '</div></div>';
 
-						$('#chat_box').html(html);
-					}
-					scrollDown();
-				});
-				
+										} else {
+											html += '<div id = "msgbox">';
+											html += '<div id = "msg" class = "receivebox">';
+											html += data[i].user_name + ' : '
+													+ data[i].message;
+											html += '</div><span class = "time">'
+													+ data[i].message_date
+													+ '</span></div>';
+										}
+
+										$('#chat_box').html(html);
+									}
+									scrollDown();
+								});
+
 			}
 
 			function mentorCheck(user) {
 				$
 						.ajax({
 
-							url : 'http://13.209.47.16:8080/toti/chat/mentorcheck/'
+							url : 'localhost:8080/toti/chat/mentorcheck/'
 									+ user,
 							type : 'GET',
 							success : function(data) {
@@ -249,7 +273,7 @@
 			function chatTarget(user) {
 				$
 						.ajax({
-							url : 'http://13.209.47.16:8080/toti/chat/room/'
+							url : 'localhost:8080/toti/chat/room/'
 									+ m_idx + '/' + user,
 							type : 'GET',
 							success : function(data) {
@@ -264,7 +288,7 @@
 			function chatUser(user) {
 				$
 						.ajax({
-							url : 'http://13.209.47.16:8080/toti/chat/room/'
+							url : 'localhost:8080/toti/chat/room/'
 									+ user,
 							type : 'GET',
 							success : function(data) {
@@ -279,7 +303,7 @@
 				if ($('#check').val() == 'Y') {
 					$
 							.ajax({
-								url : 'http://13.209.47.16:8080/toti/chat/profile/mentor/'
+								url : 'localhost:8080/toti/chat/profile/mentor/'
 										+ user,
 								type : 'GET',
 								success : function(data) {
@@ -315,7 +339,7 @@
 			function mentorProfileReview(user) {
 				$
 						.ajax({
-							url : 'http://13.209.47.16:8080/toti/chat/profile/mentor/review/'
+							url : 'localhost:8080/toti/chat/profile/mentor/review/'
 									+ user,
 							type : 'GET',
 							success : function(data) {
@@ -337,12 +361,9 @@
 
 		};
 
-
 		function scrollDown() {
 			$('#chat_box').scrollTop($('#chat_box').prop('scrollHeight'));
 		}
-	
-
 	</script>
 </body>
 
