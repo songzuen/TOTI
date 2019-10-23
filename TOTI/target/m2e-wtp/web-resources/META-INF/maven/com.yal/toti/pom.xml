@@ -225,6 +225,12 @@
 			<version>2.5</version>
 		</dependency>
 
+		<!-- 웹 소켓 -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-websocket</artifactId>
+			<version>4.2.4.RELEASE</version>
+		</dependency>
 
 	</dependencies>
 	<build>

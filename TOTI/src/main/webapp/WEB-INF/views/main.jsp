@@ -79,9 +79,10 @@
     <script>
     	
     	var idx = "${ idx }";
-    	
+        	
 		$(document).ready(function() {
 			kategorieList();
+					
 		});
 		
 		function kategorieList() {
