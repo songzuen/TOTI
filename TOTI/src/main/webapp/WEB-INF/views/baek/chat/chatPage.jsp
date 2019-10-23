@@ -50,9 +50,8 @@
 						<!-- container -->
 						<div id="chat" class="container" style="margin: 30px auto;">
 							<div id="buttons">
-								<a href="/toti2/chat/chatLogin" onclick="">뒤로가기</a>
-								<a href='#' id="estBtn">견적서 내용</a> <a href='#'
-									onclick="goRtcPage()">화상채팅</a>
+								<a href="/toti/chat/chatLogin" onclick="">뒤로가기</a> <a href='#'
+									id="estBtn">견적서 내용</a> <a href='#' onclick="goRtcPage()">화상채팅</a>
 							</div>
 							<div id="chatArea">
 								<div id="chatInfo"></div>
@@ -133,7 +132,7 @@
 			$('#chat_box').empty();
 
 			$.ajax({
-				url : '/toti2/chat/estlist/' + user,
+				url : '/toti/chat/estlist/' + user,
 				type : 'GET',
 				success : function(data) {
 					var html = '';
@@ -141,10 +140,8 @@
 
 						html += '<tr>';
 						html += '<td onclick="chat(' + '\'' + data[i].est_idx
-								+ '\'' + ', ' + '\'' + data[i].cate_idx + '\''
-								+ ', ' + '\'' + data[i].m_idx + '\'' + ');">'
+								+ '\'' + ', ' + '\'' + data[i].m_idx + '\'' + ');">'
 								+ data[i].est_idx + '</td>';
-						html += '<td>' + data[i].cate_idx + '</td>';
 						html += '<td>' + data[i].mento_idx + '</td>';
 						html += '<td>' + data[i].m_idx + '</td>';
 						html += '<td>' + data[i].est_price + '</td>';
@@ -158,7 +155,7 @@
 			$('#chatRoomList').css('display', 'block');
 
 			$.ajax({
-				url : '/toti2/chat/roomlist/' + user,
+				url : '/toti/chat/roomlist/' + user,
 				type : 'GET',
 				success : function(data) {
 					var html = '';
@@ -177,8 +174,7 @@
 						html += '<tr>';
 						html += '<td>' + data[i].cate_name + '</td>';
 						html += '<td onclick="chat(' + '\'' + data[i].room_num
-								+ '\'' + ', ' + '\'' + data[i].room_cat + '\''
-								+ ', ' + '\'' + data[i].room_target + '\''
+								+ '\'' + ', ' + '\'' + data[i].room_target + '\''
 								+ ');">' + name + '</td>';
 						html += '<td>' + data[i].last_msg + '</td>';
 						html += '</tr>';
@@ -189,7 +185,7 @@
 
 		}
 
-		function chat(est_idx, cate_idx, m_idx) {
+		function chat(est_idx, m_idx) {
 
 			$('#buttons').css('display', 'block');
 			$('#chatArea').css('display', 'inline-block');
@@ -198,7 +194,7 @@
 			$('#chatRoomList').css('display', 'none');
 			$
 					.ajax({
-						url : '/toti2/chat/room/' + est_idx,
+						url : '/toti/chat/room/' + est_idx,
 						type : 'GET',
 						success : function(data) {
 
@@ -357,7 +353,7 @@
 				$
 						.ajax({
 
-							url : '/toti2/chat/mentorcheck/'
+							url : '/toti/chat/mentorcheck/'
 									+ user + '/' + room_num,
 							type : 'GET',
 							success : function(data) {
@@ -371,9 +367,10 @@
 			}
 
 			function chatTarget(user) {
+				
 				$
 						.ajax({
-							url : '/toti2/chat/room/'
+							url : '/toti/chat/room/'
 									+ m_idx + '/' + user,
 							type : 'GET',
 							success : function(data) {
@@ -388,7 +385,7 @@
 			function chatUser(user) {
 				$
 						.ajax({
-							url : '/toti2/chat/room/name/'
+							url : '/toti/chat/room/name/'
 									+ user,
 							type : 'GET',
 							success : function(data) {
@@ -403,7 +400,7 @@
 				if ($('#check').val() == 'Y') {
 					$
 							.ajax({
-								url : '/toti2/chat/profile/mentor/'
+								url : '/toti/chat/profile/mentor/'
 										+ user,
 								type : 'GET',
 								success : function(data) {
@@ -438,7 +435,7 @@
 					
 					$
 							.ajax({
-								url : '/toti2/chat/checkreq/'
+								url : '/toti/chat/checkreq/'
 										+ room_num,
 								type : 'GET',
 								success : function(data) {
@@ -447,7 +444,7 @@
 									
 									
 									$.ajax({
-										url : '/toti2/requestData',
+										url : '/toti/requestData',
 										type : 'GET',
 										data : {
 											request_idx : req_idx,
@@ -494,7 +491,7 @@
 				
 				$
 						.ajax({
-							url : '/toti2/chat/profile/mentor/review/'
+							url : '/toti/chat/profile/mentor/review/'
 									+ user,
 							type : 'GET',
 							success : function(data) {
@@ -544,7 +541,7 @@
 			html += '<a href=# onclick="goChatPage()">화상 종료</a></div>';
 			
 /* 			html += '<iframe src="/toti/chat/rtc?roomnum= '+ room_num +'"></iframe>'; */
-			html += '<iframe src="/toti2/chat/rtc/' + roomnum + '/' + target + '/' + user +'" onLoad="autoResize(this);"></iframe>';
+			html += '<iframe src="/toti/chat/rtc/' + roomnum + '/' + target + '/' + user +'" onLoad="autoResize(this);"></iframe>';
  
 				$('#rtcPage').html(html);
 				
