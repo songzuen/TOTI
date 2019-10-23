@@ -65,10 +65,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		room_target = #{param1};
 	</select>
 
-	<select id="selectMentorCheck" resultType="String">
-		select m_ver from
-		toti.toti_member where m_idx =
-		#{param1}
+	<select id="selectMentorCheck" resultType="_int">
+		select room_user from toti.toti_chatroom where
+		room_num = #{param1};
 	</select>
 
 	<insert id="insertChatRoom">
@@ -106,6 +105,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 
 	<select id="selectReqNum" resultType="_int">
-		select request_idx from toti.toti_estimatee where est_idx = #{param1};
+		select request_idx from
+		toti.toti_estimatee where est_idx = #{param1};
 	</select>
 </mapper>

@@ -1,243 +1,110 @@
-<%-- <%@ page language="java" contentType="text/html; charset=UTF-8"
+<%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-
 <head>
-<%@include file="/WEB-INF/views/frame/contents/header.jsp"%>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<!-- title -->
-<title>SamplePage</title>
+<%@ include file="/WEB-INF/views/frame/header.jsp"%>
+<link href="<c:url value="/css/minjongCss/chat.css" />" rel="stylesheet">
+<title>TOTI</title>
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-<script
-	src="http://ec2-13-125-96-18.ap-northeast-2.compute.amazonaws.com:3000/socket.io/socket.io.js"></script>
-<!-- <script src="http://13.209.47.16:82/socket.io/socket.io.js"></script> -->
-<style>
-#content {
-	width: 100%;
-	height: 500px;
-}
-
-#chatArea {
-	border: 1px solid black;
-	width: 72%;
-	display: none;
-	background-color: #c1c1c1;
-	float: left;
-	margin-right: 20px;
-}
-
-#profileArea {
-	border: 1px solid black;
-	width: 25%;
-	display: none;
-	min-height: 500px;
-}
-
-#chat_box {
-	width: 100%;
-	height: 500px;
-	min-height: 500px;
-	border: 1px solid black;
-	position: relative;
-	overflow: auto;
-}
-
-#list {
-	width: 700px;
-	height: 500px;
-	margin: 0 auto;
-}
-
-#estListTable {
-	width: 100%;
-	border-collapse: collapse;
-}
-
-#chatRoomListTable {
-	width: 100%;
-	border-collapse: collapse;
-}
-
-#chatRoomList {
-	padding-top: 50px;
-}
-
-table tr td {
-	border: 1px solid black;
-	padding: 5px;
-}
-
-#input_msg {
-	width: 80%;
-	margin: 0;
-	padding: 0;
-}
-
-#msg_process {
-	width: 15%;
-	margin: 0;
-	padding: 0;
-}
-
-#msgbox {
-	width: 100%;
-	padding: 2px 10px;
-}
-
-#msg {
-	display: inline-block;
-	padding: 10px;
-	border-radius: 5%;
-	background-color: white;
-}
-
-.time {
-	font-size: 11px;
-	color: gray;
-	padding: 0 5px;
-}
-
-.receivebox {
-	font-weight: bold;
-}
-
-.alarmbox {
-	color: gray;
-	font-weight: bold;
-}
-
-.text_right {
-	text-align: right;
-}
-
-.text_center {
-	text-align: center;
-}
-
-.area {
-	margin: 0 auto;
-	background-color: blue;
-}
-
-.profileTitle {
-	text-align: center;
-	font-size: 24px;
-	font-weight: bold;
-}
-
-.profileImg {
-	width: 100px;
-	height: 100px;
-	border: 1px solid black;
-	border-radius: 50%;
-	margin: 10px auto;
-}
-
-.profileName {
-	text-align: center;
-}
-
-.profileSubTitle {
-	margin: 10px 0 2px 2px;
-	font-size: 11px;
-	color: gray;
-	margin-left: 2px;
-	font-size: 11px;
-}
-
-.profileSubContent {
-	margin: 0 2px;
-}
-
-hr {
-	margin: 0;
-	padding: 0;
-}
-
-.review {
-	margin: 10px 2px;
-}
-
-.reviewName {
-	font-size: 14px;
-}
-
-.reviewStar {
-	font-weight: bold;
-}
-
-.reviewDate {
-	color: gray;
-	margin-left: 2px;
-	font-size: 11px;
-}
-</style>
+<script src="http://localhost:3000/socket.io/socket.io.js"></script>
 </head>
-
+<!--/head-->
 <body>
-	<%@include file="/WEB-INF/views/frame/loading.jsp"%>
-	<!-- page container -->
-	<div class="page-container">
-		<%@include file="/WEB-INF/views/frame/contents/contentsHeader.jsp"%>
-		<%@include file="/WEB-INF/views/frame/contents/nav.jsp"%>
-		<!-- demo content -->
-		<div class="demo-content">
-			<!-- container -->
-			<div class="container" style="margin: 50px auto;">
-				<div id=backBtn>
-					<a href="http://13.209.47.16:8080/toti/chat/chatLogin" onclick="">뒤로가기</a>
-				</div>
-				<div id="chatArea">
-					<div id="chatInfo"></div>
-					<div id="targetName"></div>
-					<div id="userName"></div>
-					<div id="chat_box"></div>
-					<input type="text" id="input_msg">
-					<button id="msg_process">전송</button>
-				</div>
-				<div id="profileArea">
-
-					<div id="profile"></div>
-
+	<%@ include file="/WEB-INF/views/frame/nav.jsp"%>
+	<!--/#header-->
+	<section id="page-breadcrumb">
+		<div class="vertical-center sun">
+			<div class="container">
+				<div class="row">
+					<div class="action">
+						<div class="col-sm-12">
+							<h1 class="title">채 팅</h1>
+							<p>-</p>
+						</div>
+					</div>
 				</div>
 			</div>
-			<div id="list">
-				<div id="estList">
-					<table id="estListTable">
-						<tr>
-							<td>est_idx</td>
-							<td>cate_idx</td>
-							<td>mentor_idx</td>
-							<td>m_idx</td>
-							<td>est_price</td>
-							<td>est_const</td>
-						</tr>
-					</table>
-				</div>
-				<div id="chatRoomList">
-					<table id="chatRoomListTable">
-						<tr>
-							<td>분야</td>
-							<td>상대방</td>
-							<td>마지막 메시지</td>
-						</tr>
-					</table>
-				</div>
-			</div>
-
-			<!-- end home variation -->
-			<!-- end component -->
 		</div>
-		<!-- end container -->
+	</section>
+	<!--/#action-->
 
-		<!-- end demo content -->
-		<!-- footer -->
-		<%@include file="/WEB-INF/views/frame/contents/footer.jsp"%>
-	</div>
+	<section id="blog" class="padding-top padding-bottom">
+		<div id="myModal" class="modal">
+
+			<!-- Modal content -->
+			<div class="modal-content">
+				<span class="close">&times;</span>
+				<div id="estInfo"></div>
+			</div>
+
+		</div>
+		<div class="container">
+			<div class="row">
+				<div class="col-md">
+					<!-- 제공하는 컨텐츠 이렇게 넣으세여 예시↓ -->
+					<div class="demo-content">
+						<!-- container -->
+						<div class="container" style="margin: 50px auto;">
+							<div id=backBtn>
+								<a href="http://localhost:8080/toti/chat/chatLogin" onclick="">뒤로가기</a>
+							</div>
+							<div id="chatArea">
+								<div id="chatInfo"></div>
+								<div id="targetName"></div>
+								<div id="userName"></div>
+								<button id="myBtn">견적서 내용</button>
+								<div id="chat_box"></div>
+								<input type="text" id="input_msg">
+								<button id="msg_process">전송</button>
+							</div>
+							<div id="profileArea">
+
+								<div id="profile"></div>
+
+							</div>
+						</div>
+						<div id="list">
+							<div id="estList">
+								<table id="estListTable">
+									<tr>
+										<td>est_idx</td>
+										<td>cate_idx</td>
+										<td>mentor_idx</td>
+										<td>m_idx</td>
+										<td>est_price</td>
+										<td>est_const</td>
+									</tr>
+								</table>
+							</div>
+							<div id="chatRoomList">
+								<table id="chatRoomListTable">
+									<tr>
+										<td>분야</td>
+										<td>상대방</td>
+										<td>마지막 메시지</td>
+									</tr>
+								</table>
+							</div>
+						</div>
+
+						<!-- end home variation -->
+						<!-- end component -->
+					</div>
+					<!-- 여기까지 -->
+
+
+				</div>
+			</div>
+		</div>
+	</section>
+	<!--/#blog-->
+
+	<%@ include file="/WEB-INF/views/frame/footer.jsp"%>
+
 	<script>
 		// 사용자 계정 정보
-		var user = '${loginInfo.m_idx}';
+		var user = (${idx});
 
 		// 요일 구할 때 사용할 배열
 		var week = new Array('일', '월', '화', '수', '목', '금', '토');
@@ -258,7 +125,7 @@ hr {
 			$('#chat_box').empty();
 
 			$.ajax({
-				url : 'http://13.209.47.16:8080/toti/chat/estlist/' + user,
+				url : 'http://localhost:8080/toti/chat/estlist/' + user,
 				type : 'GET',
 				success : function(data) {
 					var html = '';
@@ -283,7 +150,7 @@ hr {
 			$('#chatRoomList').css('display', 'block');
 
 			$.ajax({
-				url : 'http://13.209.47.16:8080/toti/chat/roomlist/' + user,
+				url : 'http://localhost:8080/toti/chat/roomlist/' + user,
 				type : 'GET',
 				success : function(data) {
 					var html = '';
@@ -323,22 +190,20 @@ hr {
 			$('#chatRoomList').css('display', 'none');
 			$
 					.ajax({
-						url : 'http://13.209.47.16:8080/toti/chat/room/' + est_idx
-								+ '/' + cate_idx + '/' + user + '/' + m_idx,
+						url : 'http://localhost:8080/toti/chat/room/' + est_idx,
 						type : 'GET',
 						success : function(data) {
 
 							var html = '';
-							html += '<input type="hidden" id="chat_room" value="' + data + '">'
+							html += '채팅방 번호 <input type="text" id="chat_room" value="' + data + '">'
 							$('#chatInfo').html(html);
-							mentorCheck(user);
+							mentorCheck(m_idx);
 							chatTarget(user);
 							chatUser(user);
 						}
 					});
 
-			var socket = io
-					.connect('http://ec2-13-125-96-18.ap-northeast-2.compute.amazonaws.com:3000/');
+			var socket = io.connect('http://localhost:3000/');
 
 			var room_num = $('input#chat_room').val();
 
@@ -352,6 +217,20 @@ hr {
 					target : m_idx
 				});
 			}, 500);
+
+			socket.on("loadEst", function(data) {
+
+				var html = '';
+
+				for (var i = 0; i < data.length; i++) {
+					html += '<div id = "msg" class = "alarmbox">';
+					html += '금액 : ' + data[i].price + '<br>' + data[i].cont;
+					html += '</div>';
+				}
+				var bannerOffset = $('.topFixBanner').offset();
+
+				$('#estInfo').html(html);
+			});
 
 			socket.on("loadChatLog", function(data) {
 
@@ -453,7 +332,7 @@ hr {
 				$
 						.ajax({
 
-							url : 'http://13.209.47.16:8080/toti/chat/mentorcheck/'
+							url : 'http://localhost:8080/toti/chat/mentorcheck/'
 									+ user,
 							type : 'GET',
 							success : function(data) {
@@ -469,13 +348,13 @@ hr {
 			function chatTarget(user) {
 				$
 						.ajax({
-							url : 'http://13.209.47.16:8080/toti/chat/room/'
+							url : 'http://localhost:8080/toti/chat/room/'
 									+ m_idx + '/' + user,
 							type : 'GET',
 							success : function(data) {
 
 								var html = '';
-								html += '<input type="hidden" id="target" value="' + data + '">'
+								html += '상대방 <input type="text" id="target" value="' + data + '">'
 								$('#targetName').html(html);
 							}
 						});
@@ -484,13 +363,13 @@ hr {
 			function chatUser(user) {
 				$
 						.ajax({
-							url : 'http://13.209.47.16:8080/toti/chat/room/'
+							url : 'http://localhost:8080/toti/chat/room/name/'
 									+ user,
 							type : 'GET',
 							success : function(data) {
 								// alert(data);
 								var html = '';
-								html += '<input type="hidden" id="user" value="' + data + '">'
+								html += '사용자 <input type="text" id="user" value="' + data + '">'
 								$('#userName').html(html);
 							}
 						});
@@ -499,7 +378,7 @@ hr {
 				if ($('#check').val() == 'Y') {
 					$
 							.ajax({
-								url : 'http://13.209.47.16:8080/toti/chat/profile/mentor/'
+								url : 'http://localhost:8080/toti/chat/profile/mentor/'
 										+ user,
 								type : 'GET',
 								success : function(data) {
@@ -529,13 +408,65 @@ hr {
 							});
 
 				}
-			}
-			;
+				else {
+					
+					var room_num = $('input#chat_room').val();
+					
+					$
+							.ajax({
+								url : 'http://localhost:8080/toti/chat/checkreq/'
+										+ room_num,
+								type : 'GET',
+								success : function(data) {
+									var req_idx = data;
+									
+									
+									
+									$.ajax({
+										url : 'http://localhost:8080/toti/requestData',
+										type : 'GET',
+										data : {
+											request_idx : req_idx,
+											m_idx : user
+										},
+										success : function(data) {
+											
+											var html = '';
+											
+											html += '<div class ="text_center"><img src="<c:url value="/images/user/'+data.userInfo.m_photo+'" />" class = "profileImg"><div>';
+											html += '<div id="requesr_user"><p>'+data.request_date+'</p>';
+											html += '<h2>'+data.cate_name+'('+data.service_name+')</h2><h3>'+data.userInfo.m_name+'님</h3></div>';
+											html += '<div id="request_con">'
+											
+											for (var i = 0; i < data.answer.length; i++) {
+												html += '<p class="con_p1">'+data.answer[i].quest_name+'</p>';
+												html += '<p class="con_p2">'+data.answer[i].answer_cont+'</p>';			
+											}
+											
+											html += '</div>';
+
+											$('#profile').append(html);
+											
+										}
+
+									});
+								}
+							});
+
+				}
+				
+				
+				
+				
+				
+				
+				
+			};
 
 			function mentorProfileReview(user) {
 				$
 						.ajax({
-							url : 'http://13.209.47.16:8080/toti/chat/profile/mentor/review/'
+							url : 'http://localhost:8080/toti/chat/profile/mentor/review/'
 									+ user,
 							type : 'GET',
 							success : function(data) {
@@ -560,8 +491,43 @@ hr {
 		function scrollDown() {
 			$('#chat_box').scrollTop($('#chat_box').prop('scrollHeight'));
 		}
+
+		$("#chat_box").scroll(function() { //window에 스크롤링이 발생하면
+			if ($(document).scrollTop() > bannerOffset.top) { // 위치 및 사이즈를 파악하여 미리 정한 css class를 add 또는 remove 합니다.
+				$('.topFixBanner').addClass('topFixBannerFixed');
+			} else {
+				$('.topFixBanner').removeClass('topFixBannerFixed');
+			}
+
+		});
+
+		// Get the modal
+		var modal = document.getElementById('myModal');
+
+		// Get the button that opens the modal
+		var btn = document.getElementById("myBtn");
+
+		// Get the <span> element that closes the modal
+		var span = document.getElementsByClassName("close")[0];
+
+		// When the user clicks on the button, open the modal 
+		btn.onclick = function() {
+			modal.style.display = "block";
+		}
+
+		// When the user clicks on <span> (x), close the modal
+		span.onclick = function() {
+			modal.style.display = "none";
+		}
+
+		// When the user clicks anywhere outside of the modal, close it
+		window.onclick = function(event) {
+			if (event.target == modal) {
+				modal.style.display = "none";
+			}
+		}
+		
 	</script>
 </body>
 
 </html>
- --%>

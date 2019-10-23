@@ -7,7 +7,10 @@
 <link href="<c:url value="/css/minjongCss/chat.css" />" rel="stylesheet">
 <title>TOTI</title>
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-<script src="http://localhost:3000/socket.io/socket.io.js"></script>
+<script src="https://chat.yal-toti.tk/socket.io/socket.io.js"></script>
+
+<style>
+</style>
 </head>
 <!--/head-->
 <body>
@@ -30,7 +33,7 @@
 	<!--/#action-->
 
 	<section id="blog" class="padding-top padding-bottom">
-		<div id="myModal" class="modal">
+		<div id="estModal" class="modal">
 
 			<!-- Modal content -->
 			<div class="modal-content">
@@ -45,18 +48,21 @@
 					<!-- 제공하는 컨텐츠 이렇게 넣으세여 예시↓ -->
 					<div class="demo-content">
 						<!-- container -->
-						<div class="container" style="margin: 50px auto;">
-							<div id=backBtn>
-								<a href="http://localhost:8080/toti/chat/chatLogin" onclick="">뒤로가기</a>
+						<div id="chat" class="container" style="margin: 30px auto;">
+							<div id="buttons">
+								<a href="/toti/chat/chatLogin" onclick="">뒤로가기</a> <a href='#'
+									id="estBtn">견적서 내용</a> <a href='#' onclick="goRtcPage()">화상채팅</a>
 							</div>
 							<div id="chatArea">
 								<div id="chatInfo"></div>
 								<div id="targetName"></div>
 								<div id="userName"></div>
-								<button id="myBtn">견적서 내용</button>
+								<!-- <button id="rtcBtn" onclick="goRtcPage()">화상 채팅</button> -->
 								<div id="chat_box"></div>
-								<input type="text" id="input_msg">
-								<button id="msg_process">전송</button>
+								<div id="chat_input">
+									<textarea id="input_msg"></textarea>
+									<button id="msg_process">전송</button>
+								</div>
 							</div>
 							<div id="profileArea">
 
@@ -88,6 +94,7 @@
 							</div>
 						</div>
 
+						<div id="rtcPage" class="container"></div>
 						<!-- end home variation -->
 						<!-- end component -->
 					</div>
@@ -118,14 +125,14 @@
 		function estlist() {
 
 			$('#chatArea').css('display', 'none');
-			$('#backBtn').css('display', 'none');
+			$('#buttons').css('display', 'none');
 			$('#profileArea').css('display', 'none');
-			$('#estList').css('display', 'block');
+			$('#list').css('display', 'block');
 
 			$('#chat_box').empty();
 
 			$.ajax({
-				url : 'http://localhost:8080/toti/chat/estlist/' + user,
+				url : '/toti/chat/estlist/' + user,
 				type : 'GET',
 				success : function(data) {
 					var html = '';
@@ -133,10 +140,8 @@
 
 						html += '<tr>';
 						html += '<td onclick="chat(' + '\'' + data[i].est_idx
-								+ '\'' + ', ' + '\'' + data[i].cate_idx + '\''
-								+ ', ' + '\'' + data[i].m_idx + '\'' + ');">'
+								+ '\'' + ', ' + '\'' + data[i].m_idx + '\'' + ');">'
 								+ data[i].est_idx + '</td>';
-						html += '<td>' + data[i].cate_idx + '</td>';
 						html += '<td>' + data[i].mento_idx + '</td>';
 						html += '<td>' + data[i].m_idx + '</td>';
 						html += '<td>' + data[i].est_price + '</td>';
@@ -150,7 +155,7 @@
 			$('#chatRoomList').css('display', 'block');
 
 			$.ajax({
-				url : 'http://localhost:8080/toti/chat/roomlist/' + user,
+				url : '/toti/chat/roomlist/' + user,
 				type : 'GET',
 				success : function(data) {
 					var html = '';
@@ -169,8 +174,7 @@
 						html += '<tr>';
 						html += '<td>' + data[i].cate_name + '</td>';
 						html += '<td onclick="chat(' + '\'' + data[i].room_num
-								+ '\'' + ', ' + '\'' + data[i].room_cat + '\''
-								+ ', ' + '\'' + data[i].room_target + '\''
+								+ '\'' + ', ' + '\'' + data[i].room_target + '\''
 								+ ');">' + name + '</td>';
 						html += '<td>' + data[i].last_msg + '</td>';
 						html += '</tr>';
@@ -181,29 +185,29 @@
 
 		}
 
-		function chat(est_idx, cate_idx, m_idx) {
+		function chat(est_idx, m_idx) {
 
-			$('#backBtn').css('display', 'block');
+			$('#buttons').css('display', 'block');
 			$('#chatArea').css('display', 'inline-block');
 			$('#profileArea').css('display', 'inline-block');
-			$('#estList').css('display', 'none');
+			$('#list').css('display', 'none');
 			$('#chatRoomList').css('display', 'none');
 			$
 					.ajax({
-						url : 'http://localhost:8080/toti/chat/room/' + est_idx,
+						url : '/toti/chat/room/' + est_idx,
 						type : 'GET',
 						success : function(data) {
 
 							var html = '';
-							html += '채팅방 번호 <input type="text" id="chat_room" value="' + data + '">'
+							html += '<input type="hidden" id="chat_room" value="' + data + '">'
 							$('#chatInfo').html(html);
-							mentorCheck(m_idx);
+							mentorCheck(user);
 							chatTarget(user);
 							chatUser(user);
 						}
 					});
 
-			var socket = io.connect('http://localhost:3000/');
+			var socket = io.connect('https://chat.yal-toti.tk/');
 
 			var room_num = $('input#chat_room').val();
 
@@ -223,8 +227,13 @@
 				var html = '';
 
 				for (var i = 0; i < data.length; i++) {
-					html += '<div id = "msg" class = "alarmbox">';
-					html += '금액 : ' + data[i].price + '<br>' + data[i].cont;
+					
+					// 천의 자리 마다 , 찍기
+					var regexp = /\B(?=(\d{3})+(?!\d))/g;
+					var price = data[i].price.toString().replace(regexp, ',');
+					
+					html += '<div id = "alarmMsg" class = "alarmbox">';
+					html += '금액 : ' + price + '<br>' + data[i].cont;
 					html += '</div>';
 				}
 				var bannerOffset = $('.topFixBanner').offset();
@@ -302,10 +311,14 @@
 
 			$("#input_msg").keydown(function(key) {
 				// 해당하는 키가 엔터키(13) 이라면
-				if (key.keyCode == 13) {
-					// "msg_process"를 클릭한다.
-					msg_process.click();
+				if (key.keyCode == 13 && key.shiftKey == true) {
+					
+				} else if (key.keyCode == 13) {
+					msg_process.click();// "msg_process"를 클릭한다.
+					return false;
 				}
+				
+
 			});
 
 			$("#msg_process").click(
@@ -317,27 +330,35 @@
 								+ (d.getMonth() + 1) + "월 " + d.getDate()
 								+ "일 " + week[d.getDay()] + "요일 ";
 						var currentTime = d.getHours() + ":" + d.getMinutes();
+						
+						// 줄 바꿈 적용
+						var str = document.getElementById("input_msg").value;
+						str = str.replace(/(?:\r\n|\r|\n)/g, '<br/>');
+						document.getElementById("input_msg").value = str;
 
 						socket.emit("send_msg", {
 							room : $('#chat_room').val(),
 							useridx : user,
 							username : $('#user').val(),
-							message : $("#input_msg").val(),
+							message : str,
 							time : currentDate + currentTime
 						});
-						$("#input_msg").val("");
+						$("#input_msg").val('');
 					});
 
 			function mentorCheck(user) {
+				
+				var room_num = $('input#chat_room').val();
+				
 				$
 						.ajax({
 
-							url : 'http://localhost:8080/toti/chat/mentorcheck/'
-									+ user,
+							url : '/toti/chat/mentorcheck/'
+									+ user + '/' + room_num,
 							type : 'GET',
 							success : function(data) {
 								var html = '';
-								html += '<input type="input" id="check" value="' + data + '">'
+								html += '<input type="hidden" id="check" value="' + data + '">'
 								$('#profile').html(html);
 								mentorProfile(user);
 							}
@@ -346,15 +367,16 @@
 			}
 
 			function chatTarget(user) {
+				
 				$
 						.ajax({
-							url : 'http://localhost:8080/toti/chat/room/'
+							url : '/toti/chat/room/'
 									+ m_idx + '/' + user,
 							type : 'GET',
 							success : function(data) {
 
 								var html = '';
-								html += '상대방 <input type="text" id="target" value="' + data + '">'
+								html += '<input type="hidden" id="target" value="' + data + '">'
 								$('#targetName').html(html);
 							}
 						});
@@ -363,13 +385,13 @@
 			function chatUser(user) {
 				$
 						.ajax({
-							url : 'http://localhost:8080/toti/chat/room/name/'
+							url : '/toti/chat/room/name/'
 									+ user,
 							type : 'GET',
 							success : function(data) {
 								// alert(data);
 								var html = '';
-								html += '사용자 <input type="text" id="user" value="' + data + '">'
+								html += '<input type="hidden" id="user" value="' + data + '">'
 								$('#userName').html(html);
 							}
 						});
@@ -378,29 +400,28 @@
 				if ($('#check').val() == 'Y') {
 					$
 							.ajax({
-								url : 'http://localhost:8080/toti/chat/profile/mentor/'
+								url : '/toti/chat/profile/mentor/'
 										+ user,
 								type : 'GET',
 								success : function(data) {
 									var html = '';
 									html += '<div class = "profileTitle">멘토 프로필</div>';
-									html += '<div class = "profileImg"> '
-											+ data.m_photo + '</div>';
+									html += '<div class = "profileImg"><img src="<c:url value="/images/user/' + data.m_photo + '"/>"class = "profileImg"></div>';
 									html += '<div class = "profileName">'
 											+ data.m_name + ' (' + data.m_id
-											+ ')</div>';
-									html += '<div class = "profileSubTitle">코멘트</div>';
-									html += '<div class = "profileSubContent">'
-											+ data.p_shot + '</div>';
-									html += '<div class = "profileSubTitle">학력</div>';
-									html += '<div class = "profileSubContent">'
-											+ data.p_edu + '</div>';
-									html += '<div class = "profileSubTitle">경력</div>';
-									html += '<div class = "profileSubContent">'
-											+ data.p_career + '</div>';
-									html += '<div class = "profileSubTitle">결제 방식</div>';
-									html += '<div class = "profileSubContent">'
-											+ data.p_pay + '</div><hr>';
+											+ ')</div><div>';
+									html += '<p class = "con_p1">코멘트</p>';
+									html += '<p class = "con_p2">'
+											+ data.p_shot + '</p>';
+									html += '<p class = "con_p1">학력</p>';
+									html += '<p class = "con_p2">'
+											+ data.p_edu + '</p>';
+									html += '<p class = "con_p1">경력</p>';
+									html += '<p class = "con_p2">'
+											+ data.p_career + '</p></div>';
+									html += '<p class = "con_p1">결제 방식</p>';
+									html += '<p class = "con_p2">'
+											+ data.p_pay + '</p><hr>';
 									html += '<div class = "mentorReview"></div>';
 									$('#profile').append(html);
 									mentorProfileReview(user)
@@ -414,7 +435,7 @@
 					
 					$
 							.ajax({
-								url : 'http://localhost:8080/toti/chat/checkreq/'
+								url : '/toti/chat/checkreq/'
 										+ room_num,
 								type : 'GET',
 								success : function(data) {
@@ -423,7 +444,7 @@
 									
 									
 									$.ajax({
-										url : 'http://localhost:8080/toti/requestData',
+										url : '/toti/request/requestData',
 										type : 'GET',
 										data : {
 											request_idx : req_idx,
@@ -456,31 +477,44 @@
 				}
 				
 				
-				
-				
-				
-				
-				
 			};
 
 			function mentorProfileReview(user) {
+				
+				var fullStar = '<span><img id=\"star\" src=\"https://d1hhkexwnh74v.cloudfront.net/icons/icon-common-review-star-small-full.svg\"></span>';
+				var halfStar = '<span><img id=\"star\" src=\"https://d1hhkexwnh74v.cloudfront.net/icons/icon-common-review-star-small-half.svg\"></span>';
+				
 				$
 						.ajax({
-							url : 'http://localhost:8080/toti/chat/profile/mentor/review/'
+							url : '/toti/chat/profile/mentor/review/'
 									+ user,
 							type : 'GET',
 							success : function(data) {
 								for (var i = 0; i < data.length; i++) {
+									
+									var star = data[i].review_star;
+									var halfCheck = 'N'
+									
+									if (star % 1 == 0.5) {
+										halfCheck = 'Y'
+									}
+									
 									var html = '<div class = review>'
 									html += '<div class = reviewName>'
-											+ data[i].m_name + ' / '
-											+ data[i].review_star + '</div>';
+											+ data[i].m_name + '</div><div class="reviewStar"></div>';
 									html += '<div class = reviewDate>'
 											+ data[i].review_date + '</div>';
 									html += '<div>' + data[i].review_cont
 											+ '</div>';
 									html += '</div>';
 									$('.mentorReview').append(html);
+									
+									for(var i = 0; i < star; i++) {
+										$('.reviewStar').append(fullStar);
+									}
+									if (star % 1 == 0.5) {
+										$('.reviewStar').append(halfStar);
+									}
 								}
 							}
 						});
@@ -491,41 +525,65 @@
 		function scrollDown() {
 			$('#chat_box').scrollTop($('#chat_box').prop('scrollHeight'));
 		}
+		
+		function goRtcPage() {
+			var roomnum = $('input#chat_room').val();
+			var target = $('input#target').val();
+			var user = $('input#user').val();
+			var html = '';
 
-		$("#chat_box").scroll(function() { //window에 스크롤링이 발생하면
-			if ($(document).scrollTop() > bannerOffset.top) { // 위치 및 사이즈를 파악하여 미리 정한 css class를 add 또는 remove 합니다.
-				$('.topFixBanner').addClass('topFixBannerFixed');
-			} else {
-				$('.topFixBanner').removeClass('topFixBannerFixed');
-			}
+			html += '<div class="buttons">';
+			html += '<a href=# onclick="goChatPage()">화상 종료</a></div>';
+			
+/* 			html += '<iframe src="/toti/chat/rtc?roomnum= '+ room_num +'"></iframe>'; */
+			html += '<iframe src="/toti/chat/rtc/' + roomnum + '/' + target + '/' + user +'" onLoad="autoResize(this);"></iframe>';
+ 
+				$('#rtcPage').html(html);
+				
+				$('#chat').css('display', 'none');
 
-		});
+		}
+		
+		function goChatPage() {
+			$('#rtcPage').empty();
+			$('#chat').css('display', 'block');
+		}
 
-		// Get the modal
-		var modal = document.getElementById('myModal');
-
-		// Get the button that opens the modal
-		var btn = document.getElementById("myBtn");
-
-		// Get the <span> element that closes the modal
+		
+		// modal
+		var modal = document.getElementById('estModal');
+		var estBtn = document.getElementById("estBtn");
 		var span = document.getElementsByClassName("close")[0];
 
-		// When the user clicks on the button, open the modal 
-		btn.onclick = function() {
+		estBtn.onclick = function() {
 			modal.style.display = "block";
 		}
 
-		// When the user clicks on <span> (x), close the modal
 		span.onclick = function() {
 			modal.style.display = "none";
 		}
 
-		// When the user clicks anywhere outside of the modal, close it
 		window.onclick = function(event) {
 			if (event.target == modal) {
 				modal.style.display = "none";
 			}
 		}
+		
+		// iframe 사이즈 조절
+		function autoResize(obj){
+			var newheight;
+			var newwidth;
+				if(obj.contentDocument){
+					newheight = obj.contentDocument.documentElement.scrollHeight+30;
+					newwidth = obj.contentDocument.documentElement.scrollWidth+30;
+				} else {
+					newheight=obj.contentWindow.document.body.scrollHeight+30;
+					newwidth=obj.contentWindow.document.body.scrollWidth+30;
+				}
+			obj.height= newheight + "px";
+			obj.width= newwidth + "px";
+		}
+		
 	</script>
 </body>
 
