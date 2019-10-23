@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace는 필수 속성이다. : dao 식별하기 위한 이름 -->
+<mapper namespace="com.yal.toti.baek.dao.ChatSessionDao">
+	<select id="selectMemberById"
+		resultType="com.yal.toti.baek.domain.MemberInfo">
+		select * from toti_member where m_id = #{param1}
+	</select>
+
+	<select id="selectAllList"
+		resultType="com.yal.toti.baek.domain.EstInfo">
+		select est.est_idx, req.cate_idx, est.mento_idx, req.m_idx,
+		est.est_price, est.est_cont from toti_estimatee as est join
+		toti_request as req
+		on est.request_idx = req.request_idx where
+		mento_idx = #{param1}
+	</select>
+
+	<select id="selectChatRoomListByUser"
+		resultType="com.yal.toti.baek.domain.ChatRoomInfo">
+		select chatroom.room_num, chatroom.room_cat,
+		cate.cate_name,
+		chatroom.room_user,
+		chatroom.last_msg,
+		chatroom.room_target,
+		(select m_name from toti.toti_member where m_idx
+		= room_user) as username, (select m_name from toti.toti_member where
+		m_idx = room_target) as targetname from
+		toti.toti_chatroom as chatroom
+		join toti.toti_member
+		as member on
+		chatroom.room_target = member.m_idx
+		join toti.toti_cate as cate on
+		chatroom.room_cat = cate.cate_idx where
+		room_user =
+		#{param1} or
+		room_target = #{param1} order by cate_name
+	</select>
+
+	<select id="searchChatRoom" resultType="String">
+		select room_num from
+		toti_chatroom where room_num = #{param1};
+	</select>
+
+	<select id="searchTargetName" resultType="String">
+		select distinct
+		member.m_name from toti.toti_chatroom as chatroom join
+		toti.toti_member as member on chatroom.room_target = member.m_idx
+		where room_target = #{param1}
+	</select>
+
+	<select id="searchUserName" resultType="String">
+		select m_name from
+		toti.toti_member where m_idx = #{param1}
+	</select>
+
+	<select id="searchTargetNameByUser" resultType="String">
+		select distinct
+		member.m_name from toti.toti_chatroom as chatroom join
+		toti.toti_member as member on chatroom.room_user = member.m_idx where
+		room_target = #{param1};
+	</select>
+
+	<select id="selectMentorCheck" resultType="_int">
+		select room_user from toti.toti_chatroom where
+		room_num = #{param1};
+	</select>
+
+	<insert id="insertChatRoom">
+		insert into toti_chatroom(room_num, room_cat,
+		room_user, room_target, est_price, est_cont)
+		values(#{param1},
+		#{param2}, #{param3},
+		#{param4}, (select est_price from
+		toti.toti_estimatee where est_idx = #{param1}), (select est_cont from
+		toti.toti_estimatee where est_idx = #{param1}))
+	</insert>
+
+	<update id="updateLastMsgAtChatRoom">
+		update toti.toti_chatroom set last_msg = est_cont
+		where room_num = #{param1};
+	</update>
+
+	<select id="selectMentorProfile"
+		resultType="com.yal.toti.baek.domain.MentorProfile">
+		SELECT mentor.mento_idx, member.m_id, member.m_name,
+		member.m_gender,
+		member.m_photo, member.m_date, mentor.p_shot,
+		mentor.p_pay,
+		mentor.p_edu, mentor.p_career, mentor.p_long FROM
+		toti.toti_mentor_profile as mentor join toti.toti_member as member on
+		mentor.mento_idx = member.m_idx where mento_idx = #{param1};
+	</select>
+
+	<select id="selectMentorReview"
+		resultType="com.yal.toti.baek.domain.MentorReview">
+		SELECT review.m_idx, member.m_name, review.review_star,
+		review.review_cont, review.review_date FROM toti.toti_review as review
+		join toti.toti_member as member on review.m_idx = member.m_idx where
+		review.mento_idx = #{param1} order by m_idx limit 0, 3;
+	</select>
+
+	<select id="selectReqNum" resultType="_int">
+		select request_idx from
+		toti.toti_estimatee where est_idx = #{param1};
+	</select>
+</mapper>

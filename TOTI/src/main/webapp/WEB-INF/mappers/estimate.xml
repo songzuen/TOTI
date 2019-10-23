@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yal.toti.song.mentor.dao.EstimateDao">
+
+	<resultMap type="com.yal.toti.song.mentor.domain.Coin"
+		id="coin">
+		<result column="mento_idx" property="mento_idx" />
+		<result column="tor_coin" property="tor_coin" />
+	</resultMap>
+
+	<resultMap type="com.yal.toti.song.mentor.domain.ChatList"
+		id="chat">
+		<result column="est_idx" property="est_idx" />
+		<result column="m_photo" property="m_photo" />
+		<result column="m_name" property="m_name" />
+		<result column="cate_name" property="cate_name" />
+		<result column="service_name" property="service_name" />
+		<result column="est_price" property="est_price" />
+		<result column="est_date" property="est_date" />
+		<result column="answer_cont" property="answer_cont" />
+		<result column="mento_idx" property="mento_idx" />
+		<result column="last_msg" property="last_msg" />
+	</resultMap>
+	<!-- 견적서 등록 -->
+	<insert id="insertEstimate" keyProperty="est_idx"
+		useGeneratedKeys="true"
+		parameterType="com.yal.toti.song.mentor.domain.EstimateInfo">
+		insert into toti.toti_estimatee (mento_idx, request_idx, est_price,
+		est_cont, est_file)
+		select
+		#{mento_idx},#{request_idx},#{est_price},#{est_cont},#{est_file} from
+		dual
+		<where> not exists (select * from toti.toti_estimatee where
+			request_idx =
+			#{request_idx} and mento_idx = #{mento_idx});
+		</where>
+	</insert>
+
+	<update id="updateCoin"
+		parameterType="com.yal.toti.song.mentor.domain.EstimateInfo">
+		update toti.toti_mentor set tor_coin = (tor_coin - 1)
+		where mento_idx
+		= #{mento_idx} and tor_coin>=1
+	</update>
+
+	<!-- 코인 체크 -->
+	<select id="coinCheck" resultMap="coin">
+		select mento_idx, tor_coin from
+		toti.toti_mentor where mento_idx = #{mento_idx}
+	</select>
+
+
+	<select id="getChatList" resultMap="chat">
+		select est_idx,m_photo,m_name, cate_name,service_name,
+		format(est_price,0) est_price, date_format(est_date,'%Y-%m-%d')
+		est_date, answer_cont, last_msg from toti.toti_estimatee e
+		join
+		toti.toti_request
+		r on r.request_idx = e.request_idx
+		join
+		toti.toti_member m on r.m_idx =
+		m.m_idx
+		join toti.toti_mentee_service
+		ms
+		on ms.request_idx =
+		r.request_idx
+		join toti.toti_service s on
+		s.service_idx = ms.service_idx
+		join toti.toti_cate c on c.cate_idx =
+		s.cate_idx
+		join toti.toti_answer a
+		on a.request_idx = r.request_idx
+		join toti.toti_chatroom rm on rm.room_num = e.est_idx
+		<where> quest_idx=999 and mento_idx = #{mento_idx} </where>
+	</select>
+</mapper>

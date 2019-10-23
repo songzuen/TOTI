@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yal.toti.song.mentor.dao.RequestListDao">
+
+	<resultMap type="com.yal.toti.song.mentor.domain.RequestList"
+		id="requestList">
+		<result column="request_idx" property="request_idx" />
+		<result column="m_idx" property="m_idx" />
+		<result column="request_date" property="request_date" />
+		<result column="quest_name" property="quest_name" />
+		<result column="cate_idx" property="cate_idx" />
+		<result column="cate_name" property="cate_name" />
+		<result column="answer_idx" property="answer_idx" />
+		<result column="answer_cont" property="answer_cont" />
+		<result column="m_name" property="m_name" />
+		<result column="mento_idx" property="mento_idx" />
+		<result column="service_name" property="service_name" />
+
+	</resultMap>
+
+	<!-- <select id="selectAllRequest" resultMap="requestList"> SELECT a.request_idx,m.m_idx, 
+		m_name, m_photo,quest_name, answer_cont, service_name, request_date FROM 
+		toti.toti_answer a join toti.toti_question q on q.quest_idx = a.quest_idx 
+		join toti.toti_request r on r.request_idx = a.request_idx join toti.toti_member 
+		m on m.m_idx = r.m_idx join toti.toti_cate c on q.cate_idx = c.cate_idx join 
+		toti.toti_mentee_service tee on r.request_idx = tee.request_idx join toti.toti_service 
+		s on s.service_idx = tee.service_idx <where> c.cate_idx = 4 and q.quest_idx 
+		= 999 </where> order by request_date desc </select> -->
+
+	<select id="selectAllRequest" resultMap="requestList">
+		SELECT a.request_idx,m.m_idx, m_name, m_photo,quest_name, answer_cont,
+		service_name, request_date
+		FROM toti.toti_answer a
+		join toti.toti_question q on q.quest_idx = a.quest_idx
+		join toti.toti_request r on r.request_idx = a.request_idx
+		join toti.toti_member m on m.m_idx = r.m_idx
+		join toti.toti_cate c on q.cate_idx = c.cate_idx
+		join toti.toti_mentee_service tee on r.request_idx = tee.request_idx
+		join toti.toti_service s on s.service_idx = tee.service_idx
+
+		<where>
+			c.cate_idx = 4 and q.quest_idx = 999 and tee.service_idx in
+			(select service_idx from toti.toti_mentor_service mts join toti.toti_mentor
+			mt on mt.mento_idx=mts.mento_idx
+			where mt.mento_idx=#{mento_idx})
+		</where>
+	</select>
+
+	<!-- 요청서 상세페이지 -->
+	<select id="getRequestInfo" resultMap="requestList">
+		SELECT r.request_idx, quest_name, answer_cont, m.m_idx, m_name,
+		m_photo,cate_name, c.cate_idx, cate.service_name FROM toti.toti_answer a
+		join toti.toti_question q on q.quest_idx = a.quest_idx
+		join toti.toti_request r on r.request_idx = a.request_idx join
+		toti.toti_member m on m.m_idx = r.m_idx
+		join toti.toti_cate c on q.cate_idx = c.cate_idx
+		join toti.toti_mentee_service ms on ms.request_idx = r.request_idx
+		join toti.toti_service s on ms.service_idx = s.service_idx
+		left outer join (select cate_idx, se.service_idx, se.service_name, m_idx
+		from toti.toti_service se
+		join toti.toti_mentee_service tee on se.service_idx = tee.service_idx )
+		cate on cate.service_idx = s.service_idx
+		<where> r.request_idx = #{request_idx}</where>
+		group by q.quest_idx
+	</select>
+
+	<!-- <delete id="deleteRequest"> delete from toti.toti_mentee_service where 
+		request_idx = #{request_idx} </delete> -->
+</mapper>
