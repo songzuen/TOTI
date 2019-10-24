@@ -61,11 +61,11 @@
 						<input type="hidden" value="${idx}" id="m_idx" name="m_idx">
 						<br><div style="font-size: 16px; font-weight: bold">당신의 평가</div>
 						<div class="starRev">
-						  <span class="starR on">1</span>
-						  <span class="starR on">2</span>
-						  <span class="starR on">3</span>
-						  <span class="starR on">4</span>
-						  <span class="starR on">5</span>
+						  <span class="starR">1</span>
+						  <span class="starR">2</span>
+						  <span class="starR">3</span>
+						  <span class="starR">4</span>
+						  <span class="starR">5</span>
 						</div><br>
 						<input type="hidden" name="review_star" id="restar">
 						<input type="text" name="review_cont" id="review_cont" style="width:700px; height:100px;'">
@@ -84,10 +84,16 @@
 	</div>
 
 	<script>
+		
+	if($('#mento_idx').val() == $('#m_idx').val()){
+		alert('본인은 리뷰작성이 불가능합니다.');
+		location.href="http://localhost:8080/toti/profile/"+$('#mento_idx').val();
+	}
+	
 		$(document).ready(function() {
 			mentorProfile($('#mento_idx').val());
 		});
-
+		
 		function mentorProfile(mento_idx) {
 			$.ajax({
 				url : 'http://localhost:8080/toti/mento/' + mento_idx,
@@ -110,6 +116,9 @@
 		}
 		
 		$('#reviewFrom').submit(function(){
+			if($('#restar').val() == ""){
+				alert('별점을 선택해주세요.');
+			}
 	            $.ajax({
 	                url : 'http://localhost:8080/toti/review' ,
 	                type : 'POST',
@@ -117,13 +126,13 @@
 	                success : function(data){
 	    				if(data=='success'){
 	    					alert('리뷰가 추가되었습니다.');
-	    					location.href="http://localhost:8080/toti/main";
+	    					location.href="http://localhost:8080/toti/mentor/"+$('#mento_idx').val();
 	    				}else {
 	    					alert('등록 실패');
 	    				}
 	    			}
 	            });
-	            
+			
 	            return false;
 	        });
 		

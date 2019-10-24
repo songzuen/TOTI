@@ -55,6 +55,7 @@
 		<div class="demo-content mrg-top-md">
 			<!-- container -->
 			<div class="container" style="margin-top: -50px; margin-bottom: 50px;">
+			<input type="hidden" value="${idx}" id="m_idx" name="m_idx">
 				<div id="checkService">
 					<hr><h2>분야 선택</h2><br>
 					<div id="catelist"></div><br><hr>
@@ -136,6 +137,11 @@
 			categoryList();
 			categoryOption();
 		});
+		
+		if($('#m_idx').val() != 37 ){
+			alert('관리자 권한이 없습니다.');
+			location.href="http://localhost:8080/toti/main";
+		}
 		
 		function categoryList() {
 			$.ajax({

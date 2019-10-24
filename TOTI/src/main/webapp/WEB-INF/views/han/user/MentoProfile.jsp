@@ -5,6 +5,7 @@
 <head>
 	<%@ include file="/WEB-INF/views/frame/header.jsp" %>
 <title>TOTI :: 프로필 관리</title>
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <style>
 	table {
 		width: 100%;
@@ -92,8 +93,12 @@
 		margin-top: 3px;
 	}
 	
-	a:hover {
-		color: red;
+	#servbtn{
+		height:19px; 
+		padding: 0px 4px; 
+		padding-bottom: 20px;
+		text-align: center;
+		margin: 3px;
 	}
 	
 </style>
@@ -107,8 +112,8 @@
 			<!-- container -->
 			<div  class="container" style="margin-top: -50px; margin-bottom: 50px;">
 				<input type="hidden" id="mento_idx" value="${mento_idx}">
-				<div id="mentorProfile">
-				</div>
+				<input type="hidden" value="${idx}" id="m_idx" name="m_idx">
+				<div id="mentorProfile"></div>
 				<div style="float:right; width:25%; margin:10px;" >
 					<h4>리뷰 요청하기</h4>
 					링크를 공유하고 고객들에게 리뷰를 받아 보세요. 긍정적인 리뷰가 있는 고수는 고용될 확률이 2배 이상 높습니다.
@@ -124,12 +129,19 @@
 		<!-- footer -->
 		<%@include file="/WEB-INF/views/frame/footer.jsp"%>
 	</div>
-
+	
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=77476b461a52048f03e20b9b307d995f&libraries=services"></script>
+<script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
 	$(document).ready(function() {
 		mentorProfile($('#mento_idx').val());
 	});
-
+	
+	if($('#mento_idx').val() != $('#m_idx').val() ){
+		alert('접근 불가능한 페이지입니다. 메인화면으로 이동합니다.');
+		location.href="http://localhost:8080/toti/main";
+	}
+	
 	function mentorProfile(mento_idx) {
 		$.ajax({
 			url : 'http://localhost:8080/toti/mento/' + mento_idx,
@@ -137,7 +149,9 @@
 			success : function(data) {
 				var html = '';
 				for (var i = 0; i < data.length; i++) {
-
+	
+					var position = data[i].tor_location;
+					
 					/*간략한 고수정보*/
 					html += '<div class="info" id="overview">';
 					html += '<img class="img" src="<c:url value="/images/user/'+data[i].m_photo+'" />">';
@@ -259,10 +273,28 @@
 					html += '<table>';
 					html += '<tr>';
 					html += '<td><h4>위치</h4></td>';
-					html += '<td class="btn-edit"><button class="btn btn-outline-danger">수정</button></td>';
+					html += '<td class="btn-edit"><button class="btn btn-outline-danger" id="sample4_roadAddress" onclick="locationInfo('+mento_idx+')">수정</button></td>';
 					html += '</tr>';
 					html += '<tr>';
 					html += '<td colspan="2">'+ data[i].tor_location + '<br>';
+					html += '</td>'
+					html += '</tr>';
+					html += '</table><div id="map" style="width:100%;height:350px;"></div></div>';
+
+					
+					/* 위치 변경  */
+					html += '<div id="editLocation" style="display : none">';
+					html += '<hr><input type="hidden" name="mento_idx" id="mento_idx">';
+					html += '<table>';
+					html += '<tr>';
+					html += '<td><h4>위치</h4></td>';
+					html += '<td class="btn-edit"><button class="btn btn-outline-primary" onclick="editLocation('+mento_idx+')">저장</button></td>';
+					html += '</tr>';
+					html += '<tr>';
+					if (data[i].tor_location !=null){
+						html += '<td colspan="2"><input type="text" name="tor_location" id="tor_location" value="'+data[i].tor_location+'" style="width:250px;" readonly>';
+					} 
+					html += '<button onclick="sample4_execDaumPostcode()">주소 검색</button>';
 					html += '</td>'
 					html += '</tr>';
 					html += '</table></div>';
@@ -366,7 +398,7 @@
 					html += '<hr><input type="hidden" name="mento_idx" id="mento_idx">';
 					html += '<table>';
 					html += '<tr>';
-					html += '<td><h4>경력사항</h4></td>';
+					html += '<td><h4>경력</h4></td>';
 					html += '<td class="btn-edit"><button class="btn btn-outline-primary" onclick="editEdu('+mento_idx+')">저장</button></td>';
 					html += '</tr>';
 					html += '<tr>';
@@ -393,7 +425,7 @@
 					if (data[i].p_long !=null){
 						html += data[i].p_long + '<br>';	
 					} else {
-						html += '<div class="subinfo">고수님의 레슨에 대한 상세한 정보를 작성해주세요.</div>';
+						html += '<div class="subinfo">레슨에 대한 상세한 정보를 작성해주세요.</div>';
 					}
 					html += '</td>'
 					html += '</tr>';
@@ -408,7 +440,7 @@
 					html += '<td class="btn-edit"><button class="btn btn-outline-primary" onclick="editLong('+mento_idx+')">저장</button></td>';
 					html += '</tr>';
 					html += '<tr>';
-					html += '<td colspan="2"><textarea rows=7 cols=120 name="p_long" id="p_long">';
+					html += '<td colspan="2"><textarea rows=7 cols=90 name="p_long" id="p_long">';
 					if (data[i].p_long !=null){
 						html += data[i].p_long ;	
 					} else {
@@ -417,7 +449,7 @@
 					html += '</textarea></td>'
 					html += '</tr>';
 					html += '</table></div>';
-    				
+					
 					/* 리뷰  */
 					var star= '<img src="https://d1hhkexwnh74v.cloudfront.net/icons/icon-common-review-star-small-full.svg">';
 					var nostar='<img src="https://d1hhkexwnh74v.cloudfront.net/icons/icon-common-review-star-small-empty.svg">';
@@ -441,14 +473,14 @@
 					html += '</h4></div><br>';
 					break;
 				}
+				
 				for (var i = 0; i < data.length; i++) {
 					html += '<input type="hidden" name="review_idx" value="'+data[i].review_idx+'">';
 					html += '<table style="width:95%; margin-left:20px;">';
 					html += '<tr>';
 					html += '<td id="m-name">';
 					if (data[i].member_name !=null){
-						html += data[i].member_name ;	
-						html += '</td>';
+						html += data[i].member_name ;
 					
 						if(data[i].review_star == 5){
 							html += star+star+star+star+star;
@@ -460,7 +492,8 @@
 							html += star+star+nostar+nostar+nostar;
 						}else if(data[i].review_star == 1){
 							html += star+nostar+nostar+nostar+nostar;
-						}
+						}	
+						html += '</td>';
 						html += '<td class="date">';
 						if (data[i].review_date !=null){
 							html += data[i].review_date ;	
@@ -485,6 +518,43 @@
 				}
 				html += '</div>';
 				$('#mentorProfile').html(html);
+				
+				var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+			    mapOption = {
+			        center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+			        level: 3 // 지도의 확대 레벨
+			    };  
+		
+				// 지도를 생성합니다    
+				var map = new kakao.maps.Map(mapContainer, mapOption); 
+			
+				// 주소-좌표 변환 객체를 생성합니다
+				var geocoder = new kakao.maps.services.Geocoder();
+			
+				// 주소로 좌표를 검색합니다
+				geocoder.addressSearch(position, function(result, status) {
+				
+				    // 정상적으로 검색이 완료됐으면 
+				     if (status === kakao.maps.services.Status.OK) {
+			
+				        var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+			
+				        // 결과값으로 받은 위치를 마커로 표시합니다
+				        var marker = new kakao.maps.Marker({
+				            map: map,
+				            position: coords
+				        });
+			
+				        // 인포윈도우로 장소에 대한 설명을 표시합니다
+				        var infowindow = new kakao.maps.InfoWindow({
+				            content: '<div style="width:150px;text-align:center;padding:6px 0;">'+position+'</div>'
+				        });
+				        infowindow.open(map, marker);
+			
+				        // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+				        map.setCenter(coords);
+				    } 
+				}); 
 				}
 			});
 		}
@@ -495,17 +565,11 @@
 		$('#editName').css('display', 'block');
 		$.ajax({
 			url : 'http://localhost:8080/toti/mento/' + mento_idx,
-			type : 'GET',
-			success : function(data) {
-				$('#mento_idx').val(mento_idx);
-                $('#m_name').val(data[i].m_name);
-			}
-
+			type : 'GET'
 		});
 	}
 	
 	function editName(mento_idx){
-
 		$.ajax({
 			url :'http://localhost:8080/toti/mento/editname/' + mento_idx,
 		    dataType: 'text',
@@ -528,12 +592,7 @@
 		$('#editShot').css('display', 'block');
 		$.ajax({
 			url : 'http://localhost:8080/toti/mento/' + mento_idx,
-			type : 'GET',
-			success : function(data) {
-				$('#mento_idx').val(mento_idx);
-                $('#p_shot').val(data[i].p_shot);
-			}
-
+			type : 'GET'
 		});
 	}
 	
@@ -565,12 +624,12 @@
 				var html = '';
                
 		    	html += '<hr><h4>제공 서비스</h4> ';
-		    	html += '<h5>레슨 가능한 서비스들을 선택해주세요.</h5>';
+		    	html += '<h5 style="color:#48A0DC;">레슨 가능한 서비스들을 선택해주세요.</h5>';
 		    	for(var i=0; i<data.length;i++){
 		    		html += '<form id="addServiceForm" >';	
 	    			html += '<input type="hidden" name="mento_idx" id="mento_idx" value="'+mento_idx+'">';
 	    			html += '<input type="hidden" name="service_idx" id="service_idx" value="'+data[i].service_idx+'">'; 
-	    			html += '<input type="button" class="btn btn-outline-primary btn-sm" value="+" onclick="addService('+mento_idx+','+ data[i].service_idx+')">';
+	    			html += '<input type="button" id="servbtn" class="btn btn-outline-primary btn-sm" value="+" onclick="addService('+mento_idx+','+ data[i].service_idx+')">';
 	    			html += data[i].service_name;
 	    			html += '</form> ';	
 		    	}
@@ -590,12 +649,12 @@
 				var html = '';
                 
 		    	html += '<hr><h4>제공 서비스</h4> ';
-		    	html += '<h5>삭제할 서비스를 골라주세요.</h5>';
+		    	html += '<h5 style="color:#48A0DC;">삭제할 서비스를 선택하세요.</h5>';
 		    	for(var i=0; i<data.length;i++){
 	    			html += '<form id="delServiceForm" >';
 	    			html += '<input type="hidden" name="mento_idx" id="mento_idx" value="'+mento_idx+'">';
 	    			html += '<input type="hidden" name="service_idx" id="service_idx" value="'+data[i].service_idx+'">'; 
-	    			html += '<input type="button" class="btn btn-outline-danger btn-sm" value="-" onclick="delService('+mento_idx+','+ data[i].service_idx+')">';
+	    			html += '<input type="button" id="servbtn" class="btn btn-outline-danger btn-sm" value="-" onclick="delService('+mento_idx+','+ data[i].service_idx+')">';
 	    			html += data[i].service_name;
 	    			html += '</form> ';
 		    	}
@@ -646,6 +705,35 @@
 	}
 		
 	/* 위치 */
+	function locationInfo(mento_idx){
+		$('#plocation').css('display', 'none');
+		$('#editLocation').css('display', 'block');	
+		$.ajax({
+			url : 'http://localhost:8080/toti/mento/' + mento_idx,
+			type : 'GET',
+			success : function(data) {
+				
+				
+			}
+		});
+	}
+	
+	function editLocation(mento_idx){
+		$.ajax({
+			url :'http://localhost:8080/toti/mento/editlocation/' + mento_idx,
+		    dataType: 'text',
+	        type: 'PUT',	
+	        contentType:'application/json;chartset=utf-8',
+	        data: JSON.stringify({
+	        	mento_idx:$('#mento_idx').val(),
+	        	tor_location:$('#tor_location').val()
+			}),
+			success : function(data){
+				location.reload();
+			}
+		});
+		
+    }
 	
 	/* 결제 수단 */
 	function payInfo(mento_idx){
@@ -653,12 +741,7 @@
 		$('#editPay').css('display', 'block');		
 		$.ajax({
 			url : 'http://localhost:8080/toti/mento/' + mento_idx,
-			type : 'GET',
-			success : function(data) {
-				$('#mento_idx').val(mento_idx);
-                $('#p_pay').val(data[i].p_pay);
-			}
-
+			type : 'GET'
 		});
 	}
 	
@@ -686,12 +769,7 @@
 		$('#editEdu').css('display', 'block');		
 		$.ajax({
 			url : 'http://localhost:8080/toti/mento/' + mento_idx,
-			type : 'GET',
-			success : function(data) {
-				$('#mento_idx').val(mento_idx);
-                $('#p_edu').val(data[i].p_edu);
-			}
-
+			type : 'GET'
 		});
 	}
 	
@@ -719,12 +797,7 @@
 		$('#editCareer').css('display', 'block');
 		$.ajax({
 			url : 'http://localhost:8080/toti/mento/' + mento_idx,
-			type : 'GET',
-			success : function(data) {
-				$('#mento_idx').val(mento_idx);
-                $('#p_career').val(data[i].p_career);
-			}
-
+			type : 'GET'
 		});
 	}
 	
@@ -753,12 +826,7 @@
 		$('#editLong').css('display', 'block');
 		$.ajax({
 			url : 'http://localhost:8080/toti/mento/' + mento_idx,
-			type : 'GET',
-			success : function(data) {
-				$('#mento_idx').val(mento_idx);
-                $('#p_long').val(data[i].p_long);
-			}
-
+			type : 'GET'
 		});
 	}
 	
@@ -805,6 +873,56 @@
 	   
 	  document.execCommand('copy'); // or 'cut'
 	}, false);
+	
+	
+	function sample4_execDaumPostcode() {
+        new daum.Postcode({
+            oncomplete: function(data) {
+                // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+
+                // 도로명 주소의 노출 규칙에 따라 주소를 표시한다.
+                // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+                var roadAddr = data.roadAddress; // 도로명 주소 변수
+                var extraRoadAddr = ''; // 참고 항목 변수
+
+                // 법정동명이 있을 경우 추가한다. (법정리는 제외)
+                // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+                if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
+                    extraRoadAddr += data.bname;
+                }
+                // 건물명이 있고, 공동주택일 경우 추가한다.
+                if(data.buildingName !== '' && data.apartment === 'Y'){
+                   extraRoadAddr += (extraRoadAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+                }
+                // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+                if(extraRoadAddr !== ''){
+                    extraRoadAddr = ' (' + extraRoadAddr + ')';
+                }
+
+                // 우편번호와 주소 정보를 해당 필드에 넣는다.
+                document.getElementById("tor_location").value = roadAddr;
+                
+                
+
+                var guideTextBox = document.getElementById("guide");
+                // 사용자가 '선택 안함'을 클릭한 경우, 예상 주소라는 표시를 해준다.
+                if(data.autoRoadAddress) {
+                    var expRoadAddr = data.autoRoadAddress + extraRoadAddr;
+                    guideTextBox.innerHTML = '(예상 도로명 주소 : ' + expRoadAddr + ')';
+                    guideTextBox.style.display = 'block';
+
+                } 
+            }
+        }).open();
+    }
+	
+
+    
+
+	
+	
+	
 </script>
+
 </body>
 </html>

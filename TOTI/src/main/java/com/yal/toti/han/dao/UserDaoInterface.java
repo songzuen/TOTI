@@ -20,7 +20,6 @@ public interface UserDaoInterface {
 	// 한 줄 소개 변경
 	public int updateShot(MentoProfile mentoProfile);
 	
-	// 제공 서비스 변경
 	// 고수 분야의 서비스 보기
 	public List<ServiceEdit> getService(int mento_idx);
 	// 고수가 선택한 서비스
@@ -31,6 +30,7 @@ public interface UserDaoInterface {
 	public int deleteService(int mento_idx, int service_idx);
 	
 	// 위치 변경
+	public int updateLocation(MentoProfile mentoProfile);
 	// 결제 수단 변경
 	public int updatePay(MentoProfile mentoProfile);
 	// 학력 변경
