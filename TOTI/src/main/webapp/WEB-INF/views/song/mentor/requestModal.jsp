@@ -486,7 +486,7 @@ p {
 
 							if (item[i].tor_coin == 0) {
 								alert('코인을 충전 후 사용해주세요.');
-								location.href = '#';
+								location.href =  'http://localhost:8080/toti/mypage2';
 								break;
 							} else {
 
