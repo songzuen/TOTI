@@ -68,7 +68,6 @@ public class MentoProfileRestController {
 		return new ResponseEntity<String>(cnt < 0 ? "success" : "fail", HttpStatus.OK);
 	}
 
-	// 제공 서비스 수정
 	// 고수가 추가할 수 있는 서비스 목록
 	@CrossOrigin
 	@GetMapping("/getservice/{mento_idx}")
@@ -86,6 +85,7 @@ public class MentoProfileRestController {
 		ResponseEntity<List<ServiceEdit>> entity = new ResponseEntity<List<ServiceEdit>>(list, HttpStatus.OK);
 		return entity;
 	}
+	
 	// 고수의 서비스 등록
 	@CrossOrigin
 	@PostMapping("/addservice")
@@ -104,7 +104,15 @@ public class MentoProfileRestController {
 		return new ResponseEntity<String>(cnt > 0 ? "success" : "fail", HttpStatus.OK);
 	}
 	// 위치 수정
-
+	@CrossOrigin
+	@PutMapping("/editlocation/{mento_idx}")
+	public ResponseEntity<String> editLocation(@PathVariable("mento_idx") int mento_idx,
+			@RequestBody MentoProfile mentoProfile) {
+		mentoProfile.setMento_idx(mento_idx);
+		int cnt = mentoservice.LocationEdit(mentoProfile);
+		return new ResponseEntity<String>(cnt < 0 ? "success" : "fail", HttpStatus.OK);
+	}
+	
 	// 결제 수단 수정
 	@CrossOrigin
 	@PutMapping("/editpay/{mento_idx}")

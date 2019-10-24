@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.yal.toti.han.dao.AdminDaoInterface;
 import com.yal.toti.han.domain.QuestionInfo;
+import com.yal.toti.han.domain.QuestionItem;
 
 @Service("adminQuestion")
 public class QuestionAdminService {
@@ -66,5 +67,35 @@ public class QuestionAdminService {
 
 		return resultCnt;
 	}
+	
+	// 질문별 항목 리스트
+		public List<QuestionItem> getItemByQuestion(int quest_idx) {
+
+			dao = template.getMapper(AdminDaoInterface.class);
+
+			List<QuestionItem> list = dao.itemList(quest_idx);
+
+			return list;
+		} 
+		
+		// 항목 등록
+		public int ItemInsert(QuestionItem questionItem) {
+
+			dao = template.getMapper(AdminDaoInterface.class);
+
+			int resultCnt = 0;
+
+			resultCnt = dao.insertItem(questionItem);
+
+			return resultCnt;
+		}
+		
+		// 항목 삭제
+		public int Itemdelete(int item_idx) {
+
+			dao = template.getMapper(AdminDaoInterface.class);
+
+			return dao.deleteItem(item_idx);
+		}
 	
 }

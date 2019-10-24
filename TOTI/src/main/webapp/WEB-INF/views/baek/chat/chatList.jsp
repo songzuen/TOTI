@@ -96,10 +96,17 @@
 							target_name = data[i].room_username;
 							target_photo =data[i].room_userphoto;
 						}
+						if (data[i].room_lastmsgTime == null) {
+							var lastmsgTime = '';
+						} else {
+							var lastmsgTime = formatChange(data[i].room_lastmsgTime);
+						}
 						
-						var lastmsgTime = formatChange(data[i].room_lastmsgTime);
-
-						
+						if (data[i].room_lastmsg == null) {
+							var lastmsg = '새로운 견적서가 도착했습니다.';
+						} else {
+							var lastmsg = data[i].room_lastmsg;
+						}
 
 /* 						html += '<tr>';
 						html += '<td>' + data[i].cate_name + ' / ' + data[i].service_name + '</td>';
@@ -112,11 +119,11 @@
 						html += '</tr>'; */
 						
 						html += '<div class="est_wrap">';
-						html += '<div class="est_user"><div class="est_user_img">';
+						html += '<div class="est_user">'+ data[i].cate_name + ' / ' + data[i].service_name +'<p class="list_date">'+lastmsgTime+'</p><div class="est_user_img">';
 						html += '<img src="<c:url value="/images/user/'+target_photo+'"/>"></div>';
 						html += '<div class="est_user_info" onclick="goChatPage(' + data[i].room_num +', ' + data[i].room_target + ')">';
-						html += '<p class="info_con">'+target_name+'</p><p class="info_date">'+lastmsgTime+'</p>';
-						html += '<p class="info_name">'+data[i].room_lastmsg+'</p>';
+						html += '<p class="list_name">'+target_name+'</p>';
+						html += '<p class="list_msg">'+lastmsg+'</p>';
 						html += '</div></div></div></div>';
 					}
 					$('#chatRoomList').append(html);

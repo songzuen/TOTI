@@ -7,7 +7,7 @@
 <link href="<c:url value="/css/minjongCss/chat.css" />" rel="stylesheet">
 <title>TOTI</title>
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-<script src="http://localhost:80/socket.io/socket.io.js"></script>
+<script src="https://chat.yal-toti.tk/socket.io/socket.io.js"></script>
 
 <style>
 </style>
@@ -102,7 +102,7 @@
 
 		$(document).ready(function() {
 
-			alert("사용자 : " +user + "\n상대방 : " + m_idx + "\n채팅방 : " + est_idx);
+			/* alert("사용자 : " +user + "\n상대방 : " + m_idx + "\n채팅방 : " + est_idx); */
 			
 			chat(est_idx, m_idx);
 
@@ -123,7 +123,7 @@
 						success : function(data) {
 
 							var html = '';
-							html += '<input type="text" id="chat_room" value="' + data + '">'
+							html += '<input type="hidden" id="chat_room" value="' + data + '">'
 							$('#chatInfo').html(html);
 							mentorCheck(user);
 							chatTarget(user);
@@ -131,7 +131,7 @@
 						}
 					});
 
-			var socket = io.connect('http://localhost:80/');
+			var socket = io.connect('https://chat.yal-toti.tk/');
 
 			var room_num = $('input#chat_room').val();
 
@@ -281,7 +281,7 @@
 							type : 'GET',
 							success : function(data) {
 								var html = '';
-								html += '<input type="text" id="check" value="' + data + '">'
+								html += '<input type="hidden" id="check" value="' + data + '">'
 								$('#profile').html(html);
 								mentorProfile(user);
 							}
@@ -299,7 +299,7 @@
 							success : function(data) {
 
 								var html = '';
-								html += '<input type="text" id="target" value="' + data + '">'
+								html += '<input type="hidden" id="target" value="' + data + '">'
 								$('#targetName').html(html);
 							}
 						});
@@ -314,7 +314,7 @@
 							success : function(data) {
 								// alert(data);
 								var html = '';
-								html += '<input type="input" id="user" value="' + data + '">'
+								html += '<input type="hidden" id="user" value="' + data + '">'
 								$('#userName').html(html);
 							}
 						});
@@ -370,13 +370,13 @@
 										type : 'GET',
 										data : {
 											request_idx : req_idx,
-											m_idx : m_idx
+											m_idx : user
 										},
 										success : function(data) {
 											
 											var html = '';
 											
-											html += '<div class ="text_center"><img src="<c:url value="/images/user/'+data.userInfo.m_photo+'" />" class = "profileImg"><div>';
+											html += '<div class = "profileTitle">요청서 내용</div><div class ="text_center"><img src="<c:url value="/images/user/'+data.userInfo.m_photo+'" />" class = "profileImg"><div>';
 											html += '<div id="requesr_user"><p>'+data.request_date+'</p>';
 											html += '<h2>'+data.cate_name+'('+data.service_name+')</h2><h3>'+data.userInfo.m_name+'님</h3></div>';
 											html += '<div id="request_con">'

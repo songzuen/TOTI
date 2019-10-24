@@ -27,4 +27,9 @@ public class ReviewService {
 			return resultCnt;
 		}
 
+	// 리뷰 삭제
+		public int ReviewDelete(int review_idx) {
+			dao = template.getMapper(UserDaoInterface.class);
+			return dao.deleteReview(review_idx);
+		}
 }

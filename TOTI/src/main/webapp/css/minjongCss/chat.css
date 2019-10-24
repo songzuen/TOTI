@@ -53,7 +53,6 @@
 	margin: 0;
 	padding: 0;
 	resize: none;
-	margin: 0
 }
 
 #msg_process {
@@ -62,9 +61,6 @@
 	float: right;
 	margin: 0;
 	padding: 0;
-	margin: 0;
-	margin: 0;
-	margin: 0;
 }
 
 #msgbox {
@@ -243,6 +239,10 @@ iframe {
 	border: 0px;
 }
 
+#chatRoomList {
+	
+}
+
 .est_wrap {
 	border: 1px solid #d8d8d8;
 	border-radius: 15px;
@@ -258,6 +258,7 @@ iframe {
 	float: left;
 	width: auto;
 	margin-right: 10px;
+	display: inline-block;
 }
 
 .est_user_img img {
@@ -267,23 +268,23 @@ iframe {
 }
 
 .est_user_info {
-	padding: 10px;
 	cursor: pointer;
 }
 
-.info_con {
+.list_name {
 	font-weight: bold;
 	font-size: 16px;
-	float: left;
+	margin: 5px 0;
 }
 
-.info_name {
-	font-weight: 400;
+.list_msg {
 	font-size: 15px;
+	margin: 5px 0;
 }
 
-.info_date {
-	text-align: right;
+.list_date {
+	float: right;
+	margin: 5px 0;
 }
 
 /* .topFixBanner {

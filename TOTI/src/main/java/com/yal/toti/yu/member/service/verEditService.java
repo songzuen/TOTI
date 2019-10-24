@@ -40,6 +40,8 @@ public class verEditService  {
 
 		rCnt = dao.goMentee(memberInfo);
 		
+		System.out.println("ver가 cnt ==== "+rCnt);
+		
 		return rCnt;
 	}
 	

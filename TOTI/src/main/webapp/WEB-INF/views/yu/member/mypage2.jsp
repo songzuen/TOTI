@@ -200,10 +200,9 @@
                     html += '<tr><td>이름</td>';
                     html += '<td>' + data.name + '</td></tr>';
                     html += '<tr><td>성별</td>';
-                    html += '<td>' + data.gender + '</td></tr>';
-                    html += '<tr><td>회원 등급</td>';
-                    html += '<td>' + data.ver + '</td></tr>';
-                   //	html += '<td><button style="color=black;" onclick="mentorInsert(\'' + data.id + '\')">고수등록</button></td></tr>';
+                    html += '<td>' + data.gender + '</td></tr>'
+                    
+                    //	html += '<td><button style="color=black;" onclick="mentorInsert(\'' + data.id + '\')">고수등록</button></td></tr>';
                     html += '<tr><td>사진</td>';
                     html += '<td><img class="img-thumbnail" alt="Cinque Terre" src="http://13.209.47.16:8080/toti/uploadfile/' + data.photo_name + '"></td></tr>'; 
                    // html += '<tr style="display:none;"><td>가입날짜</td>';
@@ -212,7 +211,7 @@
                     html += '<tr><td><button class="btn btn-primary" onclick="edit(\'' + data.id + '\')">회원수정</button></td>';
                     // html += '<button onclick="deleteMem(\'' + data.id + '\')">회원탈퇴</button>';
                     html += '<td><button class="btn btn-primary" onclick="deleteMem(\'' + data.id + '\')">회원탈퇴</button>';
-                    html += '<button style=\"background-color:gold;\" class=\"btn btn-primary\"><a href=\"http://13.209.47.16:8080/toti/insertMentor\">멘토등록</a></button>';
+                    html += '<button style=\"background-color:gold;\" class=\"btn btn-primary\"><a href=\"http://13.209.47.16:8080/toti/cash\">캐쉬 충전</a></button>';
                    //html += '<button style=\"background-color:gold;\" class=\"btn btn-primary\"><a href=\"http://13.209.47.16:8080/toti/insertMentor\">멘티로 전환</a></button></td></tr></table>';
                     
 
@@ -389,7 +388,7 @@
                             dataType: 'text',
                             success: function(data) {
                                 //alert(요청하신 정보로 변경되었습니다.);
-                                location.href = "http://13.209.47.16:8080/toti/mypage";
+                                location.href = "http://13.209.47.16:8080/toti/mypage2";
                               //alert(요청하신 정보로 변경되었습니다.);
                             }
                         });

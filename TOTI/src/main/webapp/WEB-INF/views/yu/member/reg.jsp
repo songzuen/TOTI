@@ -161,14 +161,16 @@
             $('#name').focus();
             return false;
          }
+         
          var formData = new FormData(); 
          formData.append('id', $('#id').val());
          formData.append('pw', $('#pw').val());
          formData.append('name', $('#name').val());
          formData.append('gender', $('#gender').val());
          formData.append('ver', $('#ver').val());
+         
          $.ajax({
-            url : '/toti/member/reg',
+            url : 'http://13.209.47.16:8080/toti/member/reg',
             type : 'POST',
             data : formData,
             processData : false,
@@ -177,10 +179,12 @@
             success : function(data) {
                //alert(data);
                alert('이메일로 인증키를 발송했습니다. 메일에서 인증후에 다시 사용해주시기바랍니다.');
-               location.href = "/toti/main";
+               location.href = "http://13.209.47.16:8080/toti/main";
             }
          });
+         
          return false;
+         
       });
    });
 
@@ -191,7 +195,7 @@
          alert('아이디를 입력해주시기 바랍니다.   ');
       } else {
          $.ajax({
-            url : '/toti/member/reg?id='+id,
+            url : 'http://13.209.47.16:8080/toti/member/reg?id='+id,
             type : 'GET',
             success : function(data) {
                if (data == 'Y') {

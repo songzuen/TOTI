@@ -49,7 +49,6 @@ public class MentoProfileService {
 		return resultCnt;
 	}
 
-	// 제공 서비스 수정
 	// 고수가 추가할 수 있는 서비스
 	public List<ServiceEdit> getService(int mento_idx) {
 		dao = template.getMapper(UserDaoInterface.class);
@@ -82,7 +81,13 @@ public class MentoProfileService {
 	}
 	
 	// 위치 수정
-
+	public int LocationEdit(MentoProfile mentoProfile) {
+		dao = template.getMapper(UserDaoInterface.class);
+		int resultCnt = 0;
+		resultCnt = dao.updateLocation(mentoProfile);
+		return resultCnt;
+	}
+	
 	// 결제 수단 수정
 	public int PayEdit(MentoProfile mentoProfile) {
 		dao = template.getMapper(UserDaoInterface.class);

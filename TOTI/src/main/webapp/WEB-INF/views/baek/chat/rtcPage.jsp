@@ -68,7 +68,7 @@ video {
 	var target = '${target}';
 	var user = '${user}';
 
-	alert("roomnum : " + roomnum + ", target : " + target + ", user : " + user);
+	/* alert("roomnum : " + roomnum + ", target : " + target + ", user : " + user); */
 	
 	
 
@@ -168,7 +168,7 @@ video {
 	    })
 	    .then(gotStream)
 	    .catch(function (e) {
-	        alert('getUserMedia() error: ' + e.name);
+	       /* alert('getUserMedia() error: ' + e.name); */
 	    });
 
 	function gotStream(stream) {
@@ -223,7 +223,7 @@ video {
 	        console.log('Created RTCPeerConnnection');
 	    } catch (e) {
 	        console.log('Failed to create PeerConnection, exception: ' + e.message);
-	        alert('Cannot create RTCPeerConnection object.');
+	        /* alert('Cannot create RTCPeerConnection object.'); */
 	        return;
 	    }
 	}

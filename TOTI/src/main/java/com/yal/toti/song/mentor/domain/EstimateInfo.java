@@ -10,6 +10,7 @@ public class EstimateInfo {
 	private String est_cont; 	//견적 내용
 	private String est_file;	//견적 파일
 	private Date est_date;
+	
 	public int getEst_idx() {
 		return est_idx;
 	}
