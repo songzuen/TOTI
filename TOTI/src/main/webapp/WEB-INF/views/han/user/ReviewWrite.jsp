@@ -90,6 +90,8 @@
 		location.href="http://localhost:8080/toti/profile/"+$('#mento_idx').val();
 	}
 	
+	
+	
 		$(document).ready(function() {
 			mentorProfile($('#mento_idx').val());
 		});
@@ -118,6 +120,9 @@
 		$('#reviewFrom').submit(function(){
 			if($('#restar').val() == ""){
 				alert('별점을 선택해주세요.');
+			}else if($('#m_idx').val() == ""){
+				alert('로그인 후 이용해주세요.');
+				location.href="http://localhost:8080/toti/login";
 			}
 	            $.ajax({
 	                url : 'http://localhost:8080/toti/review' ,

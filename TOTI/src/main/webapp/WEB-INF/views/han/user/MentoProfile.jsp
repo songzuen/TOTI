@@ -186,7 +186,7 @@
 					html += '<td class="btn-edit"><button class="btn btn-outline-primary" onclick="editName('+mento_idx+')">저장</button></td>';
 					html += '</tr>';
 					html += '<tr>';
-					html += '<td colspan="2"><input type="text" name="m_name" id="m_name" value="'+data[i].m_name+'"required></td>'
+					html += '<td colspan="2"><input type="text" name="m_name" id="m_name" style="width: 150px;" value="'+data[i].m_name+'"required></td>'
 					html += '</tr>';
 					html += '</table></div>'; 
 					
@@ -269,7 +269,7 @@
 					
 					/* 위치 */
 					html += '<div class="info" id="plocation">';
-					html += '<hr>';
+					html += '<hr><hr>';
 					html += '<table>';
 					html += '<tr>';
 					html += '<td><h4>위치</h4></td>';
@@ -284,7 +284,7 @@
 					
 					/* 위치 변경  */
 					html += '<div id="editLocation" style="display : none">';
-					html += '<hr><input type="hidden" name="mento_idx" id="mento_idx">';
+					html += '<hr><hr><input type="hidden" name="mento_idx" id="mento_idx">';
 					html += '<table>';
 					html += '<tr>';
 					html += '<td><h4>위치</h4></td>';
@@ -294,7 +294,7 @@
 					if (data[i].tor_location !=null){
 						html += '<td colspan="2"><input type="text" name="tor_location" id="tor_location" value="'+data[i].tor_location+'" style="width:250px;" readonly>';
 					} 
-					html += '<button onclick="sample4_execDaumPostcode()">주소 검색</button>';
+					html += '<button style="margin:2px;" onclick="sample4_execDaumPostcode()">주소 검색</button>';
 					html += '</td>'
 					html += '</tr>';
 					html += '</table></div>';
