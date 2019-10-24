@@ -47,6 +47,7 @@ width: 200px;
 height:  300px;
 border: 1px solid #ddd;
 border-radius: 7px;
+overflow: hidden;
 }
 
 #m_photo{

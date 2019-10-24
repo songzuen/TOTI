@@ -60,14 +60,14 @@ public class EstimateService {
 			
 			
 			
-			cnt = dao.insertEstimate(est);
-			System.out.println(cnt);
+			rCnt = dao.insertEstimate(est);
+//			System.out.println(cnt);
 //			rCnt = dao.insertEstimate(procedure);
-//			if (rCnt != 0) {
-////				cnt = est.getEst_idx();
+			if (rCnt != 0) {
+				cnt = est.getEst_idx();
 //				cnt = dao.getEstidx(request_idx, mento_idx);
 //				System.out.println(cnt);
-//			}	
+			}	
 		} catch (IllegalStateException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

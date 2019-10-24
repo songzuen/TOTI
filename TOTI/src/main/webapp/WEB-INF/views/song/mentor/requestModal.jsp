@@ -273,11 +273,6 @@ p {
 </body>
 <script type="text/javascript"
 	src="//dapi.kakao.com/v2/maps/sdk.js?appkey=c69d5f862cf8316938343efcf4a7d402&libraries=services"></script>
-<!-- The core Firebase JS SDK is always required and must be listed first -->
-<script src="https://www.gstatic.com/firebasejs/5.5.9/firebase.js"></script>
-
-<!-- TODO: Add SDKs for Firebase products that you want to use
-     https://firebase.google.com/docs/web/setup#available-libraries -->
 
 <script>
 	

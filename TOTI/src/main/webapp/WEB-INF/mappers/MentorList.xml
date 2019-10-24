@@ -293,7 +293,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-ma
 	<!-- 고수 상세 페이지 -->
 	<select id="getMentorPage" resultMap="member"
 		resultType="com.yal.toti.song.mentee.domain.MentorMemberInfo">
-		select t.mento_idx, c.cate_idx,p_shot,p_pay,p_edu,p_career,p_long,m_name,m_photo,c.cate_name,r.review_idx,r.review_star,r.review_cont,r.review_date,member_name,(if(isnull(r.review_idx),'리뷰 없음',r.review_cont))
+		select *,(if(isnull(r.review_idx),'리뷰 없음',r.review_cont))
 		cont,(if(isnull(r.review_idx),'0',(select
 		round(avg(sr.review_star),1) from toti.toti_review sr where
 		sr.mento_idx = t.mento_idx))) str,

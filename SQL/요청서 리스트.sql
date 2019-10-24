@@ -9,5 +9,5 @@ join toti.toti_mentee_service tee on r.request_idx =  tee.request_idx
 join toti.toti_service s on s.service_idx = tee.service_idx
 where c.cate_idx = 4 and q.quest_idx = 999 and tee.service_idx in 
 (select service_idx from toti.toti_mentor_service mts join toti.toti_mentor mt on mt.mento_idx=mts.mento_idx 
-where mt.mento_idx=3)
+where mt.mento_idx=84)
 order by request_date desc;
