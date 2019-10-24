@@ -1,5 +1,7 @@
 package com.yal.toti.baek.service;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -8,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.yal.toti.baek.dao.ChatSessionDao;
 import com.yal.toti.baek.domain.ChatRoomInfo;
+import com.yal.toti.baek.domain.Chatlog;
 
 @Service("roomService")
 public class RoomService {
@@ -24,17 +27,22 @@ public class RoomService {
 
 		cnt = dao.insertChatRoom(roomnum, category, user, target);
 
-		/*
-		 * Date d = new Date(); SimpleDateFormat format = new
-		 * SimpleDateFormat("yyyy년 MM월 dd일 E요일 HH:mm"); String date = format.format(d);
-		 */
+		Date d = new Date();
+		SimpleDateFormat format = new SimpleDateFormat("yyyy년 MM월 dd일 E요일 HH:mm");
+		String date = format.format(d);
 
 		/*
 		 * cnt += dao.insertEstPriceToChatRoom(roomnum, user, date); cnt +=
 		 * dao.insertEstContToChatRoom(roomnum, user, date);
 		 */
 		
-		dao.updateLastMsgAtChatRoom(roomnum);
+		System.out.println(date);
+		Chatlog log = dao.insertChatlog("견적서를 꼭 확인해주세요 ! ! !", date, roomnum, "공지사항");
+		int lastmsg = log.getMessage_num();
+		System.out.println(lastmsg);
+		System.out.println(123456);
+
+		cnt += dao.updateLastMsgAtChatRoom(lastmsg, roomnum);
 
 		return cnt;
 
@@ -75,7 +83,7 @@ public class RoomService {
 		if (list == null) {
 
 		}
-
+		System.out.println(list);
 		return list;
 	}
 }

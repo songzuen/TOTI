@@ -90,7 +90,7 @@
 
 		function mentorProfile(mento_idx) {
 			$.ajax({
-				url : 'http://localhost:8080/toti/mento/' + mento_idx,
+				url : '/toti/mento/' + mento_idx,
 				type : 'GET',
 				success : function(data) {
 					var html = '';
@@ -112,13 +112,13 @@
 		$('#reviewFrom').submit(function(){
 			alert($('#review_star').html());
 	            $.ajax({
-	                url : 'http://localhost:8080/toti/review' ,
+	                url : '/toti/review' ,
 	                type : 'POST',
 	                data : $('#reviewFrom').serialize(),
 	                success : function(data){
 	    				if(data=='success'){
 	    					alert('리뷰가 추가되었습니다.');
-	    					location.href="http://localhost:8080/toti/main";
+	    					location.href="/toti/main";
 	    				}else {
 	    					alert('등록 실패');
 	    				}

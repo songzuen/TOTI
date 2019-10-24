@@ -180,7 +180,7 @@ div.card {
 				
 
 				$.ajax({
-					url : 'http://localhost:8080/toti/member/insertMentor',
+					url : '/toti/member/insertMentor',
 					type : 'POST',
 					data :  { 
 						m_idx : $('#m_idx').val()

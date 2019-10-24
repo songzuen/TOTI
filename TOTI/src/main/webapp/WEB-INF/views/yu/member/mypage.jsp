@@ -126,7 +126,7 @@
         	var id = '${id}';
 
             $.ajax({
-                url: 'http://localhost:8080/toti/member/mypage',
+                url: '/toti/member/mypage',
                 type: 'GET',
                 data: {id: id},
                 success: function(data) {
@@ -144,15 +144,15 @@
                     html += '<td>' + data.ver + '</td></tr>';
                    	//html += '<td><button style="color=black;" onclick="mentorInsert(\'' + data.id + '\')">고수등록</button></td></tr>';
                    /*  html += '<tr><td>사진</td>';
-                    html += '<td><img src="http://localhost:8080/toti/uploadfile/yu/' + data.photo_name + '"></td></tr>'; */
+                    html += '<td><img src="/toti/uploadfile/yu/' + data.photo_name + '"></td></tr>'; */
                     html += '<tr style="display:none;"><td>가입날짜</td>';
                     //html += '<td>' + data.regDate + '</td></tr></table>';
                     html += '<td>' + data.regDate + '</td></tr>';
                     html += '<tr><td><button class="btn btn-primary" onclick="edit(\'' + data.id + '\')">회원수정</button></td>';
                     // html += '<button onclick="deleteMem(\'' + data.id + '\')">회원탈퇴</button>';
                     html += '<td><button class="btn btn-primary" onclick="deleteMem(\'' + data.id + '\')">회원탈퇴</button>';
-                    html += '<button style=\"background-color:gold;\" class=\"btn btn-primary\"><a href=\"http://localhost:8080/toti/insertMentor\">멘토등록</a></button>';
-                   //html += '<button style=\"background-color:gold;\" class=\"btn btn-primary\"><a href=\"http://localhost:8080/toti/insertMentor\">멘티로 전환</a></button></td></tr></table>';
+                    html += '<button style=\"background-color:gold;\" class=\"btn btn-primary\"><a href=\"/toti/insertMentor\">멘토등록</a></button>';
+                   //html += '<button style=\"background-color:gold;\" class=\"btn btn-primary\"><a href=\"/toti/insertMentor\">멘티로 전환</a></button></td></tr></table>';
                     
 
                     $('#myInfo').html(html);
@@ -165,14 +165,14 @@
         	var id = '${id}';
 
             $.ajax({
-                url: 'http://localhost:8080/toti/member/mypage',
+                url: '/toti/member/mypage',
                 type: 'GET',
                 data: {id: id},
                 success: function(data) {
                    // alert(JSON.stringify(data));
 
                     var html = '';
-                    html += '<img src="http://localhost:8080/toti/uploadfile/yu/' + data.photo_name + '">';
+                    html += '<img src="/toti/uploadfile/yu/' + data.photo_name + '">';
          
                     $('#myPhoto').html(html);
                 }
@@ -183,7 +183,7 @@
         function logout(id){
         	
         	$.ajax({
-            	url: "http://localhost:8080/toti/member/logout",
+            	url: "/toti/member/logout",
             	data: {
             		id: id
             	},
@@ -191,7 +191,7 @@
             	dataType: 'text',
             	success: function(data){
                 	//alert(data);
-                	location.href = "http://localhost:8080/toti/main";
+                	location.href = "/toti/main";
                 }
             });
         	
@@ -200,7 +200,7 @@
         function deleteMem(id){
         	
         	$.ajax({
-        		url: 'http://localhost:8080/toti/member/mypage',
+        		url: '/toti/member/mypage',
                 type: 'DELETE',
                 data: JSON.stringify({
                 	id: id
@@ -210,14 +210,14 @@
                 success: function(data){
                 	//alert(data);
 	                	$.ajax({
-	                    	url: "http://localhost:8080/toti/member/logout",
+	                    	url: "/toti/member/logout",
 	                    	data: {
 	                    		id: id
 	                    	},
 	                    	type: 'GET',
 	                    	success: function(data){
 	                        	alert(data);
-	                        	location.href = "http://localhost:8080/toti/main";
+	                        	location.href = "/toti/main";
 	                        }
 	                    });
                 }
@@ -227,7 +227,7 @@
         function edit(id) {
 
             $.ajax({
-                url: 'http://localhost:8080/toti/member/mypage/id',
+                url: '/toti/member/mypage/id',
                 type: 'GET',
                 data: {
                     id: id
@@ -279,7 +279,7 @@
                             return false;
                         }
                         $.ajax({
-                            url: 'http://localhost:8080/toti/member/mypage',
+                            url: '/toti/member/mypage',
                             type: 'POST',
                             data: formData,
                             processData: false, //파일 전송 시 필수
@@ -311,7 +311,7 @@
                         }
 
                         $.ajax({
-                            url: 'http://localhost:8080/toti/member/mypage',
+                            url: '/toti/member/mypage',
                             type: 'PUT',
 
                             	//alert("수정되었습니다.");
@@ -329,7 +329,7 @@
                             dataType: 'text',
                             success: function(data) {
                                 //alert(요청하신 정보로 변경되었습니다.);
-                                location.href = "http://localhost:8080/toti/main";
+                                location.href = "/toti/main";
                               //alert(요청하신 정보로 변경되었습니다.);
                             }
                         });
@@ -342,7 +342,7 @@
         }
         
         function cancel(){
-        	location.href = "http://localhost:8080/toti/mypage";
+        	location.href = "/toti/mypage";
         }
 
         function checkPw() {

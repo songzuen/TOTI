@@ -111,7 +111,7 @@
 				
 
 				$.ajax({
-						url:'http://localhost:8080/toti/member/login',
+						url:'/toti/member/login',
 							type : 'POST',
 							data : $('#form').serialize(),
 							success : function(data) {
@@ -129,7 +129,7 @@
 // 								alert(data.id);
 								
 								$.ajax({
-									url : "http://localhost:8080/toti/member/loginProcess",
+									url : "/toti/member/loginProcess",
 										type : 'GET',
 										data : {
 											id : data.id,
@@ -139,7 +139,7 @@
 											},
 								success : function(data) {
 								
-											location.href = "http://localhost:8080/toti/main";
+											location.href = "/toti/main";
 											
 														}
 												});

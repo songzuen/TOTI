@@ -53,7 +53,7 @@
             
                <!-- 멘티 로그인 -->
                         <li><a href="<c:url value="/requests" />"><i class="fa fa-uesr"></i>보낸요청</a></li>
-                        <li><a href="<c:url value="/chat/chatLogin" />">채팅</a></li>
+                        <li><a href="<c:url value="/chat/chatList"/>">채팅</a></li>
                         <li><a href="<c:url value="/mentorList" />">멘토찾기</a></li>
                         <li class="dropdown"><a href="#">${name} 멘티님<i class="fa fa-angle-down"></i></a>
                             <ul role="menu" class="sub-menu">
@@ -74,7 +74,7 @@
                         <!-- 멘토 로그인 -->
 
                         <li><a href="<c:url value="/requestList" />">받은요청</a></li>
-                        <li><a href="<c:url value="/mentor/chatList" />">채팅</a></li>
+                        <li><a href="<c:url value="/chat/chatList" />">채팅</a></li>
                         <li><a href="<c:url value="/profile/${idx}" />">프로필</a></li>
                         <li class="dropdown"><a href="#">${name}멘토님<i class="fa fa-angle-down"></i></a>
                             <ul role="menu" class="sub-menu">

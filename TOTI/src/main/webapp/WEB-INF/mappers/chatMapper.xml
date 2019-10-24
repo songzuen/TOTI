@@ -22,23 +22,39 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<select id="selectChatRoomListByUser"
 		resultType="com.yal.toti.baek.domain.ChatRoomInfo">
-		select chatroom.room_num, chatroom.room_cat,
-		cate.cate_name,
-		chatroom.room_user,
-		chatroom.last_msg,
-		chatroom.room_target,
-		(select m_name from toti.toti_member where m_idx
-		= room_user) as username, (select m_name from toti.toti_member where
-		m_idx = room_target) as targetname from
-		toti.toti_chatroom as chatroom
-		join toti.toti_member
-		as member on
-		chatroom.room_target = member.m_idx
-		join toti.toti_cate as cate on
-		chatroom.room_cat = cate.cate_idx where
-		room_user =
-		#{param1} or
-		room_target = #{param1} order by cate_name
+		select room.room_num, room.room_user, (select m_name from
+		toti.toti_member
+		where m_idx = room.room_user) as room_username
+		,
+		(select m_photo from toti.toti_member where m_idx = room.room_user)
+		as
+		room_userphoto
+		, room.room_target, (select m_name from toti.toti_member
+		where m_idx =
+		room.room_target) as room_targetname
+		, (select m_photo
+		from toti.toti_member where m_idx = room.room_target)
+		as
+		room_targetphoto
+		, (select message from toti.toti_chatlog where
+		message_num =
+		room.last_msg) as room_lastmsg
+		, (select message_date from
+		toti.toti_chatlog where message_num =
+		room.last_msg) as
+		room_lastmsgTime
+		, (select cate_name from toti.toti_cate where cate_idx
+		= room.room_cat)
+		as cate_name
+		, (select service_name from
+		toti.toti_service where service_idx =
+		(select service_idx from
+		toti.toti_mentee_service where request_idx =
+		(select request_idx from
+		toti.toti_estimatee where est_idx =
+		room.room_num))) as service_name
+		from toti.toti_chatroom as room where room_user = #{param1} or
+		room_target = #{param1};
 	</select>
 
 	<select id="searchChatRoom" resultType="String">
@@ -66,7 +82,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 
 	<select id="selectMentorCheck" resultType="_int">
-		select room_user from toti.toti_chatroom where
+		select room_user from
+		toti.toti_chatroom where
 		room_num = #{param1};
 	</select>
 
@@ -80,9 +97,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		toti.toti_estimatee where est_idx = #{param1}))
 	</insert>
 
+	<insert id="insertChatlog">
+		insert into toti.toti_chatlog (message, message_date,
+		room_num, msg_user) values (#{param1}, #{param2}, #{param3},
+		#{param4});
+	</insert>
+
 	<update id="updateLastMsgAtChatRoom">
-		update toti.toti_chatroom set last_msg = est_cont
-		where room_num = #{param1};
+		update toti.toti_chatroom set last_msg = #{param1}
+		where room_num = #{param2}
 	</update>
 
 	<select id="selectMentorProfile"

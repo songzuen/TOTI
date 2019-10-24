@@ -141,7 +141,7 @@ $(document).ready(function(){
             
   
        $.ajax({
-           url : 'http://localhost:8080/toti/member/mentor',
+           url : '/toti/member/mentor',
            type : 'POST',
            data : { 
         	   m_idx : $('#m_idx').val(),
@@ -158,12 +158,12 @@ $(document).ready(function(){
            	if (data == 'success') {
            	
            	alert('멘토님의 정보가 저장되었습니다.');
-           	location.href = "http://localhost:8080/toti/main";
+           	location.href = "/toti/main";
   			 }
   			 },
   			 error: function(e) {
   			 alert('실패임');
-  			location.href = "http://localhost:8080/toti/insertMen";
+  			location.href = "/toti/insertMen";
       	 }
            
 
