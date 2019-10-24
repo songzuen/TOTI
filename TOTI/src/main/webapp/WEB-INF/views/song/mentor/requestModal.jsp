@@ -289,7 +289,7 @@ p {
 	function request(request_idx) {
 		$
 				.ajax({
-					url : 'http://localhost:8080/toti/requestInfo/'
+					url : 'http://13.209.47.16:8080/toti/requestInfo/'
 							+ request_idx,
 					type : 'GET',
 					success : function(data) {
@@ -377,7 +377,7 @@ p {
 
 		$
 				.ajax({
-					url : 'http://localhost:8080/toti/requestInfo/'
+					url : 'http://13.209.47.16:8080/toti/requestInfo/'
 							+ request_idx,
 					type : 'GET',
 					success : function(data) {
@@ -440,7 +440,7 @@ p {
 
 		$
 				.ajax({
-					url : 'http://localhost:8080/toti/credit/' + mento_idx,
+					url : 'http://13.209.47.16:8080/toti/credit/' + mento_idx,
 					type : 'GET',
 					success : function(item) {
 
@@ -487,7 +487,7 @@ p {
 
 							if (item[i].tor_coin == 0) {
 								alert('코인을 충전 후 사용해주세요.');
-								location.href =  'http://localhost:8080/toti/mypage2';
+								location.href =  'http://13.209.47.16:8080/toti/mypage2';
 								break;
 							} else {
 
@@ -516,7 +516,7 @@ p {
 
 								$
 										.ajax({
-											url : 'http://localhost:8080/toti/estimateform/'
+											url : 'http://13.209.47.16:8080/toti/estimateform/'
 													+ request_idx,
 											type : 'POST',
 											processData : false,
@@ -529,14 +529,14 @@ p {
 
 													$
 															.ajax({
-																url : 'http://localhost:8080/toti/credit/'
+																url : 'http://13.209.47.16:8080/toti/credit/'
 																		+ mento_idx,
 																type : 'PUT',
 																success : function(
 																		data) {
 
 																					$.ajax({
-																								url : "http://localhost:8080/toti/chat/room/"
+																								url : "http://13.209.47.16:8080/toti/chat/room/"
 																										+ +est_idx
 																										+ "/"
 																										+ cate_idx
