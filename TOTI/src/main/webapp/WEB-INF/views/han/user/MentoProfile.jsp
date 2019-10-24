@@ -1,23 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
-<%@include file="/WEB-INF/views/frame/header.jsp"%>
-<!-- title -->
+	<%@ include file="/WEB-INF/views/frame/header.jsp" %>
 <title>TOTI :: 프로필 관리</title>
 <style>
-
-	
 	table {
 		width: 100%;
 	}
-	
 		
 	#mentorProfile {
 		float: left;
-		width: 80%;
+		width: 70%;
 	}
 	
 	.btn-edit{
@@ -81,24 +76,25 @@
 		width: 250px;
 		height: 25px;
 	}
+	
 </style>
 </head>
 <body>
 	<!-- page container -->
-	<div class="page-container">
+	<div class="page-container" >
 		<%@include file="/WEB-INF/views/frame/nav.jsp"%>
 		<!-- demo content -->
 		<div class="demo-content mrg-top-md">
 			<!-- container -->
-			<div  class="container" style="margin-top: -50px">
+			<div  class="container" style="margin-top: -50px; margin-bottom: 50px;">
 				<input type="hidden" id="mento_idx" value="${mento_idx}">
 				<div id="mentorProfile">
 				</div>
-				<div style="float:right; width:20%" >
+				<div style="float:right; width:25%; margin:10px;" >
 					<h4>리뷰 요청하기</h4>
 					링크를 공유하고 고객들에게 리뷰를 받아 보세요. 긍정적인 리뷰가 있는 고수는 고용될 확률이 2배 이상 높습니다.
 					<input type="text" id="url_field" value="http://localhost:8080/toti/review/${mento_idx}" readonly><br>
-					<input id="copy_btn" type="button" value="복사하기">
+					<input class="btn btn-outline-danger" id="copy_btn" type="button" value="복사하기">
 				</div>
 				<!-- end home variation -->
 				<!-- end component -->
@@ -110,12 +106,9 @@
 		<%@include file="/WEB-INF/views/frame/footer.jsp"%>
 	</div>
 
-
 <script>
 	$(document).ready(function() {
 		mentorProfile($('#mento_idx').val());
-		
-		
 	});
 
 	function mentorProfile(mento_idx) {
@@ -128,17 +121,15 @@
 
 					/*간략한 고수정보*/
 					html += '<div class="info" id="overview">';
-					html += '<img class="img" src="<c:url value="/img/'+data[i].m_photo+'" />">';
+					html += '<img class="img" src="<c:url value="/images/user/'+data[i].m_photo+'" />">';
 					html += '<div class="overview"> ';
 					html += '<table id="overtable"><tr>';
-					html += '<td id="num">'+ data[i].review_avg +'.0</td>';
+					html += '<td id="num">'+ data[i].review_avg +'</td>';
 					html += '<td id="num">'+ data[i].review_cnt +'</td>';
 					html += '</tr>';
 					html += '<tr><td>';
 					html += '리뷰 평균</td>';
 					html += '<td>리뷰 수</td></tr></table></div></div>';
-					
-					
 					
 					/* 이름 */
 					html += '<div class="info" id="pname">';
@@ -264,7 +255,7 @@
 					html += '</tr>';
 					html += '<tr>';
 					html += '<td colspan="2">';
-					if (data[i].p_shot !=null){
+					if (data[i].p_pay !=null){
 						html += data[i].p_pay + '<br>';	
 					} else {
 						html += '';
@@ -420,17 +411,13 @@
 							
 					if(data[i].review_avg == 5){
 						html += star+star+star+star+star;
-					}
-					else if(data[i].review_avg == 4){
+					}else if(data[i].review_avg == 4){
 						html += star+star+star+star+nostar;
-					}
-					else if(data[i].review_avg == 3){
+					}else if(data[i].review_avg == 3){
 						html += star+star+star+nostar+nostar;
-					}
-					else if(data[i].review_avg == 2){
+					}else if(data[i].review_avg == 2){
 						html += star+star+nostar+nostar+nostar;
-					}
-					else if(data[i].review_avg == 1){
+					}else if(data[i].review_avg == 1){
 						html += star+nostar+nostar+nostar+nostar;
 					}
 					html += '</h4></div>';
@@ -440,27 +427,38 @@
 					html += '<table style="width:100%">';
 					html += '<tr>';
 					html += '<td id="m-name">';
-					html += data[i].member_name + '</td>';
+					if (data[i].member_name !=null){
+						html += data[i].member_name ;	
+					} else {
+						html += '등록된 리뷰가 없습니다.</td>';
+					}
 					if(data[i].review_star == 5){
 						html += star+star+star+star+star;
-					}
-					if(data[i].review_star == 4){
+					}else if(data[i].review_star == 4){
 						html += star+star+star+star+nostar;
-					}
-					if(data[i].review_star == 3){
+					}else if(data[i].review_star == 3){
 						html += star+star+star+nostar+nostar;
-					}
-					if(data[i].review_star == 2){
+					}else if(data[i].review_star == 2){
 						html += star+star+nostar+nostar+nostar;
-					}
-					if(data[i].review_star == 1){
+					}else if(data[i].review_star == 1){
 						html += star+nostar+nostar+nostar+nostar;
 					}
-					html += '<td class="date">'+data[i].review_date+'</td>';
+					html += '<td class="date">';
+					if (data[i].review_date !=null){
+						html += data[i].review_date ;	
+					} else {
+						html += '</td>';
+					}
 					html += '</tr>';
 					html += '<tr>';
-					html += '<td colspan="2">' + data[i].cont
+					html += '<td colspan="2">';
 							+ '</td>';
+					if (data[i].cont !=null){
+						html += data[i].cont ;	
+					} else {
+						html += '';
+					}
+					html += '</td>';
 					html += '</tr>';
 					html += '</table><br>';
 				}
@@ -587,7 +585,7 @@
 	
 	/* 서비스 추가하기 */
 	function addService(mento_idx, service_idx){
-		alert(service_idx);
+
 		$.ajax({
 			url : 'http://localhost:8080/toti/mento/addservice',
 			type : 'POST',
@@ -608,8 +606,6 @@
 	
     /* 서비스 삭제하기 */
     function delService(mento_idx, service_idx){
-    	alert(service_idx);
-    	alert(mento_idx);
 		$.ajax({
 			url : 'http://localhost:8080/toti/mento/delservice',
 			type : 'GET',
@@ -654,7 +650,7 @@
 	        contentType:'application/json;chartset=utf-8',
 	        data: JSON.stringify({
 	        	mento_idx:$('#mento_idx').val(),
-	        	p_pay:$('#p_pay').val()
+	        	p_pay:$("input:radio[name=p_pay]:checked").val()
 			}),
 			success : function(data){
 				location.reload();

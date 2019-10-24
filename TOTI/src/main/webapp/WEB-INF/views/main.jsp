@@ -4,11 +4,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<%@ include file="/WEB-INF/views/frame/header.jsp" %>
+   <%@ include file="/WEB-INF/views/frame/header.jsp" %>
     <title>TOTI</title>
 </head>
 <body>
-	<%@ include file="/WEB-INF/views/frame/nav.jsp" %>
+   <%@ include file="/WEB-INF/views/frame/nav.jsp" %>
     <!--/#header-->
     <section id="home-slider">
         <div class="container">
@@ -44,19 +44,18 @@
         </div>
     </section>
     <!--/#services-->
-
     <section id="action" class="responsive">
         <div class="vertical-center">
              <div class="container">
                 <div class="row">
                     <div class="action take-tour">
                         <div class="col-sm-7 wow fadeInLeft" data-wow-duration="500ms" data-wow-delay="300ms">
-                            <h1 class="title">Triangle Corporate Template</h1>
-                            <p>A responsive, retina-ready &amp; wide multipurpose template.</p>
+                            <h1 class="title">어떤 멘토를 원하세요?</h1>
+                            <p>배우고싶은 분야, 원하는 분야의 멘토와 수업해보세요! </p>
                         </div>
                         <div class="col-sm-5 text-center wow fadeInRight" data-wow-duration="500ms" data-wow-delay="300ms">
                             <div class="tour-button">
-                                <a href="#" class="btn btn-common">TAKE THE TOUR</a>
+                                <a href="#cate_select" class="btn btn-common">분야찾기</a>
                              </div>
                         </div>
                     </div>
@@ -68,108 +67,65 @@
 
     <section id="features">
         <div class="container">
-            <div class="row">
-                <div class="single-features">
-                    <div class="col-sm-5 wow fadeInLeft" data-wow-duration="500ms" data-wow-delay="300ms">
-                        <img src="images/home/image1.png" class="img-responsive" alt="">
-                    </div>
-                    <div class="col-sm-6 wow fadeInRight" data-wow-duration="500ms" data-wow-delay="300ms">
-                        <h2>Experienced and Enthusiastic</h2>
-                        <p>Pork belly leberkas cow short ribs capicola pork loin. Doner fatback frankfurter jerky meatball pastrami bacon tail sausage. Turkey fatback ball tip, tri-tip tenderloin drumstick salami strip steak.</p>
-                    </div>
-                </div>
-                <div class="single-features">
-                    <div class="col-sm-6 col-sm-offset-1 align-right wow fadeInLeft" data-wow-duration="500ms" data-wow-delay="300ms">
-                        <h2>Built for the Responsive Web</h2>
-                        <p>Mollit eiusmod id chuck turducken laboris meatloaf pork loin tenderloin swine. Pancetta excepteur fugiat strip steak tri-tip. Swine salami eiusmod sint, ex id venison non. Fugiat ea jowl cillum meatloaf.</p>
-                    </div>
-                    <div class="col-sm-5 wow fadeInRight" data-wow-duration="500ms" data-wow-delay="300ms">
-                        <img src="images/home/image2.png" class="img-responsive" alt="">
-                    </div>
-                </div>
-                <div class="single-features">
-                    <div class="col-sm-5 wow fadeInLeft" data-wow-duration="500ms" data-wow-delay="300ms">
-                        <img src="images/home/image3.png" class="img-responsive" alt="">
-                    </div>
-                    <div class="col-sm-6 wow fadeInRight" data-wow-duration="500ms" data-wow-delay="300ms">
-                        <h2>Experienced and Enthusiastic</h2>
-                        <p>Ut officia cupidatat anim excepteur fugiat cillum ea occaecat rump pork chop tempor. Ut tenderloin veniam commodo. Shankle aliquip short ribs, chicken eiusmod exercitation shank landjaeger spare ribs corned beef.</p>
-                    </div>
-                </div>
+            <div id="cate_list" class="row">
+
             </div>
         </div>
     </section>
      <!--/#features-->
-	
-    <section id="clients">
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-12">
-                    <div class="clients text-center wow fadeInUp" data-wow-duration="500ms" data-wow-delay="300ms">
-                        <p><img src="images/home/clients.png" class="img-responsive" alt=""></p>
-                        <h1 class="title">Happy Clients</h1>
-                        <p>Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. <br> Ut enim ad minim veniam, quis nostrud </p>
-                    </div>
-                    <div class="clients-logo wow fadeIn" data-wow-duration="1000ms" data-wow-delay="600ms">
-                        <div class="col-xs-3 col-sm-2">
-                            <a href="#"><img src="images/home/client1.png" class="img-responsive" alt=""></a>
-                        </div>
-                        <div class="col-xs-3 col-sm-2">
-                            <a href="#"><img src="images/home/client2.png" class="img-responsive" alt=""></a>
-                        </div>
-                         <div class="col-xs-3 col-sm-2">
-                            <a href="#"><img src="images/home/client3.png" class="img-responsive" alt=""></a>
-                        </div>
-                         <div class="col-xs-3 col-sm-2">
-                            <a href="#"><img src="images/home/client4.png" class="img-responsive" alt=""></a>
-                        </div>
-                         <div class="col-xs-3 col-sm-2">
-                            <a href="#"><img src="images/home/client5.png" class="img-responsive" alt=""></a>
-                        </div>
-                         <div class="col-xs-3 col-sm-2">
-                            <a href="#"><img src="images/home/client6.png" class="img-responsive" alt=""></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-     </section>
-    <!--/#clients-->
-	<%@ include file="/WEB-INF/views/frame/footer.jsp" %>
-	
+     
+   <%@ include file="/WEB-INF/views/frame/footer.jsp" %>
+   
     <script>
-		$(document).ready(function() {
+      $(document).ready(function() {
+         kategorieList();
+      });
+      
+      function kategorieList() {
+         
+         $.ajax({
+            url : 'http://localhost:8080/toti/kategorieList',
+            type : 'GET',
+            success : function(data) {
+               
+               var html = '';
+               for (var i = 0; i < data.length-1; i++) {
+                  html += '<div class="col-sm-4 text-center wow fadeIn" data-wow-duration="1000ms" data-wow-delay="300ms">\n';
+                  html += '<a href="<c:url value="/request?cate_idx='+data[i].cate_idx+'" />">\n';
+                  html += '<div class="single-service">\n';
+                  html += '<div style="padding: 50px; border: 1px solid; margin: 20px;">\n';
+                  html += '<h2>'+data[i].cate_name+'</h2>\n';
+                  html += '<p style="width: 230px; padding: 0;">'+data[i].cate_con+'</p>\n';
+                  html += '</div></div></a></div>';
+               }
+               $('#cate_wrap').html(html);
+               html = '';
+               
+               for (var j = 0; j < data.length-1; j++) {
+                  html += '<a href="<c:url value="/request?cate_idx='+data[j].cate_idx+'" />">\n';
+                  html += '<div class="single-features">\n';
+                  if(i%j==0){
+                     html += '<div class="col-sm-6 col-sm-offset-1 align-right wow fadeInLeft" data-wow-duration="500ms" data-wow-delay="300ms">';
+                     html += '<h2>'+data[j].cate_name+'</h2>';
+                     html += '<p>'+data[j].cate_con+'</p></div>';
+                     html += ' <div class="col-sm-5 wow fadeInRight" data-wow-duration="500ms" data-wow-delay="300ms">';
+                     html += '<img src="<c:url value="/images/request/'+data[j].cate_img+'" />" class="img-responsive" alt=""></div>';
+                  }else {
+                     html += '<div class="col-sm-5 wow fadeInLeft" data-wow-duration="500ms" data-wow-delay="300ms">';
+                     html += '<img src="<c:url value="/images/request/'+data[j].cate_img+'" />" class="img-responsive" alt=""></div>';
+                     html += '<div class="col-sm-6 wow fadeInRight" data-wow-duration="500ms" data-wow-delay="300ms">';
+                     html += '<h2>'+data[j].cate_name+'</h2>';
+                     html += '<p>'+data[j].cate_con+'</p>';
+                  }
+                  html += '</div></div></a>';
+               }
+               
 
-			kategorieList();
-
-		});
-		
-		function kategorieList() {
-			
-			$.ajax({
-				url : 'http://localhost:8080/toti/kategorieList',
-				type : 'GET',
-				success : function(data) {
-					
-					var html = '';
-
-					for (var i = 0; i < data.length-1; i++) {
-						html += '<div class="col-sm-4 text-center wow fadeIn" data-wow-duration="1000ms" data-wow-delay="300ms">\n';
-						html += '<a href="<c:url value="/request?cate_idx='+data[i].cate_idx+'" />">\n';
-						html += '<div class="single-service">\n';
-						html += '<div style="padding: 50px; border: 1px solid; margin: 20px;">\n';
-						html += '<h2>'+data[i].cate_name+'</h2>\n';
-						html += '<p>분야설명넣고싶은데 넣으려면 DB에 추가해야한다ㅏㅏㅏㅏㅏㅏ</p>\n';
-						html += '</div></div></a></div>';
-					}
-
-					$('#cate_wrap').html(html);
-					
-				}
-
-			});
-			
-		}
-	</script>
+   $('#cate_list').html(html);
+            }
+         });
+         
+      }
+   </script>
 </body>
 </html>

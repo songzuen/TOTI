@@ -14,7 +14,7 @@ public class RequestVerEditMemberInfo {
 	private String id;
 	private String pw;
 	private String name;
-	private char ver;
+	private String ver;
 	private char gender;
 	private MultipartFile photo;
 	private String photo_name;
@@ -36,11 +36,23 @@ public class RequestVerEditMemberInfo {
 	}
  
 	
+
+	
+	public RequestVerEditMemberInfo(String id, String ver) {
+		super();
+		this.id = id;
+		this.ver = ver;
+	}
+
 	
 	
+	
+
 	public int getIdx() {
 		return idx;
 	}
+
+
 
 	public void setIdx(int idx) {
 		this.idx = idx;
@@ -71,11 +83,11 @@ public class RequestVerEditMemberInfo {
 	}
 
 	
-	public char getVer() {
+	public String getVer() {
 		return ver;
 	}
 
-	public void setVer(char ver) {
+	public void setVer(String ver) {
 		this.ver = ver;
 	}
 

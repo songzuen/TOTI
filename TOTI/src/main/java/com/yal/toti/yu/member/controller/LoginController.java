@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.yal.toti.yu.member.domain.KakaoLoginInfo;
 import com.yal.toti.yu.member.domain.MemberInfo;
 import com.yal.toti.yu.member.service.LoginService;
 
@@ -39,13 +40,12 @@ public class LoginController {
 		String name = "";
 		String photo_name="";
 		String idxstr = "";
+		String ver = "";
+		
 		idxstr =  String.valueOf(mi.getIdx());
 		name = mi.getName();
-		
-
-		
 		photo_name = mi.getPhoto_name();
-		
+		ver = mi.getVer();
 		
 		String view = "";
 		Map<String, String> maps = new HashMap<String, String>();
@@ -57,6 +57,7 @@ public class LoginController {
 			maps.put("photo_name", photo_name);
 			maps.put("id", id);
 			maps.put("idxstr", idxstr);
+			maps.put("ver", ver);
 			maps.put("view", view);
 		} else if (cnt == 2) {
 			// 2. 미인증 회원 -> 이메일 다시 보내기
@@ -73,12 +74,29 @@ public class LoginController {
 		int idx =  Integer.parseInt(idxstr);
 		
 		System.out.println("idx="+idx);
+		System.out.println("ver="+ver);
 
 		/* return new ResponseEntity<String>(cnt>0?"success":"fail", HttpStatus.OK); */
 		// return new ResponseEntity<String>(view, HttpStatus.OK);
 		return maps;
 	}
+	@PostMapping("/kakao")
+	public String kakaoLogin(KakaoLoginInfo kakaoLoginInfo) {
+		
+		
+		
+		return null;
+	}
 
+	  //카카오톡 관련 로그아웃 메소드
+    @RequestMapping("kakao_logout.do")
+    public String kakao_logout(HttpSession session, HttpServletRequest request) {
+        
+        //세션에 담긴값 초기화
+        session.invalidate();
+        
+        return "home";
+    }
 
 
 }

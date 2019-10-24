@@ -1,0 +1,231 @@
+@charset "UTF-8";
+
+#content {
+	width: 100%;
+	height: 500px;
+}
+
+#chatArea {
+	border: 1px solid black;
+	width: 72%;
+	display: none;
+	background-color: #c1c1c1;
+	float: left;
+	margin-right: 20px;
+}
+
+#profileArea {
+	border: 1px solid black;
+	width: 25%;
+	display: none;
+	min-height: 500px;
+}
+
+#chat_box {
+	width: 100%;
+	height: 500px;
+	min-height: 500px;
+	border: 1px solid black;
+	position: relative;
+	overflow: auto;
+}
+
+#list {
+	width: 700px;
+	height: 500px;
+	margin: 0 auto;
+}
+
+#estListTable {
+	width: 100%;
+	border-collapse: collapse;
+}
+
+#chatRoomListTable {
+	width: 100%;
+	border-collapse: collapse;
+}
+
+#chatRoomList {
+	padding-top: 50px;
+}
+
+table tr td {
+	border: 1px solid black;
+	padding: 5px;
+}
+
+#input_msg {
+	width: 80%;
+	margin: 0;
+	padding: 0;
+}
+
+#msg_process {
+	width: 15%;
+	margin: 0;
+	padding: 0;
+}
+
+#msgbox {
+	width: 100%;
+	padding: 2px 10px;
+}
+
+#msg {
+	display: inline-block;
+	padding: 10px;
+	border-radius: 5%;
+	background-color: white;
+}
+
+.time {
+	font-size: 11px;
+	color: gray;
+	padding: 0 5px;
+}
+
+.receivebox {
+	font-weight: bold;
+}
+
+.alarmbox {
+	color: gray;
+	font-weight: bold;
+}
+
+.text_right {
+	text-align: right;
+}
+
+.text_center {
+	text-align: center;
+}
+
+.area {
+	margin: 0 auto;
+	background-color: blue;
+}
+
+.profileTitle {
+	text-align: center;
+	font-size: 24px;
+	font-weight: bold;
+}
+
+.profileImg {
+	width: 100px;
+	height: 100px;
+	border: 1px solid black;
+	border-radius: 50%;
+	margin: 10px auto;
+}
+
+.profileName {
+	text-align: center;
+}
+
+.profileSubTitle {
+	margin: 10px 0 2px 2px;
+	font-size: 11px;
+	color: gray;
+	margin-left: 2px;
+	font-size: 11px;
+}
+
+.profileSubContent {
+	margin: 0 2px;
+}
+
+hr {
+	margin: 0;
+	padding: 0;
+}
+
+.review {
+	margin: 10px 2px;
+}
+
+.reviewName {
+	font-size: 14px;
+}
+
+.reviewStar {
+	font-weight: bold;
+}
+
+.reviewDate {
+	color: gray;
+	margin-left: 2px;
+	font-size: 11px;
+}
+
+/* The Modal (background) */
+.modal {
+	display: none; /* Hidden by default */
+	position: fixed; /* Stay in place */
+	z-index: 1; /* Sit on top */
+	left: 0;
+	top: 0;
+	width: 100%; /* Full width */
+	height: 100%; /* Full height */
+	overflow: auto; /* Enable scroll if needed */
+	background-color: rgb(0, 0, 0); /* Fallback color */
+	background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+}
+
+/* Modal Content/Box */
+.modal-content {
+	background-color: #fefefe;
+	position: fixed;
+	margin: 25% 25%;
+	padding: 20px;
+	border: 1px solid #888;
+	width: 50%; /* Could be more or less, depending on screen size */
+}
+/* The Close Button */
+.close {
+	color: #aaa;
+	float: right;
+	font-size: 28px;
+	font-weight: bold;
+}
+
+.close:hover, .close:focus {
+	color: black;
+	text-decoration: none;
+	cursor: pointer;
+}
+
+.profileImg {
+	width: 100px;
+	height: 100px;
+	border: 0px;
+	border-radius: 50%;
+	margin: 10px auto;
+	border-radius: 50%;
+}
+
+.con_p1 {
+	font-weight: bold;
+	font-size: 14px;
+}
+
+#requesr_user h2 {
+	font-weight: bold;
+}
+
+/* .topFixBanner {
+	text-align: left;
+	background-color: #ffffff;
+	padding: 20px 0px 20px 20px;
+	width: 100%;
+	border-bottom: #666666 solid 2px;
+}
+
+.topFixBannerFixed {
+	position: fixed;
+	top: 0px;
+	text-align: left;
+	padding-left: 20px;
+} */

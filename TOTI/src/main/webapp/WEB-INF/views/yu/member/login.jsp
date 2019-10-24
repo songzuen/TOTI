@@ -4,6 +4,8 @@
 <html>
 <head>
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
+
 
 	<%@ include file="/WEB-INF/views/frame/header.jsp" %>
 	<title>Blog Masonry | Triangle</title>
@@ -56,6 +58,7 @@
                
                                  <div class="form-group">
                                      <input type="submit" style="background-color: #FFBF00; color: white; font-weight: bold;" name="submit" class="btn btn-submit" value="로그인">
+                                       <a href="javascript:loginWithKakao()" class="btn btn-submit" id="kakaoLogin">카카오 로그인</a>
                                  </div>
                                  
                                  <div style="display: none;">
@@ -63,6 +66,7 @@
 								<input type="text" id="idxstr" name="idxstr">
 								<input type="text" id="name" name="name">
 								<input type="text" id="photo_name" name="photo_name">
+								<input type="text" id="ver" name="ver">
 							</div>
 						</div> 
 						
@@ -124,8 +128,9 @@
 								$('#idxstr').val(data.idxstr);
 								$('#name').val(data.name);
 								$('#photo_name').val(data.photo_name);
+								$('#ver').val(data.ver);
 								
-// 								alert(data.idxstr);
+ 								alert(data.ver);
 // 								alert(data.id);
 								
 								$.ajax({
@@ -135,6 +140,7 @@
 											id : data.id,
 											idxstr:data.idxstr,
 											name : data.name,
+											ver : data.ver ,
 											photo_name:data.photo_name
 											},
 								success : function(data) {
@@ -152,11 +158,57 @@
 											
 																	alert('아이디와 비밀번호가 일치하지 않습니다. 아이디와 비밀번호를 다시 확인해주시기 바랍니다.');
 																}
+																
 															}
 														});
 												return false;
 											});
 						});
+		
+		 Kakao.init('a0bed70f3e68b9f973d0d2d13611aaea');
+		  // 로그인
+	        function loginWithKakao() {
+	            // 로그인 창을 띄웁니다.
+	            Kakao.Auth.login({
+	                success: function(authObj) {
+	                   
+	                	//alert('Auth.login >>>>> '+JSON.stringify(authObj));
+
+	                    // 정보 확인 -> id(email) session에 저장
+	                        Kakao.API.request({
+	                            url: '/v2/user/me',
+	                            success: function(res) {
+	                                //alert('API.request >>>>> '+JSON.stringify(res));
+	                                var id = res.kakao_account.email;
+	                                var kakao = 'kakao';
+	                                
+	                                $.ajax({
+	                                    url: "http://localhost:8080/toti/member/loginProcess2",
+	                                    data: {
+	                                        id: id,
+	                                        kakao: kakao
+	                                    },
+	                                    type: 'GET',
+	                                    success: function(data){
+	                                    	alert('[카카오]로그인 성공');
+	                                    	location.href = "http://localhost:8080/toti/main";
+	                                    }
+	                                });
+	                            },
+	                            fail: function(error) {
+	                                alert(JSON.stringify(error));
+	                            }
+	                        });
+	                    
+	                    
+	                },
+	                fail: function(err) {
+	                    alert(JSON.stringify(err));
+	                    alert('[카카오]로그인 실패');
+	                }
+	            });
+	        };
+		
 	</script>
 </body>
 </html>

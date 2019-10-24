@@ -44,10 +44,10 @@ public class RequestService {
 		dao = template.getMapper(RequestDaoInterface.class);
 
 		RequestListData data = new RequestListData();
-
-		data.setCate_idx(cate_idx);
-		data.setCate_name(dao.cate_naem(cate_idx));
-
+		CategoriData cd = new CategoriData();
+		
+		data.setCatedata(dao.cate_data(cate_idx));	
+		cd.setCate_idx(cate_idx);
 		data.setService(dao.serviceData(cate_idx));
 		data.setQuest(dao.questData(cate_idx));
 		

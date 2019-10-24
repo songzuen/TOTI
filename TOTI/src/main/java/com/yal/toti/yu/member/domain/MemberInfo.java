@@ -14,7 +14,7 @@ public class MemberInfo {
 	private String id;
 	private String pw;
 	private String name;
-	private char ver;
+	private String ver;
 	private char gender;
 	private MultipartFile photo;
 	private String photo_name;
@@ -35,13 +35,24 @@ public class MemberInfo {
 		this.code = getRandom();
 	}
  
-	
+	// ver생성자
+	public MemberInfo(char verify) {
+		this.verify = verify;
+	}
+
+
+	public MemberInfo(String id, String ver) {
+		this.id = id;
+		this.ver = ver;
+	}
+
 	
 	
 	public int getIdx() {
 		return idx;
 	}
 
+	
 	public void setIdx(int idx) {
 		this.idx = idx;
 	}
@@ -71,11 +82,11 @@ public class MemberInfo {
 	}
 
 	
-	public char getVer() {
+	public String getVer() {
 		return ver;
 	}
 
-	public void setVer(char ver) {
+	public void setVer(String ver) {
 		this.ver = ver;
 	}
 

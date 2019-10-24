@@ -6,6 +6,7 @@ public class RequestMentorReg {
 	private int m_idx;
 	private int coin;
 	private String location;
+	private int cate_idx;
 	
 	
 	//default 생송자
@@ -14,14 +15,14 @@ public class RequestMentorReg {
 	
 
 	
-	public int getIdx() {
+	public int getM_idx() {
 		return m_idx;
 	}
 
 
 
-	public void setIdx(int idx) {
-		this.m_idx = idx;
+	public void setM_idx(int m_idx) {
+		this.m_idx = m_idx;
 	}
 
 
@@ -50,18 +51,35 @@ public class RequestMentorReg {
 
 
 
-	public RequestMentorReg(int idx, int coin, String location) {
+	public int getCate_idx() {
+		return cate_idx;
+	}
+
+
+
+	public void setCate_idx(int cate_idx) {
+		this.cate_idx = cate_idx;
+	}
+
+
+
+	public RequestMentorReg(int m_idx, int coin, String location, int cate_idx) {
 		super();
-		this.m_idx = idx;
+		this.m_idx = m_idx;
 		this.coin = coin;
 		this.location = location;
+		this.cate_idx = cate_idx;
 		
 	}
 
 
+	
+
+
 	@Override
 	public String toString() {
-		return "RequestMentorReg [idx=" + m_idx + ", coin=" + coin + ", location=" + location + "]";
+		return "RequestMentorReg [m_idx=" + m_idx + ", coin=" + coin + ", location=" + location + ", cate_idx="
+				+ cate_idx + "]";
 	}
 
 
@@ -71,6 +89,7 @@ public class RequestMentorReg {
 		mentorInfo.setM_idx(m_idx);
 		mentorInfo.setCoin(coin);
 		mentorInfo.setLocation(location);
+		mentorInfo.setCate_idx(cate_idx);
 		
 		
 		return mentorInfo;

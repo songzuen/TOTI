@@ -18,7 +18,8 @@ import com.yal.toti.yu.member.domain.MemberInfo;
 import com.yal.toti.yu.member.domain.RequestMentorReg;
 import com.yal.toti.yu.member.domain.RequestVerEditMemberInfo;
 import com.yal.toti.yu.member.service.MentorRegService;
-import com.yal.toti.yu.member.service.VerChangeService;
+import com.yal.toti.yu.member.service.verEditService;
+
 
 @RestController
 @RequestMapping("/member/mentor")
@@ -28,7 +29,7 @@ public class RestFulMentorController {
 	private MentorRegService regService;
 	
 	@Autowired
-	private VerChangeService verEditService;
+	private  verEditService verEditService;
 	
 	
 	@CrossOrigin
@@ -62,11 +63,12 @@ public class RestFulMentorController {
 			){
 		
 		editRequest.setId(id);
+		int cnt = verEditService.verEdit(editRequest, request);
 		System.out.println(editRequest);
 		
-		int cnt = verEditService.verEdit(editRequest, request);
 		
-		return new ResponseEntity<String>(cnt>0?"success":"fail", HttpStatus.OK);
+	
+	return new ResponseEntity<String>(cnt>0?"success":"fail", HttpStatus.OK);
 		
 		
 	}

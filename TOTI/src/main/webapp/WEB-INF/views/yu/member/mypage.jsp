@@ -4,6 +4,8 @@
 <html>
 <head>
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
+
 
 	<%@ include file="/WEB-INF/views/frame/header.jsp" %>
 	<title>Blog Masonry | Triangle</title>
@@ -71,8 +73,8 @@
                      <div class="col-md-4 col-sm-12"  id="mainTable">
                          <div class="contact-form bottom">
                          <div id="formDiv">
-                             <form id="form" name="contact-form" onsubmit="return false">
-                                <div style="padding-left:23%;" id=myPhoto></div>
+                             <form id="form" name="contact-form" onsubmit="return false" enctype="multipart/form-data">
+                               <!--  <div style="padding-left:23%;" id=myPhoto></div> -->
                                 <div id="myInfo"></div>
                                 	
                              </form>
@@ -113,13 +115,72 @@
     <script type="text/javascript" src="js/main.js"></script>
     
 <script>
-   
+	Kakao.init('a0bed70f3e68b9f973d0d2d13611aaea');
+
       $(document).ready(function(){
-            	 
+    	  var kakao = '${kakao}';
+      	
+      	if(kakao == 'kakao'){
+      		// 카카오로 로그인 되어있을 때
+      		infoWithKakao()
+      	} else {
+      		// 일반 회원으로 로그인 되어있을 때
+      	 // myPhoto();  
+      		myInfo();
+       	       
+       	  }
+      });
             		
-            	  myInfo();
-            	  myPhoto();
-              }); 
+            	 
+      
+      function infoWithKakao(){
+      	Kakao.API.request({
+              url: '/v2/user/me',
+              success: function(res) {
+                  alert(JSON.stringify(res));
+                  
+                  var id = res.kakao_account.email;
+                  var photo = res.properties.profile_image;
+                  var nickname = res.properties.nickname;
+              
+
+                  var html = '';
+                  html += '<h2>카카오 아이디로 임시 로그인 중입니다.</h2>'
+                  html += '<table id="table"> <tr>';
+                  html += '<td>아이디: </td>';
+                  html += '<td>' + id + '</td> </tr>';
+                  html += '<tr><td>닉네임: </td>';
+                  html += '<td>' + nickname + '</td></tr>';
+                  html += '<tr><td>사진</td>';
+                  html += '<td><img class="img-thumbnail" style="width:150px" src="'+photo+'"></td></tr></table>';
+                  html += '<button onclick="logoutWithKakao()" style="float: right" class="btn btn-warning btn-fill">로그아웃</button>';
+
+                  $('#myInfo').html(html);
+              },
+              fail: function(error) {
+                  alert(JSON.stringify(error));
+              }
+          });
+      }
+      
+   // 로그아웃
+      function logoutWithKakao() {
+          Kakao.Auth.logout(function() {
+          	
+          	//alert('카카오 토큰 제거');
+          	
+          	$.ajax({
+              	url: "http://localhost:8080/toti/member/logout2",
+              	type: 'GET',
+              	dataType: 'text',
+              	success: function(data){
+                  	alert(data);
+                  	location.href = "http://localhost:8080/toti/main";
+                  }
+              });
+          });
+      }
+            
               	
         function myInfo() {
         	
@@ -142,16 +203,17 @@
                     html += '<td>' + data.gender + '</td></tr>';
                     html += '<tr><td>회원 등급</td>';
                     html += '<td>' + data.ver + '</td></tr>';
-                   	//html += '<td><button style="color=black;" onclick="mentorInsert(\'' + data.id + '\')">고수등록</button></td></tr>';
-                   /*  html += '<tr><td>사진</td>';
-                    html += '<td><img src="http://localhost:8080/toti/uploadfile/yu/' + data.photo_name + '"></td></tr>'; */
-                    html += '<tr style="display:none;"><td>가입날짜</td>';
+                   //	html += '<td><button style="color=black;" onclick="mentorInsert(\'' + data.id + '\')">고수등록</button></td></tr>';
+                    html += '<tr><td>사진</td>';
+                    html += '<td><img class="img-thumbnail" alt="Cinque Terre" src="http://localhost:8080/toti/uploadfile/' + data.photo_name + '"></td></tr>'; 
+                   // html += '<tr style="display:none;"><td>가입날짜</td>';
                     //html += '<td>' + data.regDate + '</td></tr></table>';
-                    html += '<td>' + data.regDate + '</td></tr>';
+                   // html += '<td>' + data.regDate + '</td></tr>';
                     html += '<tr><td><button class="btn btn-primary" onclick="edit(\'' + data.id + '\')">회원수정</button></td>';
                     // html += '<button onclick="deleteMem(\'' + data.id + '\')">회원탈퇴</button>';
                     html += '<td><button class="btn btn-primary" onclick="deleteMem(\'' + data.id + '\')">회원탈퇴</button>';
-                    html += '<button style=\"background-color:gold;\" class=\"btn btn-primary\"><a href=\"http://localhost:8080/toti/insertMentor\">멘토등록</a></button></td></tr></table>';
+                    html += '<button style=\"background-color:gold;\" class=\"btn btn-primary\"><a href=\"http://localhost:8080/toti/insertMentor\">멘토등록</a></button>';
+                   //html += '<button style=\"background-color:gold;\" class=\"btn btn-primary\"><a href=\"http://localhost:8080/toti/insertMentor\">멘티로 전환</a></button></td></tr></table>';
                     
 
                     $('#myInfo').html(html);
@@ -159,7 +221,7 @@
 
             });
         }
-		function myPhoto() {
+		/* function myPhoto() {
         	
         	var id = '${id}';
 
@@ -177,7 +239,7 @@
                 }
 
             });
-        }
+        } */
         
         function logout(id){
         	
@@ -232,7 +294,6 @@
                     id: id
                 },
                 success: function(data) {
-                    //alert(JSON.stringify(data));
 
                     var html = '';
 
@@ -269,14 +330,13 @@
 
                     $('#photoEditbtn').click(function() {
 						
-                    	//alert('사진업로드 ajax');
-                        var formData = new FormData(); // 파일 전송 -> FormData()활용
+                        var formData = new FormData(); 
 
                         formData.append('id', $('#id').val());
                         if ($('#photo').val()) {
-                            formData.append('photo', $('photo')[0].files[0]);
+                            formData.append('photo', $('#photo')[0].files[0]);
                         } else {
-                           // alert('사진을 업로드 해주세요!');
+								
                             return false;
                         }
                         $.ajax({
@@ -290,22 +350,21 @@
                                 alert(data);
                             }
                         });
-                        return false;
                     });
  
                     $('#upEditbtn').click(function() {
                     	
 
                         if (!$('#pwCheck').prop('checked')) {
-                            alert('[비말번호 불일치] 다시 확인해주세요!');
+                            alert('비말번호를 다시 확인해주세요');
                             return false;
                         }
 
-                        var checkPw = RegExp(/^(?=.*[a-zA-Z])((?=.*\d)|(?=.*\W)).{4,10}$/); // 비밀번호: 영문 4글자~10글자 미만, 최소 1개의 숫자 또는 특수문자 포함
+                        var checkPw = RegExp(/^(?=.*[a-zA-Z])((?=.*\d)|(?=.*\W)).{8,16}$/); // 비밀번호: 영문 4글자~10글자 미만, 최소 1개의 숫자 또는 특수문자 포함
 
                         // 비밀번호 유효성 검사
                         if (!checkPw.test($('#pw').val())) {
-                            $('#pwSpan2').html('[비밀번호] 영문 4글자~10글자 미만, 최소 1개의 숫자 또는 특수문자 포함');
+                            $('#pwSpan2').html('비밀번호는 영문 /숫자를 각각 포함하며 8~16글자 이하로 해주세요 ');
                             $('#pwSpan2').css('color', 'red');
                             $('#pw2').focus();
                             return false;
@@ -323,14 +382,14 @@
                             	id: $('#id').val(),
                                 pw: $('#pw').val(),
                                 gender: $('#gender').val(),
-                                ver: $('#ver').val()        
-                               // photo: $('#photo').val()
+                                ver: $('#ver').val(),    
+                                photo: $('#photo_name').val()
                             }),
                             contentType: 'application/json; charset=utf-8',
                             dataType: 'text',
                             success: function(data) {
                                 //alert(요청하신 정보로 변경되었습니다.);
-                                location.href = "http://localhost:8080/toti/main";
+                                location.href = "http://localhost:8080/toti/mypage";
                               //alert(요청하신 정보로 변경되었습니다.);
                             }
                         });
