@@ -27,12 +27,34 @@
 	
 	</resultMap>
 	
-
+		<resultMap id="coinMap" type="com.yal.toti.yu.member.domain.CoinInfo">
+	
+		<result property="idx" column="m_idx" />
+		<result property="id" column="m_id" />
+		<result property="name" column="m_name" />
+		<result property="coin" column="tor_coin" />
+		
+	</resultMap> 
+	
+	
+	<select id="coinSelect" resultMap="coinMap">
+		select m_idx, m_name, m_id, tor_coin from toti_member m join toti_mentor t on m_idx = mento_idx where m_idx = #{m_idx};
+	</select>
+	
+	<update id="addCoin">
+		update toti_mentor set tor_coin = tor_coin + #{coin} where mento_idx = #{m_idx};
+	</update>
+	
+	
+	
+	
 	<insert id="insertMen" parameterType="com.yal.toti.yu.member.domain.MentorInfo">
 	insert into toti_mentor (mento_idx, tor_coin, tor_location, cate_idx) values
    (#{m_idx}, 100,#{location},#{cate_idx});
    
    insert into toti_mentor_profile (mento_idx) values (#{m_idx})
+   
+
 	
 	</insert>
 	
@@ -54,6 +76,10 @@
 	<update id="updateVerify">
 	update toti_member set m_codeVer = 'Y' where m_id = #{id}
 	</update>
+	
+	<update id="updateVer">
+	update toti_member set m_ver = 'Y' where m_id = #{id}
+	</update>
 
 	<!-- 수정 -->
 	<update id="updateMem" parameterType="com.yal.toti.yu.member.domain.MemberInfo">
@@ -68,16 +94,12 @@
 	
 	<!-- 멘토에서 멘티로 -->
 	<update id="goMentee" parameterType="com.yal.toti.yu.member.domain.MemberInfo">
-		update toti_member set m_ver = #{ver} where m_id = #{id}
+		update toti_member set m_ver =#{ver} where m_id = #{id}
 	
 	
 	</update>
 
-	<!-- verChange  -->
-	<update id="verUpdate"
-		parameterType="com.yal.toti.yu.member.domain.MemberInfo">
-		update toti_member set m_ver=#{ver} where m_id=#{id}
-	</update>
+	
 
 	
 	<!-- 탈퇴 -->

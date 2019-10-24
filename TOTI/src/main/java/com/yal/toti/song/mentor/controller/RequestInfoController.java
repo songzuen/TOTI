@@ -23,7 +23,7 @@ public class RequestInfoController {
 	
 	@GetMapping
 	public ResponseEntity<List<RequestList>> getRequestInfo(@PathVariable("request_idx") int request_idx,Model model){
-		System.out.println(request_idx);
+		
 		List<RequestList> list = null;
 		
 		model.addAttribute("request_idx", request_idx);

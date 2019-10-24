@@ -433,7 +433,7 @@
 											
 											var html = '';
 											
-											html += '<div class ="text_center"><img src="<c:url value="/images/user/'+data.userInfo.m_photo+'" />" class = "profileImg"><div>';
+											html += '<div class ="text_center"><img src="<c:url value="/uploadfile/'+data.userInfo.m_photo+'" />" class = "profileImg"><div>';
 											html += '<div id="requesr_user"><p>'+data.request_date+'</p>';
 											html += '<h2>'+data.cate_name+'('+data.service_name+')</h2><h3>'+data.userInfo.m_name+'님</h3></div>';
 											html += '<div id="request_con">'

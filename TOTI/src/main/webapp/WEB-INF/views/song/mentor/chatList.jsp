@@ -39,6 +39,7 @@ margin: 0 auto;
 
 #m_photo{
 width: 100px;
+height: 100px;
 border-radius: 50%;
 }
 
@@ -84,7 +85,7 @@ border: 0px;
 		</section>
 		<!--/#home-slider-->		
 		<!-- demo content -->
-		<section id="blog" class="padding-top padding-bottom">
+		<section id="blog" class="padding-bottom">
 			<div class="container">
 				<div class="row">
 					<div class="col-md">
@@ -123,7 +124,7 @@ border: 0px;
 							html += '<tr>';
 							html += '<td rowspan="6" style="text-aline:center">';
 							html += '<span id="photo">';
-							html += '<img id="m_photo" src = "<c:url value="/images/user/'+data[i].m_photo+'"/>"';
+							html += '<img id="m_photo" src = "<c:url value="/uploadfile/'+data[i].m_photo+'"/>"';
 							html += '</span>';
 							html += '</td>';
 							html += '</tr>';

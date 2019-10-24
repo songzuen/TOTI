@@ -63,9 +63,10 @@ public class RestFulMentorController {
 			){
 		
 		editRequest.setId(id);
+		int cnt = verEditService.verEdit(editRequest, request);
 		System.out.println(editRequest);
 		
-		int cnt = verEditService.verEdit(editRequest, request);
+		
 	
 	return new ResponseEntity<String>(cnt>0?"success":"fail", HttpStatus.OK);
 		

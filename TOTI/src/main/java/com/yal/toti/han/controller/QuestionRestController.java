@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.yal.toti.han.domain.QuestionInfo;
+import com.yal.toti.han.domain.QuestionItem;
 import com.yal.toti.han.service.QuestionAdminService;
 
 @RestController
@@ -73,6 +74,35 @@ public class QuestionRestController {
 
 		return new ResponseEntity<String>(cnt > 0 ? "success" : "fail", HttpStatus.OK);
 
+	}
+	
+	@CrossOrigin
+	@GetMapping("/itemlist/{quest_idx}")
+	public ResponseEntity<List<QuestionItem>> getItemList(@PathVariable("quest_idx") int quest_idx) {
+
+		List<QuestionItem> list = questAdmin.getItemByQuestion(quest_idx);
+
+		ResponseEntity<List<QuestionItem>> entity = new ResponseEntity<List<QuestionItem>>(list, HttpStatus.OK);
+
+		return entity;
+	}
+	
+	@CrossOrigin
+	@PostMapping("/insertItem")
+	public ResponseEntity<String> itemInsert(QuestionItem questionItem) {
+
+		int cnt = questAdmin.ItemInsert(questionItem);
+
+		return new ResponseEntity<String>(cnt > 0 ? "success" : "fail", HttpStatus.OK);
+	}
+	
+	@CrossOrigin
+	@DeleteMapping("/deleteItem/{item_idx}")
+	public ResponseEntity<String> deleteItem(@PathVariable("item_idx") int item_idx) {
+
+		int cnt = questAdmin.Itemdelete(item_idx);
+
+		return new ResponseEntity<String>(cnt > 0 ? "success" : "fail", HttpStatus.OK);
 	}
 	
 }

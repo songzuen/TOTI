@@ -71,4 +71,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		where quest_idx=#{quest_idx}
 	</update>
 	
+	<!-- 질문별 항목 리스트 -->
+	<select id="itemList" resultType="com.yal.toti.han.domain.QuestionItem">
+		select * from toti_item i join toti_question q on i.quest_idx=q.quest_idx 
+		where i.quest_idx=#{quest_idx}
+	</select>
+	
+	<!-- 항목 등록 -->
+	<insert id="insertItem" parameterType="com.yal.toti.han.domain.QuestionItem">
+		insert into toti_item (quest_idx, item_cont) values (#{quest_idx}, #{item_cont})
+	</insert>
+	
+	<!-- 항목 삭제 -->
+	<delete id="deleteItem">
+		delete from toti_item where item_idx=#{item_idx}
+	</delete>
 </mapper>

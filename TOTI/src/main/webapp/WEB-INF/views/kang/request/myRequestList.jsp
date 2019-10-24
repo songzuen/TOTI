@@ -102,12 +102,15 @@
 										
 										html += '</div></div></div>';
 									}
-									
+
 									$('#list_wrap').html(html);
+									
 								}
 							});
-														
+
 						}
+						
+						$('#list_wrap').html(html);
 					}
 
 				});

@@ -7,7 +7,7 @@
 <link href="<c:url value="/css/minjongCss/chat.css" />" rel="stylesheet">
 <title>TOTI</title>
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-<script src="https://chat.yal-toti.tk/socket.io/socket.io.js"></script>
+<script src="http://localhost:80/socket.io/socket.io.js"></script>
 
 <style>
 </style>
@@ -70,29 +70,6 @@
 
 							</div>
 						</div>
-						<div id="list">
-							<div id="estList">
-								<table id="estListTable">
-									<tr>
-										<td>est_idx</td>
-										<td>cate_idx</td>
-										<td>mentor_idx</td>
-										<td>m_idx</td>
-										<td>est_price</td>
-										<td>est_const</td>
-									</tr>
-								</table>
-							</div>
-							<div id="chatRoomList">
-								<table id="chatRoomListTable">
-									<tr>
-										<td>분야</td>
-										<td>상대방</td>
-										<td>마지막 메시지</td>
-									</tr>
-								</table>
-							</div>
-						</div>
 
 						<div id="rtcPage" class="container"></div>
 						<!-- end home variation -->
@@ -110,80 +87,27 @@
 	<%@ include file="/WEB-INF/views/frame/footer.jsp"%>
 
 	<script>
-		// 사용자 계정 정보
+	
+		// 사용자 idx
 		var user = (${idx});
+		
+		// 견적서 (채팅 방) idx
+		var est_idx = (${est_idx});
+		
+		// 상대방 idx
+		var m_idx = (${m_idx});
 
 		// 요일 구할 때 사용할 배열
 		var week = new Array('일', '월', '화', '수', '목', '금', '토');
 
 		$(document).ready(function() {
 
-			estlist();
+			alert("사용자 : " +user + "\n상대방 : " + m_idx + "\n채팅방 : " + est_idx);
+			
+			chat(est_idx, m_idx);
 
 		});
 
-		function estlist() {
-
-			$('#chatArea').css('display', 'none');
-			$('#buttons').css('display', 'none');
-			$('#profileArea').css('display', 'none');
-			$('#list').css('display', 'block');
-
-			$('#chat_box').empty();
-
-			$.ajax({
-				url : '/toti/chat/estlist/' + user,
-				type : 'GET',
-				success : function(data) {
-					var html = '';
-					for (var i = 0; i < data.length; i++) {
-
-						html += '<tr>';
-						html += '<td onclick="chat(' + '\'' + data[i].est_idx
-								+ '\'' + ', ' + '\'' + data[i].m_idx + '\'' + ');">'
-								+ data[i].est_idx + '</td>';
-						html += '<td>' + data[i].mento_idx + '</td>';
-						html += '<td>' + data[i].m_idx + '</td>';
-						html += '<td>' + data[i].est_price + '</td>';
-						html += '<td>' + data[i].est_cont + '</td>';
-						html += '</tr>';
-					}
-					$('#estListTable').append(html);
-				}
-			});
-
-			$('#chatRoomList').css('display', 'block');
-
-			$.ajax({
-				url : '/toti/chat/roomlist/' + user,
-				type : 'GET',
-				success : function(data) {
-					var html = '';
-					for (var i = 0; i < data.length; i++) {
-
-						var name = data[i].targetname;
-
-						if (user == data[i].room_target) {
-							var tmp = data[i].room_target;
-							data[i].room_target = data[i].room_user;
-							data[i].room_user = tmp;
-
-							name = data[i].username;
-						}
-
-						html += '<tr>';
-						html += '<td>' + data[i].cate_name + '</td>';
-						html += '<td onclick="chat(' + '\'' + data[i].room_num
-								+ '\'' + ', ' + '\'' + data[i].room_target + '\''
-								+ ');">' + name + '</td>';
-						html += '<td>' + data[i].last_msg + '</td>';
-						html += '</tr>';
-					}
-					$('#chatRoomListTable').append(html);
-				}
-			});
-
-		}
 
 		function chat(est_idx, m_idx) {
 
@@ -199,7 +123,7 @@
 						success : function(data) {
 
 							var html = '';
-							html += '<input type="hidden" id="chat_room" value="' + data + '">'
+							html += '<input type="text" id="chat_room" value="' + data + '">'
 							$('#chatInfo').html(html);
 							mentorCheck(user);
 							chatTarget(user);
@@ -207,7 +131,7 @@
 						}
 					});
 
-			var socket = io.connect('https://chat.yal-toti.tk/');
+			var socket = io.connect('http://localhost:80/');
 
 			var room_num = $('input#chat_room').val();
 
@@ -248,7 +172,7 @@
 				for (var i = 0; i < data.length; i++) {
 					/* 					console.log(data[i]); */
 
-					if (user == data[i].room_user) {
+					if (user == data[i].msg_user) {
 						html += '<div id = "msgbox" class="text_right">';
 						html += '<span class = "time">' + data[i].message_date
 								+ '</span>';
@@ -353,12 +277,11 @@
 				$
 						.ajax({
 
-							url : '/toti/chat/mentorcheck/'
-									+ user + '/' + room_num,
+							url : '/toti/chat/mentorcheck/'+ user + '/' + room_num,
 							type : 'GET',
 							success : function(data) {
 								var html = '';
-								html += '<input type="hidden" id="check" value="' + data + '">'
+								html += '<input type="text" id="check" value="' + data + '">'
 								$('#profile').html(html);
 								mentorProfile(user);
 							}
@@ -376,7 +299,7 @@
 							success : function(data) {
 
 								var html = '';
-								html += '<input type="hidden" id="target" value="' + data + '">'
+								html += '<input type="text" id="target" value="' + data + '">'
 								$('#targetName').html(html);
 							}
 						});
@@ -391,7 +314,7 @@
 							success : function(data) {
 								// alert(data);
 								var html = '';
-								html += '<input type="hidden" id="user" value="' + data + '">'
+								html += '<input type="input" id="user" value="' + data + '">'
 								$('#userName').html(html);
 							}
 						});
@@ -406,7 +329,7 @@
 								success : function(data) {
 									var html = '';
 									html += '<div class = "profileTitle">멘토 프로필</div>';
-									html += '<div class = "profileImg"><img src="<c:url value="/images/user/' + data.m_photo + '"/>"class = "profileImg"></div>';
+									html += '<div class = "profileImg"><img src="<c:url value="/uploadfile/' + data.m_photo + '"/>"class = "profileImg"></div>';
 									html += '<div class = "profileName">'
 											+ data.m_name + ' (' + data.m_id
 											+ ')</div><div>';
@@ -442,19 +365,18 @@
 									var req_idx = data;
 									
 									
-									
 									$.ajax({
 										url : '/toti/request/requestData',
 										type : 'GET',
 										data : {
 											request_idx : req_idx,
-											m_idx : user
+											m_idx : m_idx
 										},
 										success : function(data) {
 											
 											var html = '';
 											
-											html += '<div class ="text_center"><img src="<c:url value="/images/user/'+data.userInfo.m_photo+'" />" class = "profileImg"><div>';
+											html += '<div class ="text_center"><img src="<c:url value="/uploadfile/'+data.userInfo.m_photo+'" />" class = "profileImg"><div>';
 											html += '<div id="requesr_user"><p>'+data.request_date+'</p>';
 											html += '<h2>'+data.cate_name+'('+data.service_name+')</h2><h3>'+data.userInfo.m_name+'님</h3></div>';
 											html += '<div id="request_con">'

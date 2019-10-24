@@ -63,7 +63,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			group by sms.mento_idx) mento_service,
 			mp.p_shot, mt.tor_location, mp.p_pay, mp.p_edu, mp.p_career, mp.p_long,
 			(if(isnull(rv.review_idx),'',rv.review_cont)) cont,
-			rv.member_name, rv.review_date, rv.review_star
+			rv.review_idx, rv.member_name, rv.review_date, rv.review_star
 		from toti_member mb
 			inner join toti_mentor mt on mb.m_idx=mt.mento_idx
 			inner join toti_mentor_profile mp on mt.mento_idx=mp.mento_idx
@@ -149,5 +149,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		insert into toti_review (m_idx, mento_idx, review_star, review_cont)
 		values (#{m_idx},#{mento_idx},#{review_star},#{review_cont})
 	</insert>
+	
+	<!-- 리뷰 삭제 -->
+	<delete id="deleteReview">
+		delete from toti_review where review_idx=#{review_idx}
+	</delete>
 
 </mapper>

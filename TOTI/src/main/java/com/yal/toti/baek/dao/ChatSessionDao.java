@@ -3,6 +3,7 @@ package com.yal.toti.baek.dao;
 import java.util.List;
 
 import com.yal.toti.baek.domain.ChatRoomInfo;
+import com.yal.toti.baek.domain.Chatlog;
 import com.yal.toti.baek.domain.EstInfo;
 import com.yal.toti.baek.domain.MemberInfo;
 import com.yal.toti.baek.domain.MentorProfile;
@@ -31,8 +32,10 @@ public interface ChatSessionDao {
 
 	public List<MentorReview> selectMentorReview(int user);
 
-	public int updateLastMsgAtChatRoom(int roomnum);
-	
+	public Chatlog insertChatlog(String message, String message_date, int roomnum, String msg_user);
+
 	public int selectReqNum(int room_num);
-	
+
+	public int updateLastMsgAtChatRoom(int lastmsg, int roomnum);
+
 }

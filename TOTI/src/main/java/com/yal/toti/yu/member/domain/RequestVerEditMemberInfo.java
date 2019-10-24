@@ -14,7 +14,7 @@ public class RequestVerEditMemberInfo {
 	private String id;
 	private String pw;
 	private String name;
-	private char ver;
+	private String ver;
 	private char gender;
 	private MultipartFile photo;
 	private String photo_name;
@@ -35,13 +35,10 @@ public class RequestVerEditMemberInfo {
 		this.code = getRandom();
 	}
  
-	// ver생성자
-	public RequestVerEditMemberInfo(char ver) {
-		this.ver = ver;
-	}
+	
 
 	
-	public RequestVerEditMemberInfo(String id, char ver) {
+	public RequestVerEditMemberInfo(String id, String ver) {
 		super();
 		this.id = id;
 		this.ver = ver;
@@ -86,11 +83,11 @@ public class RequestVerEditMemberInfo {
 	}
 
 	
-	public char getVer() {
+	public String getVer() {
 		return ver;
 	}
 
-	public void setVer(char ver) {
+	public void setVer(String ver) {
 		this.ver = ver;
 	}
 
