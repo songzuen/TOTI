@@ -1,18 +1,19 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<% session = request.getSession();
-      Object idxstr = session.getAttribute("idx");
-      String id = (String)session.getAttribute("id");
-      String ver = (String)session.getAttribute("ver");
-      String name = (String)session.getAttribute("name");
-      String tortee = (String)session.getAttribute("tortee");
-      
-  	System.out.println("session.getAttribute >>>>> "+ver);
-  	System.out.println("session.getAttribute >>>>> "+id);
-  	System.out.println("tortee nav >>>>> "+tortee);
-  	System.out.println("idxstr idxstr >>>>> "+idxstr);
-	System.out.println("idxstr name >>>>> "+name);
-   %>
+<%
+	session = request.getSession();
+	Object idxstr = session.getAttribute("idx");
+	String id = (String) session.getAttribute("id");
+	String ver = (String) session.getAttribute("ver");
+	String name = (String) session.getAttribute("name");
+	String tortee = (String) session.getAttribute("tortee");
+
+	System.out.println("session.getAttribute >>>>> " + ver);
+	System.out.println("session.getAttribute >>>>> " + id);
+	System.out.println("tortee nav >>>>> " + tortee);
+	System.out.println("idxstr idxstr >>>>> " + idxstr);
+	System.out.println("idxstr name >>>>> " + name);
+%>
 <header id="header">
 	<div class="navbar navbar-inverse" role="banner">
 		<div class="container">
@@ -34,17 +35,17 @@
 			<!-- nav -->
 			<div class="collapse navbar-collapse">
 				<ul class="nav navbar-nav navbar-right">
-					<% 
-               if(id == null){
-            %>
+					<%
+						if (id == null) {
+					%>
 					<!-- 로그인전 nav-->
 					<li><a href="<c:url value="/login" />">로그인</a></li>
 
 					<li class="active"><a href="<c:url value="/reg" />">회원가입</a></li>
 
 					<%
-            } else if (id != null && id.equals( "admin@admin")){
-            %>
+						} else if (id != null && id.equals("admin@admin")) {
+					%>
 					<!-- --------------- -->
 					<li><a href="<c:url value="/service" />">상세 서비스</a></li>
 					<li><a href="<c:url value="/question" />">요청서 질문</a></li>
@@ -62,10 +63,9 @@
 			</div>
 
 
-			<% 
-             } else if (id != null && tortee != null && tortee.equals("N")){
-            	
-            %>
+			<%
+				} else if (id != null && tortee != null && tortee.equals("N")) {
+			%>
 			<div class="show1">
 				<div class="collapse navbar-collapse">
 					<ul class="nav navbar-nav navbar-right">
@@ -73,7 +73,7 @@
 
 						<!-- 멘티 로그인 -->
 						<li><a href="<c:url value="/requests" />">보낸요청</a></li>
-						<li><a href="<c:url value="/chat/chatLogin" />">채팅</a></li>
+						<li><a href="<c:url value="/chat/chatList" />">채팅</a></li>
 						<li><a href="<c:url value="/mentorList" />">멘토찾기</a></li>
 						<li class="dropdown"><a href="#">${name} 멘티님<i
 								class="fa fa-angle-down"></i></a>
@@ -84,26 +84,26 @@
 								<li><a href="<c:url value="/requests"/>">보낸요청</a></li>
 								<li><a href="<c:url value="/mypage"/>">마이페이지</a></li>
 								<hr>
-								<% 
-               						if(ver != null && ver.equals("Y")){
-            					%>
+								<%
+									if (ver != null && ver.equals("Y")) {
+								%>
 
 
 								<li><a href="<c:url value="/member/goMentor"/>">멘토로 전환</a>
 								</li>
 
 
-								<% 
-             					} else if (ver != null && ver.equals("N")) { 
-            						%>
+								<%
+									} else if (ver != null && ver.equals("N")) {
+								%>
 								<li><a href="<c:url value="/mypage"/>">멘토 등록</a></li>
 								<%
-                 					 } else if (ver == null) {
-                 				 %>
+									} else if (ver == null) {
+								%>
 								<li><a href="#">정식 회원가입을 진행해주세요</a></li>
 								<%
-                 					 } 
-                 				 %>
+									}
+								%>
 								<li><a href="<c:url value="/member/logout"/>">로그아웃</a></li>
 
 							</ul></li>
@@ -112,15 +112,15 @@
 				</div>
 			</div>
 			<%
-               	} else {
-                        %>
+				} else {
+			%>
 			<!-- 멘토 로그인 -->
 			<div class="show2">
 				<div class="collapse navbar-collapse">
 					<ul class="nav navbar-nav navbar-right">
 
 						<li><a href="<c:url value="/requestList" />">받은요청</a></li>
-						<li><a href="<c:url value="/mentor/chatList" />">채팅</a></li>
+						<li><a href="<c:url value="/chat/chatList" />">채팅</a></li>
 						<li><a href="<c:url value="/profile/${idx}" />">프로필</a></li>
 						<li class="dropdown"><a href="#">${name} 멘토님<i
 								class="fa fa-angle-down"></i></a>
@@ -139,9 +139,8 @@
 				</div>
 			</div>
 			<%
-                  } 
-             
-          %>
+				}
+			%>
 
 
 			<div class="search">

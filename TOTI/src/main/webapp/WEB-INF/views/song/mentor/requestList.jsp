@@ -133,7 +133,7 @@ text-overflow: ellipsis;
 
 	function list(mento_idx) {
 		$.ajax({
-					url : 'http://13.209.47.16:8080/toti/mentor/requestList/'+mento_idx,
+					url : '/toti/mentor/requestList/'+mento_idx,
 					type : 'GET',
 					success : function(data) {
 						var html = '';
@@ -174,7 +174,7 @@ text-overflow: ellipsis;
 	}
 
 	function selectRequest(request_idx) {
-		location.href = "http://13.209.47.16:8080/toti/requestList/" + request_idx;
+		location.href = "/toti/requestList/" + request_idx;
 	}
 
 </script>

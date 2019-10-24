@@ -146,7 +146,7 @@ $(document).ready(function(){
             
   
        $.ajax({
-           url : 'http://13.209.47.16:8080/toti/member/mentor',
+           url : '/toti/member/mentor',
            type : 'POST',
            data : { 
         	   m_idx : $('#m_idx').val(),
@@ -159,7 +159,7 @@ $(document).ready(function(){
            success : function(data){
            	if (data == 'success') {
                /*   $.ajax({
-                     url : 'http://13.209.47.16:8080/toti/member/mentor/'+id,
+                     url : '/toti/member/mentor/'+id,
                      type : 'PUT',
                      data: JSON.stringify({
                          ver: $('#ver').val() 
@@ -168,7 +168,7 @@ $(document).ready(function(){
                      contentType: 'application/json; charset=utf-8',
                      success: function(data) {
                     		alert('멘토님의 정보가 저장되었습니다.');
-    			       	location.href = "http://13.209.47.16:8080/toti/main";
+    			       	location.href = "/toti/main";
                      }
                   
 
@@ -179,7 +179,7 @@ $(document).ready(function(){
   			 
   			 error: function(e) {
   			 alert('실패임');
-  			location.href = "http://13.209.47.16:8080/toti/insertMen";
+  			location.href = "/toti/insertMen";
       	 }
            
 
@@ -194,7 +194,7 @@ $(document).ready(function(){
       
 	  
       $.ajax({
-          url : 'http://13.209.47.16:8080/toti/member/mentor',
+          url : '/toti/member/mentor',
           type : 'POST',
           data : { 
        	   m_idx : $('#m_idx').val(),
@@ -211,12 +211,12 @@ $(document).ready(function(){
           	if (data == 'success') {
           	
           	alert('멘토님의 정보가 저장되었습니다. 다시 로그인 해주세요');
-          	location.href = "http://13.209.47.16:8080/toti/member/logout";
+          	location.href = "/toti/member/logout";
  			 }
  			 },
  			 error: function(e) {
  			 alert('실패임');
- 			location.href = "http://13.209.47.16:8080/toti/insertMen";
+ 			location.href = "/toti/insertMen";
      	 }
           
 

@@ -87,7 +87,7 @@
 		
 	if($('#mento_idx').val() == $('#m_idx').val()){
 		alert('본인은 리뷰작성이 불가능합니다.');
-		location.href="http://13.209.47.16:8080/toti/profile/"+$('#mento_idx').val();
+		location.href="/toti/profile/"+$('#mento_idx').val();
 	}
 	
 	
@@ -98,7 +98,7 @@
 		
 		function mentorProfile(mento_idx) {
 			$.ajax({
-				url : 'http://13.209.47.16:8080/toti/mento/' + mento_idx,
+				url : '/toti/mento/' + mento_idx,
 				type : 'GET',
 				success : function(data) {
 					var html = '';
@@ -122,16 +122,16 @@
 				alert('별점을 선택해주세요.');
 			}else if($('#m_idx').val() == ""){
 				alert('로그인 후 이용해주세요.');
-				location.href="http://13.209.47.16:8080/toti/login";
+				location.href="/toti/login";
 			}
 	            $.ajax({
-	                url : 'http://13.209.47.16:8080/toti/review' ,
+	                url : '/toti/review' ,
 	                type : 'POST',
 	                data : $('#reviewFrom').serialize(),
 	                success : function(data){
 	    				if(data=='success'){
 	    					alert('리뷰가 추가되었습니다.');
-	    					location.href="http://13.209.47.16:8080/toti/mentor/"+$('#mento_idx').val();
+	    					location.href="/toti/mentor/"+$('#mento_idx').val();
 	    				}else {
 	    					alert('등록 실패');
 	    				}

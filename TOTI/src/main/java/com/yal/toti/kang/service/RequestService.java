@@ -175,7 +175,6 @@ public class RequestService {
 		data.setCate_name(dao.requestCate(request_idx));
 		data.setService_name(dao.requestService(request_idx));
 		data.setRequest_date(dao.requestDate(request_idx));
-		
 		data.setEstiData(dao.estimateeList(request_idx));
 		
 		return data;

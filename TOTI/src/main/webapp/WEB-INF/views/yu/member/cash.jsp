@@ -142,7 +142,7 @@ $(function(){
         if ( rsp.success ) {
             //[1] 서버단에서 결제정보 조회를 위해 jQuery ajax로 imp_uid 전달하기
             jQuery.ajax({
-                url: 'http://13.209.47.16:8080/toti/member/coin', //cross-domain error가 발생하지 않도록 주의해주세요
+                url: '/toti/member/coin', //cross-domain error가 발생하지 않도록 주의해주세요
                 type: 'POST',
                 dataType: 'json',
                 data: {
@@ -170,12 +170,12 @@ $(function(){
                 }
             });
             //성공시 이동할 페이지
-            location.href = "http://13.209.47.16:8080/toti/mypage2?msg="+ msg;
+            location.href = "/toti/mypage2?msg="+ msg;
         } else {
             msg = '결제에 실패하였습니다.';
             msg += '에러내용 : ' + rsp.error_msg;
             //실패시 이동할 페이지
-            location.href = "http://13.209.47.16:8080/toti/mypage2";
+            location.href = "/toti/mypage2";
             alert(msg);
         }
     });

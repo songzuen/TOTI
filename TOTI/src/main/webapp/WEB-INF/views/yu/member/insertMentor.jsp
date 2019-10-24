@@ -128,7 +128,7 @@ function getParams() {
 	alert('id: ' + id);
 
 	$.ajax({
-		url : 'http://13.209.47.16:8080/toti/member/verifyidx2',
+		url : '/toti/member/verifyidx2',
 		type : 'GET',
 		data : {
 			
@@ -140,7 +140,7 @@ function getParams() {
 				
 				var chk = confirm('멘토 필수 정보를 등록해주세요');
 				if(chk){
-					location.href = "http://13.209.47.16:8080/toti/insertMen";
+					location.href = "/toti/insertMen";
 				}
 			} else {
 				alert('실패');

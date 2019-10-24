@@ -10,8 +10,7 @@
 <!-- title -->
 <title>SamplePage</title>
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-<script
-	src="http://ec2-13-125-96-18.ap-northeast-2.compute.amazonaws.com:3000/socket.io/socket.io.js"></script>
+<script src="https://chat.yal-toti.tk/socket.io/socket.io.js"></script>
 <style>
 * {
 	margin: 0;
@@ -276,8 +275,6 @@ p {
 	src="//dapi.kakao.com/v2/maps/sdk.js?appkey=c69d5f862cf8316938343efcf4a7d402&libraries=services"></script>
 
 <script>
-	
-	
 	/* ajax 시작 */
 	$(document).ready(function() {
 
@@ -289,8 +286,7 @@ p {
 	function request(request_idx) {
 		$
 				.ajax({
-					url : 'http://13.209.47.16:8080/toti/requestInfo/'
-							+ request_idx,
+					url : '/toti/requestInfo/' + request_idx,
 					type : 'GET',
 					success : function(data) {
 						var html = '';
@@ -377,8 +373,7 @@ p {
 
 		$
 				.ajax({
-					url : 'http://13.209.47.16:8080/toti/requestInfo/'
-							+ request_idx,
+					url : '/toti/requestInfo/' + request_idx,
 					type : 'GET',
 					success : function(data) {
 
@@ -440,7 +435,7 @@ p {
 
 		$
 				.ajax({
-					url : 'http://13.209.47.16:8080/toti/credit/' + mento_idx,
+					url : '/toti/credit/' + mento_idx,
 					type : 'GET',
 					success : function(item) {
 
@@ -487,7 +482,7 @@ p {
 
 							if (item[i].tor_coin == 0) {
 								alert('코인을 충전 후 사용해주세요.');
-								location.href =  'http://13.209.47.16:8080/toti/mypage2';
+								location.href = '/toti/mypage2';
 								break;
 							} else {
 
@@ -516,7 +511,7 @@ p {
 
 								$
 										.ajax({
-											url : 'http://13.209.47.16:8080/toti/estimateform/'
+											url : '/toti/estimateform/'
 													+ request_idx,
 											type : 'POST',
 											processData : false,
@@ -529,49 +524,49 @@ p {
 
 													$
 															.ajax({
-																url : 'http://13.209.47.16:8080/toti/credit/'
+																url : '/toti/credit/'
 																		+ mento_idx,
 																type : 'PUT',
 																success : function(
 																		data) {
 
-																					$.ajax({
-																								url : "http://13.209.47.16:8080/toti/chat/room/"
-																										+ +est_idx
-																										+ "/"
-																										+ cate_idx
-																										+ "/"
-																										+ user
-																										+ "/"
-																										+ m_idx,
-																								type : 'GET',
-																								success : function() {
-																									var socket = io
-																											.connect('http://ec2-13-125-96-18.ap-northeast-2.compute.amazonaws.com:3000/');
+																	$
+																			.ajax({
+																				url : "/toti/chat/room/"
+																						+ +est_idx
+																						+ "/"
+																						+ cate_idx
+																						+ "/"
+																						+ user
+																						+ "/"
+																						+ m_idx,
+																				type : 'GET',
+																				success : function() {
+																					var socket = io
+																							.connect('https://chat.yal-toti.tk/');
 
-																									var room_num = est_idx;
+																					var room_num = est_idx;
 
-																									// alert($('#chat_room').val());
-																									// alert(room_num);
+																					// alert($('#chat_room').val());
+																					// alert(room_num);
 
-																									socket
-																											.emit(
-																													"join",
-																													{
-																														room : room_num,
-																														user : user,
-																														target : m_idx
-																													});
-																									alert('1코인이 사용 되었습니다.');
-																								 
-																								 history.go(0);
-																								}
-																							});
+																					socket
+																							.emit(
+																									"join",
+																									{
+																										room : room_num,
+																										user : user,
+																										target : m_idx
+																									});
+																					alert('1코인이 사용 되었습니다.');
+
+																					history.go(0);
 																				}
-
 																			});
-																
-												
+																}
+
+															});
+
 												} else {
 													alert('이미 견적서를 전송한 요청서 입니다.');
 												}

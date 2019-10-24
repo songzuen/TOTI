@@ -115,7 +115,7 @@
 				
 
 				$.ajax({
-						url:'http://13.209.47.16:8080/toti/member/login',
+						url:'/toti/member/login',
 							type : 'POST',
 							data : $('#form').serialize(),
 							success : function(data) {
@@ -134,7 +134,7 @@
 // 								alert(data.id);
 								
 								$.ajax({
-									url : "http://13.209.47.16:8080/toti/member/loginProcess",
+									url : "/toti/member/loginProcess",
 										type : 'GET',
 										data : {
 											id : data.id,
@@ -145,7 +145,7 @@
 											},
 								success : function(data) {
 								
-											location.href = "http://13.209.47.16:8080/toti/main";
+											location.href = "/toti/main";
 											
 														}
 												});
@@ -183,7 +183,7 @@
 	                                var kakao = 'kakao';
 	                                
 	                                $.ajax({
-	                                    url: "http://13.209.47.16:8080/toti/member/loginProcess2",
+	                                    url: "/toti/member/loginProcess2",
 	                                    data: {
 	                                        id: id,
 	                                        kakao: kakao
@@ -191,7 +191,7 @@
 	                                    type: 'GET',
 	                                    success: function(data){
 	                                    	alert('[카카오]로그인 성공');
-	                                    	location.href = "http://13.209.47.16:8080/toti/main";
+	                                    	location.href = "/toti/main";
 	                                    }
 	                                });
 	                            },
