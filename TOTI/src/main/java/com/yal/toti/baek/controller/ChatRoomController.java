@@ -37,10 +37,10 @@ public class ChatRoomController {
 	}
 
 	@CrossOrigin
-	@GetMapping(value = "/{m_idx}/{user}", produces = "application/text; charset=utf8")
-	public String targetName(@PathVariable("m_idx") int target, @PathVariable("user") int user) {
+	@GetMapping(value = "/{m_idx}/{user}/{est_idx}", produces = "application/text; charset=utf8")
+	public String targetName(@PathVariable("m_idx") int target, @PathVariable("user") int user, @PathVariable("est_idx") int est_idx) {
 
-		String name = service.targetName(target, user);
+		String name = service.targetName(target, user, est_idx);
 
 		return name;
 	}

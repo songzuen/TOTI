@@ -67,6 +67,7 @@
 								<input type="text" id="name" name="name">
 								<input type="text" id="photo_name" name="photo_name">
 								<input type="text" id="ver" name="ver">
+								<input type="text" id="gender" name="gender">
 							</div>
 						</div> 
 						
@@ -129,6 +130,7 @@
 								$('#name').val(data.name);
 								$('#photo_name').val(data.photo_name);
 								$('#ver').val(data.ver);
+								$('#gender').val(data.gender);
 								
  								alert(data.ver);
 // 								alert(data.id);
@@ -141,6 +143,7 @@
 											idxstr:data.idxstr,
 											name : data.name,
 											ver : data.ver ,
+											gender : data.gender ,
 											photo_name:data.photo_name
 											},
 								success : function(data) {
@@ -190,7 +193,7 @@
 	                                    },
 	                                    type: 'GET',
 	                                    success: function(data){
-	                                    	alert('[카카오]로그인 성공');
+	                                    	alert('카카오로 임시 로그인 되었습니다. ');
 	                                    	location.href = "/toti/main";
 	                                    }
 	                                });
@@ -204,7 +207,7 @@
 	                },
 	                fail: function(err) {
 	                    alert(JSON.stringify(err));
-	                    alert('[카카오]로그인 실패');
+	                    alert('실패');
 	                }
 	            });
 	        };

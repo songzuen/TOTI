@@ -7,6 +7,7 @@
 	String name = request.getParameter("name");
 	String photo_name = request.getParameter("photo_name");
 	String ver = request.getParameter("ver");
+	String gender = request.getParameter("gender");
 	
 	
     System.out.println(ver);
@@ -21,6 +22,7 @@
 	session.setAttribute("photo_name", photo_name);
 	session.setAttribute("ver", ver);
 	session.setAttribute("tortee", "N");
+	session.setAttribute("gender", gender);
 
 	
 	String id1 = (String)session.getAttribute("id");

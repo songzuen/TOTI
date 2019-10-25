@@ -148,6 +148,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		delete from toti_request where request_idx = #{param1};
 	</delete>
 	
+	<insert id="insertChatlog">
+		insert into toti.toti_chatlog (message, message_date, room_num, msg_user) values (#{param1}, #{param2}, #{param3}, #{param4});
+	</insert>
+	
 </mapper>
 
 

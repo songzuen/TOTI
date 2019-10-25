@@ -58,7 +58,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 
 	<select id="searchChatRoom" resultType="String">
-		select room_num from
+		select distinct room_num from
 		toti_chatroom where room_num = #{param1};
 	</select>
 
@@ -70,19 +70,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 
 	<select id="searchUserName" resultType="String">
-		select m_name from
+		select distinct m_name from
 		toti.toti_member where m_idx = #{param1}
 	</select>
 
-	<select id="searchTargetNameByUser" resultType="String">
+	<select id="searchTargetNameByUser" resultType="_int">
 		select distinct
 		member.m_name from toti.toti_chatroom as chatroom join
 		toti.toti_member as member on chatroom.room_user = member.m_idx where
-		room_target = #{param1};
+		room_target = #{param1} and room_num = #{param2};
 	</select>
 
 	<select id="selectMentorCheck" resultType="_int">
-		select room_user from
+		select distinct room_user from
 		toti.toti_chatroom where
 		room_num = #{param1};
 	</select>
@@ -128,7 +128,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 
 	<select id="selectReqNum" resultType="_int">
-		select request_idx from
+		select distinct request_idx from
 		toti.toti_estimatee where est_idx = #{param1};
 	</select>
 </mapper>

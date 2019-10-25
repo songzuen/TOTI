@@ -7,6 +7,7 @@
 	session.removeAttribute("name");
 	session.removeAttribute("photo_name");
 	session.removeAttribute("ver");
+	session.removeAttribute("gender");
 	session.removeAttribute("kakao");
 	
 	
@@ -16,6 +17,8 @@
 	String d = (String) session.getAttribute("photo_name");
 	String e = (String) session.getAttribute("ver");
 	String f = (String) session.getAttribute("kakao");
+	String g = (String) session.getAttribute("gender");
+
 	
 	
 	System.out.println("id세션 >>>>> " + a);
@@ -25,5 +28,6 @@
 	System.out.println("여부 >>>>> " + e);
 	System.out.println("로그아웃됨"); 
 	System.out.println("kaka"+f); 
+	System.out.println("gender"+g); 
 	response.sendRedirect("/toti/main");
 %>

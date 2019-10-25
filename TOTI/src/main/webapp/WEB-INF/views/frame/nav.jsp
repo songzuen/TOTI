@@ -7,12 +7,16 @@
 	String ver = (String) session.getAttribute("ver");
 	String name = (String) session.getAttribute("name");
 	String tortee = (String) session.getAttribute("tortee");
+	String gender = (String) session.getAttribute("gender");
 
+	
 	System.out.println("session.getAttribute >>>>> " + ver);
 	System.out.println("session.getAttribute >>>>> " + id);
 	System.out.println("tortee nav >>>>> " + tortee);
 	System.out.println("idxstr idxstr >>>>> " + idxstr);
 	System.out.println("idxstr name >>>>> " + name);
+	System.out.println("idxstr gender >>>>> " + gender);
+
 %>
 <header id="header">
 	<div class="navbar navbar-inverse" role="banner">

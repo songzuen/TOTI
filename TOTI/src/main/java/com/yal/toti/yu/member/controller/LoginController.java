@@ -41,31 +41,34 @@ public class LoginController {
 		String photo_name="";
 		String idxstr = "";
 		String ver = "";
+		String gender="";
 		
 		idxstr =  String.valueOf(mi.getIdx());
 		name = mi.getName();
 		photo_name = mi.getPhoto_name();
 		ver = mi.getVer();
+		gender = mi.getGender();
 		
 		String view = "";
 		Map<String, String> maps = new HashMap<String, String>();
 
 		if (cnt == 1) {
-			// 1. 인증 처리됨 -> 메인 화면으로
+			// 1. �씤利� 泥섎━�맖 -> 硫붿씤 �솕硫댁쑝濡�
 			view = "success";
 			maps.put("name", name);
 			maps.put("photo_name", photo_name);
 			maps.put("id", id);
 			maps.put("idxstr", idxstr);
 			maps.put("ver", ver);
+			maps.put("gender", gender);
 			maps.put("view", view);
 		} else if (cnt == 2) {
-			// 2. 미인증 회원 -> 이메일 다시 보내기
+			// 2. 誘몄씤利� �쉶�썝 -> �씠硫붿씪 �떎�떆 蹂대궡湲�
 			view = "undefined";
 			maps.put("id", null);
 			maps.put("view", view);
 		} else if (cnt == 3) {
-			// 3. 로그인 실패 -> loginFail 페이지
+			// 3. 濡쒓렇�씤 �떎�뙣 -> loginFail �럹�씠吏�
 			view = "loginfail";
 			maps.put("id", null);
 			maps.put("view", view);
@@ -88,11 +91,11 @@ public class LoginController {
 		return null;
 	}
 
-	  //카카오톡 관련 로그아웃 메소드
+	  //移댁뭅�삤�넚 愿��젴 濡쒓렇�븘�썐 硫붿냼�뱶
     @RequestMapping("kakao_logout.do")
     public String kakao_logout(HttpSession session, HttpServletRequest request) {
         
-        //세션에 담긴값 초기화
+        //�꽭�뀡�뿉 �떞湲닿컪 珥덇린�솕
         session.invalidate();
         
         return "home";

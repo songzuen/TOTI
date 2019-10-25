@@ -23,7 +23,6 @@
 					<div class="action">
 						<div class="col-sm-12">
 							<h1 class="title">채 팅</h1>
-							<p>-</p>
 						</div>
 					</div>
 				</div>
@@ -50,7 +49,7 @@
 						<!-- container -->
 						<div id="chat" class="container" style="margin: 30px auto;">
 							<div id="buttons">
-								<a href="/toti/chat/chatLogin" onclick="">뒤로가기</a> <a href='#'
+								<a href="#" onclick="goBackPage()">뒤로가기</a> <a href='#'
 									id="estBtn">견적서 내용</a> <a href='#' onclick="goRtcPage()">화상채팅</a>
 							</div>
 							<div id="chatArea">
@@ -157,7 +156,7 @@
 					var price = data[i].price.toString().replace(regexp, ',');
 					
 					html += '<div id = "alarmMsg" class = "alarmbox">';
-					html += '금액 : ' + price + '<br>' + data[i].cont;
+					html += '* 금액, 결제방식, 수업내용 등 견적서 내용을 자세하게 확인해주세요.<br>' +'<br>' + '금액 : ' + price + '<br><br>' +  data[i].cont;
 					html += '</div>';
 				}
 				var bannerOffset = $('.topFixBanner').offset();
@@ -170,9 +169,13 @@
 				var html = '';
 
 				for (var i = 0; i < data.length; i++) {
-					/* 					console.log(data[i]); */
-
-					if (user == data[i].msg_user) {
+					
+					if(data[i].msg_user == 0) {
+						html += '<div id = "msgbox" class="text_center">';
+						html += '<div id = "noticemsg" class = "noticebox">';
+						html += data[i].message;
+						html += '</div></div>';
+					}else if (user == data[i].msg_user) {
 						html += '<div id = "msgbox" class="text_right">';
 						html += '<span class = "time">' + data[i].message_date
 								+ '</span>';
@@ -294,7 +297,7 @@
 				$
 						.ajax({
 							url : '/toti/chat/room/'
-									+ m_idx + '/' + user,
+									+ m_idx + '/' + user + '/' + est_idx,
 							type : 'GET',
 							success : function(data) {
 
@@ -463,7 +466,10 @@
 				$('#rtcPage').html(html);
 				
 				$('#chat').css('display', 'none');
-
+		}
+		
+		function goBackPage() {
+			history.back();
 		}
 		
 		function goChatPage() {

@@ -1,3 +1,5 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 
@@ -13,12 +15,14 @@ body {
 }
 
 video {
-	width: 100%;
+	width: 520px;
+	max-width: 100%;
 	background-color: black;
 }
 
 #videos {
 	width: 100%;
+	height: 480px;
 }
 
 #videos div {
@@ -26,13 +30,14 @@ video {
 	text-align: center;
 	display: inline-block;
 	margin: 15px 15px;
+	text-align: center;
 }
 </style>
 </head>
 
 <body>
-
-	<h1>TOTI-WebRTC</h1>
+	<h5>* 화상 채팅 전 카메라와 마이크의 연결 상태를 꼭 확인해주세요.</h5>
+	
 	<div id="videos">
 		<div>
 			<video id="localVideo" autoplay muted playsinline></video>
@@ -164,7 +169,7 @@ video {
 
 	navigator.mediaDevices.getUserMedia({
 	        audio: true,
-	        video: true
+	        video: {width: 480, height: 360}
 	    })
 	    .then(gotStream)
 	    .catch(function (e) {

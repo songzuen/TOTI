@@ -93,9 +93,9 @@
          </div>
          <div>
             	무슨 멘토가 되시겠습니까?
-            	<input type="radio" name="cate_idx" id="cate_idx" value="1" /> 보컬
-				<input type="radio" name="cate_idx" id="cate_idx" value="2" /> 댄스
-				<input type="radio" name="cate_idx" id="cate_idx" value="3" /> 악기
+            	<input type="radio" name="radio" id="radio" value="1" /> 보컬
+				<input type="radio" name="radio" id="radio" value="2" /> 댄스
+				<input type="radio" name="radio" id="radio" value="3" /> 악기
          </div>
          <div>
          			<input type="submit" value="멘토 정보 등록" />
@@ -192,7 +192,7 @@ $(document).ready(function(){
   
   $('#writeForm').submit(function(){
       
-	  
+	
       $.ajax({
           url : '/toti/member/mentor',
           type : 'POST',
@@ -200,7 +200,9 @@ $(document).ready(function(){
        	   m_idx : $('#m_idx').val(),
        	   coin : $('#coin').val(),
               location : $('#location').val(),
-              cate_idx: $('#cate_idx').val()
+              
+             
+              cate_idx:$('input[name="radio"]:checked').val()
               
             
 
@@ -209,7 +211,7 @@ $(document).ready(function(){
           success : function(data){
           	
           	if (data == 'success') {
-          	
+          		alert(radio);
           	alert('멘토님의 정보가 저장되었습니다. 다시 로그인 해주세요');
           	location.href = "/toti/member/logout";
  			 }

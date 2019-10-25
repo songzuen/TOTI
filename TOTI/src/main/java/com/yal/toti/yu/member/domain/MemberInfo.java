@@ -15,7 +15,7 @@ public class MemberInfo {
 	private String pw;
 	private String name;
 	private String ver;
-	private char gender;
+	private String gender;
 	private MultipartFile photo;
 	private String photo_name;
 	private String regDate;
@@ -29,13 +29,13 @@ public class MemberInfo {
 		this.regDate = time();
 	}
 	
-	// 아이디 생성자
+	// �븘�씠�뵒 �깮�꽦�옄
 	public MemberInfo(String id) {
 		this.id = id;
 		this.code = getRandom();
 	}
  
-	// ver생성자
+	// ver�깮�꽦�옄
 	public MemberInfo(char verify) {
 		this.verify = verify;
 	}
@@ -90,11 +90,11 @@ public class MemberInfo {
 		this.ver = ver;
 	}
 
-	public char getGender() {
+	public String getGender() {
 		return gender;
 	}
 
-	public void setGender(char gender) {
+	public void setGender(String gender) {
 		this.gender = gender;
 	}
 
@@ -148,19 +148,19 @@ public class MemberInfo {
 
 
 	
-	// yyyy/mm/dd로 바꾸기
+	// yyyy/mm/dd濡� 諛붽씀湲�
 	public String time() {
 		SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd");
 		Date date = new Date();
 		return format.format(date);
 	}
 	
-	// 난수 생성
+	// �궃�닔 �깮�꽦
 	public String getRandom() {
 		Random rand = new Random(System.nanoTime());
 		StringBuffer sb = new StringBuffer();
 		
-		//총 20문자 길이의 난수 생성
+		//珥� 20臾몄옄 湲몄씠�쓽 �궃�닔 �깮�꽦
 		for(int i=0; i<20; i++) {
 			if(rand.nextBoolean()) {
 				sb.append(rand.nextInt(10));

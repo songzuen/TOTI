@@ -1,7 +1,5 @@
 package com.yal.toti.baek.service;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -10,7 +8,6 @@ import org.springframework.stereotype.Service;
 
 import com.yal.toti.baek.dao.ChatSessionDao;
 import com.yal.toti.baek.domain.ChatRoomInfo;
-import com.yal.toti.baek.domain.Chatlog;
 
 @Service("roomService")
 public class RoomService {
@@ -26,26 +23,20 @@ public class RoomService {
 		int cnt = 0;
 
 		cnt = dao.insertChatRoom(roomnum, category, user, target);
-
-		Date d = new Date();
-		SimpleDateFormat format = new SimpleDateFormat("yyyy년 MM월 dd일 E요일 HH:mm");
-		String date = format.format(d);
-
-		/*
-		 * cnt += dao.insertEstPriceToChatRoom(roomnum, user, date); cnt +=
-		 * dao.insertEstContToChatRoom(roomnum, user, date);
-		 */
-		
-		System.out.println(date);
-		Chatlog log = dao.insertChatlog("견적서를 꼭 확인해주세요 ! ! !", date, roomnum, "공지사항");
-		int lastmsg = log.getMessage_num();
-		System.out.println(lastmsg);
-		System.out.println(123456);
-
-		cnt += dao.updateLastMsgAtChatRoom(lastmsg, roomnum);
-
+		if (cnt != 0) {
+			cnt += insertChatlog(roomnum);
+		}
 		return cnt;
 
+	}
+
+	public int insertChatlog(int roomnum) {
+		dao = template.getMapper(ChatSessionDao.class);
+
+		int cnt = dao.insertChatlog(
+				"멘토로 부터 견적서가 도착했습니다.<br>견적서 내용을 확인해주세요.<br><hr><a href='#' id=\"estBtn\">견적서 내용</a>", "", roomnum, 0);
+
+		return cnt;
 	}
 
 	public String searchChatRoom(int roomnum) {
@@ -56,13 +47,13 @@ public class RoomService {
 		return room;
 	}
 
-	public String targetName(int target, int user) {
+	public String targetName(int target, int user, int est_idx) {
 		dao = template.getMapper(ChatSessionDao.class);
 
-		String targetName = dao.searchTargetName(target);
+		String targetName = dao.searchTargetName(target, est_idx);
 
 		if (targetName == null) {
-			targetName = dao.searchTargetNameByUser(user);
+			targetName = dao.searchTargetName(user, est_idx);
 		}
 
 		return targetName;

@@ -560,7 +560,7 @@ p {
 																									});
 																					alert('1코인이 사용 되었습니다.');
 
-																					history.go(0);
+																					history.back();
 																				}
 																			});
 																}

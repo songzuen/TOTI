@@ -71,8 +71,8 @@
                                  
                                  <div class="form-group">
                         
-                              <input type="radio" name="gender" id="gender" value="F" /> 여자
-                           <input type="radio" name="gender" id="gender" value="M" /> 남자
+                              <input type="radio" name="radio" id="radio" value="F" /> 여자
+                           <input type="radio" name="radio" id="radio" value="M" /> 남자
                      
                                  </div>
                                  
@@ -162,11 +162,14 @@
             return false;
          }
          
+         
+         
+         
          var formData = new FormData(); 
          formData.append('id', $('#id').val());
          formData.append('pw', $('#pw').val());
          formData.append('name', $('#name').val());
-         formData.append('gender', $('#gender').val());
+         formData.append('gender', $('input[name="radio"]:checked').val());
          formData.append('ver', $('#ver').val());
          
          $.ajax({

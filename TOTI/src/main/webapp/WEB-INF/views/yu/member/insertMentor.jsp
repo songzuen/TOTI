@@ -68,18 +68,37 @@
                       <!-- 예시 끝 -->
                      <!-- 동준님 이거 쓰세여 회원가입 -->
                      <!-- 너비 조절은 col-md-4 col-sm-12 클래스를 통해서 하세여 더 늘리고싶으면 col-md-5 로 올리는 식으로 -->
-                     <div class="col-md-4 col-sm-12"  id="mainTable">
-                         <div class="contact-form bottom">
-                         <div id="formDiv">
-                            
-                             <div id="formDiv" style="float: right;">
+                  <div style="text-align: center;">
+                          <h3>1. 고객의 요청을 보내드려요</h3> 	
+                           	<ul>
+                           		<li>고객은 도움이 필요한 서비스에 대해서 요청서를 작성해요.</li>
+                           		<li>요청이 올바른지 검토한 후 고수님께 무료로 보내드려요.</li>
+                           	</ul>
+                        	<hr><br><br>
+                        	<h3>2. 답변을 보낼 고객을 선택하세요.</h3> 	
+                           	<ul>
+                           		<li>이메일과 문자메시지를 통해 고객의 요청을 전달 해 드려요.</li>
+                           		<li>고객에게 견적서를 보낸 후 고용기회를 잡아보세요.</li>
+                           		<li>견적서를 보내기 전 멤버십 가입이 필요해요.</li>
+                           	</ul>
+                        	<hr><br><br>
+                        	<h3>3. 맞춤형 견적서를 보내세요.</h3> 	
+                           	<ul>
+                           		<li>고객이 원하는 요청에 맞춰 견적서를 보내세요.</li>
+                           		<li>가격, 연락처, 리뷰, 자격증 등의 정보를 포함시켜 주세요.</li>
+                           	</ul>
+                        	<hr><br><br>
+                        	<h3>4. 고객과 빠르게 연락하세요.</h3> 	
+                           	<ul>
+                           		<li>요청자는 견적을 비교하고 자신에게 맞는 고수를 선택하세요.</li>
+                           		<li>채팅, 안심번호(전화)를 통해 세부사항을 조율하시면 됩니다.</li>
+                           	</ul>
+                        	<hr><br><br>
+                       </div> 	 
                              <input type="hidden" id="id" name="id" value="${id}">
-							<input type="button" class="btn btn-submit" onclick="getParams()" value="확인" id="ver">
-							</div>
                             
-                             </div>
-                         </div>
-                     </div>
+							<input type="button" class="btn btn-submit" onclick="getParams()" value="확인" id="ver">
+					
                     <!-- 여기까지 -->
                     
                 
