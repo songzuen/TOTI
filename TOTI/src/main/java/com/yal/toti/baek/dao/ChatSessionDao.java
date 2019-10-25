@@ -18,6 +18,8 @@ public interface ChatSessionDao {
 	public int insertChatRoom(int user, int target, int category, int roomnum);
 
 	public String searchTargetName(int target, int est_idx);
+	
+	public String searchTargetNameByUser(int user, int est_idx);
 
 	public String searchUserName(int user);
 

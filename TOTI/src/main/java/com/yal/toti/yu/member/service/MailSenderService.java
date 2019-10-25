@@ -61,7 +61,7 @@ public class MailSenderService {
 			
 			message.setSubject("[TOTI]회원가입 인증키 발송 이메일 입니다", "UTF-8");
 			String text = "<h1>인증키를 통해 회원가입을 완료해 주세요</h1>";
-			text += "<a href=\"http://13.209.47.16:8080/toti/member/verify?code="+memberInfo.getCode()+"&id="+memberInfo.getId()+"\">인증하기</a><br>";
+			text += "<a href=\"https://yal-toti.tk/toti/member/verify?code="+memberInfo.getCode()+"&id="+memberInfo.getId()+"\">인증하기</a><br>";
 			text += "인증번호 : " + memberInfo.getCode();
 			
 			message.setText(text, "UTF-8", "html");

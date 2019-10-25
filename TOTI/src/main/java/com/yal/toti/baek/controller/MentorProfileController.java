@@ -23,8 +23,8 @@ public class MentorProfileController {
 	private MentorService service;
 
 	@CrossOrigin
-	@GetMapping("/{user}")
-	public MentorProfile mentorProfile(@PathVariable("user") int user) {
+	@GetMapping("/{m_idx}")
+	public MentorProfile mentorProfile(@PathVariable("m_idx") int user) {
 
 		MentorProfile profile = service.getMentorProfile(user);
 

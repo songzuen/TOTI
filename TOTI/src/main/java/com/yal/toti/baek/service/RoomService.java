@@ -53,7 +53,7 @@ public class RoomService {
 		String targetName = dao.searchTargetName(target, est_idx);
 
 		if (targetName == null) {
-			targetName = dao.searchTargetName(user, est_idx);
+			targetName = dao.searchTargetNameByUser(user, est_idx);
 		}
 
 		return targetName;

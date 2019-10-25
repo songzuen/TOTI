@@ -323,11 +323,11 @@
 						});
 			}
 			function mentorProfile(user) {
-				if ($('#check').val() == 'Y') {
+				if ($('#check').val() == 'N') {
 					$
 							.ajax({
 								url : '/toti/chat/profile/mentor/'
-										+ user,
+										+ m_idx,
 								type : 'GET',
 								success : function(data) {
 									var html = '';
@@ -350,7 +350,7 @@
 											+ data.p_pay + '</p><hr>';
 									html += '<div class = "mentorReview"></div>';
 									$('#profile').append(html);
-									mentorProfileReview(user)
+									mentorProfileReview(m_idx);
 								}
 							});
 
@@ -373,7 +373,7 @@
 										type : 'GET',
 										data : {
 											request_idx : req_idx,
-											m_idx : user
+											m_idx : m_idx
 										},
 										success : function(data) {
 											
