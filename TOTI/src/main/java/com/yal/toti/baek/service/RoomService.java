@@ -34,7 +34,8 @@ public class RoomService {
 		dao = template.getMapper(ChatSessionDao.class);
 
 		int cnt = dao.insertChatlog(
-				"멘토로 부터 견적서가 도착했습니다.<br>견적서 내용을 확인해주세요.<br><hr><a href='#' id=\"estBtn\">견적서 내용</a>", "", roomnum, 0);
+				"멘토로 부터 견적서가 도착했습니다.<br>견적서 내용을 확인해주세요.<br><hr><a onclick=" + "modalDisplay()" + ">견적서 내용</a>", "",
+				roomnum, 0);
 
 		return cnt;
 	}
@@ -52,8 +53,8 @@ public class RoomService {
 
 		String targetName = dao.searchTargetName(target, est_idx);
 
-		if (targetName == null) {
-			targetName = dao.searchTargetNameByUser(user, est_idx);
+		if (targetName == null || targetName == "") {
+			targetName = dao.searchTargetNameByUser(target, est_idx);
 		}
 
 		return targetName;

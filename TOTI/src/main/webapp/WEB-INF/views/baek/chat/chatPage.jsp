@@ -49,8 +49,8 @@
 						<!-- container -->
 						<div id="chat" class="container" style="margin: 30px auto;">
 							<div id="buttons">
-								<a href="#" onclick="goBackPage()">뒤로가기</a> <a href='#'
-									id="estBtn">견적서 내용</a> <a href='#' onclick="goRtcPage()">화상채팅</a>
+								<a href="#" onclick="goBackPage()">뒤로가기</a> <a
+									onclick="modalDisplay()">견적서 내용</a> <a onclick="goRtcPage()">화상채팅</a>
 							</div>
 							<div id="chatArea">
 								<div id="chatInfo"></div>
@@ -60,7 +60,9 @@
 								<div id="chat_box"></div>
 								<div id="chat_input">
 									<textarea id="input_msg"></textarea>
-									<button id="msg_process">전송</button>
+									<button id="msg_process">
+										<span>전송</span>
+									</button>
 								</div>
 							</div>
 							<div id="profileArea">
@@ -294,6 +296,7 @@
 
 			function chatTarget(user) {
 				
+				
 				$
 						.ajax({
 							url : '/toti/chat/room/'
@@ -444,7 +447,7 @@
 							}
 						});
 			}
-
+			
 		};
 
 		function scrollDown() {
@@ -452,9 +455,9 @@
 		}
 		
 		function goRtcPage() {
-			var roomnum = $('input#chat_room').val();
-			var target = $('input#target').val();
-			var user = $('input#user').val();
+			var roomnum = est_idx;
+			var target = $('#target').val();
+			var user = $('#user').val();
 			var html = '';
 
 			html += '<div class="buttons">';
@@ -476,14 +479,13 @@
 			$('#rtcPage').empty();
 			$('#chat').css('display', 'block');
 		}
-
 		
 		// modal
 		var modal = document.getElementById('estModal');
-		var estBtn = document.getElementById("estBtn");
+		var estBtn = document.getElementsByClassName('estBtn');
 		var span = document.getElementsByClassName("close")[0];
 
-		estBtn.onclick = function() {
+		function modalDisplay() {
 			modal.style.display = "block";
 		}
 
@@ -496,6 +498,7 @@
 				modal.style.display = "none";
 			}
 		}
+
 		
 		// iframe 사이즈 조절
 		function autoResize(obj){

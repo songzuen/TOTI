@@ -75,7 +75,6 @@ video {
 
 	/* alert("roomnum : " + roomnum + ", target : " + target + ", user : " + user); */
 	
-	
 
 	var pcConfig = {
 	    'iceServers': [{
