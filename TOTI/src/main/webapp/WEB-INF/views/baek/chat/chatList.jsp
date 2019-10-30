@@ -22,7 +22,6 @@
 					<div class="action">
 						<div class="col-sm-12">
 							<h1 class="title">채 팅</h1>
-							<p>-</p>
 						</div>
 					</div>
 				</div>
