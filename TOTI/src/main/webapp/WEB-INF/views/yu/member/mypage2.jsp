@@ -265,6 +265,7 @@ input {
 							html += '<td>아이디</td>';
 							html += '<td>' + data.id + '</td> </tr>';
 							html += '<tr><td>이름</td>';
+							html += '<td>' + data.name + '</td></tr>';
 							html += '<tr><td>성별</td>';
 							html += '<td>여자</td></tr>';
 							html += '<td>' + data.gender + '</td></tr>'; */

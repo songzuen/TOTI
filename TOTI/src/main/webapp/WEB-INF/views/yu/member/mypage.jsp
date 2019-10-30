@@ -64,7 +64,7 @@ input {
 	margin: 5px;
 }
 
-#verInfo {
+#verInfo{
 	text-align: center;
 	width: 300px;
 	background-color: silver;
@@ -73,8 +73,8 @@ input {
 	font-size: 15px;
 	margin: auto;
 }
-
-#verInfo2 {
+ #verInfo2
+ {
 	text-align: center;
 	width: 300px;
 	background-color: gold;
@@ -109,10 +109,10 @@ input {
 						} else if (ver != null && ver.equals("Y")) {
 					%>
 
-
-					<div id="verInfo2">멘토 회원</div>
-				</div>
-
+				
+								<div id="verInfo2">멘토  회원</div>
+						</div>
+					
 				<%
 					}
 					if (gender != null && gender.equals("M")) {
@@ -144,17 +144,17 @@ input {
 				<%
 					} else {
 				%>
-				<div class="col-md-4 col-sm-12" id="mainTable">
-					<div class="contact-form bottom">
-						<div id="formDiv">
-							<form id="form" name="contact-form" onsubmit="return false"
-								enctype="multipart/form-data">
-								<!--  <div style="padding-left:23%;" id=myPhoto></div> -->
-								<div id="myInfo"></div>
+						<div class="col-md-4 col-sm-12" id="mainTable">
+						<div class="contact-form bottom">
+							<div id="formDiv">
+								<form id="form" name="contact-form" onsubmit="return false"
+									enctype="multipart/form-data">
+									<!--  <div style="padding-left:23%;" id=myPhoto></div> -->
+									<div id="myInfo"></div>
+							</div>
 						</div>
 					</div>
-				</div>
-				<%
+				<%	
 					}
 				%>
 				<!-- 여기까지 -->
@@ -277,11 +277,12 @@ input {
 							html += '<td>아이디</td>';
 							html += '<td>' + data.id + '</td> </tr>';
 							html += '<tr><td>이름</td>';
+							html += '<td>' + data.name + '</td></tr>';
 							html += '<tr><td>성별</td>';
 							html += '<td>여자</td></tr>';
 							/* html += '<tr><td>성별</td>';
 							html += '<td>' + data.gender + '</td></tr>'; */
-
+							
 							//	html += '<td><button style="color=black;" onclick="mentorInsert(\'' + data.id + '\')">고수등록</button></td></tr>';
 							html += '<tr><td>사진</td>';
 							html += '<td><img class="img-thumbnail" alt="Cinque Terre" src="/toti/uploadfile/' + data.photo_name + '"></td></tr>';
