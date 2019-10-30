@@ -132,7 +132,6 @@
 								$('#ver').val(data.ver);
 								$('#gender').val(data.gender);
 								
- 								alert(data.ver);
 // 								alert(data.id);
 								
 								$.ajax({
@@ -199,14 +198,12 @@
 	                                });
 	                            },
 	                            fail: function(error) {
-	                                alert(JSON.stringify(error));
 	                            }
 	                        });
 	                    
 	                    
 	                },
 	                fail: function(err) {
-	                    alert(JSON.stringify(err));
 	                    alert('실패');
 	                }
 	            });

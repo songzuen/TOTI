@@ -115,7 +115,7 @@
 														<option selected>답변</option>
 														<option id="radio" value="radio">단일 선택</option>
 														<option id="checkbox" value="checkbox">중복 선택</option>
-														<option id="select" value="select">목록 선택</option>
+														<option id="text" value="text">직접 입력</option>
 													</select>
 												</td>
 											</tr>

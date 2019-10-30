@@ -15,7 +15,7 @@
 	width: 500px;
 	left: 30%;
 	margin: auto;
-	background-color: #E3F6CE;
+	background-color: silver;
 }
 
 input {
@@ -206,7 +206,6 @@ input {
 					.request({
 						url : '/v2/user/me',
 						success : function(res) {
-							alert(JSON.stringify(res));
 
 							var id = res.kakao_account.email;
 							var photo = res.properties.profile_image;
@@ -226,7 +225,6 @@ input {
 							$('#myInfo').html(html);
 						},
 						fail : function(error) {
-							alert(JSON.stringify(error));
 						}
 					});
 		}
@@ -242,7 +240,6 @@ input {
 					type : 'GET',
 					dataType : 'text',
 					success : function(data) {
-						alert(data);
 						location.href = "/toti/main";
 					}
 				});
@@ -268,11 +265,11 @@ input {
 							html += '<td>아이디</td>';
 							html += '<td>' + data.id + '</td> </tr>';
 							html += '<tr><td>이름</td>';
+							html += '<tr><td>성별</td>';
 							html += '<td>여자</td></tr>';
-							/* html += '<tr><td>성별</td>';
 							html += '<td>' + data.gender + '</td></tr>'; */
-							html += '<tr><td>회원 등급</td>';
-							html += '<td>' + data.ver + '</td></tr>';
+							//html += '<tr><td>회원 등급</td>';
+							//html += '<td>' + data.ver + '</td></tr>';
 							//	html += '<td><button style="color=black;" onclick="mentorInsert(\'' + data.id + '\')">고수등록</button></td></tr>';
 							html += '<tr><td>사진</td>';
 							html += '<td><img class="img-thumbnail" alt="Cinque Terre" src="/toti/uploadfile/' + data.photo_name + '"></td></tr>';
@@ -287,7 +284,7 @@ input {
 									  html += '<button style=\"background-color:gold;\" class=\"btn btn-primary\"><a href=\"/toti/cash\">캐쉬 충전</a></button>';
 							//html += '<button style=\"background-color:gold;\" class=\"btn btn-primary\"><a href=\"/toti/insertMentor\">멘티로 전환</a></button></td></tr></table>';
 
-							$('#myInfo').html(html);
+							$('#myInfo2').html(html);
 						}
 
 					});
@@ -374,7 +371,6 @@ input {
 						},
 						type : 'GET',
 						success : function(data) {
-							alert(data);
 							location.href = "/toti/main";
 						}
 					});
@@ -452,7 +448,6 @@ input {
 											contentType : false, //파일 전송 시 필수
 											dataType : 'text',
 											success : function(data) {
-												alert(data);
 											}
 										});
 									});
