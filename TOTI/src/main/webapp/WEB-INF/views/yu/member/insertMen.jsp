@@ -4,7 +4,7 @@
 <html>
 <head>
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
+<script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 
 	<%@ include file="/WEB-INF/views/frame/header.jsp" %>
 <%-- 	<% int idx = (int)session.getAttribute("idx"); %> --%>

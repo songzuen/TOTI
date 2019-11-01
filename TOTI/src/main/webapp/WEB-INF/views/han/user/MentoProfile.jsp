@@ -117,7 +117,7 @@
 				<div style="float:right; width:25%; margin:10px;" >
 					<h4>리뷰 요청하기</h4>
 					링크를 공유하고 고객들에게 리뷰를 받아 보세요. 긍정적인 리뷰가 있는 고수는 고용될 확률이 2배 이상 높습니다.
-					<input type="text" id="url_field" value="/toti/review/${mento_idx}" readonly><br>
+					<input type="text" id="url_field" value="yal-toti.tk/toti/review/${mento_idx}" readonly><br>
 					<button class="btn btn-outline-danger" id="copy_btn" style="margin-top: 5px;"> 복사하기 </button>
 				</div>
 				<!-- end home variation -->

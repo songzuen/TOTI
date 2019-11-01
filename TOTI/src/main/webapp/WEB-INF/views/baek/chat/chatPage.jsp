@@ -147,6 +147,7 @@
 				});
 			}, 500);
 
+			setTimeout(function() {
 			socket.on("loadEst", function(data) {
 
 				var html = '';
@@ -165,7 +166,7 @@
 
 				$('#estInfo').html(html);
 			});
-
+			}, 1000);
 			socket.on("loadChatLog", function(data) {
 
 				var html = '';
