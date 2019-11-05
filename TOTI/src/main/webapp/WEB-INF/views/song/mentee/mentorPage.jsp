@@ -54,6 +54,7 @@ font-size: 12px;
 }
 #m_photo {
 width: 100px;
+height: 100px;
 border-radius : 50%;
 }
 
@@ -98,7 +99,8 @@ margin-top: 6px;
 <body>
 	<!-- page container -->
 	<div>
-		<%@include file="/WEB-INF/views/frame/nav.jsp"%>
+	<%@include file="/WEB-INF/views/frame/nav.jsp"%>
+		
 		
 		 <!--/#header-->
     <section id="page-breadcrumb">
@@ -139,10 +141,12 @@ margin-top: 6px;
 		<%@include file="/WEB-INF/views/frame/footer.jsp"%>
 	</div>
 </body>
-
+<script type="text/javascript"
+	src="//dapi.kakao.com/v2/maps/sdk.js?appkey=c69d5f862cf8316938343efcf4a7d402&libraries=services"></script>
 <script>
 	$(document).ready(function() {
 	mentorPage($('#mento_idx').val());
+	mentorLocation($('#mento_idx').val());
 	});
 	
 	function mentorPage(mento_idx){
@@ -151,7 +155,7 @@ margin-top: 6px;
 		var halfStar = '<span><img id=\"star\" src=\"https://d1hhkexwnh74v.cloudfront.net/icons/icon-common-review-star-small-half.svg\"></span>';
 		
 		$.ajax({
-			url : 'http://localhost:8080/toti/mentorpage/'+mento_idx,
+			url : '/toti/mentorpage/'+mento_idx,
 			type : 'GET',
 			success : function(data){
 				var html = '';
@@ -160,7 +164,7 @@ margin-top: 6px;
 				for(var i = 0; i<data.length; i++){
 						
 						/*고수 프로필*/
-						html+='<div class="info"><span id="img"><img id="m_photo" src = "<c:url value="/images/user/'+data[i].m_photo+'"/>"><span></div>';
+						html+='<div class="info"><span id="img"><img id="m_photo" src = "<c:url value="/uploadfile/'+data[i].m_photo+'"/>"><span></div>';
 						
 						html+='<div class="info" style="height:100px; padding:30px 10px;"><b><h2>'+data[i].m_name+'</h2></b><span style="color:black; font-size:9px;">';
 						
@@ -228,9 +232,11 @@ margin-top: 6px;
 						html+='</div></div>';
 
 						/* 고수 한 줄 소개 */
+						if(data[i].p_shot != null){
 						html+='<div class="info">';
 						html+='<h3>한줄 소개</h3><div>'+data[i].p_shot+'<br>';
 						html+='</div></div>';
+						}
 						
 						/* 제공 서비스 */
 						
@@ -244,7 +250,9 @@ margin-top: 6px;
 						if(data[i].tor_location != null){
 							html+= '<div class="info">';
 							html+= '<h3>위치</h3><div>';
-							html+= data[i].tor_location+'</div></div>';
+							html+= data[i].tor_location+'</div>';
+							html+= '<div id="map" style="width:100%;height:350px;"></div>';
+							html+ '</div>';
 						}
 						
 						/* 고수 학력 */
@@ -429,7 +437,7 @@ margin-top: 6px;
 				for(var i = 0; i<data.length;i++){
 				revBtn += data[i].m_name+' 멘토님의 수업이 어떠셨나요?<br>';
 				revBtn += data[i].m_name+' 멘토님에 관한 후기를 남겨주세요<br>';
-				revBtn +='<button type="button" id="revBtn" class="btn btn-primary">리뷰 작성하기</button>';
+				revBtn +='<button type="button" id="revBtn" class="btn btn-primary" onclick="review('+data[i].mento_idx+')">리뷰 작성하기</button>';
 				break;
 				}
 				$('#reviewBtnBox').html(revBtn);
@@ -438,5 +446,69 @@ margin-top: 6px;
 		});
 		
 	}
+	
+	function mentorLocation(mento_idx) {
+
+		$
+				.ajax({
+					url : '/toti/mentorpage/'+mento_idx,
+					type : 'GET',
+					success : function(data) {
+
+						var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+						mapOption = {
+							center : new kakao.maps.LatLng(33.450701,
+									126.570667), // 지도의 중심좌표
+							level : 2
+						// 지도의 확대 레벨
+						};
+
+						// 지도를 생성합니다    
+						var map = new kakao.maps.Map(mapContainer, mapOption);
+
+						// 주소-좌표 변환 객체를 생성합니다
+						var geocoder = new kakao.maps.services.Geocoder();
+
+						for (var i = 0; i < data.length; i++) {
+							// 주소로 좌표를 검색합니다
+							geocoder
+									.addressSearch(
+											data[i].tor_location,
+											function(result, status) {
+
+												// 정상적으로 검색이 완료됐으면 
+												if (status === kakao.maps.services.Status.OK) {
+
+													var coords = new kakao.maps.LatLng(
+															result[0].y,
+															result[0].x);
+
+													// 결과값으로 받은 위치를 마커로 표시합니다
+													var marker = new kakao.maps.Marker(
+															{
+																map : map,
+																position : coords
+															});
+
+													// 인포윈도우로 장소에 대한 설명을 표시합니다
+													var infowindow = new kakao.maps.InfoWindow(
+															{
+																content : '<div style="width:150px;text-align:center;padding:6px 0;">고수  위치</div>'
+															});
+													infowindow
+															.open(map, marker);
+
+													// 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+													map.setCenter(coords);
+												}
+											});
+						}
+					}
+				});
+	}
+	
+	function review(mento_idx){
+	      location.href="/toti/review/"+mento_idx;
+	   }
 </script>
 </html>

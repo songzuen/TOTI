@@ -1,0 +1,211 @@
+@charset "UTF-8";
+
+
+#title_wrap {
+	background-color: white;
+	border-radius: 20px;
+	margin-bottom: -300px;
+}
+
+#request_form_wrap {
+	padding: 30px;
+	width: 800px;
+	margin: auto;
+	box-shadow: 5px 5px 10px 1px #acacac;
+	border-radius: 15px;
+}
+
+#request_form_wrap input[type=radio] {
+	margin: 5px;
+	vertical-align: middle;
+}
+
+#request_form_wrap input[type=checkbox] {
+	margin: 5px;
+	vertical-align: middle;
+}
+
+#request_form_wrap label {
+	font-weight: normal;
+}
+
+#request_form_wrap p {
+	font-weight: bold;
+	font-size: 18px;
+	padding: 5px 0;
+}
+
+#cate_select_wrap {
+	padding: 50px 20px;
+}
+
+#cate_select_wrap p {
+	padding: 10px;
+}
+
+#cate_select_wrap i {
+	vertical-align: middle;
+	padding: 8px;
+}
+
+#request_form_wrap input[type=button] {
+	margin: 10px 0;
+	border: 1px solid #6ed0ed;
+	background-color: #6ed0ed;
+	color: white;
+	padding: 10px;
+	width: 100%;
+	border-radius: 5px;
+}
+
+#request_form_wrap input[type=button]:hover {
+	border: 1px solid #6ed0ed;
+	background-color: white;
+	color: #333;
+}
+
+#requsr_my_list {
+	
+	border: 1px solid #d5e8e8;
+	padding: 25px;
+	border-radius: 10px;
+	margin: 10px 0;
+	box-shadow: 1px 1px 8px #d0d0d0;
+	
+}
+
+#requsr_my_list h2 {
+	color: black;
+}
+
+#requsr_my_list a {
+	 display: block;
+     text-decoration: underline;
+}
+
+#requsr_my_list a:last-child {
+	text-decoration: none;
+	margin-top: 15px;
+}
+
+#list_wrap {
+	margin-bottom: 50px; 
+}
+
+#request{
+	border: 1px solid #ededed;
+	margin: 20px auto;
+	width: 50%;
+	padding: 50px;
+	border-radius: 10px;
+	box-shadow: 1px 1px 20px 1px #f2f2f2;	
+}
+
+#est_request {
+	margin: 20px auto;
+	width: 50%;
+	padding: 50px;
+}
+
+#request img, #est_request img {
+	border-radius: 50%;
+	height: 130px;
+	width: 130px;
+	display: inline;
+}
+
+#requesr_user {
+	display: inline-block;
+	width: 70%;
+	padding: 0 0 0 40px;
+}
+
+#requesr_user p {
+	text-align: right
+}
+
+#requesr_user h2 {
+	color: black;
+}
+
+#request_con {
+	padding: 20px 0;
+}
+
+.con_p1 {
+	font-weight: bold;
+	font-size: 16px;
+}
+
+.con_p2 {
+	font-size: 14px;
+}
+
+#estimatee_wrap li {
+	width: 50%; text-align: center;
+}
+
+.est_wrap {
+	border: 1px solid #d8d8d8; border-radius: 15px; padding: 10px; margin: 10px 0;
+}
+
+.est_user {
+	padding: 0 10px;
+}
+
+.est_user_img {
+	float: left; width: auto; padding: 10px 15px 10px 0;
+}
+
+.est_user_img img {
+	width: 80px; height: 80px; border-radius: 50%;
+}
+
+.est_user_info {
+	padding: 10px;
+}
+
+.info_con {
+	font-weight: bold; font-size: 16px;
+	float: left;
+}
+
+.info_name {
+	font-weight: 400; font-size: 15px;
+}
+
+.info_date {
+    text-align: right;
+}
+
+.info_map {
+	font-weight: 400; font-size: 15px;
+}
+
+.est_pay {
+	clear: both;
+}
+
+.est_pay hr {
+	margin: -5px 10px 5px 10px;
+}
+
+.est_pay div {
+	padding: 10px;
+}
+
+.est_pay div span {
+	border: 1px solid #cccccc; border-radius: 5px; padding: 3px;
+}
+
+#not_request {
+	
+	text-align: center; font-size: 16px; border: 1px solid #d4d4d4; border-radius: 10px; padding: 20px;
+	width: 80%;
+	margin: 0 auto;
+	
+}
+
+#not_request a {
+	text-decoration: underline; font-size: 14px;
+}

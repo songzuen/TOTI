@@ -105,5 +105,3 @@ target/
 *.properties
 *.MF
 *.properties
-
-*.DS_Store

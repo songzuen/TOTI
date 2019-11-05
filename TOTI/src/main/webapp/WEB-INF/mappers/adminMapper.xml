@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.yal.toti.han.dao.AdminDaoInterface">
+	
+	<resultMap id="resultServiceInfo" type="com.yal.toti.han.domain.ServiceInfo">
+		<id property="service_idx" column="service_idx"/>
+		<result property="cate_idx" column="cate_idx"/>
+		<result property="service_name" column="service_name"/>
+	</resultMap>
+	
+	<resultMap id="resultQuestionInfo" type="com.yal.toti.han.domain.QuestionInfo">
+		<id property="quest_idx" column="quest_idx"/>
+		<result property="cate_idx" column="cate_idx"/>
+		<result property="quest_name" column="quest_name"/>
+	</resultMap>
+	
+	<!-- 분야 리스트 -->
+	<select id="categoryList" resultType="com.yal.toti.han.domain.CategoryInfo">
+		select * from toti_cate
+	</select>
+	
+	<!-- 분야별 서비스 리스트 -->
+	<select id="selectServiceByCate" resultMap="resultServiceInfo">
+		select * from toti.toti_service s inner join toti.toti_cate c 
+		on s.cate_idx=c.cate_idx 
+		where c.cate_idx=#{cate_idx}
+	</select>
+	
+	<!-- 서비스 등록  -->
+	<insert id="insertService" parameterType="com.yal.toti.han.domain.ServiceInfo">
+		insert into toti.toti_service (cate_idx, service_name) values 
+		(#{cate_idx}, #{service_name})
+	</insert>
+	
+	 <!--서비스 삭제 -->
+	<delete id="deleteService">
+		delete from toti.toti_service where service_idx=#{service_idx}
+	</delete>
+	
+	
+	<!-- 분야별 질문 리스트 -->
+	<select id="selectQuestionByCate" resultMap="resultQuestionInfo">
+		select * from toti.toti_question q inner join toti.toti_cate c 
+		on q.cate_idx=c.cate_idx 
+		where c.cate_idx=#{cate_idx}
+	</select>
+	
+	<!-- 질문 등록 -->
+	<insert id="insertQuestion" parameterType="com.yal.toti.han.domain.QuestionInfo">
+		insert into toti.toti_question (cate_idx, quest_name, quest_type) 
+		values (#{cate_idx}, #{quest_name}, #{quest_type})
+	</insert>
+	
+	<!-- 질문 삭제 -->
+	<delete id="deleteQuestion">
+		delete from toti.toti_question where quest_idx=#{quest_idx}
+	</delete>
+	
+	<!-- 질문 수정을 위한 정보 획득-->
+	<select id="selectQuestionByIdx" resultMap="resultQuestionInfo">
+		select * from toti.toti_question where quest_idx=#{quest_idx}
+	</select>
+
+	<!-- 회원정보수정 -->
+	<update id="questionUpdate" parameterType="com.yal.toti.han.domain.QuestionInfo">
+		update toti.toti_question set quest_name=#{quest_name}, quest_type=#{quest_type}
+		where quest_idx=#{quest_idx}
+	</update>
+	
+	<!-- 질문별 항목 리스트 -->
+	<select id="itemList" resultType="com.yal.toti.han.domain.QuestionItem">
+		select * from toti_item i join toti_question q on i.quest_idx=q.quest_idx 
+		where i.quest_idx=#{quest_idx}
+	</select>
+	
+	<!-- 항목 등록 -->
+	<insert id="insertItem" parameterType="com.yal.toti.han.domain.QuestionItem">
+		insert into toti_item (quest_idx, item_cont) values (#{quest_idx}, #{item_cont})
+	</insert>
+	
+	<!-- 항목 삭제 -->
+	<delete id="deleteItem">
+		delete from toti_item where item_idx=#{item_idx}
+	</delete>
+</mapper>

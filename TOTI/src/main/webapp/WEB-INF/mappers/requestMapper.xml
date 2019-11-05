@@ -11,9 +11,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select * from toti_cate
 	</select>
 	
+	<!--로그인한 유저(멘토)의 카테고리명 -->
+	<select id="categorieIdx" resultType="String">
+		select cate_idx from toti_member m join toti_mentor mt
+		on m.m_idx = mt.mento_idx
+		where m_idx=#{m_idx}
+	</select>
+	
 	<!-- 분야번호에 맞는 분야명 -->
-	<select id="cate_naem" resultType="String" parameterType="int">
-		select cate_name from toti_cate where cate_idx=#{cate_idx}
+	<select id="cate_data" resultType="com.yal.toti.kang.domain.CategoriData" parameterType="int">
+		select * from toti_cate where cate_idx=#{cate_idx}
 	</select>
 	
 	<!-- 분야번호에 맞는 서비스번호, 서비스명 리스트 -->
@@ -72,6 +79,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		where r.request_idx = #{param1}
 	</select>
 	
+	<!-- 5일지난 유저의 요청서번호 -->
+	<select id="userDelRequestNum" resultType="int">
+		select request_idx from toti_request
+		where date_add(request_date, INTERVAL 5 DAY)-now()<![CDATA[ < ]]>0 and m_idx=#{m_idx}
+	</select>
+	
+	<!-- 5일지난 유저의 요청서 삭제 스케줄러사용-->
+	<delete id="userRequestDel">
+		delete from toti_request where request_idx in
+		(select request_idx from(
+		select request_idx from toti_request
+		where date_add(request_date, INTERVAL 5 DAY)-now()<![CDATA[ < ]]>0) re)
+	</delete>
 	
 	<!-- ==============요청서 정보에 대한 Mapper================ -->
 	<!-- 로그인한 유저정보 -->
@@ -112,12 +132,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<!-- 견적서 데이터 리스트 -->
 	<select id="estimateeList" resultType="com.yal.toti.kang.domain.EstimateeListData">
-		select m.mento_idx, mm.m_photo, mm.m_name, mp.p_shot, FORMAT(e.est_price , 0) est_price, m.tor_location, 
-		(if(isnull(re.review_idx),0,(select round(avg(sr.review_star),1) from toti_review sr where sr.mento_idx = m.mento_idx))) str,
-		(select count(*) from toti.toti_review src where m.mento_idx = src.mento_idx) cont_cnt
-		from toti_estimatee e join toti_request r join toti_mentor m join toti_mentor_profile mp join toti_member mm join toti_review re
-		on e.request_idx = r.request_idx and e.mento_idx = m.mento_idx and m.mento_idx = mp.mento_idx and m.mento_idx = mm.m_idx and re.mento_idx = m.mento_idx
-		where r.request_idx = #{param1}
+		select es.est_idx, mt.mento_idx, m.m_name, mp.p_shot, mt.tor_location,m_photo, es.est_price, date_format(es.est_date, '%y-%m-%d %H:%i') est_date,
+		(if(isnull(rv.review_idx),0,(select round(avg(sr.review_star),1) from toti_review sr where sr.mento_idx = mt.mento_idx))) str,
+		(select count(*) from toti.toti_review src where mt.mento_idx = src.mento_idx) cont_cnt
+		from toti_mentor mt join toti_mentor_profile mp join toti_member m join toti_estimatee es
+		on mt.mento_idx = m.m_idx and mt.mento_idx = es.mento_idx and mt.mento_idx = mp.mento_idx 
+		left outer join toti_review rv
+		on rv.mento_idx = mt.mento_idx
+		where es.request_idx = #{request_idx}
 		group by est_idx
 	</select>
 	
@@ -125,6 +147,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<delete id="requestDelete">
 		delete from toti_request where request_idx = #{param1};
 	</delete>
+	
+	<insert id="insertChatlog">
+		insert into toti.toti_chatlog (message, message_date, room_num, msg_user) values (#{param1}, #{param2}, #{param3}, #{param4});
+	</insert>
 	
 </mapper>
 

@@ -32,12 +32,10 @@ public class RequestController {
 	
 	@RequestMapping(value = ("/request"), method = RequestMethod.POST)
 	public String request(RequestData data, Model model) {		
-		
-		int cnt;
+
 		try {
-			cnt = requestService.insertRequest(data);
-			
-			model.addAttribute("cnt", cnt);
+			requestService.insertRequest(data);
+
 			model.addAttribute("request_idx", data.getRequest_idx());
 			
 		} catch (Exception e) {
@@ -48,7 +46,7 @@ public class RequestController {
 		return "kang/request/request";
 	}
 
-	@RequestMapping("/user/request/{request_idx}")
+	@RequestMapping("/{request_idx}")
 	public String userRequest(@PathVariable("request_idx") int request_idx, Model model) {		
 		
 		model.addAttribute("request_idx", request_idx);
@@ -57,13 +55,13 @@ public class RequestController {
 		
 	}
 	
-	@RequestMapping("/user/requests")
+	@RequestMapping("/requests")
 	public String userRequestList() {		
 		
 		return "kang/request/myRequestList";
 	}
 	
-	@RequestMapping("/user/estimatee/{request_idx}")
+	@RequestMapping("/estimatee/{request_idx}")
 	public String userEstimatee(@PathVariable("request_idx") int request_idx, Model model) {		
 		
 		model.addAttribute("request_idx", request_idx);

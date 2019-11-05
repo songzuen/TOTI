@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- interface의 full name을 namespace의 속성으로 사용 : 필수 -->
+<mapper namespace="com.yal.toti.yu.member.dao.MemberDaoInterface">
+
+	<resultMap id="memberMap"
+		type="com.yal.toti.yu.member.domain.MemberInfo">
+		
+		<result property="id" column="m_id" />
+		<result property="idx" column="m_idx" />
+		<result property="pw" column="m_pw" />
+		<result property="name" column="m_name" />
+		<result property="ver" column="m_ver" />
+		<result property="gender" column="m_gender" />
+		<result property="photo_name" column="m_photo" />
+		<result property="regDate" column="m_date" />
+		<result property="verify" column="m_codeVer" />
+		<result property="code" column="m_code" />
+	</resultMap> 
+
+	<resultMap type="com.yal.toti.yu.member.domain.MentorInfo" id="mentorMap">
+	
+		<result property="m_idx" column="mento_idx"/>
+		<result property="coin" column="tor_coin"/>
+		<result property="location" column="tor_location"/>
+	
+	</resultMap>
+	
+		<resultMap id="coinMap" type="com.yal.toti.yu.member.domain.CoinInfo">
+	
+		<result property="idx" column="m_idx" />
+		<result property="id" column="m_id" />
+		<result property="name" column="m_name" />
+		<result property="coin" column="tor_coin" />
+		
+	</resultMap> 
+	
+	
+	<select id="coinSelect" resultMap="coinMap">
+		select m_idx, m_name, m_id, tor_coin from toti_member m join toti_mentor t on m_idx = mento_idx where m_idx = #{m_idx};
+	</select>
+	
+	<update id="addCoin">
+		update toti_mentor set tor_coin = tor_coin + #{coin} where mento_idx = #{m_idx};
+	</update>
+	
+	
+	
+	
+	<insert id="insertMen" parameterType="com.yal.toti.yu.member.domain.MentorInfo">
+	insert into toti_mentor (mento_idx, tor_coin, tor_location, cate_idx) values
+   (#{m_idx}, 100,#{location},#{cate_idx});
+   
+   insert into toti_mentor_profile (mento_idx) values (#{m_idx})
+   
+
+	
+	</insert>
+	
+	<!-- 회원가입 --><insert id="insertMem" parameterType="com.yal.toti.yu.member.domain.MemberInfo">
+		
+		insert into toti_member (m_id, m_name, m_pw, m_ver, m_gender,m_date, m_code) 
+		  values
+		(#{id},#{name},#{pw},#{ver},#{gender},#{regDate},#{code})
+		
+	</insert>
+	
+	
+	
+	<!-- 회원로그인 -->
+	<select id="selectById" resultMap="memberMap">
+		select * from toti_member where m_id = #{id}
+	</select>
+	<!-- 인증 -->
+	<update id="updateVerify">
+	update toti_member set m_codeVer = 'Y' where m_id = #{id}
+	</update>
+	
+	<update id="updateVer">
+	update toti_member set m_ver = 'Y' where m_id = #{id}
+	</update>
+
+	<!-- 수정 -->
+	<update id="updateMem" parameterType="com.yal.toti.yu.member.domain.MemberInfo">
+		update toti_member set
+			<if test="photo_name == null">
+			m_pw = #{pw}, m_ver = #{ver} where m_id = #{id}
+			</if>
+			<if test="photo_name != null">
+			m_photo = #{photo_name} where m_id = #{id}
+			</if>
+	</update>
+	
+	<!-- 멘토에서 멘티로 -->
+	<update id="goMentee" parameterType="com.yal.toti.yu.member.domain.MemberInfo">
+		update toti_member set m_ver =#{ver} where m_id = #{id}
+	
+	
+	</update>
+
+	
+
+	
+	<!-- 탈퇴 -->
+	<delete id="deleteMem">
+		delete from toti_member where m_id = #{id}
+	</delete>
+</mapper>

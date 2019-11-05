@@ -39,9 +39,18 @@ public class RequestRestController {
 		
 		return entity;	
 	}
-		
 	
-	@GetMapping("/itemList/{quest_idx}")
+	@GetMapping("/getkateidx/{m_idx}")
+	public ResponseEntity<String> getKateIdx(@PathVariable("m_idx") int m_idx) {
+		
+		String data = requestService.getKategorIdx(m_idx);
+
+		ResponseEntity<String> entity = new ResponseEntity<String>(data, HttpStatus.OK);
+				
+		return entity;	
+	}
+	
+	@GetMapping("/request/itemList/{quest_idx}")
 	public ResponseEntity<List<ItemListData>> getItemList(@PathVariable("quest_idx") int quest_idx) {
 		
 		List<ItemListData> list = requestService.getItemList(quest_idx);
@@ -52,7 +61,7 @@ public class RequestRestController {
 	}
 	
 	
-	@GetMapping("/user/requests/{m_idx}")
+	@GetMapping("/requests/{m_idx}")
 	public ResponseEntity<List<UserRequestList>> getUserRequests(@PathVariable("m_idx") int m_idx) {
 		
 		List<UserRequestList> list = requestService.getUserRequests(m_idx);
@@ -62,7 +71,18 @@ public class RequestRestController {
 		return entity;
 	}
 	
-	@DeleteMapping("/user/request/{request_idx}")
+	@GetMapping("/requestsDelList/{m_idx}")
+	public ResponseEntity<List<Integer>> getUserDelRequests(@PathVariable("m_idx") int m_idx) {
+		
+		List<Integer> list = requestService.getUserDelRequests(m_idx);
+		
+		ResponseEntity<List<Integer>> entity = new ResponseEntity<List<Integer>>(list, HttpStatus.OK);
+		
+		return entity;
+	}
+	
+	
+	@DeleteMapping("/requests/{request_idx}")
 	public ResponseEntity<Integer> requestDelete(@PathVariable("request_idx") int request_idx) {
 		
 		int cnt = requestService.requestDelete(request_idx);
@@ -73,7 +93,7 @@ public class RequestRestController {
 	}
 	
 	
-	@GetMapping("/requestData")
+	@GetMapping("/request/requestData")
 	public ResponseEntity<UserRequestData> getRequest(@RequestParam("request_idx") int request_idx,@RequestParam("m_idx") int m_idx) {
 		
 		UserRequestData data = requestService.getUserRequestData(request_idx, m_idx);
@@ -84,7 +104,7 @@ public class RequestRestController {
 	}
 	
 	
-	@GetMapping("/user/estimateeList/{request_idx}")
+	@GetMapping("/estimatee/estimateeList/{request_idx}")
 	public ResponseEntity<EstimateeList> getEstimateeList(@PathVariable("request_idx") int request_idx) {
 		
 		EstimateeList data = requestService.getEstimateeList(request_idx);

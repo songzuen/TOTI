@@ -39,5 +39,4 @@ public class UserRequestList {
 		this.request_cnt = request_cnt;
 	}
 	
-	
 }

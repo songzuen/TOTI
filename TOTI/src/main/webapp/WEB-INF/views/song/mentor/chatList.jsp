@@ -3,6 +3,7 @@
 	isELIgnored="false"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%-- <% int idx = (int)session.getAttribute("idx"); %> --%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -18,42 +19,18 @@
 }
 
 body {
-	min-width: 700px;
+	
 	overflow: auto;
 }
+
 h1,h2,h3,h4,h5,h6{
 color:black;
 letter-spacing: 1px;
 }
-.wrapper {
-	width: 55%;
-	margin: 20px auto;
-}
 
-#searchDiv {
-	height: 10px;
-}
-
-#searchDiv span{
-margin: 0 40px;
-	float: right;
-	width: 25%;
-}
-
-#stype {
-	border: 0px;
-}
-
-#keyword {
-	padding-left: 5px;
-	width: 40%;
-	border: 0px;
-	border-bottom: 1px solid #ddd;
-	margin: 0 20px;
-	
-}
 #chatList{
-margin: 70px 0;
+width: 70%;
+margin: 0 auto;
 }
 #chat {
 	margin: 5px auto;
@@ -62,6 +39,7 @@ margin: 70px 0;
 
 #m_photo{
 width: 100px;
+height: 100px;
 border-radius: 50%;
 }
 
@@ -107,26 +85,12 @@ border: 0px;
 		</section>
 		<!--/#home-slider-->		
 		<!-- demo content -->
-		<section id="blog" class="padding-top padding-bottom">
+		<section id="blog" class="padding-bottom">
 			<div class="container">
 				<div class="row">
 					<div class="col-md">
-						<div id="searchDiv">
-						
-						<span>
-							<form id="searchForm" method="post" onsubmit="return false">
-								<select name="stype" id="stype">
-									<option value="both">이름+서비스</option>
-									<option value="cate">서비스</option>
-									<option value="name">이름</option>
-								</select> 
-								<input type="text" name="keyword" id="keyword"> 
-								<input
-									type="submit" id="searchBtn" value="검색" onclick="search()">
-									</form>
-						</span>
-						</div>
-					<input type="hidden" name="mento_idx" id="mento_idx" value="3">
+					
+					<input type="hidden" name="mento_idx" id="mento_idx" value="${idx}">
 					<div id="chatList"></div>
 					<!-- end home variation -->
 					<!-- end component -->
@@ -148,7 +112,7 @@ border: 0px;
 	
 	function list(mento_idx) {
 		$.ajax({
-					url : 'http://localhost:8080/toti/mentor/chattingList/'+mento_idx,
+					url : '/toti/mentor/chattingList/'+mento_idx,
 					type : 'GET',
 					success : function(data) {
 						var html = '';
@@ -160,7 +124,7 @@ border: 0px;
 							html += '<tr>';
 							html += '<td rowspan="6" style="text-aline:center">';
 							html += '<span id="photo">';
-							html += '<img id="m_photo" src = "<c:url value="/images/user/'+data[i].m_photo+'"/>"';
+							html += '<img id="m_photo" src = "<c:url value="/uploadfile/'+data[i].m_photo+'"/>"';
 							html += '</span>';
 							html += '</td>';
 							html += '</tr>';
@@ -198,7 +162,7 @@ border: 0px;
 							html += '</tr>';
 							html += '</table>';
 
-							//html += '<a href="http://localhost:8080/toti/mentorpage/'+data[i].mento_idx+'">고수 페이지</a>';
+							//html += '<a href="/toti/mentorpage/'+data[i].mento_idx+'">고수 페이지</a>';
 							html += '</div></label>';
 							html += '<hr>';
 						}

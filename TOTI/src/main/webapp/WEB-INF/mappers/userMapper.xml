@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.yal.toti.han.dao.UserDaoInterface">
+
+	<resultMap id="MentoProfile"
+		type="com.yal.toti.han.domain.MentoProfile">
+		<id property="m_idx" column="m_idx" />
+		<id property="mento_idx" column="mento_idx" />
+		<id property="m_name" column="m_name" />
+		<id property="m_photo" column="m_photo" />
+		<id property="cate_name" column="cate_name" />
+		<id property="service_name" column="service_name" />
+		<id property="mento_service" column="mento_service" />
+		<id property="p_shot" column="p_shot" />
+		<id property="tor_location" column="tor_location" />
+		<id property="p_pay" column="p_pay" />
+		<id property="p_edu" column="p_edu" />
+		<id property="p_career" column="p_career" />
+		<id property="p_long" column="p_long" />
+		<id property="review_idx" column="review_idx" />
+		<id property="review_avg" column="review_avg" />
+		<id property="review_cnt" column="review_cnt" />
+		<id property="review_star" column="review_star" />
+		<id property="review_cont" column="review_cont" />
+		<id property="cont" column="cont" />
+		<id property="member_name" column="member_name" />
+		<id property="review_date" column="review_date" />
+	</resultMap>
+	
+	<resultMap type="com.yal.toti.han.domain.ReviewInfo" id="Review">
+		<id property="review_idx" column="review_idx" />
+		<id property="m_idx" column="m_idx" />
+		<id property="mento_idx" column="mento_idx" />
+		<id property="review_star" column="review_star" />
+		<id property="review_cont" column="review_cont" />
+		<id property="review_date" column="review_date" />
+	</resultMap>
+
+	<select id="selectMentoList" resultType="com.yal.toti.han.domain.MentoInfo">
+		select * from toti_mentor
+	</select>
+
+	<!-- 고수 상세 프로필 -->
+	<select id="selectMentoProfile" resultMap="MentoProfile">
+		select mb.m_idx,
+			mb.m_name, mb.m_photo, mb.m_id, mb.m_gender, mb.m_ver,
+			(if(isnull(rv.review_idx),'0',(select round(avg(arv.review_star),1)
+			from toti_review arv join toti_mentor amt on
+			arv.mento_idx=amt.mento_idx where amt.mento_idx = mt.mento_idx)))
+			review_avg,
+			(select round(count(arv.review_idx))
+			from toti_review arv join toti_mentor amt on arv.mento_idx=amt.mento_idx
+			where amt.mento_idx = mt.mento_idx) review_cnt, ct.cate_idx, ct.cate_name,
+			(select group_concat(ssv.service_name separator ' / ')
+			from toti_mentor smt
+			inner join toti_mentor_service sms on smt.mento_idx=sms.mento_idx
+			inner join toti_service ssv on sms.service_idx=ssv.service_idx
+			where sms.mento_idx=mt.mento_idx
+			group by sms.mento_idx) mento_service,
+			mp.p_shot, mt.tor_location, mp.p_pay, mp.p_edu, mp.p_career, mp.p_long,
+			(if(isnull(rv.review_idx),'',rv.review_cont)) cont,
+			rv.review_idx, rv.member_name, rv.review_date, rv.review_star
+		from toti_member mb
+			inner join toti_mentor mt on mb.m_idx=mt.mento_idx
+			inner join toti_mentor_profile mp on mt.mento_idx=mp.mento_idx
+			inner join toti_cate ct on mt.cate_idx=ct.cate_idx
+			left outer join
+			(
+			select * from
+			(
+			select review_idx,mento_idx,review_star,review_cont, review_date, m_name as
+			member_name
+			from toti.toti_review w join toti.toti_member e on w.m_idx = e.m_idx
+			) r
+			where review_idx > 0
+			) rv on rv.mento_idx = mt.mento_idx
+		<where> mt.mento_idx=#{mento_idx} </where>
+	</select>
+	
+	<!-- 고수 이름 수정 -->
+	<update id="updateName" parameterType="com.yal.toti.han.domain.MentoProfile">
+		update toti_member set m_name=#{m_name} where m_idx=#{mento_idx}
+	</update>
+	
+	<!-- 한줄 소개 수정 -->
+	<update id="updateShot" parameterType="com.yal.toti.han.domain.MentoProfile">
+		update toti_mentor_profile set p_shot=#{p_shot} where mento_idx=#{mento_idx}
+	</update>
+	
+	<!-- 등록 가능한 서비스 받아오기 -->
+	<select id="getService" resultType="com.yal.toti.han.domain.ServiceEdit">
+		select *
+		from toti_service s
+		join toti_mentor m on s.cate_idx=m.cate_idx
+		left outer join toti_mentor_service ms on s.service_idx=ms.service_idx and m.mento_idx=ms.mento_idx
+		where s.service_idx not in (select ss.service_idx from toti_mentor_service ss where mento_idx=#{mento_idx}) 
+		and m.mento_idx=#{mento_idx}
+	</select>
+	
+	<!-- 고수가 선택한 서비스 -->
+	<select id="getService2" resultType="com.yal.toti.han.domain.ServiceEdit">
+		select * from toti_mentor_service sms
+	    inner join toti_service ssv on sms.service_idx=ssv.service_idx
+	    where sms.mento_idx=#{mento_idx};
+	</select>
+	
+	<!-- 고수의 서비스 등록 -->
+	<insert id="updateService" parameterType="com.yal.toti.han.domain.ServiceEdit">
+		insert into toti_mentor_service (mento_idx, service_idx) values (#{param1}, #{param2})
+	</insert>
+	
+	<!-- 고수의 서비스 삭제 -->
+	<delete id="deleteService">
+		delete from toti_mentor_service where mento_idx=#{param1} and service_idx=#{param2}
+	</delete>
+	
+	
+	<!-- 활동 지역 수정 -->
+	<update id="updateLocation" parameterType="com.yal.toti.han.domain.MentoProfile">
+		update toti_mentor set tor_location=#{tor_location} where mento_idx=#{mento_idx}
+	</update>
+	
+	<!-- 결제 수단 수정 -->
+	<update id="updatePay" parameterType="com.yal.toti.han.domain.MentoProfile">
+		update toti_mentor_profile set p_pay=#{p_pay} where mento_idx=#{mento_idx}
+	</update>
+	
+	<!-- 학력 수정 -->
+	<update id="updateEdu" parameterType="com.yal.toti.han.domain.MentoProfile">
+		update toti_mentor_profile set p_edu=#{p_edu} where mento_idx=#{mento_idx}
+	</update>
+	
+	<!-- 경력 수정 -->
+	<update id="updateCareer" parameterType="com.yal.toti.han.domain.MentoProfile">
+		update toti_mentor_profile set p_career=#{p_career} where mento_idx=#{mento_idx}
+	</update>
+	
+	<!-- 상세 설명 수정 -->
+	<update id="updateLong" parameterType="com.yal.toti.han.domain.MentoProfile">
+		update toti_mentor_profile set p_long={p_long} where mento_idx=#{mento_idx}
+	</update>
+	
+	<!-- 리뷰 작성 -->
+	<insert id="insertReview" parameterType="com.yal.toti.han.domain.ReviewInfo">
+		insert into toti_review (m_idx, mento_idx, review_star, review_cont)
+		values (#{m_idx},#{mento_idx},#{review_star},#{review_cont})
+	</insert>
+	
+	<!-- 리뷰 삭제 -->
+	<delete id="deleteReview">
+		delete from toti_review where review_idx=#{review_idx}
+	</delete>
+
+</mapper>

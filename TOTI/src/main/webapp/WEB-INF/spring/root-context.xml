@@ -20,7 +20,7 @@
 	<bean id="dataSource"
       class="org.apache.commons.dbcp2.BasicDataSource"
       p:driverClassName="com.mysql.cj.jdbc.Driver"
-      p:url="jdbc:mysql://mysql-mm.chvivg7pudki.ap-northeast-2.rds.amazonaws.com/toti?characterEncoding=utf8&amp;serverTimezone=UTC"
+      p:url="jdbc:mysql://mysql-mm.chvivg7pudki.ap-northeast-2.rds.amazonaws.com/toti?characterEncoding=utf8&amp;serverTimezone=UTC&amp;allowMultiQueries=true"
       p:username="bit" p:password="bit" />
 
 	<bean id="jdbcTemplate"

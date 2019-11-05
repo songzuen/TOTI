@@ -39,7 +39,7 @@ text-align: center;
 }
 
 #list{
-margin : 0 10px;
+margin : 10px 10px;
 padding-bottom : 10px;
 float: left;
 text-align: center;
@@ -47,14 +47,12 @@ width: 200px;
 height:  300px;
 border: 1px solid #ddd;
 border-radius: 7px;
-
+overflow: hidden;
 }
-/* #requestList :hover{
-background-color: #F2F3CA;
-} */
 
 #m_photo{
 width: 100px;
+height: 100px;
 border-radius: 50%;
 text-align: center;
 margin:30px 0;
@@ -70,9 +68,9 @@ color: #a0a0a0;
 }
 #listInfo{
 text-align: left;
-margin-left: 20%;
-margin-right : 3%;
-width :70%;
+margin-left: 10%;
+margin-right : 0;
+width :200px;
 
 white-space: nowrap; 
 overflow: hidden;
@@ -106,11 +104,11 @@ text-overflow: ellipsis;
     </section>
     
         
-    <section id="blog" class="padding-top padding-bottom">
+    <section id="blog" class="padding-bottom">
         <div class="container">
             <div class="row">
                    <div class="col-md">
-                       <input type="hidden" name="mento_idx" id="mento_idx" value="3">
+                       <input type="hidden" name="mento_idx" id="mento_idx" value="${idx}">
 				
 				
 				<div id="noList"></div>
@@ -135,7 +133,7 @@ text-overflow: ellipsis;
 
 	function list(mento_idx) {
 		$.ajax({
-					url : 'http://localhost:8080/toti/mentor/requestList/'+mento_idx,
+					url : '/toti/mentor/requestList/'+mento_idx,
 					type : 'GET',
 					success : function(data) {
 						var html = '';
@@ -151,11 +149,11 @@ text-overflow: ellipsis;
 							
 							var date = new Date(data[i].request_date);
 							var year = date.getFullYear();
-							var month = date.getMonth();
-							var day = date.getDate();
+							var month = (date.getMonth()+1);
+							var day = (date.getDate()-1);
 							
-							html += '<label for="estimateBtn('+data[i].request_idx+')" style="cursor:pointer"><div id="list">';
-							html += '<div><img id="m_photo" src = "<c:url value="/images/user/'+data[i].m_photo+'"/>"</div><br>';
+							html += '<div id="list"><label for="estimateBtn('+data[i].request_idx+')" style="cursor:pointer">';
+							html += '<div><img id="m_photo" src = "<c:url value="/uploadfile/'+data[i].m_photo+'"/>"</div><br>';
 							html += '<div id="listInfo"><h3>'
 							html += data[i].m_name+'(' + data[i].service_name
 									+ ')</h3>';
@@ -165,7 +163,7 @@ text-overflow: ellipsis;
 							html += '</div>'
 							html += '<button id= "estimateBtn('+data[i].request_idx+')" class="btn" onclick="selectRequest('
 							+ data[i].request_idx + ')">이동</button><br>';
-							html += '</div></label>';
+							html += '</label></div>';
 							html += '</div>';
 						}
 						}
@@ -176,7 +174,7 @@ text-overflow: ellipsis;
 	}
 
 	function selectRequest(request_idx) {
-		location.href = "http://localhost:8080/toti/requestList/" + request_idx;
+		location.href = "/toti/requestList/" + request_idx;
 	}
 
 </script>
