@@ -1,7 +1,5 @@
 package com.yal.toti.baek.service;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -24,17 +22,22 @@ public class RoomService {
 
 		int cnt = 0;
 
-		dao.insertChatRoom(roomnum, category, user, target);
-
-		Date d = new Date();
-		SimpleDateFormat format = new SimpleDateFormat("yyyy년 MM월 dd일 E요일 HH:mm");
-		String date = format.format(d);
-		cnt += dao.insertEstPriceToChatRoom(roomnum, user, date);
-		cnt += dao.insertEstContToChatRoom(roomnum, user, date);
-		cnt += dao.updateLastMsgAtChatRoom(roomnum);
-
+		cnt = dao.insertChatRoom(roomnum, category, user, target);
+		if (cnt != 0) {
+			cnt += insertChatlog(roomnum);
+		}
 		return cnt;
 
+	}
+
+	public int insertChatlog(int roomnum) {
+		dao = template.getMapper(ChatSessionDao.class);
+
+		int cnt = dao.insertChatlog(
+				"멘토로 부터 견적서가 도착했습니다.<br>견적서 내용을 확인해주세요.<br><hr><a onclick=" + "modalDisplay()" + ">견적서 내용</a>", "",
+				roomnum, 0);
+
+		return cnt;
 	}
 
 	public String searchChatRoom(int roomnum) {
@@ -45,13 +48,13 @@ public class RoomService {
 		return room;
 	}
 
-	public String targetName(int target, int user) {
+	public String targetName(int target, int user, int est_idx) {
 		dao = template.getMapper(ChatSessionDao.class);
 
-		String targetName = dao.searchTargetName(target);
+		String targetName = dao.searchTargetName(target, est_idx);
 
-		if (targetName == null) {
-			targetName = dao.searchTargetNameByUser(user);
+		if (targetName == null || targetName == "") {
+			targetName = dao.searchTargetNameByUser(target, est_idx);
 		}
 
 		return targetName;
@@ -72,7 +75,7 @@ public class RoomService {
 		if (list == null) {
 
 		}
-
+		System.out.println(list);
 		return list;
 	}
 }

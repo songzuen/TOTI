@@ -8,7 +8,7 @@
 
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script
-	src="http://ec2-13-125-96-18.ap-northeast-2.compute.amazonaws.com:3000/socket.io/socket.io.js"></script>
+	src="http://localhost:3000/socket.io/socket.io.js"></script>
 <%@ include file="/WEB-INF/views/frame/header.jsp"%>
 </head>
 <!--/head-->

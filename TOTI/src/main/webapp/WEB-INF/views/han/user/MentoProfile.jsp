@@ -117,7 +117,7 @@
 				<div style="float:right; width:25%; margin:10px;" >
 					<h4>리뷰 요청하기</h4>
 					링크를 공유하고 고객들에게 리뷰를 받아 보세요. 긍정적인 리뷰가 있는 고수는 고용될 확률이 2배 이상 높습니다.
-					<input type="text" id="url_field" value="http://localhost:8080/toti/review/${mento_idx}" readonly><br>
+					<input type="text" id="url_field" value="yal-toti.tk/toti/review/${mento_idx}" readonly><br>
 					<button class="btn btn-outline-danger" id="copy_btn" style="margin-top: 5px;"> 복사하기 </button>
 				</div>
 				<!-- end home variation -->
@@ -139,12 +139,12 @@
 	
 	if($('#mento_idx').val() != $('#m_idx').val() ){
 		alert('접근 불가능한 페이지입니다. 메인화면으로 이동합니다.');
-		location.href="http://localhost:8080/toti/main";
+		location.href="/toti/main";
 	}
 	
 	function mentorProfile(mento_idx) {
 		$.ajax({
-			url : 'http://localhost:8080/toti/mento/' + mento_idx,
+			url : '/toti/mento/' + mento_idx,
 			type : 'GET',
 			success : function(data) {
 				var html = '';
@@ -154,7 +154,7 @@
 					
 					/*간략한 고수정보*/
 					html += '<div class="info" id="overview">';
-					html += '<img class="img" src="<c:url value="/images/user/'+data[i].m_photo+'" />">';
+					html += '<img class="img" src="<c:url value="/uploadfile/'+data[i].m_photo+'" />">';
 					html += '<div class="overview"> ';
 					html += '<table id="overtable"><tr>';
 					html += '<td id="num">'+ data[i].review_avg +'</td>';
@@ -269,7 +269,7 @@
 					
 					/* 위치 */
 					html += '<div class="info" id="plocation">';
-					html += '<hr><hr>';
+					html += '<hr>';
 					html += '<table>';
 					html += '<tr>';
 					html += '<td><h4>위치</h4></td>';
@@ -284,7 +284,7 @@
 					
 					/* 위치 변경  */
 					html += '<div id="editLocation" style="display : none">';
-					html += '<hr><hr><input type="hidden" name="mento_idx" id="mento_idx">';
+					html += '<hr><input type="hidden" name="mento_idx" id="mento_idx">';
 					html += '<table>';
 					html += '<tr>';
 					html += '<td><h4>위치</h4></td>';
@@ -399,7 +399,7 @@
 					html += '<table>';
 					html += '<tr>';
 					html += '<td><h4>경력</h4></td>';
-					html += '<td class="btn-edit"><button class="btn btn-outline-primary" onclick="editEdu('+mento_idx+')">저장</button></td>';
+					html += '<td class="btn-edit"><button class="btn btn-outline-primary" onclick="editCareer('+mento_idx+')">저장</button></td>';
 					html += '</tr>';
 					html += '<tr>';
 					html += '<td colspan="2"><textarea rows=3 cols=80 name="p_career" id="p_career">';
@@ -564,14 +564,14 @@
 		$('#pname').css('display', 'none');
 		$('#editName').css('display', 'block');
 		$.ajax({
-			url : 'http://localhost:8080/toti/mento/' + mento_idx,
+			url : '/toti/mento/' + mento_idx,
 			type : 'GET'
 		});
 	}
 	
 	function editName(mento_idx){
 		$.ajax({
-			url :'http://localhost:8080/toti/mento/editname/' + mento_idx,
+			url :'/toti/mento/editname/' + mento_idx,
 		    dataType: 'text',
 	        type: 'PUT',	
 	        contentType:'application/json;chartset=utf-8',
@@ -591,14 +591,14 @@
 		$('#pshot').css('display', 'none');
 		$('#editShot').css('display', 'block');
 		$.ajax({
-			url : 'http://localhost:8080/toti/mento/' + mento_idx,
+			url : '/toti/mento/' + mento_idx,
 			type : 'GET'
 		});
 	}
 	
 	function editShot(mento_idx){
 		$.ajax({
-			url :'http://localhost:8080/toti/mento/editshot/' + mento_idx,
+			url :'/toti/mento/editshot/' + mento_idx,
 		    dataType: 'text',
 	        type: 'PUT',	
 	        contentType:'application/json;chartset=utf-8',
@@ -617,7 +617,7 @@
 	function getService(mento_idx){
 		$('#pservice').css('display', 'none');
 		$.ajax({
-			url : 'http://localhost:8080/toti/mento/getservice/' + mento_idx,
+			url : '/toti/mento/getservice/' + mento_idx,
 			type: 'GET',
 			success : function(data){
 				
@@ -643,7 +643,7 @@
 	function getService2(mento_idx){
 		$('#pservice').css('display', 'none');
 		$.ajax({
-			url : 'http://localhost:8080/toti/mento/getservice2/' + mento_idx,
+			url : '/toti/mento/getservice2/' + mento_idx,
 			type: 'GET',
 			success : function(data){
 				var html = '';
@@ -667,7 +667,7 @@
 	function addService(mento_idx, service_idx){
 
 		$.ajax({
-			url : 'http://localhost:8080/toti/mento/addservice',
+			url : '/toti/mento/addservice',
 			type : 'POST',
 			data : {
 				mento_idx : mento_idx,
@@ -687,7 +687,7 @@
     /* 서비스 삭제하기 */
     function delService(mento_idx, service_idx){
 		$.ajax({
-			url : 'http://localhost:8080/toti/mento/delservice',
+			url : '/toti/mento/delservice',
 			type : 'GET',
 			data : {
 				mento_idx : mento_idx,
@@ -709,7 +709,7 @@
 		$('#plocation').css('display', 'none');
 		$('#editLocation').css('display', 'block');	
 		$.ajax({
-			url : 'http://localhost:8080/toti/mento/' + mento_idx,
+			url : '/toti/mento/' + mento_idx,
 			type : 'GET',
 			success : function(data) {
 				
@@ -720,7 +720,7 @@
 	
 	function editLocation(mento_idx){
 		$.ajax({
-			url :'http://localhost:8080/toti/mento/editlocation/' + mento_idx,
+			url :'/toti/mento/editlocation/' + mento_idx,
 		    dataType: 'text',
 	        type: 'PUT',	
 	        contentType:'application/json;chartset=utf-8',
@@ -740,7 +740,7 @@
 		$('#ppay').css('display', 'none');
 		$('#editPay').css('display', 'block');		
 		$.ajax({
-			url : 'http://localhost:8080/toti/mento/' + mento_idx,
+			url : '/toti/mento/' + mento_idx,
 			type : 'GET'
 		});
 	}
@@ -748,7 +748,7 @@
 	function editPay(mento_idx){
 		
 		$.ajax({
-			url :'http://localhost:8080/toti/mento/editpay/' + mento_idx,
+			url :'/toti/mento/editpay/' + mento_idx,
 		    dataType: 'text',
 	        type: 'PUT',	
 	        contentType:'application/json;chartset=utf-8',
@@ -768,7 +768,7 @@
 		$('#pedu').css('display', 'none');
 		$('#editEdu').css('display', 'block');		
 		$.ajax({
-			url : 'http://localhost:8080/toti/mento/' + mento_idx,
+			url : '/toti/mento/' + mento_idx,
 			type : 'GET'
 		});
 	}
@@ -776,7 +776,7 @@
 	function editEdu(mento_idx){
 		
 		$.ajax({
-			url :'http://localhost:8080/toti/mento/editedu/' + mento_idx,
+			url :'/toti/mento/editedu/' + mento_idx,
 		    dataType: 'text',
 	        type: 'PUT',	
 	        contentType:'application/json;chartset=utf-8',
@@ -796,7 +796,7 @@
 		$('#pcareer').css('display', 'none');
 		$('#editCareer').css('display', 'block');
 		$.ajax({
-			url : 'http://localhost:8080/toti/mento/' + mento_idx,
+			url : '/toti/mento/' + mento_idx,
 			type : 'GET'
 		});
 	}
@@ -804,7 +804,7 @@
 	function editCareer(mento_idx){
 		
 		$.ajax({
-			url :'http://localhost:8080/toti/mento/editcareer/' + mento_idx,
+			url :'/toti/mento/editcareer/' + mento_idx,
 		    dataType: 'text',
 	        type: 'PUT',	
 	        contentType:'application/json;chartset=utf-8',
@@ -825,7 +825,7 @@
 		$('#plong').css('display', 'none');
 		$('#editLong').css('display', 'block');
 		$.ajax({
-			url : 'http://localhost:8080/toti/mento/' + mento_idx,
+			url : '/toti/mento/' + mento_idx,
 			type : 'GET'
 		});
 	}
@@ -833,7 +833,7 @@
 	function editLong(mento_idx){
 		
 		$.ajax({
-			url :'http://localhost:8080/toti/mento/editlong/' + mento_idx,
+			url :'/toti/mento/editlong/' + mento_idx,
 		    dataType: 'text',
 	        type: 'PUT',	
 	        contentType:'application/json;chartset=utf-8',
@@ -851,7 +851,7 @@
 	function delreview(review_idx){
 		if(confirm('리뷰를 삭제할까요?')){
 	           $.ajax({
-	                url : 'http://localhost:8080/toti/delreview/'+review_idx,
+	                url : '/toti/delreview/'+review_idx,
 	                type : 'DELETE',
 	                success : function(data){
 	                    if(data=='success'){

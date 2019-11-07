@@ -115,7 +115,7 @@
 														<option selected>답변</option>
 														<option id="radio" value="radio">단일 선택</option>
 														<option id="checkbox" value="checkbox">중복 선택</option>
-														<option id="select" value="select">목록 선택</option>
+														<option id="text" value="text">직접 입력</option>
 													</select>
 												</td>
 											</tr>
@@ -186,12 +186,12 @@
 		
 		if($('#m_idx').val() != 37 ){
 			alert('관리자 권한이 없습니다.');
-			location.href="http://localhost:8080/toti/main";
+			location.href="/toti/main";
 		}
 		
 		function categoryList() {
 			$.ajax({
-				url : 'http://localhost:8080/toti/admin/service/categoryList',
+				url : '/toti/admin/service/categoryList',
 				type : 'GET',
 				success : function(data) {
 					var html = '';
@@ -210,7 +210,7 @@
 		
 		function categoryOption() {
 			$.ajax({
-				url : 'http://localhost:8080/toti/admin/service/categoryList',
+				url : '/toti/admin/service/categoryList',
 				type : 'GET',
 				contentType : 'application/json; charset=utf-8',
 				dataType : 'json',
@@ -227,7 +227,7 @@
 		
 		function listByCate(cate_idx){
 			$.ajax({
-				url : 'http://localhost:8080/toti/admin/question/list/'+cate_idx,
+				url : '/toti/admin/question/list/'+cate_idx,
 				type : 'GET',
 				success : function(data){
 					var html = '';
@@ -256,7 +256,7 @@
 		 
 		function addQuestion() {
 			$.ajax({
-				url : 'http://localhost:8080/toti/admin/question/insert',
+				url : '/toti/admin/question/insert',
 				type : 'POST',
 				data : $('#questionForm').serialize(),
 				success : function(data) {
@@ -274,7 +274,7 @@
 		function del(quest_idx){
 	        if(confirm('서비스를 삭제할까요?')){
 	           $.ajax({
-	                url : 'http://localhost:8080/toti/admin/question/delete/'+quest_idx,
+	                url : '/toti/admin/question/delete/'+quest_idx,
 	                type : 'DELETE',
 	                success : function(data){
 	                    if(data=='success'){
@@ -292,7 +292,7 @@
 	        $('#editFrame').css('display', 'block');
 	        
 			$.ajax({
-				url : 'http://localhost:8080/toti/admin/question/edit/'+quest_idx,
+				url : '/toti/admin/question/edit/'+quest_idx,
 				type : 'GET',
 				success : function(data){
 	                $('#quest_idx').val(quest_idx);
@@ -304,7 +304,7 @@
 		
 		$('#editForm').submit(function(){            
             $.ajax({
-                url : 'http://localhost:8080/toti/admin/question/edit/'+$('#quest_idx').val(),
+                url : '/toti/admin/question/edit/'+$('#quest_idx').val(),
                 type : 'PUT',
                 data : JSON.stringify({quest_name : $('#equest_name').val(), quest_type : $('#equest_type').val()}),
                 contentType : 'application/json; charset=utf-8',                
@@ -326,7 +326,7 @@
 		
 		function itemByQuest(quest_idx){
 			$.ajax({
-				url : 'http://localhost:8080/toti/admin/question/itemlist/'+quest_idx,
+				url : '/toti/admin/question/itemlist/'+quest_idx,
 				type : 'GET',
 				success : function(data){
 					var html = '';
@@ -349,7 +349,7 @@
 		function delitem(item_idx){
 			if(confirm('답변 항목을 삭제할까요?')){
 				$.ajax({
-					url : 'http://localhost:8080/toti/admin/question/deleteItem/'+item_idx,
+					url : '/toti/admin/question/deleteItem/'+item_idx,
 					type : 'DELETE',
 					success : function(data){
 						if(data=='success'){
@@ -365,7 +365,7 @@
 		
 		function additem() {
 			$.ajax({
-				url : 'http://localhost:8080/toti/admin/question/insertItem',
+				url : '/toti/admin/question/insertItem',
 				type : 'POST',
 				data : $('#addItemForm').serialize(),
 				success : function(data) {

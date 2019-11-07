@@ -4,6 +4,7 @@
 <html>
 <head>
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 
 	<%@ include file="/WEB-INF/views/frame/header.jsp" %>
 <%-- 	<% int idx = (int)session.getAttribute("idx"); %> --%>
@@ -76,21 +77,25 @@
    <form method="post" id="writeForm">
 
          <input type="hidden" name="m_idx" id="m_idx" value="${idx}"/>
-
-		
+		<input type="hidden" name="id" id="id" value="${id}"/>
+			<input type="hidden" name="ver" id="ver" value="Y"/>
+					
          <div>
             <input type="hidden" name="coin" id="coin" value="0"/>
          </div>
 
 		<div>
-            	지	역<input type="text" name="location" id="location" />
+            	주소<input type="hidden" class="form-control" id="postcode" placeholder="우편번호"> 
+				<input type="button" onclick="execDaumPostcode()" value="주소 검색하기"><br>
+				<input type="text" class="form-control" id="location"  placeholder="주소"><br>
+				
+
          </div>
          <div>
             	무슨 멘토가 되시겠습니까?
-            	<input type="radio" name="cate_idx" id="cate_idx" value="1" /> 보컬
-				<input type="radio" name="cate_idx" id="cate_idx" value="2" /> 댄스
-				<input type="radio" name="cate_idx" id="cate_idx" value="3" /> 악기
-				<input type="radio" name="cate_idx" id="cate_idx" value="4" /> 공통
+            	<input type="radio" name="radio" id="radio" value="1" /> 보컬
+				<input type="radio" name="radio" id="radio" value="2" /> 댄스
+				<input type="radio" name="radio" id="radio" value="3" /> 악기
          </div>
          <div>
          			<input type="submit" value="멘토 정보 등록" />
@@ -134,14 +139,14 @@
    
 $(document).ready(function(){
 	 
+	/* var id = $('#id').val();
 	
-
 
 	 $('#writeForm').submit(function(){
             
   
        $.ajax({
-           url : 'http://localhost:8080/toti/member/mentor',
+           url : '/toti/member/mentor',
            type : 'POST',
            data : { 
         	   m_idx : $('#m_idx').val(),
@@ -149,21 +154,32 @@ $(document).ready(function(){
                location : $('#location').val(),
                cate_idx: $('#cate_idx').val()
                
-             
-
            },
          
            success : function(data){
-           	
            	if (data == 'success') {
-           	
-           	alert('멘토님의 정보가 저장되었습니다.');
-           	location.href = "http://localhost:8080/toti/main";
+               /*   $.ajax({
+                     url : '/toti/member/mentor/'+id,
+                     type : 'PUT',
+                     data: JSON.stringify({
+                         ver: $('#ver').val() 
+           
+                     }),
+                     contentType: 'application/json; charset=utf-8',
+                     success: function(data) {
+                    		alert('멘토님의 정보가 저장되었습니다.');
+    			       	location.href = "/toti/main";
+                     }
+                  
+
+                 });
   			 }
-  			 },
+  			 
+           },
+  			 
   			 error: function(e) {
   			 alert('실패임');
-  			location.href = "http://localhost:8080/toti/insertMen";
+  			location.href = "/toti/insertMen";
       	 }
            
 
@@ -172,7 +188,74 @@ $(document).ready(function(){
 
  
 	  });
-  }); 
+  }); */
+  
+  $('#writeForm').submit(function(){
+      
+	
+      $.ajax({
+          url : '/toti/member/mentor',
+          type : 'POST',
+          data : { 
+       	   m_idx : $('#m_idx').val(),
+       	   coin : $('#coin').val(),
+              location : $('#location').val(),
+              
+             
+              cate_idx:$('input[name="radio"]:checked').val()
+              
+            
+
+          },
+        
+          success : function(data){
+          	
+          	if (data == 'success') {
+          		alert(radio);
+          	alert('멘토님의 정보가 저장되었습니다. 다시 로그인 해주세요');
+          	location.href = "/toti/member/logout";
+ 			 }
+ 			 },
+ 			 error: function(e) {
+ 			 alert('실패임');
+ 			location.href = "/toti/insertMen";
+     	 }
+          
+
+      });
+    return false;
+
+
+	  });
+ }); 
+  
+  
+function execDaumPostcode() {
+	new daum.Postcode({
+				oncomplete : function(data) {
+					// 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+
+					// 각 주소의 노출 규칙에 따라 주소를 조합한다.
+					// 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+					var addr = ''; // 주소 변수
+
+					//사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+					if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+						addr = data.roadAddress;
+					} else { // 사용자가 지번 주소를 선택했을 경우(J)
+						addr = data.jibunAddress;
+					}
+
+					// 우편번호와 주소 정보를 해당 필드에 넣는다.
+					document.getElementById('postcode').value = data.zonecode;
+					document.getElementById("location").value = addr;
+					
+					// 커서를 상세주소 필드로 이동한다.
+					
+				}
+			}).open();
+}
+  
     </script>
 </body>
 </html>

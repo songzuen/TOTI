@@ -16,7 +16,7 @@
                 <div class="row">
                     <div class="action">
                         <div class="col-sm-12">
-                            <h1 class="title">보낸 요청서</h1>
+                            <h1 class="title"><a href="<c:url value="/requests" />">보낸 요청서</a></h1>
                         </div>
                     </div>
                 </div>
@@ -56,7 +56,7 @@
 	function rquestData() {
 
 		$.ajax({
-			url : 'http://localhost:8080/toti/requestData',
+			url : 'request/requestData',
 			type : 'GET',
 			data : {
 				request_idx : $('#request_idx').val(),
@@ -66,7 +66,7 @@
 				
 				var html = '';
 				
-				html += '<img src="<c:url value="/images/user/'+data.userInfo.m_photo+'" />">';
+				html += '<img src="<c:url value="/uploadfile/'+data.userInfo.m_photo+'"/>">';
 				html += '<div id="requesr_user"><p>'+data.request_date+'</p>';
 				html += '<h2>'+data.cate_name+'('+data.service_name+')</h2><h3>'+data.userInfo.m_name+'님</h3></div>';
 				html += '<div id="request_con">'

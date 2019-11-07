@@ -4,6 +4,8 @@
 <html>
 <head>
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
+
 
 	<%@ include file="/WEB-INF/views/frame/header.jsp" %>
 	<title>Blog Masonry | Triangle</title>
@@ -56,6 +58,7 @@
                
                                  <div class="form-group">
                                      <input type="submit" style="background-color: #FFBF00; color: white; font-weight: bold;" name="submit" class="btn btn-submit" value="로그인">
+                                       <a href="javascript:loginWithKakao()" class="btn btn-submit" id="kakaoLogin">카카오 로그인</a>
                                  </div>
                                  
                                  <div style="display: none;">
@@ -63,6 +66,8 @@
 								<input type="text" id="idxstr" name="idxstr">
 								<input type="text" id="name" name="name">
 								<input type="text" id="photo_name" name="photo_name">
+								<input type="text" id="ver" name="ver">
+								<input type="text" id="gender" name="gender">
 							</div>
 						</div> 
 						
@@ -111,7 +116,7 @@
 				
 
 				$.ajax({
-						url:'http://localhost:8080/toti/member/login',
+						url:'/toti/member/login',
 							type : 'POST',
 							data : $('#form').serialize(),
 							success : function(data) {
@@ -124,22 +129,25 @@
 								$('#idxstr').val(data.idxstr);
 								$('#name').val(data.name);
 								$('#photo_name').val(data.photo_name);
+								$('#ver').val(data.ver);
+								$('#gender').val(data.gender);
 								
-// 								alert(data.idxstr);
 // 								alert(data.id);
 								
 								$.ajax({
-									url : "http://localhost:8080/toti/member/loginProcess",
+									url : "/toti/member/loginProcess",
 										type : 'GET',
 										data : {
 											id : data.id,
 											idxstr:data.idxstr,
 											name : data.name,
+											ver : data.ver ,
+											gender : data.gender ,
 											photo_name:data.photo_name
 											},
 								success : function(data) {
 								
-											location.href = "http://localhost:8080/toti/main";
+											location.href = "/toti/main";
 											
 														}
 												});
@@ -152,11 +160,55 @@
 											
 																	alert('아이디와 비밀번호가 일치하지 않습니다. 아이디와 비밀번호를 다시 확인해주시기 바랍니다.');
 																}
+																
 															}
 														});
 												return false;
 											});
 						});
+		
+		 Kakao.init('a0bed70f3e68b9f973d0d2d13611aaea');
+		  // 로그인
+	        function loginWithKakao() {
+	            // 로그인 창을 띄웁니다.
+	            Kakao.Auth.login({
+	                success: function(authObj) {
+	                   
+	                	//alert('Auth.login >>>>> '+JSON.stringify(authObj));
+
+	                    // 정보 확인 -> id(email) session에 저장
+	                        Kakao.API.request({
+	                            url: '/v2/user/me',
+	                            success: function(res) {
+	                                //alert('API.request >>>>> '+JSON.stringify(res));
+	                                var id = res.kakao_account.email;
+	                                var kakao = 'kakao';
+	                                
+	                                $.ajax({
+	                                    url: "/toti/member/loginProcess2",
+	                                    data: {
+	                                        id: id,
+	                                        kakao: kakao
+	                                    },
+	                                    type: 'GET',
+	                                    success: function(data){
+	                                    	alert('카카오로 임시 로그인 되었습니다. ');
+	                                    	location.href = "/toti/main";
+	                                    }
+	                                });
+	                            },
+	                            fail: function(error) {
+	                            }
+	                        });
+	                    
+	                    
+	                },
+	                fail: function(err) {
+	                    alert('실패');
+	                }
+	            });
+	        };
+		
 	</script>
 </body>
 </html>

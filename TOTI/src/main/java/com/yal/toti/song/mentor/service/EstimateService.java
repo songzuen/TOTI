@@ -2,7 +2,9 @@ package com.yal.toti.song.mentor.service;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -35,21 +37,37 @@ public class EstimateService {
 		int cnt = 0;
 		String newFileName = "";
 
-		EstimateInfo est = write.toEstimateInfo();
+		EstimateInfo est = null;
+		est = write.toEstimateInfo();
+		
 		est.setRequest_idx(request_idx);
+//		Map<String, Object> procedure = new HashMap<String, Object>(request_idx);
+//		procedure.put("mento_idx", est.getMento_idx());
+//		procedure.put("request_idx", est.getRequest_idx());
+//		procedure.put("est_price", est.getEst_price());
+//		procedure.put("est_cont", est.getEst_cont());
+		
 
 		try {
 			if (write.getEst_file() != null) {
 				newFileName = write.getRequest_idx() + "_" + write.getEst_file().getOriginalFilename();
 
 				write.getEst_file().transferTo(new File(dir, newFileName));
+				
 				est.setEst_file(newFileName);
+//				procedure.put("est_file", est.getEst_file());
 			}
-			System.out.println(est.toString());
+			
+			
+			
 			rCnt = dao.insertEstimate(est);
+//			System.out.println(cnt);
+//			rCnt = dao.insertEstimate(procedure);
 			if (rCnt != 0) {
 				cnt = est.getEst_idx();
-			}
+//				cnt = dao.getEstidx(request_idx, mento_idx);
+//				System.out.println(cnt);
+			}	
 		} catch (IllegalStateException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

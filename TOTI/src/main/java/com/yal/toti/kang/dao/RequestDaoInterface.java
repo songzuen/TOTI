@@ -19,6 +19,9 @@ public interface RequestDaoInterface {
 	//분야 리스트
 	public List<CategoriData> categorieList();
 	
+	//로그인한 유저(멘토)의 카테고리명
+	public String categorieIdx(int m_idx);
+	
 	//분야번호에 맞는 분야명
 	public CategoriData cate_data(int cate_idx);
 	
@@ -45,6 +48,12 @@ public interface RequestDaoInterface {
 	
 	//요청서 개수
 	public int requestCnt(int request_idx);
+		
+	//로그인한 유저의 5일지난 요청서번호
+	public List<Integer> userDelRequestNum(int m_idx);
+	
+	//5일지난 요청서 삭제 스케줄러
+	public void userRequestDel();
 	
 	//------------------------- 요청서 정보 ---------------------------
 	//유저정보

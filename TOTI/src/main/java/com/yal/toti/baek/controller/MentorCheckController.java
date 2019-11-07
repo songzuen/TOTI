@@ -17,10 +17,10 @@ public class MentorCheckController {
 	private MentorService service;
 
 	@CrossOrigin
-	@GetMapping("/{user}")
-	public String mentorCheck(@PathVariable("user") int user) {
+	@GetMapping("/{user}/{room_num}")
+	public String mentorCheck(@PathVariable("user") int user, @PathVariable("room_num") int roomnum) {
 
-		String check = service.mentorCheck(user);
+		String check = service.mentorCheck(user, roomnum);
 
 		return check;
 	}

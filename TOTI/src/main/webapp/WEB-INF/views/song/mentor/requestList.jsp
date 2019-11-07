@@ -47,10 +47,12 @@ width: 200px;
 height:  300px;
 border: 1px solid #ddd;
 border-radius: 7px;
+overflow: hidden;
 }
 
 #m_photo{
 width: 100px;
+height: 100px;
 border-radius: 50%;
 text-align: center;
 margin:30px 0;
@@ -68,7 +70,7 @@ color: #a0a0a0;
 text-align: left;
 margin-left: 10%;
 margin-right : 0;
-width :80%;
+width :200px;
 
 white-space: nowrap; 
 overflow: hidden;
@@ -102,7 +104,7 @@ text-overflow: ellipsis;
     </section>
     
         
-    <section id="blog" class="padding-top padding-bottom">
+    <section id="blog" class="padding-bottom">
         <div class="container">
             <div class="row">
                    <div class="col-md">
@@ -131,7 +133,7 @@ text-overflow: ellipsis;
 
 	function list(mento_idx) {
 		$.ajax({
-					url : 'http://localhost:8080/toti/mentor/requestList/'+mento_idx,
+					url : '/toti/mentor/requestList/'+mento_idx,
 					type : 'GET',
 					success : function(data) {
 						var html = '';
@@ -147,11 +149,11 @@ text-overflow: ellipsis;
 							
 							var date = new Date(data[i].request_date);
 							var year = date.getFullYear();
-							var month = date.getMonth();
-							var day = date.getDate();
+							var month = (date.getMonth()+1);
+							var day = (date.getDate()-1);
 							
 							html += '<div id="list"><label for="estimateBtn('+data[i].request_idx+')" style="cursor:pointer">';
-							html += '<div><img id="m_photo" src = "<c:url value="/images/user/'+data[i].m_photo+'"/>"</div><br>';
+							html += '<div><img id="m_photo" src = "<c:url value="/uploadfile/'+data[i].m_photo+'"/>"</div><br>';
 							html += '<div id="listInfo"><h3>'
 							html += data[i].m_name+'(' + data[i].service_name
 									+ ')</h3>';
@@ -172,7 +174,7 @@ text-overflow: ellipsis;
 	}
 
 	function selectRequest(request_idx) {
-		location.href = "http://localhost:8080/toti/requestList/" + request_idx;
+		location.href = "/toti/requestList/" + request_idx;
 	}
 
 </script>

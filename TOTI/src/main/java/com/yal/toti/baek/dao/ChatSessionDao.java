@@ -17,13 +17,13 @@ public interface ChatSessionDao {
 
 	public int insertChatRoom(int user, int target, int category, int roomnum);
 
-	public String searchTargetName(int target);
-
-	public String searchTargetNameByUser(int user);
+	public String searchTargetName(int target, int est_idx);
+	
+	public String searchTargetNameByUser(int user, int est_idx);
 
 	public String searchUserName(int user);
 
-	public String selectMentorCheck(int user);
+	public int selectMentorCheck(int roomnum);
 
 	public List<ChatRoomInfo> selectChatRoomListByUser(int user);
 
@@ -31,10 +31,10 @@ public interface ChatSessionDao {
 
 	public List<MentorReview> selectMentorReview(int user);
 
-	public int insertEstPriceToChatRoom(int roomnum, int user, String date);
+	public int insertChatlog(String message, String message_date, int roomnum, int user);
 
-	public int insertEstContToChatRoom(int roomnum, int user, String date);
+	public int selectReqNum(int room_num);
 
-	public int updateLastMsgAtChatRoom(int roomnum);
+	public int updateLastMsgAtChatRoom(int lastmsg, int roomnum);
 
 }

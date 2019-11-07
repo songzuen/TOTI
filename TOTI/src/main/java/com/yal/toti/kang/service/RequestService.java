@@ -4,13 +4,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.annotation.Resource;
-
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
 import com.yal.toti.kang.dao.RequestDaoInterface;
 import com.yal.toti.kang.domain.CategoriData;
@@ -39,6 +37,16 @@ public class RequestService {
 
 	}
 
+	public String getKategorIdx(int m_idx) {
+
+		dao = template.getMapper(RequestDaoInterface.class);
+
+		String data = dao.categorieIdx(m_idx);
+		
+		return data;
+
+	}
+	
 	public RequestListData getRequestListData(int cate_idx) {
 
 		dao = template.getMapper(RequestDaoInterface.class);
@@ -64,6 +72,7 @@ public class RequestService {
 		return list;
 
 	}
+	
 	
 	@Transactional(rollbackFor=Exception.class)
 	public int insertRequest(RequestData data) throws Exception {
@@ -97,7 +106,7 @@ public class RequestService {
 
 	}
 	
-	
+
 	public List<UserRequestList> getUserRequests(int m_idx) {
 
 		dao = template.getMapper(RequestDaoInterface.class);
@@ -112,6 +121,27 @@ public class RequestService {
 
 	}
 	
+	public List<Integer> getUserDelRequests(int m_idx) {
+
+		dao = template.getMapper(RequestDaoInterface.class);
+
+		List<Integer> list = dao.userDelRequestNum(m_idx);
+		
+		return list;
+
+	}
+	
+	//매일 23시 59분 59초에 실행
+	@Scheduled(cron="59 59 23 * * *")
+	public void userRequestDel() {
+		
+		dao = template.getMapper(RequestDaoInterface.class);
+		
+		dao.userRequestDel();
+		
+		System.out.println("5일지난 유저의 요청서 삭제 스케줄러 실행완료.");
+		
+	}
 	
 	public UserRequestData getUserRequestData(int request_idx, int m_idx) {
 
@@ -145,7 +175,6 @@ public class RequestService {
 		data.setCate_name(dao.requestCate(request_idx));
 		data.setService_name(dao.requestService(request_idx));
 		data.setRequest_date(dao.requestDate(request_idx));
-		
 		data.setEstiData(dao.estimateeList(request_idx));
 		
 		return data;
@@ -162,5 +191,4 @@ public class RequestService {
 		
 	}
 	
-
 }

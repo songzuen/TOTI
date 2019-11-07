@@ -38,7 +38,7 @@ public class RegService {
 		dao = template.getMapper(MemberDaoInterface.class);
 
 		// 사진 저장 경로
-		String path = "/uploadfile/yu";
+		String path = "/uploadfile";
 		String dir = request.getSession().getServletContext().getRealPath(path);
 
 		int rCnt = 0;
